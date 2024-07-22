@@ -9,7 +9,9 @@
 		"preview": "astro preview",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
-		"e2e:develop": "IS_PLAYWRIGHT=true playwright test --debug",
+		"test:watch": "vitest watch",
+		"test": "vitest run",
+		"e2e:dev": "IS_PLAYWRIGHT=true playwright test --debug",
 		"e2e:build": "IS_PLAYWRIGHT=true IS_BUILD=true playwright test"
 	},
 	"dependencies": {
