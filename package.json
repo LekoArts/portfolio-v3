@@ -26,6 +26,7 @@
 		"eslint": "9.5.0",
 		"eslint-plugin-astro": "^1.2.3",
 		"eslint-plugin-format": "^0.1.2",
-		"prettier-plugin-astro": "^0.14.1"
+		"prettier-plugin-astro": "^0.14.1",
+		"vitest": "^2.0.4"
 	}
 }
