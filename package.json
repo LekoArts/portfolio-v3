@@ -5,12 +5,12 @@
 	"packageManager": "pnpm@9.5.0",
 	"scripts": {
 		"dev": "astro dev",
-		"start": "astro dev",
 		"build": "astro check && astro build",
 		"preview": "astro preview",
-		"astro": "astro",
 		"lint": "eslint .",
-		"lint:fix": "eslint . --fix"
+		"lint:fix": "eslint . --fix",
+		"e2e:develop": "IS_PLAYWRIGHT=true playwright test --debug",
+		"e2e:build": "IS_PLAYWRIGHT=true IS_BUILD=true playwright test"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.8.2",
@@ -21,6 +21,8 @@
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^2.23.1",
+		"@playwright/test": "^1.45.2",
+		"@types/node": "^20.14.11",
 		"@vanilla-extract/vite-plugin": "^4.0.13",
 		"astro-eslint-parser": "^1.0.2",
 		"eslint": "9.5.0",
