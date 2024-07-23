@@ -16,9 +16,16 @@
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.8.2",
+		"@astrojs/netlify": "^5.4.0",
+		"@astrojs/react": "^3.6.0",
+		"@astrojs/sitemap": "^3.1.6",
+		"@types/react": "^18.3.3",
+		"@types/react-dom": "^18.3.0",
 		"@vanilla-extract/css": "^1.15.3",
 		"@vanilla-extract/sprinkles": "^1.6.2",
 		"astro": "^4.12.2",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
 		"typescript": "^5.5.3"
 	},
 	"devDependencies": {

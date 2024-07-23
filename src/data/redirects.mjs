@@ -1,9 +1,4 @@
-interface Redirect {
-	fromPath: string
-	toPath: string
-}
-
-export const REDIRECTS: Array<Redirect> = [
+const _REDIRECTS = [
 	{
 		fromPath: '/admin/',
 		toPath: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
@@ -321,3 +316,9 @@ export const REDIRECTS: Array<Redirect> = [
 		toPath: '/garden/',
 	},
 ]
+
+function formatRedirects(input) {
+	return Object.fromEntries(input.map(r => [r.fromPath, r.toPath]))
+}
+
+export const REDIRECTS = formatRedirects(_REDIRECTS)

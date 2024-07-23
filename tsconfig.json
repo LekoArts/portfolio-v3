@@ -1,12 +1,22 @@
 {
 	"extends": "astro/tsconfigs/strict",
 	"compilerOptions": {
+		"jsx": "react-jsx",
+		"jsxImportSource": "react",
 		"baseUrl": ".",
 		"paths": {
-			"@constants/*": ["src/constants/*"],
-			"@components/*": ["src/components/*"],
-			"@data/*": ["src/data/*"]
+			"@constants/*": [
+				"src/constants/*"
+			],
+			"@components/*": [
+				"src/components/*"
+			],
+			"@data/*": [
+				"src/data/*"
+			]
 		},
-		"types": ["vitest/globals"]
+		"types": [
+			"vitest/globals"
+		]
 	}
 }
