@@ -1,0 +1,47 @@
+- name: Writing
+  link: /writing/
+  items:
+    - name: Digital Garden
+      link: /garden/
+    - name: Tutorials
+      link: /tutorials/
+    - name: React
+      link: /react/
+    - name: RSS Feed
+      link: /rss.xml
+      isExternal: true
+- name: Art
+  link: /art/
+  items:
+    - name: Design
+      link: /art/design/
+    - name: 3D Art
+      link: /art/3d/
+    - name: Photography
+      link: /art/photography/
+- name: About
+  link: /about/
+  items:
+    - name: Appearances
+      link: /appearances/
+    - name: Resume
+      link: /resume/
+    - name: Uses
+      link: /uses/
+- name: Social
+  items:
+    - name: Email
+      link: mailto:hello@lekoarts.de
+      isExternal: true
+    - name: Twitter
+      link: https://www.twitter.com/lekoarts_de
+      isExternal: true
+    - name: Mastodon
+      link: https://mastodon.social/@lekoarts
+      isExternal: true
+    - name: GitHub
+      link: https://www.github.com/LekoArts
+      isExternal: true
+    - name: LinkedIn
+      link: https://www.linkedin.com/in/lennart-joergens/
+      isExternal: true

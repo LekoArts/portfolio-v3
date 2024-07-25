@@ -5,6 +5,9 @@
 		"jsxImportSource": "react",
 		"baseUrl": ".",
 		"paths": {
+			"@assets/*": [
+				"src/assets/*"
+			],
 			"@constants/*": [
 				"src/constants/*"
 			],
@@ -13,6 +16,9 @@
 			],
 			"@data/*": [
 				"src/data/*"
+			],
+			"@utils/*": [
+				"src/utils/*"
 			]
 		},
 		"types": [

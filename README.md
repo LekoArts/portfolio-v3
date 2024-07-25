@@ -1,47 +1,9 @@
-# Astro Starter Kit: Minimal
+# lekoarts.de
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Hello 👋
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+Welcome to the source code of [lekoarts.de](https://www.lekoarts.de). Similarly to my old websites ([v2](https://github.com/LekoArts/portfolio-v2), [v1](https://github.com/LekoArts/portfolio)), you can also see how I created the _v3_ of my own personal site. [Astro](https://astro.build/) + [MDX](https://mdxjs.com/) powers the whole site and [vanilla-extract](https://vanilla-extract.style/) is used for styling.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+While the code itself has no `LICENSE` (but is still a public repository) I'd appreciate it if you only use it to read it and learn from it. Do not do any non-commercial/commercial stuff with it, e.g. selling it or creating your own site with it. This has worked in the past and I'd like to keep the code open to everyone, but if I see ripoffs on the internet I'll make this repository private. Thanks for understanding!
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+If you found a typo in a post and want to fix it, you can go the the [content](./src/content) folder and find the relevant MDX file. Highly appreciated!

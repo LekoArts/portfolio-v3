@@ -1,0 +1,22 @@
+---
+import { slugify } from '@utils/slugify'
+import { getCollection } from 'astro:content'
+
+export async function getStaticPaths() {
+	const entries = await getCollection('writing')
+	return entries.map((entry) => ({
+		params: {
+			writing: slugify(entry.data.title, entry.data.category),
+		},
+		props: {
+			entry,
+		},
+	}))
+}
+
+const { entry } = Astro.props
+const { Content } = await entry.render()
+---
+
+<h1>{entry.data.title}</h1>
+<Content />

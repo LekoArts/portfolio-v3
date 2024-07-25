@@ -1,5 +1,8 @@
 ---
+import { getCollection } from 'astro:content'
 
+const garden = await getCollection('garden')
+const writing = await getCollection('writing')
 ---
 
 <html lang="en">
@@ -12,5 +15,19 @@
 	</head>
 	<body>
 		<h1>Astro</h1>
+		<div>
+			<pre>
+				<code>
+					{JSON.stringify(garden, null, 2)}
+				</code>
+			</pre>
+		</div>
+		<div>
+			<pre>
+				<code>
+					{JSON.stringify(writing, null, 2)}
+				</code>
+			</pre>
+		</div>
 	</body>
 </html>
