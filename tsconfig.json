@@ -8,14 +8,20 @@
 			"@assets/*": [
 				"src/assets/*"
 			],
-			"@constants/*": [
-				"src/constants/*"
-			],
 			"@components/*": [
 				"src/components/*"
 			],
+			"@constants/*": [
+				"src/constants/*"
+			],
 			"@data/*": [
 				"src/data/*"
+			],
+			"@layouts/*": [
+				"src/layouts/*"
+			],
+			"@styles/*": [
+				"src/styles/*"
 			],
 			"@utils/*": [
 				"src/utils/*"

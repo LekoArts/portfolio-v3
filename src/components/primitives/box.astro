@@ -1,0 +1,37 @@
+---
+import { atoms } from '@styles/atoms.css'
+import { type OverrideTokens, extractAtomsFromProps } from '@utils/box'
+import type { Atoms } from '@styles/atoms.css'
+import type { HTMLTag, Polymorphic } from 'astro/types'
+
+type Props<T extends HTMLTag = HTMLTag> = Polymorphic<
+	{ as: T } & Atoms & OverrideTokens<Atoms>
+>
+
+export type BoxProps<T extends HTMLTag = HTMLTag> = Props<T>
+
+type CustomStyle = Omit<
+	string | Record<string, any> | astroHTML.JSX.CSSProperties | null | undefined,
+	'string'
+>
+
+const { as: Tag = 'div', class: className, style, ...rest } = Astro.props
+const { atomProps, customProps, otherProps } = extractAtomsFromProps(
+	rest,
+	atoms,
+)
+
+if (typeof style === 'string') {
+	throw new Error(
+		'`style` prop must be an object. Did you forget to use `style={{}}`?',
+	)
+}
+---
+
+<Tag
+	style={{ ...(style as CustomStyle), ...customProps }}
+	{...otherProps}
+	class:list={[className, atoms(atomProps)]}
+>
+	<slot />
+</Tag>

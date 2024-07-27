@@ -1,0 +1,18 @@
+---
+interface Props {
+	files: Record<string, string>
+	template?: any
+	title: string
+	customSetup?: any
+}
+
+const { files, template, title, customSetup } = Astro.props
+---
+
+<div>
+	<pre>
+    <code>
+      {JSON.stringify({ files, template, title, customSetup }, null, 2)}
+    </code>
+  </pre>
+</div>

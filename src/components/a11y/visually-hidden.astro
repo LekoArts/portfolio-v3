@@ -1,0 +1,12 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import { visuallyHiddenStyle } from './visually-hidden.css'
+
+interface Props extends HTMLAttributes<'span'> {}
+
+const props = Astro.props
+---
+
+<span class={visuallyHiddenStyle} {...props}>
+	<slot />
+</span>

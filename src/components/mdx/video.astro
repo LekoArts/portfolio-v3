@@ -1,0 +1,18 @@
+---
+type Props = {
+	src: string
+	ariaLabel: string
+	description?: string
+	maxWidth?: string
+}
+
+const { src, ariaLabel, description, maxWidth } = Astro.props
+---
+
+<div>
+	<pre>
+    <code>
+      {JSON.stringify({ src, ariaLabel, description, maxWidth }, null, 2)}
+    </code>
+  </pre>
+</div>

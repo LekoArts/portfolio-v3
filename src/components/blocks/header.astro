@@ -1,0 +1,48 @@
+---
+import { withoutTrailingSlash } from '@utils/url'
+import FullWidthContainer from '@components/blocks/full-width-container.astro'
+import Box from '@components/primitives/box.astro'
+import Logo from '@components/blocks/logo.astro'
+import Spacer from '@components/primitives/spacer.astro'
+import Navigation from '@components/blocks/navigation.astro'
+import { innerHeaderStyle } from './header.css'
+import { getCollection } from 'astro:content'
+import { getDistinctCategoriesSlugs } from '@utils/collection'
+
+interface Props {
+	subnavigation?: boolean
+}
+
+const { subnavigation = false } = Astro.props
+
+const categorySlugs = getDistinctCategoriesSlugs(
+	await getCollection('categories'),
+)
+const isCategoryPage = categorySlugs.includes(
+	withoutTrailingSlash(Astro.url.pathname),
+)
+const height = subnavigation ? `navigationWithSubHeight` : `navigationHeight`
+const variant = isCategoryPage ? `fullBleed` : `navigation`
+---
+
+<FullWidthContainer
+	variant={variant}
+	height={height}
+	data-variant-name={variant}
+>
+	<Box
+		display="flex"
+		as="header"
+		color={variant === `navigation` ? `heading` : undefined}
+		alignItems="center"
+		justifyContent="space-between"
+		__color={variant === `fullBleed` ? `white` : undefined}
+		class={innerHeaderStyle}
+	>
+		<Logo />
+		<Navigation />
+	</Box>
+	<slot name="subnavigation" />
+</FullWidthContainer>
+
+{!isCategoryPage ? <Spacer size={height} axis="vertical" /> : null}

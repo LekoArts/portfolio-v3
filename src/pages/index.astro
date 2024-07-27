@@ -1,20 +1,22 @@
 ---
 import { getCollection } from 'astro:content'
+import Box from '@components/primitives/box.astro'
+import SkipNavContent from '@components/a11y/skip-nav-content.astro'
+import Base from '@layouts/base.astro'
+import Seo from '@components/seo.astro'
+import { HOMEPAGE } from '@constants/json-ld'
 
 const garden = await getCollection('garden')
 const writing = await getCollection('writing')
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
+<Base>
+	<Seo slot="seo">
+		<script set:html={JSON.stringify(HOMEPAGE)} />
+	</Seo>
+	<SkipNavContent>
 		<h1>Astro</h1>
+		<Box as="span" color="primary">hello world</Box>
 		<div>
 			<pre>
 				<code>
@@ -29,5 +31,5 @@ const writing = await getCollection('writing')
 				</code>
 			</pre>
 		</div>
-	</body>
-</html>
+	</SkipNavContent>
+</Base>

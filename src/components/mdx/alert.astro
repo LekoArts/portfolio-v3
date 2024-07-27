@@ -1,0 +1,18 @@
+---
+interface Props {
+	title: string
+	status: 'info' | 'warning' | 'error' | 'success'
+}
+
+const { title, status } = Astro.props
+---
+
+<div data-testid={`alert-${status}`}>
+	<div>
+		<div>icon</div>
+		<div>
+			{title}
+		</div>
+	</div>
+	<slot />
+</div>

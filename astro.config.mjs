@@ -16,6 +16,13 @@ export default defineConfig({
 	redirects: REDIRECTS,
 	markdown: {
 		syntaxHighlight: 'shiki',
+		shikiConfig: {
+			themes: {
+				light: 'github-light',
+				dark: 'night-owl',
+			},
+			wrap: true,
+		},
 	},
 	vite: {
 		plugins: [vanillaExtractPlugin()],

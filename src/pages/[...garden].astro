@@ -1,6 +1,12 @@
 ---
 import { slugify } from '@utils/slugify'
 import { getCollection } from 'astro:content'
+import Base from '@layouts/base.astro'
+import Seo from '@components/seo.astro'
+import { SITE } from '@constants/meta.mjs'
+import { defaultDateFormat, isoDateFormat, yearDateFormat } from '@utils/date'
+import { getReadingTime } from '@utils/reading-time'
+import { article } from '@constants/json-ld'
 
 export async function getStaticPaths() {
 	const entries = await getCollection('garden')
@@ -11,8 +17,58 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props
+const { data: garden } = entry
 const { Content } = await entry.render()
+
+const ogURL = new URL(SITE.gardenOgEdge, SITE.url)
+ogURL.searchParams.set(`title`, garden.title)
+ogURL.searchParams.set(`lastUpdated`, defaultDateFormat(garden.lastUpdated))
+ogURL.searchParams.set(`tags`, garden.tags.join(`,`))
+const ogImage = `${ogURL.pathname}${ogURL.search}`
+
+const timeToRead = getReadingTime(entry.body)
+const slug = slugify(garden.title, 'garden')
 ---
 
-<h1>{entry.data.title}</h1>
-<Content />
+<Base>
+	<Seo
+		slot="seo"
+		title={garden.title}
+		pathname={slug}
+		description={garden.description}
+		image={ogImage}
+	>
+		<meta name="twitter:label1" value="Time To Read" />
+		<meta name="twitter:data1" value={timeToRead} />
+		<meta name="twitter:label2" value="Tags" />
+		<meta name="twitter:data2" value={garden.tags.join(`, `)} />
+		<meta name="article:published_time" content={isoDateFormat(garden.date)} />
+		<meta
+			name="article:modified_time"
+			content={isoDateFormat(garden.lastUpdated)}
+		/>
+		<script
+			type="application/ld+json"
+			set:html={JSON.stringify(
+				article({
+					isGarden: true,
+					post: {
+						title: garden.title,
+						description: garden.description,
+						slug: slug,
+						image: ogImage,
+						date: isoDateFormat(garden.date),
+						lastUpdated: isoDateFormat(garden.lastUpdated),
+						year: yearDateFormat(garden.date),
+					},
+					category: {
+						name: `Digital Garden`,
+						slug: `/garden`,
+					},
+				}),
+			)}
+		/>
+	</Seo>
+	<h1>{garden.title}</h1>
+	<Content />
+</Base>

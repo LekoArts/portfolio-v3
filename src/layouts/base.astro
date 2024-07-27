@@ -1,0 +1,59 @@
+---
+import interVariableWoff2 from '@assets/fonts/inter-latin.var.woff2'
+import crimsonProVariableWoff2 from '@assets/fonts/crimson-pro-latin.var.woff2'
+import { SITE } from '@constants/meta.mjs'
+import SkipNavLink from '@components/a11y/skip-nav-link.astro'
+import Header from '@components/blocks/header.astro'
+import Footer from '@components/blocks/footer.astro'
+import '@styles/fonts.css'
+import '@styles/reset.css'
+import '@styles/global.css'
+
+const plausibleProps = {
+	src: '/js/script.tagged-events.js',
+	'data-domain': SITE.dataDomain,
+}
+
+interface Props {
+	subnavigation?: boolean
+}
+
+const { subnavigation = false } = Astro.props
+---
+
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="preload" href="/icons.svg" as="image" type="image/svg+xml" />
+		<link
+			rel="preload"
+			href={interVariableWoff2}
+			as="font"
+			type="font/woff2"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="preload"
+			href={crimsonProVariableWoff2}
+			as="font"
+			type="font/woff2"
+			crossorigin="anonymous"
+		/>
+		<slot name="seo" />
+		{
+			import.meta.env.MODE === 'production' ? (
+				<script defer {...plausibleProps} />
+			) : null
+		}
+	</head>
+	<body>
+		<SkipNavLink />
+		<Header subnavigation={subnavigation}>
+			<slot name="subnavigation" slot="subnavigation" />
+		</Header>
+		<slot />
+		<Footer />
+	</body>
+</html>

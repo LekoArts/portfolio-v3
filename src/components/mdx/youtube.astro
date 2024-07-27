@@ -1,0 +1,21 @@
+---
+interface Props {
+	id?: string
+	aspectRatio?: any
+	skipTo?: {
+		h?: number
+		m: number
+		s: number
+	}
+}
+
+const { id, aspectRatio, skipTo } = Astro.props
+---
+
+<div>
+	<pre>
+    <code>
+      {JSON.stringify({ id, aspectRatio, skipTo }, null, 2)}
+    </code>
+  </pre>
+</div>

@@ -1,5 +1,5 @@
 import sindresorhusSlugify, { type Options } from '@sindresorhus/slugify'
-import { withTrailingSlash } from './url'
+import { withTrailingSlash } from '@utils/url'
 
 export const slugifyOptions = {
 	decamelize: false,

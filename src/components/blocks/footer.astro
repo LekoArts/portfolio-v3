@@ -1,0 +1,11 @@
+---
+import { getEntry } from 'astro:content'
+import FullWidthContainer from './full-width-container.astro'
+import Box from '@components/primitives/box.astro'
+
+const { data: footerNavigation } = await getEntry('navigations', 'footer')
+---
+
+<FullWidthContainer variant="dark">
+	<Box as="footer" py={16} role="contentinfo"> Test </Box>
+</FullWidthContainer>
