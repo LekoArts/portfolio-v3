@@ -1,0 +1,71 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import { artAnchorStyle, artImageStyle } from './art-image.css'
+
+interface Props extends HTMLAttributes<'a'> {
+	images: IImages
+	photoId: string
+	alt: string
+	imgClass?: string
+}
+
+interface IImageSize {
+	url: string
+	width: number
+	height: number
+}
+
+interface IImages {
+	lg: IImageSize
+	md: IImageSize
+	sm: IImageSize
+}
+
+const USER_ID = '192975453@N04'
+
+const getSrcSet = (images: IImages) => {
+	const { lg, md, sm } = images
+
+	return `
+    ${lg.url} ${lg.width}w,
+    ${md.url} ${md.width}w,
+    ${sm.url} ${sm.width}w
+  `
+}
+
+const {
+	photoId,
+	images,
+	alt,
+	class: className,
+	imgClass,
+	...rest
+} = Astro.props
+
+const src = images.lg.url
+const { width: maxWidth, height: maxHeight } = images.lg
+const aspectRatio = maxWidth / maxHeight
+---
+
+<a
+	href={`https://www.flickr.com/photos/${USER_ID}/${photoId}`}
+	target="_blank"
+	class:list={[artAnchorStyle, className]}
+	{...rest}
+>
+	<img
+		loading="lazy"
+		decoding="async"
+		src={src}
+		sizes={`(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`}
+		srcset={getSrcSet(images)}
+		alt={alt}
+		class:list={[artImageStyle, imgClass]}
+		style={{
+			maxWidth: `${maxWidth}px`,
+			maxHeight: `${maxHeight}px`,
+			aspectRatio: `${aspectRatio} / 1`,
+			width: '100%',
+		}}
+	/>
+</a>

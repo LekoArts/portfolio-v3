@@ -1,0 +1,104 @@
+---
+import { getEntry } from 'astro:content'
+import FullWidthContainer from './full-width-container.astro'
+import Box from '@components/primitives/box.astro'
+import Link from '@components/primitives/link.astro'
+import Spacer from '@components/primitives/spacer.astro'
+
+const linkAttributesMap: Record<string, any> = {
+	Mastodon: {
+		rel: `me`,
+	},
+}
+
+const { data: footerNavigation } = await getEntry('navigations', 'footer')
+---
+
+<FullWidthContainer variant="dark">
+	<Box as="footer" py={16} role="contentinfo">
+		<Box display="flex" flexDirection="column">
+			<Box
+				display="flex"
+				flexDirection={['column', 'row']}
+				flexWrap="wrap"
+				justifyContent="space-between"
+			>
+				{
+					footerNavigation.map((s) => (
+						<Box
+							display="flex"
+							flexDirection="column"
+							alignItems="flex-start"
+							marginBottom={[8, 0]}
+						>
+							{s.link ? (
+								<Link
+									href={s.link}
+									p={1}
+									color="textEmphasizedOnBg"
+									fontSize={[`lg`, null, `lgx`]}
+									marginBottom={[2, 3]}
+								>
+									{s.name}
+								</Link>
+							) : (
+								<Box
+									color="textEmphasizedOnBg"
+									p={1}
+									fontSize={[`lg`, null, `lgx`]}
+									marginBottom={[2, 3]}
+								>
+									{s.name}
+								</Box>
+							)}
+							<Box
+								display="flex"
+								flexDirection={[`row`, `column`]}
+								alignItems="flex-start"
+								flexWrap={[`wrap`, `nowrap`]}
+							>
+								{s.items!.map((item) => {
+									if (item.isExternal) {
+										return (
+											<Link
+												href={item.link}
+												{...linkAttributesMap[item.name]}
+												marginRight={[2, 0]}
+												p={1}
+											>
+												{item.name}
+											</Link>
+										)
+									} else {
+										return (
+											<Link href={item.link} marginRight={[2, 0]} p={1}>
+												{item.name}
+											</Link>
+										)
+									}
+								})}
+							</Box>
+						</Box>
+					))
+				}
+			</Box>
+			<Spacer axis="vertical" size={16} />
+			<Box
+				display="flex"
+				flexDirection={[`column`, `row`]}
+				textAlign="center"
+				alignItems="center"
+				justifyContent="space-between"
+			>
+				<div>
+					&copy; {new Date().getFullYear()} by lekoarts.de. All rights reserved.
+				</div>
+				<div>
+					<Link href="/privacy-policy/">Privacy Policy</Link>. <Link
+						href="/legal-notice/">Legal Notice</Link
+					>.
+				</div>
+			</Box>
+		</Box>
+	</Box>
+</FullWidthContainer>

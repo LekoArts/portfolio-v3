@@ -1,0 +1,15 @@
+---
+import { SKIP_NAV_ID } from '@constants/a11y'
+
+/**
+ * Wrap the main content of a page with this, thus also the <main> tag
+ */
+interface Props {
+	id?: string
+}
+
+const { id: idProp } = Astro.props
+const id = idProp || SKIP_NAV_ID
+---
+
+<main id={id}><slot /></main>

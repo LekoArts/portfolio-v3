@@ -1,0 +1,4 @@
+name: JavaScript
+description: At this point one can build nearly everything with JavaScript. I write about different frameworks, supersets & experiments here, including TypeScript.
+gradient: 'linear-gradient(to top, #eab308, #7f591c)'
+image: ./_img/javascript.png

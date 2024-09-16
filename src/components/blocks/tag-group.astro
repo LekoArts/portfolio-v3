@@ -1,0 +1,80 @@
+---
+import type { Tag } from '@constants/types'
+import { tagCloseIconStyle, tagGroupStyle, tagStyle } from './tag-group.css'
+import SvgIcon from '@components/primitives/svg-icon.astro'
+
+type Props =
+	| {
+			id: 'garden'
+			items: Array<Tag>
+	  }
+	| {
+			id: 'photography'
+			items: Array<string>
+	  }
+
+const { id, items } = Astro.props
+---
+
+<lekoarts-tag-group data-id={id}>
+	<div class={tagGroupStyle}>
+		{
+			items.sort().map((item) => (
+				<button class={tagStyle} data-item={item}>
+					{item}
+					<span class={tagCloseIconStyle} aria-hidden>
+						<SvgIcon id="close" width="100%" height="100%" />
+					</span>
+				</button>
+			))
+		}
+	</div>
+</lekoarts-tag-group>
+
+<script>
+	import type { TagGroupKeys } from '@stores/tag-group'
+	import { $tagGroup, addTag, removeTag } from '@stores/tag-group'
+
+	class LekoArtsTagGroup extends HTMLElement {
+		id: TagGroupKeys
+
+		constructor() {
+			super()
+
+			this.id = this.dataset.id as TagGroupKeys
+
+			const buttons = this.querySelectorAll('button')
+
+			// Check if the store already contains tags (when on page load there are tags in the query params)
+			const tags = $tagGroup.get()[this.id]
+
+			if (tags.length > 0) {
+				buttons.forEach((button) => {
+					const item = button.dataset.item as string
+					const isActive = tags.includes(item)
+
+					if (isActive) {
+						button.classList.add('active')
+					}
+				})
+			}
+
+			buttons.forEach((button) => {
+				button.addEventListener('click', () => {
+					const item = button.dataset.item as string
+					const isActive = $tagGroup.get()[this.id].includes(item)
+
+					if (isActive) {
+						removeTag(this.id, item)
+						button.classList.remove('active')
+					} else {
+						addTag(this.id, item)
+						button.classList.add('active')
+					}
+				})
+			})
+		}
+	}
+
+	customElements.define('lekoarts-tag-group', LekoArtsTagGroup)
+</script>

@@ -1,0 +1,110 @@
+---
+import type { MarkdownHeading } from 'astro'
+import Box from '@components/primitives/box.astro'
+import { asideStyle, headingStyle, navStyle } from './toc.css'
+import TocItem from '@components/writing/toc-item.astro'
+import { buildToc, getIds } from '@utils/toc'
+
+interface Props {
+	headings: MarkdownHeading[]
+}
+
+const { headings } = Astro.props
+
+const toc = buildToc(headings)
+const ids = getIds(headings)
+---
+
+<Box
+	as="aside"
+	marginBottom={{ mobile: 16, '2xl': 0 }}
+	fontSize={[`sm`, `md`]}
+	class={asideStyle}
+>
+	<Box
+		as="nav"
+		display="flex"
+		flexDirection="column"
+		alignItems="flex-start"
+		class={navStyle}
+	>
+		<Box
+			as="h2"
+			color="heading"
+			fontWeight="medium"
+			marginBottom={{ mobile: 2, '2xl': 4 }}
+			class={headingStyle}
+		>
+			Table of Contents
+		</Box>
+		<lekoarts-toc data-ids={ids}>
+			<ul id="toc">
+				{toc.map((heading) => <TocItem heading={heading} />)}
+			</ul>
+		</lekoarts-toc>
+	</Box>
+</Box>
+
+<script>
+	class LekoArtsToc extends HTMLElement {
+		ids: Array<string>
+
+		constructor() {
+			super()
+
+			this.ids = this.dataset.ids ? this.dataset.ids.split(',') : []
+			this.setActiveHeading()
+		}
+
+		setActiveHeading() {
+			const headingElements = this.ids
+				.map((id) => document.getElementById(id))
+				.filter(Boolean)
+
+			const observerOptions: IntersectionObserverInit = {
+				rootMargin: '0% 0% -80% 0%',
+				threshold: [0.9],
+			}
+
+			const observerCallback: IntersectionObserverCallback = (entries) => {
+				for (const entry of entries) {
+					const { id } = entry.target
+					const tocItem = document.querySelector(`#toc a[href="#${id}"]`)
+
+					if (!tocItem) {
+						return
+					}
+
+					if (entry.isIntersecting) {
+						document
+							.querySelectorAll('#toc a')
+							.forEach((el) => el.classList.remove('active'))
+
+						tocItem.classList.add('active')
+					}
+				}
+			}
+
+			const observer = new IntersectionObserver(
+				observerCallback,
+				observerOptions,
+			)
+
+			headingElements.forEach((el) => {
+				if (el) {
+					observer.observe(el)
+				}
+			})
+
+			return () => {
+				headingElements.forEach((el) => {
+					if (el) {
+						observer.unobserve(el)
+					}
+				})
+			}
+		}
+	}
+
+	customElements.define('lekoarts-toc', LekoArtsToc)
+</script>

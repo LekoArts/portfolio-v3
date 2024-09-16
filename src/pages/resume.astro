@@ -1,0 +1,104 @@
+---
+import ResumeText from '../assets/resume-body.mdx'
+import Base from '@layouts/base.astro'
+import Seo from '@components/seo.astro'
+import SkipNavContent from '@components/a11y/skip-nav-content.astro'
+import Container from '@components/primitives/container.astro'
+import VisuallyHidden from '@components/a11y/visually-hidden.astro'
+import Box from '@components/primitives/box.astro'
+import Heading from '@components/typography/heading.astro'
+import Text from '@components/typography/text.astro'
+import Spacer from '@components/primitives/spacer.astro'
+import Link from '@components/primitives/link.astro'
+import Button from '@components/primitives/button/base.astro'
+import Prose from '@components/typography/prose.astro'
+import { paddingResponsiveArrays } from '@styles/tokens/space'
+import SvgIcon from '@components/primitives/svg-icon.astro'
+import { components } from '@components/mdx'
+import { imgStyle, summaryWrapperStyle } from './_resume.css'
+---
+
+<Base>
+	<Seo
+		slot="seo"
+		title="Resume"
+		description="Lennart Jörgens' resume"
+		breadcrumbListItems={[{ name: `Resume`, url: `/resume/` }]}
+		noIndex
+	/>
+	<SkipNavContent>
+		<Container py={paddingResponsiveArrays.paddingSmall}>
+			<VisuallyHidden>
+				<Heading as="h1">Resume</Heading>
+			</VisuallyHidden>
+			<Box class={summaryWrapperStyle}>
+				<Box>
+					<Heading as="h2">Hi, I'm Lennart Jörgens.</Heading>
+					<Text variant="prominent">
+						A product-focused full stack engineer with years of experience in
+						leading large-scale open source projects and shipping high-quality
+						work to millions of users. Adept at building delightful, inclusive,
+						and well-documented solutions to customers' needs.
+					</Text>
+					<Spacer axis="vertical" size={8} />
+					<Text>
+						<Link href="mailto:hello@lekoarts.de">hello@lekoarts.de</Link> —{
+							` `
+						}
+						<Link href="https://github.com/LekoArts">GitHub</Link> —{` `}
+						<Link href="https://www.linkedin.com/in/lennart-joergens/"
+							>LinkedIn</Link
+						>
+					</Text>
+					<Spacer axis="vertical" size={4} />
+					<Button
+						kind="link"
+						target="_blank"
+						href="/resume.pdf"
+						size="md"
+						variant="primary"
+						icon
+						>Download Resume <SvgIcon
+							id="download"
+							height="1em"
+							width="1em"
+							slot="icon"
+						/></Button
+					>
+				</Box>
+				<Box>
+					<img
+						src="/social/head.jpg"
+						class={imgStyle}
+						alt="Me in a blue t-shirt in front of the beautiful alpes in austria"
+					/>
+				</Box>
+			</Box>
+			<Spacer size={12} axis="vertical" />
+			<Box
+				as="hr"
+				height="px"
+				width="full"
+				bg="text"
+				opacity={0.1}
+				border="none"
+			/>
+			<Prose>
+				<ResumeText components={components} />
+			</Prose>
+			<Spacer size={12} axis="vertical" />
+			<Box
+				as="hr"
+				height="px"
+				width="full"
+				bg="text"
+				opacity={0.1}
+				border="none"
+			/>
+			<Spacer size={8} axis="vertical" />
+			<Text fontSize={[`md`, null, null, `lg`]}
+				>Last updated: September 6, 2023</Text
+			>
+		</Container>
+	</SkipNavContent>
+</Base>

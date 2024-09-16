@@ -1,0 +1,14 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import VisuallyHidden from '@components/a11y/visually-hidden.astro'
+
+interface Props extends HTMLAttributes<'button'> {
+	description: string
+}
+
+const { description, class: className, ...rest } = Astro.props
+---
+
+<button class={className} {...rest}
+	><slot /><VisuallyHidden>{description}</VisuallyHidden></button
+>

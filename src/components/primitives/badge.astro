@@ -1,0 +1,18 @@
+---
+import { badgeVariants, type Badges } from './badge.css'
+import Box from '@components/primitives/box.astro'
+
+interface Props {
+	variant: Badges
+}
+
+const { variant } = Astro.props
+---
+
+<Box
+	as="span"
+	display="inline-block"
+	fontWeight="medium"
+	fontSize={[`xs`, null, null, `sm`]}
+	class={badgeVariants[variant]}><slot /></Box
+>

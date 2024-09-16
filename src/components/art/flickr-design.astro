@@ -1,0 +1,31 @@
+---
+import type { FlickrPhotosetsGetPhotosResponse } from '@constants/types'
+import { fetchFlickr, transformFlickrPhoto } from '@lib/flickr'
+import ArtImage from '@components/art/art-image.astro'
+
+const PHOTOSET_ID = '72177720300725772'
+
+const res = await fetchFlickr<FlickrPhotosetsGetPhotosResponse>({
+	method: 'photosets.getPhotos',
+	query: {
+		photoset_id: PHOTOSET_ID,
+	},
+})
+
+const photos = res.photoset.photo.map((photo) => transformFlickrPhoto(photo))
+---
+
+{
+	photos
+		.sort(
+			(a, b) =>
+				new Date(b.date_taken).getTime() - new Date(a.date_taken).getTime(),
+		)
+		.map((photo) => (
+			<ArtImage
+				images={photo.images}
+				alt={photo.description}
+				photoId={photo.id}
+			/>
+		))
+}

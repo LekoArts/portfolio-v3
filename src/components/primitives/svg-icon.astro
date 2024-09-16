@@ -1,0 +1,19 @@
+---
+import type { SVGIconNames } from '@constants/types'
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends HTMLAttributes<'svg'> {
+	id: SVGIconNames
+}
+
+const { id, class: className, ...rest } = Astro.props
+---
+
+<svg
+	aria-hidden
+	focusable="false"
+	class:list={['svg-icon', className]}
+	{...rest}
+>
+	<use href={`/icons.svg#${id}`}></use>
+</svg>

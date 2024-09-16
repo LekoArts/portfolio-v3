@@ -1,0 +1,45 @@
+---
+import Box from '@components/primitives/box.astro'
+import SvgIcon from '@components/primitives/svg-icon.astro'
+import {
+	alertIconStyle,
+	alertTitleStyle,
+	alertVariants,
+	type AlertStatus,
+} from './alert.css'
+
+interface Props {
+	title: string
+	status: AlertStatus
+}
+
+const iconMap = {
+	info: `info`,
+	warning: `warning`,
+	success: `check`,
+	error: `warning`,
+} as const
+
+const { title, status } = Astro.props
+---
+
+<Box
+	borderRadius="lg"
+	position="relative"
+	my={[6, null, null, 12]}
+	px={4}
+	py={4}
+	width="auto"
+	role="alert"
+	data-testid={`alert-${status}`}
+	class={alertVariants[status]}
+>
+	<Box display="flex" flexDirection="row" alignItems="center" marginBottom={4}>
+		<Box class={alertIconStyle}>
+			<SvgIcon id={iconMap[status]} />
+		</Box>
+		<Box fontWeight="bold" class={alertTitleStyle}>
+			{title}
+		</Box>
+	</Box><slot /></Box
+>

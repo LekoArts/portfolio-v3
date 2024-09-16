@@ -1,0 +1,172 @@
+---
+import Base from '@layouts/base.astro'
+import PhotographyText from '@assets/photography-body.mdx'
+import SkipNavContent from '@components/a11y/skip-nav-content.astro'
+import Container from '@components/primitives/container.astro'
+import Prose from '@components/typography/prose.astro'
+import Seo from '@components/seo.astro'
+import Spacer from '@components/primitives/spacer.astro'
+import { fetchFlickr, transformFlickrPhoto } from '@lib/flickr'
+import type {
+	FlickrPhotosetsGetListResponse,
+	FlickrPhotosetsGetPhotosResponse,
+	TransformedFlickrPhoto,
+} from '@constants/types'
+import {
+	explanationLayoutWrapperStyle,
+	layoutIconStyle,
+} from './_photography.css'
+import Text from '@components/typography/text.astro'
+import Box from '@components/primitives/box.astro'
+import SvgIcon from '@components/primitives/svg-icon.astro'
+import Button from '@components/primitives/button/base.astro'
+import TagGroup from '@components/blocks/tag-group.astro'
+import ArtImage from '@components/art/art-image.astro'
+
+// 3D, Design
+const EXCLUDED_PHOTOSET_IDS = ['72177720300732809', '72177720300725772']
+const LAYOUT_TYPES = [`masonry`, `grid`, `list`] as const
+
+const {
+	photosets: { photoset: photosetList },
+} = await fetchFlickr<FlickrPhotosetsGetListResponse>({
+	method: 'photosets.getList',
+	query: {},
+})
+
+let photosetTitles: Array<string> = []
+let photos = [] as Array<TransformedFlickrPhoto>
+
+for (const item of photosetList) {
+	if (!item.id) {
+		continue
+	}
+
+	if (EXCLUDED_PHOTOSET_IDS.includes(item.id)) {
+		continue
+	}
+
+	const title = item.title._content
+	photosetTitles.push(title)
+
+	const res = await fetchFlickr<FlickrPhotosetsGetPhotosResponse>({
+		method: 'photosets.getPhotos',
+		query: {
+			photoset_id: item.id,
+		},
+	})
+
+	for (const photo of res.photoset.photo) {
+		if (!photo.id) {
+			continue
+		}
+
+		const transformedPhoto = transformFlickrPhoto(photo, {
+			photoset_title: title,
+		})
+		photos.push(transformedPhoto)
+	}
+}
+
+photosetTitles.sort((a, b) => a.localeCompare(b))
+---
+
+<Base>
+	<Seo
+		slot="seo"
+		title="Photography"
+		description="With my Fujifilm cameras and lenses I primarily shoot landscape photography. I love Fuji's color science and enjoy editing my photos with Capture One."
+		breadcrumbListItems={[
+			{ name: `Art`, url: `/art/` },
+			{ name: `Photography`, url: `/art/photography/` },
+		]}
+	/>
+	<SkipNavContent>
+		<Container paddingTop={16}>
+			<Prose>
+				<h1>Photography</h1>
+				<PhotographyText />
+			</Prose>
+			<Spacer axis="vertical" size={6} />
+			<div class={explanationLayoutWrapperStyle}>
+				<Text variant="prominent"
+					>Select individual albums to filter photos:</Text
+				>
+				<Box display="flex" flexDirection="row" alignItems="center" gap={4}>
+					<Text variant="prominent">Layout:</Text>
+					<Box display="flex" flexDirection="row" gap={1}>
+						{
+							LAYOUT_TYPES.map((layoutType) => {
+								const title = `Switch to "${layoutType}" layout`
+
+								return (
+									<Button
+										data-layout={layoutType}
+										title={title}
+										aria-label={title}
+										variant="ghost"
+										size="sm"
+										class:list={[layoutIconStyle, 'button-layout']}
+									>
+										<SvgIcon height="1.25em" width="1.25em" id={layoutType} />
+									</Button>
+								)
+							})
+						}
+					</Box>
+				</Box>
+			</div>
+			<Spacer axis="vertical" size={6} />
+			<TagGroup id="photography" items={photosetTitles} />
+		</Container>
+		<Spacer size={20} axis="vertical" />
+		<div id="photography-img-wrapper">
+			{
+				photos.map((photo) => (
+					<ArtImage
+						alt={photo.description}
+						images={photo.images}
+						photoId={photo.id}
+						class="tag-group-item"
+						data-tags={photo.photoset_title}
+					/>
+				))
+			}
+		</div>
+		<Spacer axis="vertical" size={[20, null, null, 24]} />
+	</SkipNavContent>
+</Base>
+
+<script>
+	import { initializeTagGroup } from '@utils/tag-group'
+	import { $ui, type LayoutType } from '@stores/ui'
+	import { artImageStyle } from '@components/art/art-image.css'
+	import { gridImagesVariants, imageWrapperVariants } from './_photography.css'
+
+	initializeTagGroup({ id: 'photography' })
+
+	const layoutButtons =
+		document.querySelectorAll<HTMLButtonElement>('.button-layout')
+	const imgWrapper = document.getElementById(
+		'photography-img-wrapper',
+	) as HTMLElement
+	const images = imgWrapper.querySelectorAll('img')
+
+	layoutButtons.forEach((btn) => {
+		btn.addEventListener('click', () => {
+			$ui.setKey('photographyLayout', btn.dataset.layout as LayoutType)
+		})
+	})
+
+	$ui.subscribe(({ photographyLayout }) => {
+		imgWrapper.className = imageWrapperVariants[photographyLayout]
+
+		images.forEach((img) => {
+			img.className = `${gridImagesVariants[photographyLayout]} ${artImageStyle}`
+		})
+
+		layoutButtons.forEach((btn) => {
+			btn.classList.toggle('active', btn.dataset.layout === photographyLayout)
+		})
+	})
+</script>

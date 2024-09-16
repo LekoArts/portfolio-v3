@@ -1,0 +1,40 @@
+---
+import {
+	youtubeIframeStyle,
+	youtubeWrapperVariants,
+	type AspectRatios,
+} from './youtube.css'
+
+interface Props {
+	id?: string
+	aspectRatio?: AspectRatios
+	skipTo?: {
+		h?: number
+		m: number
+		s: number
+	}
+}
+
+const { id, aspectRatio = `16:9`, skipTo = { h: 0, m: 0, s: 0 } } = Astro.props
+
+const { h, m, s } = skipTo
+
+const tH = h! * 60
+const tM = m * 60
+
+const startTime = tH + tM + s
+
+const provider = `https://www.youtube-nocookie.com`
+const baseUrl = `${provider}/embed/`
+const src = `${baseUrl}${id}?&autoplay=false&start=${startTime}`
+---
+
+<div class={youtubeWrapperVariants[aspectRatio]}>
+	<iframe
+		data-testid="youtube-embed"
+		title={`youTube-${id}`}
+		src={src}
+		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+		allowfullscreen
+		class={youtubeIframeStyle}></iframe>
+</div>

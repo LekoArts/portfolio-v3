@@ -1,0 +1,69 @@
+---
+import Box from '@components/primitives/box.astro'
+import Link from '@components/primitives/link.astro'
+import Spacer from '@components/primitives/spacer.astro'
+import { getDistinctCategories } from '@utils/collection'
+import { getCollection } from 'astro:content'
+import { wrapperStyle, innerWrapperStyle, linkStyle } from './subnavigation.css'
+
+const categories = getDistinctCategories(await getCollection('categories'))
+const pathname = Astro.url.pathname
+
+function activeClassName(link: string | undefined) {
+	return pathname === link ? `active` : undefined
+}
+---
+
+<Box
+	display="flex"
+	alignItems="center"
+	py={2}
+	data-subnavigation="true"
+	class={wrapperStyle}
+>
+	<Box
+		display="flex"
+		alignItems="center"
+		flexDirection="row"
+		as="ul"
+		class={innerWrapperStyle}
+	>
+		<li>
+			<Link
+				href="/writing/"
+				fontSize="md"
+				p={2}
+				class:list={[linkStyle, activeClassName('/writing/')]}>Latest</Link
+			>
+		</li>
+		<Spacer axis="horizontal" size={2} />
+		<li>
+			<Link
+				href="/tutorials/"
+				fontSize="md"
+				p={2}
+				class:list={[linkStyle, activeClassName('/tutorials/')]}>Tutorials</Link
+			>
+		</li>
+		<Spacer axis="horizontal" size={2} />
+		{
+			categories.map((item, index) => (
+				<>
+					<li>
+						<Link
+							href={item.slug}
+							fontSize="md"
+							p={2}
+							class:list={[linkStyle, activeClassName(item.slug)]}
+						>
+							{item.data.name}
+						</Link>
+					</li>
+					{index !== categories.length - 1 && (
+						<Spacer axis="horizontal" size={2} />
+					)}
+				</>
+			))
+		}
+	</Box>
+</Box>

@@ -1,0 +1,26 @@
+---
+import Link from '@components/primitives/link.astro'
+import type { TocItem } from '@utils/toc'
+import { linkStyle, listItemStyle, nestedListStyle } from './toc-item.css'
+
+interface Props {
+	heading: TocItem
+}
+
+const { heading } = Astro.props
+---
+
+<li class={listItemStyle}>
+	<Link class={linkStyle} href={`#${heading.slug}`}>
+		{heading.text}
+	</Link>
+	{
+		heading.subheadings.length > 0 && (
+			<ul class={nestedListStyle}>
+				{heading.subheadings.map((subheading) => (
+					<Astro.self heading={subheading} />
+				))}
+			</ul>
+		)
+	}
+</li>

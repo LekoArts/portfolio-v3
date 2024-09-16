@@ -1,0 +1,20 @@
+{
+  "name": "Lennart Jörgens - Software Engineer",
+  "short_name": "Lennart Jörgens",
+  "description": "Lennart is a product-focused full stack engineer with years of experience in building large-scale projects and shipping high-quality work to millions of users. Adept at building delightful, inclusive, and well-documented solutions to customers' needs.",
+  "start_url": "/",
+  "background_color": "#0f172a",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

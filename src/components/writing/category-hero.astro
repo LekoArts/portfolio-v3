@@ -1,0 +1,43 @@
+---
+import Box from '@components/primitives/box.astro'
+import Container from '@components/primitives/container.astro'
+import Heading from '@components/typography/heading.astro'
+import Text from '@components/typography/text.astro'
+import {
+	contentWrapperStyle,
+	descriptionStyle,
+	imageWrapperStyle,
+} from './category-hero.css'
+import type { Atoms } from '@styles/atoms.css'
+
+const pt = [`12`, `2`, null, null, null] as Atoms['paddingTop']
+const pb = [`12`, null, `14`, `16`, null] as Atoms['paddingTop']
+
+interface Props {
+	bgGradient: string
+	title: string
+	description: string
+}
+
+const { bgGradient, title, description } = Astro.props
+---
+
+<Box
+	marginTop="-navigationWithSubHeight"
+	paddingTop="navigationWithSubHeight"
+	style={{ backgroundImage: bgGradient }}
+>
+	<Container paddingBottom={pb} paddingTop={pt}>
+		<div class={contentWrapperStyle}>
+			<Box display="flex" flexDirection="column" justifyContent="center">
+				<Heading as="h1" __color="white">
+					{title}
+				</Heading>
+				<Text variant="prominent" class={descriptionStyle}>
+					{description}
+				</Text>
+			</Box>
+			<div class={imageWrapperStyle}><slot name="image" /></div>
+		</div>
+	</Container>
+</Box>

@@ -1,0 +1,40 @@
+---
+import SkipNavContent from '@components/a11y/skip-nav-content.astro'
+import Container from '@components/primitives/container.astro'
+import Prose from '@components/typography/prose.astro'
+import type { BreadcrumbListItem } from '@constants/types'
+import Base from '@layouts/base.astro'
+import Seo from '@components/seo.astro'
+
+interface Props {
+	frontmatter: {
+		title: string
+		description: string
+		breadcrumbListItems?: Array<BreadcrumbListItem>
+		noIndex?: boolean
+	}
+}
+
+const { frontmatter } = Astro.props
+const {
+	title,
+	description,
+	breadcrumbListItems = [],
+	noIndex = false,
+} = frontmatter
+---
+
+<Base>
+	<Seo
+		slot="seo"
+		title={title}
+		description={description}
+		breadcrumbListItems={breadcrumbListItems}
+		noIndex={noIndex}
+	/>
+	<Container variant="proseRoot">
+		<SkipNavContent>
+			<Prose><slot /></Prose>
+		</SkipNavContent>
+	</Container>
+</Base>

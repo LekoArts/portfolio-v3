@@ -1,0 +1,49 @@
+---
+import Box from '@components/primitives/box.astro'
+import { getEntry } from 'astro:content'
+import { navItemsWrapperStyle } from './navigation.css'
+import Spacer from '@components/primitives/spacer.astro'
+import ThemeToggle from '@components/blocks/theme-toggle.astro'
+import Link from '@components/primitives/link.astro'
+
+const { data: primaryNavigation } = await getEntry('navigations', 'primary')
+const pathname = Astro.url.pathname
+
+function activeClassName(link: string | undefined) {
+	return pathname === link ? `active` : undefined
+}
+---
+
+<Box display="flex" alignItems="center" flexDirection="row">
+	<nav aria-label="Primary navigation">
+		<Box
+			as="ul"
+			display="flex"
+			alignItems="center"
+			flexDirection="row"
+			class={navItemsWrapperStyle}
+		>
+			{
+				primaryNavigation.map((item, index) => {
+					const notLastItem = index !== primaryNavigation.length - 1
+
+					return (
+						<li>
+							<Link
+								href={item.link}
+								fontSize={[`md`, null, null, `lg`]}
+								marginRight={notLastItem ? [2, 4] : undefined}
+								p={2}
+								class={activeClassName(item.link)}
+							>
+								{item.name}
+							</Link>
+						</li>
+					)
+				})
+			}
+		</Box>
+	</nav>
+	<Spacer axis="horizontal" size={[2, 4]} />
+	<ThemeToggle />
+</Box>

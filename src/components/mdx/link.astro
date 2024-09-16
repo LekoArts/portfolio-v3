@@ -1,0 +1,42 @@
+---
+import VisuallyHidden from '@components/a11y/visually-hidden.astro'
+import { isInternalUrl } from '@utils/url'
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends HTMLAttributes<'a'> {}
+
+const { href: inputHref, ...rest } = Astro.props
+
+if (!inputHref) {
+	throw new Error('<Link> component must have an href')
+}
+
+const href = inputHref.toString()
+---
+
+{
+	// If URL is a hash link, use anchor tag
+	href.startsWith('#') ? (
+		<a href={href} {...rest}>
+			<slot />
+		</a>
+	) : // If internal, add data attribute
+	isInternalUrl(href) ? (
+		<a href={href} data-link-internal {...rest}>
+			<slot />
+		</a>
+	) : // If URL is a protocol like mailto or tel, use anchor tag
+	!href.startsWith(`http`) ? (
+		<a href={href} {...rest}>
+			<slot />
+		</a>
+	) : (
+		// At this point the link can only be external, style as such
+		<a data-link-external target="_blank" href={href} {...rest}>
+			<>
+				<slot />
+				<VisuallyHidden> (opens in a new tab)</VisuallyHidden>
+			</>
+		</a>
+	)
+}

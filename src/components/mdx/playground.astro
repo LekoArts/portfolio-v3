@@ -1,0 +1,24 @@
+---
+import type {
+	SandpackPredefinedTemplate,
+	SandpackSetup,
+} from '@codesandbox/sandpack-react'
+import { Playground as PlaygroundReact } from './playground'
+
+interface Props {
+	files: Record<string, string>
+	template?: SandpackPredefinedTemplate
+	title: string
+	customSetup?: SandpackSetup
+}
+
+const { files, template, title, customSetup } = Astro.props
+---
+
+<PlaygroundReact
+	files={files}
+	template={template}
+	title={title}
+	customSetup={customSetup}
+	client:visible><slot /></PlaygroundReact
+>

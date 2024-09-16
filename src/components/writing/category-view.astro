@@ -1,0 +1,59 @@
+---
+import Base from '@layouts/base.astro'
+import SkipNavContent from '@components/a11y/skip-nav-content.astro'
+import Container from '@components/primitives/container.astro'
+import Text from '@components/typography/text.astro'
+import Link from '@components/primitives/link.astro'
+import WritingSubNavigation from '@components/writing/subnavigation.astro'
+import { paddingResponsiveArrays } from '@styles/tokens/space'
+import Card from '@components/writing/card.astro'
+import { contentGridStyle } from './category-view.css'
+import type { CardProps } from '@constants/types'
+import Seo from '@components/seo.astro'
+import type { BreadcrumbListItem } from '@constants/types'
+
+interface Props {
+	posts: Array<CardProps>
+	title: string
+	description: string
+	breadcrumbListItems: Array<BreadcrumbListItem>
+}
+
+const { posts, title, description, breadcrumbListItems } = Astro.props
+---
+
+<Base subnavigation>
+	<Seo
+		title={title}
+		description={description}
+		breadcrumbListItems={breadcrumbListItems}
+		slot="seo"
+	/>
+	<WritingSubNavigation slot="subnavigation" />
+	<SkipNavContent>
+		<slot />
+		<Container py={paddingResponsiveArrays.paddingMedium}>
+			{
+				posts.length > 0 ? (
+					<div class={contentGridStyle}>
+						{posts.map((post) => (
+							<Card
+								slug={post.slug}
+								title={post.title}
+								subtitle={post.subtitle}
+								description={post.description}
+							/>
+						))}
+					</div>
+				) : (
+					<Text variant="prominent">
+						Sadly there's no content for this category available yet. Be sure to
+						follow me on{` `}
+						<Link href="https://twitter.com/lekoarts_de">Twitter</Link> to not
+						miss any announcements about new posts :)
+					</Text>
+				)
+			}
+		</Container>
+	</SkipNavContent>
+</Base>

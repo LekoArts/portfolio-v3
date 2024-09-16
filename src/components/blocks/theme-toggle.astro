@@ -1,0 +1,63 @@
+---
+import SvgIcon from '@components/primitives/svg-icon.astro'
+import Button from '@components/primitives/button/base.astro'
+import { THEMES } from '@constants/themes'
+import { toggleIconStyle } from './theme-toggle.css'
+---
+
+<lekoarts-theme-select id="lekoarts-theme-select">
+	<Button variant="ghost" size="sm" class={toggleIconStyle}>
+		<SvgIcon
+			id="computer"
+			height="1.25em"
+			width="1.25em"
+			class={THEMES.system}
+		/>
+	</Button>
+</lekoarts-theme-select>
+
+<template id="theme-icons">
+	<SvgIcon id="computer" height="1.25em" width="1.25em" class={THEMES.system} />
+	<SvgIcon id="sun" height="1.25em" width="1.25em" class={THEMES.light} />
+	<SvgIcon id="moon" height="1.25em" width="1.25em" class={THEMES.dark} />
+</template>
+
+<script is:inline>
+	LekoArtsThemeProvider.applyTheme()
+</script>
+
+<script>
+	import { capitalize } from '@utils/capitalize'
+	import { getNextTheme, loadTheme, onThemeChange } from '@utils/themes'
+
+	matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+		if (loadTheme() === 'system') {
+			onThemeChange('system')
+		}
+	})
+
+	class LekoArtsThemeSelect extends HTMLElement {
+		constructor() {
+			super()
+
+			const initialTheme = loadTheme()
+			const btn = this.querySelector('button') as HTMLButtonElement
+
+			onThemeChange(initialTheme)
+
+			const text = `Switch to "${capitalize(getNextTheme())}" theme`
+			btn.setAttribute('aria-label', text)
+			btn.setAttribute('title', text)
+
+			btn.addEventListener('click', () => {
+				onThemeChange(getNextTheme())
+
+				const text = `Switch to "${capitalize(getNextTheme())}" theme`
+				btn.setAttribute('aria-label', text)
+				btn.setAttribute('title', text)
+			})
+		}
+	}
+
+	customElements.define('lekoarts-theme-select', LekoArtsThemeSelect)
+</script>

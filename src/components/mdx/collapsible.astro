@@ -1,0 +1,22 @@
+---
+import Box from '@components/primitives/box.astro'
+import { detailsStyle, summaryStyle } from './collapsible.css'
+
+interface Props {
+	summary: string
+}
+
+const { summary } = Astro.props
+---
+
+<Box
+	as="details"
+	px={[4, null, 6]}
+	py={[4, null, 6]}
+	borderRadius="lg"
+	class={detailsStyle}
+>
+	<Box as="summary" class={summaryStyle}>
+		<em>{summary}</em>
+	</Box><slot /></Box
+>

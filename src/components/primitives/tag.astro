@@ -1,0 +1,47 @@
+---
+import type { SVGIconNames } from '@constants/types'
+import type { BoxProps } from '@components/primitives/box.astro'
+import {
+	tagIconStyle,
+	tagLabelBaseStyle,
+	tagVariants,
+	type TagsColorSchemes,
+} from './tag.css'
+import Box from '@components/primitives/box.astro'
+import SvgIcon from '@components/primitives/svg-icon.astro'
+
+interface Props extends BoxProps<'span'> {
+	iconId?: SVGIconNames
+	iconPosition?: 'left' | 'right'
+	colorScheme?: TagsColorSchemes
+}
+
+const {
+	iconId = undefined,
+	iconPosition = 'left',
+	colorScheme = 'gray',
+	...rest
+} = Astro.props
+---
+
+<Box as="span" class={tagVariants[colorScheme]} {...rest}>
+	{
+		iconPosition === 'left' && iconId && (
+			<SvgIcon id={iconId} class={tagIconStyle} />
+		)
+	}
+	{
+		iconId ? (
+			<Box as="span" class={tagLabelBaseStyle}>
+				<slot />
+			</Box>
+		) : (
+			<slot />
+		)
+	}
+	{
+		iconPosition === 'right' && iconId && (
+			<SvgIcon id={iconId} class={tagIconStyle} />
+		)
+	}
+</Box>

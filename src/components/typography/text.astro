@@ -1,0 +1,17 @@
+---
+import type { BoxProps } from '@components/primitives/box.astro'
+import Box from '@components/primitives/box.astro'
+import { prominent, type Headings } from '@styles/typography.css'
+
+interface Props extends BoxProps<Headings | 'p'> {
+	variant?: 'prominent'
+}
+
+const { variant = undefined, class: className, ...rest } = Astro.props
+---
+
+<Box
+	as="p"
+	class:list={variant === 'prominent' ? [prominent, className] : [className]}
+	{...rest}><slot /></Box
+>

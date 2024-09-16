@@ -1,0 +1,59 @@
+---
+import SkipNavContent from '@components/a11y/skip-nav-content.astro'
+import Box from '@components/primitives/box.astro'
+import Container from '@components/primitives/container.astro'
+import Seo from '@components/seo.astro'
+import Heading from '@components/typography/heading.astro'
+import WritingSubNavigation from '@components/writing/subnavigation.astro'
+import Base from '@layouts/base.astro'
+import { paddingResponsiveArrays } from '@styles/tokens/space'
+import Text from '@components/typography/text.astro'
+import Link from '@components/primitives/link.astro'
+import Card from '@components/writing/card.astro'
+import { cardGridStyle } from './_writing.css'
+import { getCollection } from 'astro:content'
+import { slugify } from '@utils/slugify'
+import { filterPublished, getSortedWriting } from '@utils/collection'
+
+const posts = getSortedWriting(await getCollection('writing', filterPublished))
+---
+
+<Base subnavigation>
+	<Seo
+		slot="seo"
+		title="Writing"
+		breadcrumbListItems={[{ name: `Writing`, url: `/writing/` }]}
+	/>
+	<WritingSubNavigation slot="subnavigation" />
+	<SkipNavContent>
+		<Container py={paddingResponsiveArrays.paddingMedium}>
+			<Box display="flex" flexDirection="column" gap={20} alignItems="center">
+				<Box display="flex" flexDirection="column" gap={3} alignItems="center">
+					<Heading as="h1">Writing</Heading>
+					<Text
+						variant="prominent"
+						textAlign="center"
+						style={{ maxWidth: `45ch` }}
+					>
+						So far I’ve written {posts.length} longform tutorials & articles. For
+						more compact content visit my <Link href="/garden/"
+							>Digital Garden</Link
+						>. <Link href="/rss.xml">RSS</Link>.
+					</Text>
+				</Box>
+				<Box gap={8} class={cardGridStyle}>
+					{
+						posts.map(({ data: post, slug }) => (
+							<Card
+								slug={slugify(slug, post.category.id)}
+								title={post.title}
+								subtitle={post.subtitle}
+								description={post.description}
+							/>
+						))
+					}
+				</Box>
+			</Box>
+		</Container>
+	</SkipNavContent>
+</Base>

@@ -1,0 +1,135 @@
+---
+import Box from '@components/primitives/box.astro'
+import {
+	groupStyle,
+	marginBottomVariants,
+	playPauseButtonStyle,
+	videoStyle,
+} from './video.css'
+import { SITE } from '@constants/meta'
+import SvgIcon from '@components/primitives/svg-icon.astro'
+
+type Props = {
+	src: string
+	ariaLabel: string
+	description?: string
+	maxWidth?: string
+}
+
+const { src, ariaLabel, description, maxWidth = '100%' } = Astro.props
+
+const ICON_SIZE = `30px`
+const MB_VARIANT = description ? `withDescription` : `default`
+---
+
+<figure>
+	<lekoarts-video>
+		<Box
+			position="relative"
+			m="auto"
+			role="group"
+			style={{ maxWidth }}
+			class:list={[groupStyle, 'lekoarts-video-wrapper']}
+		>
+			<Box
+				as="video"
+				position="relative"
+				display="block"
+				m="auto"
+				autoplay
+				playsinline
+				loop
+				muted
+				preload="none"
+				aria-label={ariaLabel}
+				class:list={[videoStyle, marginBottomVariants[MB_VARIANT]]}
+			>
+				<source src={src} type="video/mp4" />
+				<p>
+					Your browser doesn't support HTML5 video. Here is a <a
+						href={`${SITE.url}${src}`}>link to the video</a
+					> instead.
+				</p>
+			</Box>
+			<Box
+				position="absolute"
+				m="auto"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				class={playPauseButtonStyle}
+			>
+				<SvgIcon
+					id="pause"
+					width={ICON_SIZE}
+					height={ICON_SIZE}
+					style={{ strokeWidth: `2px` }}
+				/>
+			</Box>
+		</Box>
+	</lekoarts-video>
+	<figcaption>{description}</figcaption>
+</figure>
+
+<template id="video-icons">
+	<SvgIcon
+		id="pause"
+		width={ICON_SIZE}
+		height={ICON_SIZE}
+		style={{ strokeWidth: `2px` }}
+		class="pause"
+	/>
+	<SvgIcon
+		id="play"
+		width={ICON_SIZE}
+		height={ICON_SIZE}
+		style={{ marginLeft: `5px`, strokeWidth: `2px` }}
+		class="play"
+	/>
+</template>
+
+<script>
+	class LekoArtsVideo extends HTMLElement {
+		state: 'play' | 'pause'
+
+		constructor() {
+			super()
+
+			this.state = 'play'
+
+			const wrapper = this.querySelector('.lekoarts-video-wrapper') as Element
+			const video = this.querySelector('video') as HTMLVideoElement
+			const template = document.querySelector(
+				'#video-icons',
+			) as HTMLTemplateElement
+
+			wrapper.addEventListener('click', () => {
+				if (this.state === 'play') {
+					video.pause()
+					this.state = 'pause'
+
+					const newIcon = template.content.querySelector('.play')
+					if (newIcon) {
+						const oldIcon = wrapper.querySelector('svg.svg-icon')
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes)
+						}
+					}
+				} else {
+					video.play()
+					this.state = 'play'
+
+					const newIcon = template.content.querySelector('.pause')
+					if (newIcon) {
+						const oldIcon = wrapper.querySelector('svg.svg-icon')
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes)
+						}
+					}
+				}
+			})
+		}
+	}
+
+	customElements.define('lekoarts-video', LekoArtsVideo)
+</script>

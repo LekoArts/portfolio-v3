@@ -1,0 +1,49 @@
+---
+import { STORAGE_KEY, THEMES, VALUE, ATTRS } from '@constants/themes'
+---
+
+{/* This is intentionally inlined to avoid FOUC. */}
+<script is:inline define:vars={{ STORAGE_KEY, THEMES, VALUE, ATTRS }}>
+	window.LekoArtsThemeProvider = (() => {
+		const PREFERS_LIGHT = window.matchMedia('(prefers-color-scheme: light)')
+
+		function getThemeFromLocalStorage(key) {
+			return typeof localStorage !== 'undefined' && localStorage.getItem(key)
+		}
+
+		function getSystemTheme(e) {
+			if (!e)
+e = PREFERS_LIGHT
+			return e.matches ? THEMES.light : THEMES.dark
+		}
+
+		const storedTheme = getThemeFromLocalStorage(STORAGE_KEY)
+		let resolved = storedTheme || THEMES.system
+
+		if (resolved === THEMES.system) {
+			resolved = getSystemTheme()
+		}
+
+		const name = VALUE[resolved]
+		const d = document.documentElement
+
+		d.classList.remove(...ATTRS)
+		d.classList.add(name)
+		d.style.colorScheme = resolved
+
+		return {
+			applyTheme(theme = storedTheme || 'system') {
+				const el = document.getElementById('lekoarts-theme-select')
+
+				const template = document.querySelector('#theme-icons')
+				const newIcon = template && template.content.querySelector(`.${theme}`)
+				if (newIcon) {
+					const oldIcon = el.querySelector('svg.svg-icon')
+					if (oldIcon) {
+						oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes)
+					}
+				}
+			},
+		}
+	})()
+</script>

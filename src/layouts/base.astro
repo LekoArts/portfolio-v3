@@ -1,0 +1,60 @@
+---
+import { SITE } from '@constants/meta'
+import { FONT_URLS } from '@constants/fonts'
+import SkipNavLink from '@components/a11y/skip-nav-link.astro'
+import Header from '@components/blocks/header.astro'
+import Footer from '@components/blocks/footer.astro'
+import ThemeProvider from '@components/blocks/theme-provider.astro'
+import '@styles/reset.css'
+import '@styles/fonts.css'
+import '@styles/global.css'
+
+const plausibleProps = {
+	src: '/js/script.tagged-events.js',
+	'data-domain': SITE.dataDomain,
+}
+
+interface Props {
+	subnavigation?: boolean
+}
+
+const { subnavigation = false } = Astro.props
+---
+
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="preload" href="/icons.svg" as="image" type="image/svg+xml" />
+		<link
+			rel="preload"
+			href={FONT_URLS.interUI}
+			as="font"
+			type="font/woff2"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="preload"
+			href={FONT_URLS.crimsonPro}
+			as="font"
+			type="font/woff2"
+			crossorigin="anonymous"
+		/>
+		<slot name="seo" />
+		<ThemeProvider />
+		{
+			import.meta.env.PROD ? (
+				<script defer is:inline {...plausibleProps} />
+			) : null
+		}
+	</head>
+	<body>
+		<SkipNavLink />
+		<Header subnavigation={subnavigation}>
+			<slot name="subnavigation" slot="subnavigation" />
+		</Header>
+		<slot />
+		<Footer />
+	</body>
+</html>

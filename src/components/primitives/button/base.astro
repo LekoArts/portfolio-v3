@@ -1,0 +1,62 @@
+---
+import Box, { type BoxProps } from '@components/primitives/box.astro'
+import {
+	buttonVariants,
+	iconButtonStyle,
+	sizesVariants,
+	type ButtonKind,
+	type Sizes,
+	type VariantNames,
+} from './button.css'
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends BoxProps<'a' | 'button'> {
+	kind?: ButtonKind
+	href?: string
+	variant?: VariantNames
+	size?: Sizes
+	icon?: boolean
+	target?: HTMLAttributes<'a'>['target']
+}
+
+const {
+	kind = 'button',
+	href,
+	variant = 'primary',
+	size = 'brand',
+	class: className,
+	icon = false,
+	...rest
+} = Astro.props
+
+let as: 'a' | 'button'
+
+switch (kind) {
+	case 'button':
+		as = 'button'
+		break
+	case 'link':
+		as = 'a'
+		break
+	default:
+		as = 'button'
+		break
+}
+
+const optionalProps = kind === 'link' ? { href } : {}
+---
+
+<Box
+	as={as}
+	class:list={[buttonVariants[variant], sizesVariants[size], className]}
+	{...optionalProps}
+	{...rest}
+	><slot />
+	{
+		icon ? (
+			<span aria-hidden class={iconButtonStyle}>
+				<slot name="icon" />
+			</span>
+		) : null
+	}</Box
+>

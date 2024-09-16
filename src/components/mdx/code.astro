@@ -1,0 +1,70 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import {
+	codeBlockWrapper,
+	codeHeaderStyle,
+	languageDisplayStyle,
+	codeHighlightStyle,
+	codeHighlightPreStyle,
+} from './code.css'
+import Box from '@components/primitives/box.astro'
+import { generateSafeId } from '@utils/id'
+import Copy from '@components/mdx/copy.astro'
+
+interface Props extends HTMLAttributes<'pre'> {
+	'data-language'?: string
+	'data-title'?: string
+}
+
+const {
+	'data-language': _language,
+	'data-title': title,
+	class: className,
+	...rest
+} = Astro.props
+
+const id = generateSafeId()
+// If only ``` is used, the language is set to 'plaintext' by default. Hide the header in this instance.
+const language = _language === 'plaintext' ? undefined : _language
+---
+
+<div class={codeBlockWrapper} data-testid="code-wrapper">
+	{
+		(title || language) && (
+			<Box
+				display="flex"
+				flexDirection="row"
+				gap={2}
+				alignItems="center"
+				justifyContent="flex-end"
+				class={codeHeaderStyle}
+				data-testid="code-header"
+			>
+				{title && (
+					<Box style={{ flexGrow: 1 }} data-testid="code-title">
+						{title}
+					</Box>
+				)}
+				{language && (
+					<Box
+						display="inline-flex"
+						alignItems="center"
+						style={{ textTransform: `uppercase` }}
+						class={languageDisplayStyle}
+						data-lang={language}
+					>
+						{language}
+					</Box>
+				)}
+				<Copy codeId={id} fileName={title} />
+			</Box>
+		)
+	}
+	<div class={codeHighlightStyle}>
+		<pre
+			class:list={[className, codeHighlightPreStyle]}
+			data-code-id={id}
+			data-language={language}
+			{...rest}><slot /></pre>
+	</div>
+</div>

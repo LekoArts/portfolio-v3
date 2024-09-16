@@ -1,0 +1,18 @@
+---
+import Box, { type BoxProps } from '@components/primitives/box.astro'
+import {
+	fullWidthContainerVariants,
+	type FullWidthContainerVariants,
+} from './full-width-container.css'
+import Container from '@components/primitives/container.astro'
+
+interface Props extends BoxProps<'div'> {
+	variant?: FullWidthContainerVariants
+}
+
+const { variant = 'default', ...rest } = Astro.props
+---
+
+<Box class={fullWidthContainerVariants[variant]} {...rest}>
+	<Container variant={variant}><slot /></Container>
+</Box>

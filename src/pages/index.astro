@@ -1,0 +1,416 @@
+---
+import { getCollection } from 'astro:content'
+import { Image } from '@unpic/astro'
+import Box from '@components/primitives/box.astro'
+import SkipNavContent from '@components/a11y/skip-nav-content.astro'
+import Base from '@layouts/base.astro'
+import Seo from '@components/seo.astro'
+import { HOMEPAGE } from '@constants/json-ld'
+import {
+	filterPublished,
+	getSortedGarden,
+	getSortedWriting,
+} from '@utils/collection'
+import FullWidthContainer from '@components/blocks/full-width-container.astro'
+import { paddingResponsiveArrays } from '@styles/tokens/space'
+import Heading from '@components/typography/heading.astro'
+import Text from '@components/typography/text.astro'
+import Link from '@components/primitives/link.astro'
+import Badge from '@components/primitives/badge.astro'
+import Spacer from '@components/primitives/spacer.astro'
+import PrimaryButton from '@components/primitives/button/primary.astro'
+import SecondaryButton from '@components/primitives/button/secondary.astro'
+import { slugify } from '@utils/slugify'
+import {
+	artGridStyle,
+	cardLinkStyle,
+	cardsGridStyle,
+	gardenBoxStyle,
+	postBoxStyle,
+	repositoriesGridStyle,
+	staticImageOverride,
+} from './_index.css'
+import MotionBox from '@components/primitives/motion-box.astro'
+import PhotographyImage from '../assets/pages-index-photography-preview.jpg'
+import ArtImage from '../assets/pages-index-3d-preview.jpg'
+import Container from '@components/primitives/container.astro'
+import Tag from '@components/primitives/tag.astro'
+import { fetchGithub } from '@lib/github'
+
+const cardGradients = [
+	`linear-gradient(to right top, #A774F2, #F25D76, #FF964F)`,
+	`linear-gradient(to right top, #9B7BFE, #54B5F0, #88F2A9)`,
+	`linear-gradient(to right top, #933890, #E08896, #CC98DD, #D1CEE2)`,
+	`linear-gradient(to right top, #6666DE, #5778C9, #94D1C9, #A1D8FF)`,
+	`linear-gradient(to right top, #3e206d, #af3942, #d66a38, #eacc15)`,
+	`linear-gradient(to right top, #511a2a, #cb598d, #b24ecb, #ebb8eb)`,
+]
+
+const openSourceRepos = [
+	{
+		name: `thanks-contributors`,
+		url: `https://github.com/LekoArts/thanks-contributors`,
+	},
+	{
+		name: `annum`,
+		url: `https://github.com/LekoArts/annum`,
+	},
+	{
+		name: `figma-theme-ui`,
+		url: `https://github.com/LekoArts/figma-theme-ui`,
+	},
+	{
+		name: `lekoarts-stats`,
+		url: `https://github.com/LekoArts/lekoarts-stats`,
+	},
+]
+
+interface GitHubResponse {
+	data: {
+		primary: {
+			stargazerCount: number
+			description: string
+			name: string
+			url: string
+		}
+		secondary: {
+			stargazerCount: number
+			description: string
+			name: string
+			url: string
+		}
+	}
+}
+
+const githubResponse = await fetchGithub<GitHubResponse>(
+	JSON.stringify({
+		query: `#graphql
+			query {
+				primary: repository(name: "gatsby-themes", owner: "LekoArts") {
+					stargazerCount
+					description
+					name
+					url
+				}
+				secondary: repository(name: "secco", owner: "LekoArts") {
+					stargazerCount
+					description
+					name
+					url
+				}
+			}
+		`,
+	}),
+)
+
+const {
+	data: { primary, secondary },
+} = githubResponse
+
+const writing = getSortedWriting(
+	await getCollection('writing', filterPublished),
+).slice(0, 4)
+const garden = getSortedGarden(await getCollection('garden')).slice(0, 3)
+
+const [firstPost, ...otherPosts] = writing
+---
+
+<Base>
+	<Seo slot="seo">
+		<script
+			type="application/ld+json"
+			is:inline
+			set:html={JSON.stringify(HOMEPAGE)}
+		/>
+	</Seo>
+	<SkipNavContent>
+		<FullWidthContainer variant="hero">
+			<Box
+				display="flex"
+				flexDirection="column"
+				alignItems="center"
+				gap={5}
+				py={paddingResponsiveArrays.paddingLarge}
+			>
+				<Heading as="h1">Hi, I’m Lennart!</Heading>
+				<Text
+					variant="prominent"
+					textAlign="center"
+					style={{ maxWidth: `45ch` }}
+				>
+					<strong>Software Engineer</strong> from Germany. <br />
+					I’m passionate about working on open source projects & making the web more
+					inclusive through them.
+				</Text>
+				<Text
+					variant="prominent"
+					textAlign="center"
+					style={{ maxWidth: `40ch` }}
+				>
+					I’m currently working at <Link href="https://www.clerk.com"
+						>Clerk</Link
+					>.
+				</Text>
+			</Box>
+		</FullWidthContainer>
+		<FullWidthContainer variant="light">
+			<Box
+				display="flex"
+				flexDirection="column"
+				alignItems="flex-start"
+				gap={24}
+				py={paddingResponsiveArrays.paddingMedium}
+			>
+				<Box
+					display="flex"
+					flexDirection="column"
+					alignItems="flex-start"
+					gap={8}
+				>
+					<Badge variant="light">Latest Post</Badge>
+					<div>
+						<Heading as="h2">{firstPost.data.title}</Heading>
+						{
+							firstPost.data.subtitle && (
+								<>
+									<Text variant="prominent" color="heading">
+										{firstPost.data.subtitle}
+									</Text>
+									<Spacer axis="vertical" size={4} />
+								</>
+							)
+						}
+						<Text>{firstPost.data.description}</Text>
+					</div>
+					<PrimaryButton
+						href={slugify(firstPost.slug, firstPost.data.category.id)}
+						>Continue Reading</PrimaryButton
+					>
+				</Box>
+				<Box display="flex" flexDirection="column" width="full" gap={6}>
+					<Box
+						display="flex"
+						justifyContent="space-between"
+						alignItems="center"
+					>
+						<Badge variant="light">More Posts</Badge>
+						<SecondaryButton
+							aria-label="Read all long-form posts"
+							href="/writing/"
+						>
+							Read all
+						</SecondaryButton>
+					</Box>
+					<Box class={cardsGridStyle}>
+						{
+							otherPosts.map((item, index) => (
+								<Link
+									href={slugify(item.slug, item.data.category.id)}
+									borderRadius="lg"
+									class={cardLinkStyle}
+								>
+									<MotionBox
+										p={4}
+										borderRadius="lg"
+										display="flex"
+										alignItems="flex-end"
+										fontSize={[`lg`, null, `md`, `lg`, `lgx`]}
+										class={postBoxStyle}
+										__background={cardGradients[index]}
+									>
+										{item.data.title}
+									</MotionBox>
+								</Link>
+							))
+						}
+					</Box>
+				</Box>
+				<Box display="flex" flexDirection="column" width="full" gap={6}>
+					<Box
+						display="flex"
+						justifyContent="space-between"
+						alignItems="center"
+					>
+						<Badge variant="light">Digital Garden</Badge>
+						<SecondaryButton
+							aria-label="Read all Digital Garden posts"
+							href="/garden/"
+						>
+							Read all
+						</SecondaryButton>
+					</Box>
+					<Box class={cardsGridStyle}>
+						{
+							garden.map((item, index) => (
+								<Link
+									href={slugify(item.slug, 'garden')}
+									borderRadius="lg"
+									class={cardLinkStyle}
+								>
+									<MotionBox
+										p={4}
+										borderRadius="lg"
+										display="flex"
+										alignItems="flex-end"
+										fontSize={[`lg`, null, `md`, `lg`, `lgx`]}
+										class={gardenBoxStyle}
+										__background={cardGradients[index + 3]}
+									>
+										{item.data.title}
+									</MotionBox>
+								</Link>
+							))
+						}
+					</Box>
+				</Box>
+				<Box display="flex" flexDirection="column" width="full" gap={6}>
+					<Box
+						display="flex"
+						justifyContent="space-between"
+						alignItems="center"
+					>
+						<Badge variant="light">Art</Badge>
+						<SecondaryButton href="/art/">See all art</SecondaryButton>
+					</Box>
+					<Box class={artGridStyle}>
+						<Link
+							href="/art/photography/"
+							aria-label="View my photography"
+							borderRadius="lg"
+							class={cardLinkStyle}
+						>
+							<MotionBox class={staticImageOverride}
+								><Image
+									alt=""
+									src={PhotographyImage}
+									aspectRatio={16 / 9}
+									width={720}
+								/></MotionBox
+							>
+						</Link>
+						<Link
+							href="/art/3d/"
+							aria-label="View my 3D art"
+							borderRadius="lg"
+							class={cardLinkStyle}
+						>
+							<MotionBox class={staticImageOverride}
+								><Image
+									alt=""
+									src={ArtImage}
+									aspectRatio={16 / 9}
+									width={720}
+								/></MotionBox
+							>
+						</Link>
+					</Box>
+				</Box>
+			</Box>
+		</FullWidthContainer>
+		<Container>
+			<Box
+				display="flex"
+				alignItems="center"
+				flexDirection="column"
+				py={paddingResponsiveArrays.paddingLarge}
+			>
+				<Heading as="h2">Open Source</Heading>
+				<Text
+					variant="prominent"
+					textAlign="center"
+					style={{ maxWidth: `40ch` }}
+				>
+					Working in the open, interacting with the community & building
+					projects that are accessible to everyone fill me with joy.
+				</Text>
+				<Spacer axis="vertical" size={20} />
+				<Box display="flex" flexDirection="column" width="full" gap={6}>
+					<Box
+						display="flex"
+						justifyContent="space-between"
+						alignItems="center"
+					>
+						<Badge variant="dark">Featured Projects</Badge>
+						<SecondaryButton
+							kind="link"
+							href="https://www.github.com/LekoArts"
+							target="_blank"
+						>
+							GitHub
+						</SecondaryButton>
+					</Box>
+					<Box gap={6} class={repositoriesGridStyle}>
+						{
+							primary && secondary ? (
+								<>
+									<Box
+										bg="primaryAsBg"
+										p={6}
+										borderRadius="lg"
+										__color="#e7f1ff"
+									>
+										<Box
+											display="flex"
+											flexDirection="row"
+											justifyContent="space-between"
+											marginBottom={6}
+										>
+											<Link
+												fontSize={[`lg`, null, null, null, `lgx`]}
+												fontWeight="bold"
+												href={primary.url}
+												target="_blank"
+												__color="white"
+											>
+												{primary.name}
+											</Link>
+											<Tag colorScheme="blue" iconId="star">
+												{primary.stargazerCount}
+											</Tag>
+										</Box>
+										<Text>{primary.description}</Text>
+									</Box>
+									<Box bg="mutedAsBg" p={6} borderRadius="lg">
+										<Box
+											display="flex"
+											flexDirection="row"
+											justifyContent="space-between"
+											marginBottom={6}
+										>
+											<Link
+												fontSize={[`lg`, null, null, null, `lgx`]}
+												fontWeight="bold"
+												target="_blank"
+												href={secondary.url}
+											>
+												{secondary.name}
+											</Link>
+											<Tag colorScheme="gray" iconId="star">
+												{secondary.stargazerCount}
+											</Tag>
+										</Box>
+										<Text>{secondary.description}</Text>
+									</Box>
+								</>
+							) : (
+								<Box p={2} borderRadius="lg">
+									<strong>GITHUB_TOKEN</strong> for gatsby-source-graphql
+									necessary.
+								</Box>
+							)
+						}
+					</Box>
+					<Box display="flex" justifyContent="space-between" flexWrap="wrap">
+						{
+							openSourceRepos.map((repo) => (
+								<Link href={repo.url} p={2} target="_blank">
+									{repo.name}
+								</Link>
+							))
+						}
+					</Box>
+				</Box>
+			</Box>
+		</Container>
+	</SkipNavContent>
+</Base>

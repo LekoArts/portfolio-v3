@@ -1,0 +1,14 @@
+---
+import Box, { type BoxProps } from '@components/primitives/box.astro'
+import { containerVariants, type ContainerVariants } from './container.css'
+
+interface Props extends BoxProps<'div'> {
+	variant?: ContainerVariants
+}
+
+const { variant = 'default', class: className, ...rest } = Astro.props
+---
+
+<Box class:list={[containerVariants[variant], className]} {...rest}
+	><slot /></Box
+>

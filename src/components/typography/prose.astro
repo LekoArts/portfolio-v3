@@ -1,0 +1,10 @@
+---
+import Box, { type BoxProps } from '@components/primitives/box.astro'
+import { proseRootStyle } from './prose.css'
+
+interface Props extends BoxProps<'div' | 'article'> {}
+
+const { class: className, ...rest } = Astro.props
+---
+
+<Box class:list={[proseRootStyle, className]} {...rest}><slot /></Box>

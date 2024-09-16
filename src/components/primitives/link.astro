@@ -1,0 +1,11 @@
+---
+import { linkStyle } from './link.css'
+import type { BoxProps } from './box.astro'
+import Box from '@components/primitives/box.astro'
+
+interface Props extends BoxProps<'a'> {}
+
+const { class: className, ...rest } = Astro.props
+---
+
+<Box as="a" class:list={[linkStyle, className]} {...rest}><slot /></Box>

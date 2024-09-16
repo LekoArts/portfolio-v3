@@ -1,0 +1,22 @@
+---
+import { type BoxProps } from '@components/primitives/box.astro'
+import Button from '@components/primitives/button/base.astro'
+import SvgIcon from '@components/primitives/svg-icon.astro'
+import { arrowAnimationStyle, type ButtonKind } from './button.css'
+
+interface Props extends BoxProps<'button' | 'a'> {
+	href: string
+	kind?: ButtonKind
+}
+
+const { href, kind = 'link', class: className, ...rest } = Astro.props
+---
+
+<Button
+	kind={kind}
+	href={href}
+	variant="primary"
+	class={arrowAnimationStyle}
+	icon
+	{...rest}><slot /><SvgIcon id="arrow-right" slot="icon" /></Button
+>
