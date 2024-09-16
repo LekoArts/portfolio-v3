@@ -12,10 +12,7 @@ import type {
 	FlickrPhotosetsGetPhotosResponse,
 	TransformedFlickrPhoto,
 } from '@constants/types'
-import {
-	explanationLayoutWrapperStyle,
-	layoutIconStyle,
-} from './_photography.css'
+import { explanationLayoutWrapperStyle, layoutIconStyle } from './_photography.css'
 import Text from '@components/typography/text.astro'
 import Box from '@components/primitives/box.astro'
 import SvgIcon from '@components/primitives/svg-icon.astro'
@@ -89,9 +86,7 @@ photosetTitles.sort((a, b) => a.localeCompare(b))
 			</Prose>
 			<Spacer axis="vertical" size={6} />
 			<div class={explanationLayoutWrapperStyle}>
-				<Text variant="prominent"
-					>Select individual albums to filter photos:</Text
-				>
+				<Text variant="prominent">Select individual albums to filter photos:</Text>
 				<Box display="flex" flexDirection="row" alignItems="center" gap={4}>
 					<Text variant="prominent">Layout:</Text>
 					<Box display="flex" flexDirection="row" gap={1}>
@@ -138,18 +133,12 @@ photosetTitles.sort((a, b) => a.localeCompare(b))
 </Base>
 
 <script>
-	import { initializeTagGroup } from '@utils/tag-group'
 	import { $ui, type LayoutType } from '@stores/ui'
 	import { artImageStyle } from '@components/art/art-image.css'
 	import { gridImagesVariants, imageWrapperVariants } from './_photography.css'
 
-	initializeTagGroup({ id: 'photography' })
-
-	const layoutButtons =
-		document.querySelectorAll<HTMLButtonElement>('.button-layout')
-	const imgWrapper = document.getElementById(
-		'photography-img-wrapper',
-	) as HTMLElement
+	const layoutButtons = document.querySelectorAll<HTMLButtonElement>('.button-layout')
+	const imgWrapper = document.getElementById('photography-img-wrapper') as HTMLElement
 	const images = imgWrapper.querySelectorAll('img')
 
 	layoutButtons.forEach((btn) => {

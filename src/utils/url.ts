@@ -30,6 +30,8 @@ export const queryStringTags = {
 		let result
 		const parsed = queryString.parse(locationSearch, { arrayFormat })
 
+		console.log({ searchInput: locationSearch, parsed })
+
 		// Only set `result` if there are tags in the query string
 		if (parsed.tags) {
 			// If only one tag is selected a string is returned, not an array

@@ -33,17 +33,24 @@ const { id, items } = Astro.props
 
 <script>
 	import type { TagGroupKeys } from '@stores/tag-group'
+	import { queryStringTags } from '@utils/url'
 	import { $tagGroup, addTag, removeTag } from '@stores/tag-group'
+	import type { Tag } from '@constants/types'
+	import { listenKeys } from 'nanostores'
 
 	class LekoArtsTagGroup extends HTMLElement {
 		id: TagGroupKeys
+		itemSelector: string
 
 		constructor() {
 			super()
 
 			this.id = this.dataset.id as TagGroupKeys
+			this.itemSelector = '.tag-group-item'
 
 			const buttons = this.querySelectorAll('button')
+
+			this.initialize(this.id)
 
 			// Check if the store already contains tags (when on page load there are tags in the query params)
 			const tags = $tagGroup.get()[this.id]
@@ -70,6 +77,59 @@ const { id, items } = Astro.props
 					} else {
 						addTag(this.id, item)
 						button.classList.add('active')
+					}
+				})
+			})
+
+			this.subscribe(this.id)
+		}
+
+		initialize(id: TagGroupKeys) {
+			// Parse query params when loading the page
+			const parsed = queryStringTags.from(window.location.search)
+			const items = document.querySelectorAll<HTMLLinkElement>(this.itemSelector)
+
+			// If tags in the query params (?tags=MDX,Astro) are present, set them in the store and filter the items
+			if (parsed?.tags && parsed.tags.length > 0) {
+				$tagGroup.setKey(id, parsed.tags as Array<Tag>)
+
+				items.forEach((item) => {
+					const tags = item.dataset.tags?.split(',') || []
+					const isActive = tags.some((tag) => parsed.tags?.includes(tag))
+
+					if (isActive) {
+						item.classList.remove('hidden')
+					} else {
+						item.classList.add('hidden')
+					}
+				})
+			}
+		}
+
+		subscribe(id: TagGroupKeys) {
+			// When $tagGroup changes, update the list by only showing items with the selectedTags
+			listenKeys($tagGroup, [id], ({ [id]: selectedTags }) => {
+				const items = document.querySelectorAll<HTMLLinkElement>(this.itemSelector)
+
+				// If no tags are selected, show all items
+				if (selectedTags.length === 0) {
+					items.forEach((item) => item.classList.remove('hidden'))
+					window.history.pushState({}, '', `${window.location.pathname}`)
+					return
+				}
+
+				const queryString = queryStringTags.to({ tags: selectedTags })
+				window.history.pushState({}, '', `${window.location.pathname}?${queryString}`)
+
+				items.forEach((item) => {
+					const tags = item.dataset.tags?.split(',') || []
+					const isActive = tags.some((tag) => selectedTags.includes(tag))
+
+					if (isActive) {
+						item.classList.remove('hidden')
+					}
+ else {
+						item.classList.add('hidden')
 					}
 				})
 			})
