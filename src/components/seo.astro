@@ -5,19 +5,14 @@ import type { BreadcrumbListItem } from '@constants/types'
 
 interface Props {
 	title?: string
+	forceTitle?: string
 	description?: string
 	image?: string
 	noIndex?: boolean
 	breadcrumbListItems?: Array<BreadcrumbListItem>
 }
 
-const {
-	title,
-	description,
-	image,
-	noIndex = false,
-	breadcrumbListItems = [],
-} = Astro.props
+const { title, forceTitle, description, image, noIndex = false, breadcrumbListItems = [] } = Astro.props
 const {
 	title: siteTitle,
 	titleDefault: siteTitleDefault,
@@ -36,6 +31,10 @@ const seo = {
 	description: description || siteDescription,
 	url: new URL(Astro.url.pathname, siteUrl),
 	image: new URL(image || siteImage, siteUrl),
+}
+
+if (forceTitle) {
+	seo.title = forceTitle
 }
 ---
 
@@ -68,11 +67,7 @@ const seo = {
 {noIndex && <meta name="robots" content="noindex, nofollow" />}
 {
 	breadcrumbListItems.length >= 1 && (
-		<script
-			type="application/ld+json"
-			is:inline
-			set:html={JSON.stringify(breadcrumbList(breadcrumbListItems))}
-		/>
+		<script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbList(breadcrumbListItems))} />
 	)
 }
 <slot />

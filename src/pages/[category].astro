@@ -44,18 +44,10 @@ const posts: Array<CardProps> = _posts.map((post) => ({
 
 <CategoryView
 	posts={posts}
-	title={category.name}
+	title={`${category.name} articles`}
 	description={category.description}
 	breadcrumbListItems={[{ name: category.name, url: entry.slug }]}
-	><CategoryHero
-		title={category.name}
-		description={category.description}
-		bgGradient={category.gradient}
-		><Image
-			slot="image"
-			alt=""
-			src={category.image}
-			width={350}
-		/></CategoryHero
+	><CategoryHero title={category.name} description={category.description} bgGradient={category.gradient}
+		><Image slot="image" alt="" src={category.image} width={350} /></CategoryHero
 	></CategoryView
 >
