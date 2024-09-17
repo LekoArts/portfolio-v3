@@ -9,6 +9,4 @@ interface Props extends BoxProps<'div'> {
 const { variant = 'default', class: className, ...rest } = Astro.props
 ---
 
-<Box class:list={[containerVariants[variant], className]} {...rest}
-	><slot /></Box
->
+<Box class:list={[containerVariants[variant], className]} {...rest}><slot /></Box>

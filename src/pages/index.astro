@@ -6,11 +6,7 @@ import SkipNavContent from '@components/a11y/skip-nav-content.astro'
 import Base from '@layouts/base.astro'
 import Seo from '@components/seo.astro'
 import { HOMEPAGE } from '@constants/json-ld'
-import {
-	filterPublished,
-	getSortedGarden,
-	getSortedWriting,
-} from '@utils/collection'
+import { filterPublished, getSortedGarden, getSortedWriting } from '@utils/collection'
 import FullWidthContainer from '@components/blocks/full-width-container.astro'
 import { paddingResponsiveArrays } from '@styles/tokens/space'
 import Heading from '@components/typography/heading.astro'
@@ -107,9 +103,7 @@ const {
 	data: { primary, secondary },
 } = githubResponse
 
-const writing = getSortedWriting(
-	await getCollection('writing', filterPublished),
-).slice(0, 4)
+const writing = getSortedWriting(await getCollection('writing', filterPublished)).slice(0, 4)
 const garden = getSortedGarden(await getCollection('garden')).slice(0, 3)
 
 const [firstPost, ...otherPosts] = writing
@@ -117,39 +111,18 @@ const [firstPost, ...otherPosts] = writing
 
 <Base>
 	<Seo slot="seo">
-		<script
-			type="application/ld+json"
-			is:inline
-			set:html={JSON.stringify(HOMEPAGE)}
-		/>
+		<script type="application/ld+json" is:inline set:html={JSON.stringify(HOMEPAGE)} />
 	</Seo>
 	<SkipNavContent>
 		<FullWidthContainer variant="hero">
-			<Box
-				display="flex"
-				flexDirection="column"
-				alignItems="center"
-				gap={5}
-				py={paddingResponsiveArrays.paddingLarge}
-			>
+			<Box display="flex" flexDirection="column" alignItems="center" gap={5} py={paddingResponsiveArrays.paddingLarge}>
 				<Heading as="h1">Hi, I’m Lennart!</Heading>
-				<Text
-					variant="prominent"
-					textAlign="center"
-					style={{ maxWidth: `45ch` }}
-				>
+				<Text variant="prominent" textAlign="center" style={{ maxWidth: `45ch` }}>
 					<strong>Software Engineer</strong> from Germany. <br />
-					I’m passionate about working on open source projects & making the web more
-					inclusive through them.
+					I’m passionate about working on open source projects & making the web more inclusive through them.
 				</Text>
-				<Text
-					variant="prominent"
-					textAlign="center"
-					style={{ maxWidth: `40ch` }}
-				>
-					I’m currently working at <Link href="https://www.clerk.com"
-						>Clerk</Link
-					>.
+				<Text variant="prominent" textAlign="center" style={{ maxWidth: `40ch` }}>
+					I’m currently working at <Link href="https://www.clerk.com">Clerk</Link>.
 				</Text>
 			</Box>
 		</FullWidthContainer>
@@ -161,12 +134,7 @@ const [firstPost, ...otherPosts] = writing
 				gap={24}
 				py={paddingResponsiveArrays.paddingMedium}
 			>
-				<Box
-					display="flex"
-					flexDirection="column"
-					alignItems="flex-start"
-					gap={8}
-				>
+				<Box display="flex" flexDirection="column" alignItems="flex-start" gap={8}>
 					<Badge variant="light">Latest Post</Badge>
 					<div>
 						<Heading as="h2">{firstPost.data.title}</Heading>
@@ -182,33 +150,17 @@ const [firstPost, ...otherPosts] = writing
 						}
 						<Text>{firstPost.data.description}</Text>
 					</div>
-					<PrimaryButton
-						href={slugify(firstPost.slug, firstPost.data.category.id)}
-						>Continue Reading</PrimaryButton
-					>
+					<PrimaryButton href={slugify(firstPost.slug, firstPost.data.category.id)}>Continue Reading</PrimaryButton>
 				</Box>
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
-					<Box
-						display="flex"
-						justifyContent="space-between"
-						alignItems="center"
-					>
+					<Box display="flex" justifyContent="space-between" alignItems="center">
 						<Badge variant="light">More Posts</Badge>
-						<SecondaryButton
-							aria-label="Read all long-form posts"
-							href="/writing/"
-						>
-							Read all
-						</SecondaryButton>
+						<SecondaryButton aria-label="Read all long-form posts" href="/writing/"> Read all </SecondaryButton>
 					</Box>
 					<Box class={cardsGridStyle}>
 						{
 							otherPosts.map((item, index) => (
-								<Link
-									href={slugify(item.slug, item.data.category.id)}
-									borderRadius="lg"
-									class={cardLinkStyle}
-								>
+								<Link href={slugify(item.slug, item.data.category.id)} borderRadius="lg" class={cardLinkStyle}>
 									<MotionBox
 										p={4}
 										borderRadius="lg"
@@ -226,27 +178,14 @@ const [firstPost, ...otherPosts] = writing
 					</Box>
 				</Box>
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
-					<Box
-						display="flex"
-						justifyContent="space-between"
-						alignItems="center"
-					>
+					<Box display="flex" justifyContent="space-between" alignItems="center">
 						<Badge variant="light">Digital Garden</Badge>
-						<SecondaryButton
-							aria-label="Read all Digital Garden posts"
-							href="/garden/"
-						>
-							Read all
-						</SecondaryButton>
+						<SecondaryButton aria-label="Read all Digital Garden posts" href="/garden/"> Read all </SecondaryButton>
 					</Box>
 					<Box class={cardsGridStyle}>
 						{
 							garden.map((item, index) => (
-								<Link
-									href={slugify(item.slug, 'garden')}
-									borderRadius="lg"
-									class={cardLinkStyle}
-								>
+								<Link href={slugify(item.slug, 'garden')} borderRadius="lg" class={cardLinkStyle}>
 									<MotionBox
 										p={4}
 										borderRadius="lg"
@@ -264,43 +203,19 @@ const [firstPost, ...otherPosts] = writing
 					</Box>
 				</Box>
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
-					<Box
-						display="flex"
-						justifyContent="space-between"
-						alignItems="center"
-					>
+					<Box display="flex" justifyContent="space-between" alignItems="center">
 						<Badge variant="light">Art</Badge>
 						<SecondaryButton href="/art/">See all art</SecondaryButton>
 					</Box>
 					<Box class={artGridStyle}>
-						<Link
-							href="/art/photography/"
-							aria-label="View my photography"
-							borderRadius="lg"
-							class={cardLinkStyle}
-						>
+						<Link href="/art/photography/" aria-label="View my photography" borderRadius="lg" class={cardLinkStyle}>
 							<MotionBox class={staticImageOverride}
-								><Image
-									alt=""
-									src={PhotographyImage}
-									aspectRatio={16 / 9}
-									width={720}
-								/></MotionBox
+								><Image alt="" src={PhotographyImage} aspectRatio={16 / 9} width={720} /></MotionBox
 							>
 						</Link>
-						<Link
-							href="/art/3d/"
-							aria-label="View my 3D art"
-							borderRadius="lg"
-							class={cardLinkStyle}
-						>
+						<Link href="/art/3d/" aria-label="View my 3D art" borderRadius="lg" class={cardLinkStyle}>
 							<MotionBox class={staticImageOverride}
-								><Image
-									alt=""
-									src={ArtImage}
-									aspectRatio={16 / 9}
-									width={720}
-								/></MotionBox
+								><Image alt="" src={ArtImage} aspectRatio={16 / 9} width={720} /></MotionBox
 							>
 						</Link>
 					</Box>
@@ -308,34 +223,17 @@ const [firstPost, ...otherPosts] = writing
 			</Box>
 		</FullWidthContainer>
 		<Container>
-			<Box
-				display="flex"
-				alignItems="center"
-				flexDirection="column"
-				py={paddingResponsiveArrays.paddingLarge}
-			>
+			<Box display="flex" alignItems="center" flexDirection="column" py={paddingResponsiveArrays.paddingLarge}>
 				<Heading as="h2">Open Source</Heading>
-				<Text
-					variant="prominent"
-					textAlign="center"
-					style={{ maxWidth: `40ch` }}
-				>
-					Working in the open, interacting with the community & building
-					projects that are accessible to everyone fill me with joy.
+				<Text variant="prominent" textAlign="center" style={{ maxWidth: `40ch` }}>
+					Working in the open, interacting with the community & building projects that are accessible to everyone fill
+					me with joy.
 				</Text>
 				<Spacer axis="vertical" size={20} />
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
-					<Box
-						display="flex"
-						justifyContent="space-between"
-						alignItems="center"
-					>
+					<Box display="flex" justifyContent="space-between" alignItems="center">
 						<Badge variant="dark">Featured Projects</Badge>
-						<SecondaryButton
-							kind="link"
-							href="https://www.github.com/LekoArts"
-							target="_blank"
-						>
+						<SecondaryButton kind="link" href="https://www.github.com/LekoArts" target="_blank">
 							GitHub
 						</SecondaryButton>
 					</Box>
@@ -343,18 +241,8 @@ const [firstPost, ...otherPosts] = writing
 						{
 							primary && secondary ? (
 								<>
-									<Box
-										bg="primaryAsBg"
-										p={6}
-										borderRadius="lg"
-										__color="#e7f1ff"
-									>
-										<Box
-											display="flex"
-											flexDirection="row"
-											justifyContent="space-between"
-											marginBottom={6}
-										>
+									<Box bg="primaryAsBg" p={6} borderRadius="lg" __color="#e7f1ff">
+										<Box display="flex" flexDirection="row" justifyContent="space-between" marginBottom={6}>
 											<Link
 												fontSize={[`lg`, null, null, null, `lgx`]}
 												fontWeight="bold"
@@ -371,12 +259,7 @@ const [firstPost, ...otherPosts] = writing
 										<Text>{primary.description}</Text>
 									</Box>
 									<Box bg="mutedAsBg" p={6} borderRadius="lg">
-										<Box
-											display="flex"
-											flexDirection="row"
-											justifyContent="space-between"
-											marginBottom={6}
-										>
+										<Box display="flex" flexDirection="row" justifyContent="space-between" marginBottom={6}>
 											<Link
 												fontSize={[`lg`, null, null, null, `lgx`]}
 												fontWeight="bold"

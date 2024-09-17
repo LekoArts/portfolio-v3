@@ -14,35 +14,15 @@ function activeClassName(link: string | undefined) {
 }
 ---
 
-<Box
-	display="flex"
-	alignItems="center"
-	py={2}
-	data-subnavigation="true"
-	class={wrapperStyle}
->
-	<Box
-		display="flex"
-		alignItems="center"
-		flexDirection="row"
-		as="ul"
-		class={innerWrapperStyle}
-	>
+<Box display="flex" alignItems="center" py={2} data-subnavigation="true" class={wrapperStyle}>
+	<Box display="flex" alignItems="center" flexDirection="row" as="ul" class={innerWrapperStyle}>
 		<li>
-			<Link
-				href="/writing/"
-				fontSize="md"
-				p={2}
-				class:list={[linkStyle, activeClassName('/writing/')]}>Latest</Link
-			>
+			<Link href="/writing/" fontSize="md" p={2} class:list={[linkStyle, activeClassName('/writing/')]}>Latest</Link>
 		</li>
 		<Spacer axis="horizontal" size={2} />
 		<li>
-			<Link
-				href="/tutorials/"
-				fontSize="md"
-				p={2}
-				class:list={[linkStyle, activeClassName('/tutorials/')]}>Tutorials</Link
+			<Link href="/tutorials/" fontSize="md" p={2} class:list={[linkStyle, activeClassName('/tutorials/')]}
+				>Tutorials</Link
 			>
 		</li>
 		<Spacer axis="horizontal" size={2} />
@@ -50,18 +30,11 @@ function activeClassName(link: string | undefined) {
 			categories.map((item, index) => (
 				<>
 					<li>
-						<Link
-							href={item.slug}
-							fontSize="md"
-							p={2}
-							class:list={[linkStyle, activeClassName(item.slug)]}
-						>
+						<Link href={item.slug} fontSize="md" p={2} class:list={[linkStyle, activeClassName(item.slug)]}>
 							{item.data.name}
 						</Link>
 					</li>
-					{index !== categories.length - 1 && (
-						<Spacer axis="horizontal" size={2} />
-					)}
+					{index !== categories.length - 1 && <Spacer axis="horizontal" size={2} />}
 				</>
 			))
 		}

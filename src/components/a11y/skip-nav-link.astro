@@ -11,6 +11,4 @@ const { contentId, ...rest } = Astro.props
 const id = contentId || SKIP_NAV_ID
 ---
 
-<a {...rest} class={skipNavLinkStyle} href={`#${id}`}
-	><slot>Skip to content</slot></a
->
+<a {...rest} class={skipNavLinkStyle} href={`#${id}`}><slot>Skip to content</slot></a>

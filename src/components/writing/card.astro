@@ -12,13 +12,7 @@ const { slug, title, subtitle, description } = Astro.props
 
 <MotionBox p={6} borderRadius="lg" bg="cardBg" class={cardStyle}>
 	<Link href={slug} class={linkStyle}>
-		<Text
-			as="h2"
-			fontSize="lgx"
-			fontWeight="bold"
-			color="heading"
-			class={headingStyle}
-		>
+		<Text as="h2" fontSize="lgx" fontWeight="bold" color="heading" class={headingStyle}>
 			{title}
 		</Text>
 		{

@@ -9,6 +9,4 @@ interface Props extends BoxProps<Headings> {
 const { as, class: className, ...rest } = Astro.props
 ---
 
-<Box as={as} class:list={[headingVariants[as], className]} {...rest}
-	><slot /></Box
->
+<Box as={as} class:list={[headingVariants[as], className]} {...rest}><slot /></Box>

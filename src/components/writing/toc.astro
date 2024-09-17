@@ -15,26 +15,9 @@ const toc = buildToc(headings)
 const ids = getIds(headings)
 ---
 
-<Box
-	as="aside"
-	marginBottom={{ mobile: 16, '2xl': 0 }}
-	fontSize={[`sm`, `md`]}
-	class={asideStyle}
->
-	<Box
-		as="nav"
-		display="flex"
-		flexDirection="column"
-		alignItems="flex-start"
-		class={navStyle}
-	>
-		<Box
-			as="h2"
-			color="heading"
-			fontWeight="medium"
-			marginBottom={{ mobile: 2, '2xl': 4 }}
-			class={headingStyle}
-		>
+<Box as="aside" marginBottom={{ mobile: 16, '2xl': 0 }} fontSize={[`sm`, `md`]} class={asideStyle}>
+	<Box as="nav" display="flex" flexDirection="column" alignItems="flex-start" class={navStyle}>
+		<Box as="h2" color="heading" fontWeight="medium" marginBottom={{ mobile: 2, '2xl': 4 }} class={headingStyle}>
 			Table of Contents
 		</Box>
 		<lekoarts-toc data-ids={ids}>
@@ -57,9 +40,7 @@ const ids = getIds(headings)
 		}
 
 		setActiveHeading() {
-			const headingElements = this.ids
-				.map((id) => document.getElementById(id))
-				.filter(Boolean)
+			const headingElements = this.ids.map((id) => document.getElementById(id)).filter(Boolean)
 
 			const observerOptions: IntersectionObserverInit = {
 				rootMargin: '0% 0% -80% 0%',
@@ -76,19 +57,14 @@ const ids = getIds(headings)
 					}
 
 					if (entry.isIntersecting) {
-						document
-							.querySelectorAll('#toc a')
-							.forEach((el) => el.classList.remove('active'))
+						document.querySelectorAll('#toc a').forEach((el) => el.classList.remove('active'))
 
 						tocItem.classList.add('active')
 					}
 				}
 			}
 
-			const observer = new IntersectionObserver(
-				observerCallback,
-				observerOptions,
-			)
+			const observer = new IntersectionObserver(observerCallback, observerOptions)
 
 			headingElements.forEach((el) => {
 				if (el) {

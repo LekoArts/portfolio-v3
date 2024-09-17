@@ -16,12 +16,7 @@ interface Props extends HTMLAttributes<'pre'> {
 	'data-title'?: string
 }
 
-const {
-	'data-language': _language,
-	'data-title': title,
-	class: className,
-	...rest
-} = Astro.props
+const { 'data-language': _language, 'data-title': title, class: className, ...rest } = Astro.props
 
 const id = generateSafeId()
 // If only ``` is used, the language is set to 'plaintext' by default. Hide the header in this instance.

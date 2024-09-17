@@ -9,11 +9,6 @@ interface Props extends HTMLAttributes<'svg'> {
 const { id, class: className, ...rest } = Astro.props
 ---
 
-<svg
-	aria-hidden
-	focusable="false"
-	class:list={['svg-icon', className]}
-	{...rest}
->
+<svg aria-hidden focusable="false" class:list={['svg-icon', className]} {...rest}>
 	<use href={`/icons.svg#${id}`}></use>
 </svg>

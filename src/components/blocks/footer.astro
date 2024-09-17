@@ -17,20 +17,10 @@ const { data: footerNavigation } = await getEntry('navigations', 'footer')
 <FullWidthContainer variant="dark">
 	<Box as="footer" py={16} role="contentinfo">
 		<Box display="flex" flexDirection="column">
-			<Box
-				display="flex"
-				flexDirection={['column', 'row']}
-				flexWrap="wrap"
-				justifyContent="space-between"
-			>
+			<Box display="flex" flexDirection={['column', 'row']} flexWrap="wrap" justifyContent="space-between">
 				{
 					footerNavigation.map((s) => (
-						<Box
-							display="flex"
-							flexDirection="column"
-							alignItems="flex-start"
-							marginBottom={[8, 0]}
-						>
+						<Box display="flex" flexDirection="column" alignItems="flex-start" marginBottom={[8, 0]}>
 							{s.link ? (
 								<Link
 									href={s.link}
@@ -42,12 +32,7 @@ const { data: footerNavigation } = await getEntry('navigations', 'footer')
 									{s.name}
 								</Link>
 							) : (
-								<Box
-									color="textEmphasizedOnBg"
-									p={1}
-									fontSize={[`lg`, null, `lgx`]}
-									marginBottom={[2, 3]}
-								>
+								<Box color="textEmphasizedOnBg" p={1} fontSize={[`lg`, null, `lgx`]} marginBottom={[2, 3]}>
 									{s.name}
 								</Box>
 							)}
@@ -60,12 +45,7 @@ const { data: footerNavigation } = await getEntry('navigations', 'footer')
 								{s.items!.map((item) => {
 									if (item.isExternal) {
 										return (
-											<Link
-												href={item.link}
-												{...linkAttributesMap[item.name]}
-												marginRight={[2, 0]}
-												p={1}
-											>
+											<Link href={item.link} {...linkAttributesMap[item.name]} marginRight={[2, 0]} p={1}>
 												{item.name}
 											</Link>
 										)
@@ -94,9 +74,7 @@ const { data: footerNavigation } = await getEntry('navigations', 'footer')
 					&copy; {new Date().getFullYear()} by lekoarts.de. All rights reserved.
 				</div>
 				<div>
-					<Link href="/privacy-policy/">Privacy Policy</Link>. <Link
-						href="/legal-notice/">Legal Notice</Link
-					>.
+					<Link href="/privacy-policy/">Privacy Policy</Link>. <Link href="/legal-notice/">Legal Notice</Link>.
 				</div>
 			</Box>
 		</Box>

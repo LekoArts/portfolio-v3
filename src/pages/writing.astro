@@ -19,25 +19,16 @@ const posts = getSortedWriting(await getCollection('writing', filterPublished))
 ---
 
 <Base subnavigation>
-	<Seo
-		slot="seo"
-		title="Writing"
-		breadcrumbListItems={[{ name: `Writing`, url: `/writing/` }]}
-	/>
+	<Seo slot="seo" title="Writing" breadcrumbListItems={[{ name: `Writing`, url: `/writing/` }]} />
 	<WritingSubNavigation slot="subnavigation" />
 	<SkipNavContent>
 		<Container py={paddingResponsiveArrays.paddingMedium}>
 			<Box display="flex" flexDirection="column" gap={20} alignItems="center">
 				<Box display="flex" flexDirection="column" gap={3} alignItems="center">
 					<Heading as="h1">Writing</Heading>
-					<Text
-						variant="prominent"
-						textAlign="center"
-						style={{ maxWidth: `45ch` }}
-					>
-						So far I’ve written {posts.length} longform tutorials & articles. For
-						more compact content visit my <Link href="/garden/"
-							>Digital Garden</Link
+					<Text variant="prominent" textAlign="center" style={{ maxWidth: `45ch` }}>
+						So far I’ve written {posts.length} longform tutorials & articles. For more compact content visit my <Link
+							href="/garden/">Digital Garden</Link
 						>. <Link href="/rss.xml">RSS</Link>.
 					</Text>
 				</Box>

@@ -23,12 +23,7 @@ const { posts, title, description, breadcrumbListItems } = Astro.props
 ---
 
 <Base subnavigation>
-	<Seo
-		title={title}
-		description={description}
-		breadcrumbListItems={breadcrumbListItems}
-		slot="seo"
-	/>
+	<Seo title={title} description={description} breadcrumbListItems={breadcrumbListItems} slot="seo" />
 	<WritingSubNavigation slot="subnavigation" />
 	<SkipNavContent>
 		<slot />
@@ -37,20 +32,13 @@ const { posts, title, description, breadcrumbListItems } = Astro.props
 				posts.length > 0 ? (
 					<div class={contentGridStyle}>
 						{posts.map((post) => (
-							<Card
-								slug={post.slug}
-								title={post.title}
-								subtitle={post.subtitle}
-								description={post.description}
-							/>
+							<Card slug={post.slug} title={post.title} subtitle={post.subtitle} description={post.description} />
 						))}
 					</div>
 				) : (
 					<Text variant="prominent">
-						Sadly there's no content for this category available yet. Be sure to
-						follow me on{` `}
-						<Link href="https://twitter.com/lekoarts_de">Twitter</Link> to not
-						miss any announcements about new posts :)
+						Sadly there's no content for this category available yet. Be sure to follow me on{` `}
+						<Link href="https://twitter.com/lekoarts_de">Twitter</Link> to not miss any announcements about new posts :)
 					</Text>
 				)
 			}

@@ -16,13 +16,7 @@ function activeClassName(link: string | undefined) {
 
 <Box display="flex" alignItems="center" flexDirection="row">
 	<nav aria-label="Primary navigation">
-		<Box
-			as="ul"
-			display="flex"
-			alignItems="center"
-			flexDirection="row"
-			class={navItemsWrapperStyle}
-		>
+		<Box as="ul" display="flex" alignItems="center" flexDirection="row" class={navItemsWrapperStyle}>
 			{
 				primaryNavigation.map((item, index) => {
 					const notLastItem = index !== primaryNavigation.length - 1

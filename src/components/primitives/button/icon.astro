@@ -9,6 +9,4 @@ interface Props extends HTMLAttributes<'button'> {
 const { description, class: className, ...rest } = Astro.props
 ---
 
-<button class={className} {...rest}
-	><slot /><VisuallyHidden>{description}</VisuallyHidden></button
->
+<button class={className} {...rest}><slot /><VisuallyHidden>{description}</VisuallyHidden></button>

@@ -15,23 +15,10 @@ const { codeId, duration = 5000, fileName = '' } = Astro.props
 const initialLabel = `${fileName ? `${fileName}: ` : ``}Copy code to clipboard`
 ---
 
-<lekoarts-copy-button
-	data-duration={duration}
-	data-filename={fileName}
-	data-code-id={codeId}
->
-	<Box
-		as="button"
-		name={initialLabel}
-		disabled={false}
-		px={2}
-		borderRadius="md"
-		class={copyButtonStyle}
-	>
+<lekoarts-copy-button data-duration={duration} data-filename={fileName} data-code-id={codeId}>
+	<Box as="button" name={initialLabel} disabled={false} px={2} borderRadius="md" class={copyButtonStyle}>
 		<span class="copy-button-text">Copy</span>
-		<VisuallyHidden class="copy-button-label" aria-roledescription="status"
-			>{initialLabel}</VisuallyHidden
-		>
+		<VisuallyHidden class="copy-button-label" aria-roledescription="status">{initialLabel}</VisuallyHidden>
 	</Box>
 </lekoarts-copy-button>
 
@@ -49,9 +36,7 @@ const initialLabel = `${fileName ? `${fileName}: ` : ``}Copy code to clipboard`
 			const duration = Number.parseInt(this.dataset.duration as string)
 			const fileName = this.dataset.filename
 
-			const codeTag = document.querySelector(
-				`pre[data-code-id="${codeId}"]`,
-			)?.firstChild
+			const codeTag = document.querySelector(`pre[data-code-id="${codeId}"]`)?.firstChild
 
 			let content = ''
 

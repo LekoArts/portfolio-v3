@@ -33,14 +33,7 @@ const getSrcSet = (images: IImages) => {
   `
 }
 
-const {
-	photoId,
-	images,
-	alt,
-	class: className,
-	imgClass,
-	...rest
-} = Astro.props
+const { photoId, images, alt, class: className, imgClass, ...rest } = Astro.props
 
 const src = images.lg.url
 const { width: maxWidth, height: maxHeight } = images.lg

@@ -25,25 +25,12 @@ const posts: Array<CardProps> = _posts.map((post) => ({
 }))
 
 const title = 'Tutorials'
-const description =
-	'Tutorials across different categories in a longform format & with interactive elements'
+const description = 'Tutorials across different categories in a longform format & with interactive elements'
 const breadcrumbs = [{ name: `Tutorials`, url: `/tutorials/` }]
 ---
 
-<CategoryView
-	posts={posts}
-	title={title}
-	description={description}
-	breadcrumbListItems={breadcrumbs}
-	><CategoryHero
-		title={title}
-		description={description}
-		bgGradient="linear-gradient(to top, #475569, #0f172a)"
-		><Image
-			alt=""
-			src={lightbulbImage}
-			width={350}
-			slot="image"
-		/></CategoryHero
+<CategoryView posts={posts} title={title} description={description} breadcrumbListItems={breadcrumbs}
+	><CategoryHero title={title} description={description} bgGradient="linear-gradient(to top, #475569, #0f172a)"
+		><Image alt="" src={lightbulbImage} width={350} slot="image" /></CategoryHero
 	></CategoryView
 >

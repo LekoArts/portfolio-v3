@@ -35,35 +35,19 @@ import { imgStyle, summaryWrapperStyle } from './_resume.css'
 				<Box>
 					<Heading as="h2">Hi, I'm Lennart Jörgens.</Heading>
 					<Text variant="prominent">
-						A product-focused full stack engineer with years of experience in
-						leading large-scale open source projects and shipping high-quality
-						work to millions of users. Adept at building delightful, inclusive,
-						and well-documented solutions to customers' needs.
+						A product-focused full stack engineer with years of experience in leading large-scale open source projects
+						and shipping high-quality work to millions of users. Adept at building delightful, inclusive, and
+						well-documented solutions to customers' needs.
 					</Text>
 					<Spacer axis="vertical" size={8} />
 					<Text>
-						<Link href="mailto:hello@lekoarts.de">hello@lekoarts.de</Link> —{
-							` `
-						}
+						<Link href="mailto:hello@lekoarts.de">hello@lekoarts.de</Link> —{` `}
 						<Link href="https://github.com/LekoArts">GitHub</Link> —{` `}
-						<Link href="https://www.linkedin.com/in/lennart-joergens/"
-							>LinkedIn</Link
-						>
+						<Link href="https://www.linkedin.com/in/lennart-joergens/">LinkedIn</Link>
 					</Text>
 					<Spacer axis="vertical" size={4} />
-					<Button
-						kind="link"
-						target="_blank"
-						href="/resume.pdf"
-						size="md"
-						variant="primary"
-						icon
-						>Download Resume <SvgIcon
-							id="download"
-							height="1em"
-							width="1em"
-							slot="icon"
-						/></Button
+					<Button kind="link" target="_blank" href="/resume.pdf" size="md" variant="primary" icon
+						>Download Resume <SvgIcon id="download" height="1em" width="1em" slot="icon" /></Button
 					>
 				</Box>
 				<Box>
@@ -75,30 +59,14 @@ import { imgStyle, summaryWrapperStyle } from './_resume.css'
 				</Box>
 			</Box>
 			<Spacer size={12} axis="vertical" />
-			<Box
-				as="hr"
-				height="px"
-				width="full"
-				bg="text"
-				opacity={0.1}
-				border="none"
-			/>
+			<Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
 			<Prose>
 				<ResumeText components={components} />
 			</Prose>
 			<Spacer size={12} axis="vertical" />
-			<Box
-				as="hr"
-				height="px"
-				width="full"
-				bg="text"
-				opacity={0.1}
-				border="none"
-			/>
+			<Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
 			<Spacer size={8} axis="vertical" />
-			<Text fontSize={[`md`, null, null, `lg`]}
-				>Last updated: September 6, 2023</Text
-			>
+			<Text fontSize={[`md`, null, null, `lg`]}>Last updated: September 6, 2023</Text>
 		</Container>
 	</SkipNavContent>
 </Base>

@@ -6,8 +6,8 @@ export const getWritingEditLink = (relativePath: string) => `${GITHUB_REPO_BASE}
 
 export function getTwitterShareLink(link: string, message: string) {
 	return `https://twitter.com/intent/tweet/?text=${encodeURIComponent(message)}&via=lekoarts_de&url=${encodeURIComponent(
-    link,
-  )}`
+		link,
+	)}`
 }
 
 export function getMastodonShareLink(link: string, message: string) {
