@@ -24,11 +24,11 @@ const metaTagAssertions = [
 	{
 		name: 'Blog Post (Tutorial)',
 		url: '/react/using-deferred-static-generation-with-analytics-tools/',
-		title: `Using Deferred Static Generation With Analytics Tools | ${SITE.title}`,
+		title: 'Using Deferred Static Generation With Analytics Tools',
 		metaTags: [
 			{
 				key: 'og:title',
-				value: `Using Deferred Static Generation With Analytics Tools | ${SITE.title}`,
+				value: 'Using Deferred Static Generation With Analytics Tools',
 			},
 			{
 				key: 'og:description',
@@ -53,11 +53,11 @@ const metaTagAssertions = [
 	{
 		name: 'Blog Post (Prose)',
 		url: '/design/introducing-the-theme-ui-plugin-for-figma/',
-		title: `Introducing the Theme UI Plugin for Figma | ${SITE.title}`,
+		title: 'Introducing the Theme UI Plugin for Figma',
 		metaTags: [
 			{
 				key: 'og:title',
-				value: `Introducing the Theme UI Plugin for Figma | ${SITE.title}`,
+				value: 'Introducing the Theme UI Plugin for Figma',
 			},
 			{
 				key: 'og:description',
@@ -82,11 +82,11 @@ const metaTagAssertions = [
 	{
 		name: 'Garden Post',
 		url: '/garden/how-to-add-plausible-analytics-to-gatsby/',
-		title: `How to Add Plausible Analytics to Gatsby | ${SITE.title}`,
+		title: 'How to Add Plausible Analytics to Gatsby',
 		metaTags: [
 			{
 				key: 'og:title',
-				value: `How to Add Plausible Analytics to Gatsby | ${SITE.title}`,
+				value: 'How to Add Plausible Analytics to Gatsby',
 			},
 			{
 				key: 'og:description',
@@ -169,7 +169,7 @@ test.describe('Meta Tags', () => {
 		)
 
 		await page.goto('/community/')
-		await expect(page).toHaveTitle(`Community | ${SITE.title}`)
+		await expect(page).toHaveTitle(`Community articles | ${SITE.title}`)
 		const desc2 = await page.locator('meta[property="og:description"]').getAttribute('content')
 		expect(desc2).toStrictEqual(
 			'Building an engaging & inclusive community is hard and takes work. From the perspective of an open source maintainer I want to help you achieve this goal.',
