@@ -25,6 +25,7 @@
 		"@astrojs/mdx": "^3.1.7",
 		"@astrojs/netlify": "^5.5.3",
 		"@astrojs/react": "^3.6.2",
+		"@astrojs/rss": "^4.0.8",
 		"@astrojs/sitemap": "^3.1.6",
 		"@codesandbox/sandpack-react": "^2.19.8",
 		"@codesandbox/sandpack-themes": "^2.0.21",
