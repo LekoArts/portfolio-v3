@@ -12,7 +12,7 @@ import Spacer from '@components/primitives/spacer.astro'
 import Box from '@components/primitives/box.astro'
 import Link from '@components/primitives/link.astro'
 import Text from '@components/typography/text.astro'
-import { getMastodonShareLink, getTwitterShareLink, getWritingEditLink } from '@utils/sharing'
+import { getMastodonShareLink, getBlueskyShareLink, getWritingEditLink } from '@utils/sharing'
 import { SITE } from '@constants/meta'
 import { isoDateFormat, yearDateFormat } from '@utils/date'
 import Heading from '@components/typography/heading.astro'
@@ -169,7 +169,7 @@ const tagColorSwitch = (name: Category) => {
 								<Link href={getWritingEditLink(entry.id)}>Edit on GitHub</Link> -{' '}
 							</>
 						)
-					}Share on <Link href={getTwitterShareLink(`${SITE.url}${slug}`, post.title)}>Twitter</Link> / <Link
+					}Share on <Link href={getBlueskyShareLink(`${SITE.url}${slug}`, post.title)}>Bluesky</Link> / <Link
 						href={getMastodonShareLink(`${SITE.url}${slug}`, post.title)}>Mastodon</Link
 					>
 				</Box>

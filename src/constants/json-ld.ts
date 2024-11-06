@@ -23,7 +23,7 @@ export const IDENTITY = {
 	},
 	'name': SITE.titleDefault,
 	'sameAs': [
-		'https://twitter.com/lekoarts_de',
+		'https://bsky.app/profile/lekoarts.de',
 		'https://www.youtube.com/c/LeKoArtsDE',
 		'https://github.com/LekoArts',
 		'https://dribbble.com/LekoArts',
