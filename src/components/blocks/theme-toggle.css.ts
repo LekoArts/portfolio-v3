@@ -17,10 +17,10 @@ globalStyle(`#lekoarts-theme-select .${toggleIconStyle}:hover`, {
 	color: vars.color.heading,
 })
 
-globalStyle(`div[data-variant-name="fullBleed"] .${toggleIconStyle}`, {
+globalStyle(`div[data-variant-name="fullBleed"] #lekoarts-theme-select .${toggleIconStyle}`, {
 	color: colorPalette.gray[100],
 })
 
-globalStyle(`div[data-variant-name="fullBleed"] .${toggleIconStyle}:hover`, {
+globalStyle(`div[data-variant-name="fullBleed"] #lekoarts-theme-select .${toggleIconStyle}:hover`, {
 	color: 'white',
 })
