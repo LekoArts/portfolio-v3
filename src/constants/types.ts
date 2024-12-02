@@ -34,6 +34,7 @@ export type SVGIconNames =
 	| 'list'
 	| 'masonry'
 	| 'astro'
+	| 'unraid'
 
 export interface CardProps {
 	slug: string

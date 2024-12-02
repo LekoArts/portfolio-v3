@@ -13,6 +13,7 @@ export const TAGS_CHOICES = [
 	'Tooling',
 	'TypeScript',
 	'Astro',
+	'Unraid',
 ] as const
 
 export const ICON_CHOICES = [
@@ -28,6 +29,7 @@ export const ICON_CHOICES = [
 	'rust',
 	'typescript',
 	'astro',
+	'unraid',
 ] as const
 
 export const TYPE_CHOICES = ['prose', 'tutorial'] as const

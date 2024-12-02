@@ -6,7 +6,7 @@ use slug::slugify;
 use std::{fs, path::PathBuf};
 use titlecase::titlecase;
 
-const TAGS_CHOICES: [&str; 14] = [
+const TAGS_CHOICES: [&str; 15] = [
     "CLI",
     "Discord",
     "elitepvpers",
@@ -21,9 +21,10 @@ const TAGS_CHOICES: [&str; 14] = [
     "Tooling",
     "TypeScript",
     "Astro",
+    "Unraid",
 ];
 
-const ICON_CHOICES: [&str; 12] = [
+const ICON_CHOICES: [&str; 13] = [
     "cli",
     "discord",
     "elitepvpers",
@@ -36,6 +37,7 @@ const ICON_CHOICES: [&str; 12] = [
     "rust",
     "typescript",
     "astro",
+    "unraid",
 ];
 
 #[derive(Serialize)]
