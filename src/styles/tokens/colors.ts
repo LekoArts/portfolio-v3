@@ -1,6 +1,6 @@
 import { transparentize } from '@utils/color'
 
-const navBgTransparency = 0.85
+const navBgTransparency = 0.75
 
 /**
  * Tailwind CSS Color Palette

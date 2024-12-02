@@ -3,6 +3,7 @@ import { style, styleVariants } from '@vanilla-extract/css'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
+import { zIndices } from '@styles/tokens/z-indices'
 
 const containerBaseStyle = style({
 	'width': vars.space.full,
@@ -28,7 +29,9 @@ const containers: Record<ContainerVariants, StyleRule> = {
 	dark: {
 		color: colorPalette.blueGray[300],
 	},
-	navigation: {},
+	navigation: {
+		zIndex: zIndices.sticky,
+	},
 	fullBleed: {},
 	proseRoot: {
 		'paddingTop': vars.space[16],

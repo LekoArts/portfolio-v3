@@ -1,5 +1,5 @@
 import type { StyleRule } from '@vanilla-extract/css'
-import { style, styleVariants } from '@vanilla-extract/css'
+import { createVar, style, styleVariants } from '@vanilla-extract/css'
 import { themesSelectors } from '@styles/atoms.css'
 import { vars } from '@styles/themes/contract.css'
 import { colorPalette } from '@styles/tokens/colors'
@@ -45,7 +45,6 @@ const fullWidthContainers: Record<FullWidthContainerVariants, StyleRule> = {
 	},
 	navigation: {
 		background: vars.color.navigationBg,
-		backdropFilter: 'blur(8px)',
 		position: 'fixed',
 		display: 'flex',
 		zIndex: zIndices.sticky,
@@ -59,3 +58,29 @@ const fullWidthContainers: Record<FullWidthContainerVariants, StyleRule> = {
 }
 
 export const fullWidthContainerVariants = styleVariants(fullWidthContainers, fwc => [fwcBaseStyle, fwc])
+
+export const backdropStyle = style({
+	position: 'absolute',
+	inset: 0,
+	backdropFilter: 'blur(16px)',
+	background: `linear-gradient(to bottom, ${vars.color.navigationBg} 0%, transparent 50%)`,
+	height: '200%',
+	maskImage: 'linear-gradient(to bottom, black 0% 50%, transparent 50% 100%)',
+	pointerEvents: 'none',
+})
+
+const edgeThickness = createVar()
+
+export const backdropEdgeStyle = style({
+	vars: {
+		[edgeThickness]: '2px',
+	},
+	position: 'absolute',
+	inset: 0,
+	height: vars.space.full,
+	transform: 'translateY(100%)',
+	backdropFilter: 'blur(8px) brightness(1.4)',
+	pointerEvents: 'none',
+	maskImage: `linear-gradient(to bottom, black 0, black ${edgeThickness}, transparent ${edgeThickness}), linear-gradient(90deg, transparent 0, black 25%, black 75%, transparent 100%)`,
+	maskComposite: 'intersect',
+})
