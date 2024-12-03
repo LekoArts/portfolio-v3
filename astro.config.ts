@@ -34,13 +34,11 @@ export default defineConfig({
 	devToolbar: {
 		enabled: false,
 	},
-	experimental: {
-		env: {
-			schema: {
-				IS_PLAYWRIGHT: envField.boolean({ access: 'public', context: 'server', default: false, optional: true }),
-				GITHUB_TOKEN: envField.string({ access: 'secret', context: 'server' }),
-				FLICKR_API_KEY: envField.string({ access: 'secret', context: 'server' }),
-			},
+	env: {
+		schema: {
+			IS_PLAYWRIGHT: envField.boolean({ access: 'public', context: 'server', default: false, optional: true }),
+			GITHUB_TOKEN: envField.string({ access: 'secret', context: 'server' }),
+			FLICKR_API_KEY: envField.string({ access: 'secret', context: 'server' }),
 		},
 	},
 	markdown: {

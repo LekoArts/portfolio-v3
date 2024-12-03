@@ -1,6 +1,6 @@
 ---
 import { slugify } from '@utils/slugify'
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 import Base from '@layouts/base.astro'
 import Seo from '@components/seo.astro'
 import { SITE } from '@constants/meta'
@@ -36,7 +36,7 @@ export async function getStaticPaths() {
 
 const { entry, slug } = Astro.props
 const { data: garden } = entry
-const { Content } = await entry.render()
+const { Content } = await render(entry)
 
 const ogURL = new URL(SITE.gardenOgEdge, SITE.url)
 ogURL.searchParams.set(`title`, garden.title)

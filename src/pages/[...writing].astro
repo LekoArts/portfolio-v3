@@ -1,6 +1,6 @@
 ---
 import { slugify } from '@utils/slugify'
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 import { components } from '@components/mdx'
 import Base from '@layouts/base.astro'
 import { filterPublished } from '@utils/collection'
@@ -45,7 +45,7 @@ export async function getStaticPaths() {
 
 const { entry, slug } = Astro.props
 const { data: post } = entry
-const { Content, headings } = await entry.render()
+const { Content, headings } = await render(entry)
 
 const timeToRead = getReadingTime(entry.body)
 const category = await getEntry(post.category)
