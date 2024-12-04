@@ -25,7 +25,7 @@ import FormattedDate from '@components/primitives/formatted-date.astro'
 export async function getStaticPaths() {
 	const entries = await getCollection('garden')
 	return entries.map((entry) => {
-		const slug = slugify(entry.slug, 'garden')
+		const slug = slugify(entry.id, 'garden')
 
 		return {
 			params: { garden: slug },
@@ -44,7 +44,7 @@ ogURL.searchParams.set(`lastUpdated`, defaultDateFormat(garden.lastUpdated))
 ogURL.searchParams.set(`tags`, garden.tags.join(`,`))
 const ogImage = `${ogURL.pathname}${ogURL.search}`
 
-const timeToRead = getReadingTime(entry.body)
+const timeToRead = getReadingTime(entry.body ?? '')
 ---
 
 <Base>

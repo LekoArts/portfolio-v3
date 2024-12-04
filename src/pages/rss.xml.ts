@@ -10,14 +10,14 @@ export const GET: APIRoute = async () => {
 	const writing = (await getCollection('writing', filterPublished)).map(entry => ({
 		title: entry.data.title,
 		description: entry.data.description,
-		link: slugify(entry.slug, entry.data.category.id),
+		link: slugify(entry.id, entry.data.category.id),
 		pubDate: entry.data.date,
 	} satisfies RSSFeedItem))
 
 	const garden = (await getCollection('garden')).map(entry => ({
 		title: entry.data.title,
 		description: entry.data.description,
-		link: slugify(entry.slug, 'garden'),
+		link: slugify(entry.id, 'garden'),
 		pubDate: entry.data.date,
 	} satisfies RSSFeedItem))
 

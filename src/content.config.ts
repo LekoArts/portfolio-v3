@@ -35,9 +35,7 @@ const categories = defineCollection({
 		name: z.string(),
 		description: z.string(),
 		gradient: z.string(),
-		image: image().refine(img => img.width >= 800, {
-			message: 'Image width should be at least 800px',
-		}),
+		image: image(),
 	}),
 })
 

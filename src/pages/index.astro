@@ -150,7 +150,7 @@ const [firstPost, ...otherPosts] = writing
 						}
 						<Text>{firstPost.data.description}</Text>
 					</div>
-					<PrimaryButton href={slugify(firstPost.slug, firstPost.data.category.id)}>Continue Reading</PrimaryButton>
+					<PrimaryButton href={slugify(firstPost.id, firstPost.data.category.id)}>Continue Reading</PrimaryButton>
 				</Box>
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
 					<Box display="flex" justifyContent="space-between" alignItems="center">
@@ -160,7 +160,7 @@ const [firstPost, ...otherPosts] = writing
 					<Box class={cardsGridStyle}>
 						{
 							otherPosts.map((item, index) => (
-								<Link href={slugify(item.slug, item.data.category.id)} borderRadius="lg" class={cardLinkStyle}>
+								<Link href={slugify(item.id, item.data.category.id)} borderRadius="lg" class={cardLinkStyle}>
 									<MotionBox
 										p={4}
 										borderRadius="lg"
@@ -185,7 +185,7 @@ const [firstPost, ...otherPosts] = writing
 					<Box class={cardsGridStyle}>
 						{
 							garden.map((item, index) => (
-								<Link href={slugify(item.slug, 'garden')} borderRadius="lg" class={cardLinkStyle}>
+								<Link href={slugify(item.id, 'garden')} borderRadius="lg" class={cardLinkStyle}>
 									<MotionBox
 										p={4}
 										borderRadius="lg"

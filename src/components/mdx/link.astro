@@ -33,10 +33,8 @@ const href = inputHref.toString()
 	) : (
 		// At this point the link can only be external, style as such
 		<a data-link-external target="_blank" href={href} {...rest}>
-			<>
-				<slot />
-				<VisuallyHidden> (opens in a new tab)</VisuallyHidden>
-			</>
+			<slot />
+			<VisuallyHidden> (opens in a new tab)</VisuallyHidden>
 		</a>
 	)
 }
