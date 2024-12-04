@@ -17,14 +17,13 @@ I want to explain how to create a `Spacer` component in plain React, [Chakra UI]
 
 You can pass in any `number` here as there are no style tokens and type-safety on which numbers to use.
 
-{/* eslint-disable prettier/prettier */}
-
 <Playground
   title="Plain React"
   template="react-ts"
-  files={{
-    "/spacer.tsx": {
-      code: `import React from "react"
+>
+
+```tsx spacer.tsx active
+import React from "react"
 
 type SpacerProps = {
   axis: "vertical" | "horizontal"
@@ -47,49 +46,45 @@ export const Spacer = ({ size, axis, ...rest }: SpacerProps) => {
       {...rest}
     />
   )
-}`,
-      active: true,
-    },
-    "/App.tsx": {
-      code: `import React from "react"
+}
+```
+
+```tsx App.tsx
+import React from "react"
 import { Spacer } from "./spacer"
 
 export default function App() {
   return (
     <main>
-      <p>Spacer</p>
+      <div>Spacer</div>
       {/* Increase the size value */}
       <Spacer axis="vertical" size={16} />
-      <p>Some text below</p>
+      <div>Some text below</div>
     </main>
   )
-}`
-    }
-  }}
-/>
-
-{/* eslint-enable prettier/prettier */}
+}
+```
+</Playground>
 
 ## Chakra UI
 
 You'll be using Chakra UI's built-in scale for the spacing props (coming from `width`). So `size` will be a defined list of numbers or tokens like `xl`.
-
-{/* eslint-disable prettier/prettier */}
 
 <Playground
   title="Chakra UI"
   template="react-ts"
   customSetup={{
     dependencies: {
-      "@chakra-ui/react": `latest`,
+      "@chakra-ui/react": `^2.10.4`,
       "@emotion/react": `latest`,
       "@emotion/styled": `latest`,
       "framer-motion": `latest`,
     }
   }}
-  files={{
-    "/spacer.tsx": {
-      code: `import React from "react"
+>
+
+```tsx spacer.tsx active
+import React from "react"
 import { Box, BoxProps } from "@chakra-ui/react"
 
 interface ISpacerProps extends BoxProps {
@@ -111,11 +106,11 @@ export const Spacer = ({ size, axis, ...rest }: ISpacerProps) => {
       {...rest}
     />
   )
-}`,
-      active: true,
-    },
-    "/App.tsx": {
-      code: `import React from "react"
+}
+```
+
+```tsx App.tsx
+import React from "react"
 import { ChakraProvider } from "@chakra-ui/react"
 import { Spacer } from "./spacer"
 
@@ -123,19 +118,17 @@ export default function App() {
   return (
     <ChakraProvider>
       <main>
-        <p>Spacer</p>
+        <div>Spacer</div>
         {/* Use one of the tokens */}
         <Spacer axis="vertical" size="16" />
-        <p>Some text below</p>
+        <div>Some text below</div>
       </main>
     </ChakraProvider>
   )
-}`
-    }
-  }}
-/>
+}
+```
 
-{/* eslint-enable prettier/prettier */}
+</Playground>
 
 ## vanilla-extract
 
