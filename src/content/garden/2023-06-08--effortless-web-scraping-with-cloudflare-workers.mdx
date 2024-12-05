@@ -35,14 +35,13 @@ I'm now using such a permalink as my API for those website numbers. I find using
 
 Oh, and in case you're wondering how I use the table data, here's a small code playground to show it:
 
-{/* eslint-disable prettier/prettier */}
-
 <Playground
   title="Parsing data from Web Scraper"
   template="react-ts"
-  files={{
-    "/parsing.ts": {
-      code: `const incoming = "Name Max Current PlaceA 144 51 PlaceB 50 25 PlaceC 200 130"
+>
+
+```ts parsing.ts active
+const incoming = "Name Max Current PlaceA 144 51 PlaceB 50 25 PlaceC 200 130"
 
 function chunk(arr: Array<string>, size = 3): Array<Array<string>> {
   const bulks: Array<Array<string>> = []
@@ -79,11 +78,10 @@ type ParseStringResponse = {
     current: string
   }>
 }
-`,
-      active: true,
-    },
-    "/App.tsx": {
-      code: `import React from "react"
+```
+
+```tsx App.tsx hidden
+import React from "react"
 import { output } from "./parsing"
 
 export default function App() {
@@ -94,10 +92,7 @@ export default function App() {
       </code>
     </pre>
   )
-}`,
-      hidden: true,
-    }
-  }}
-/>
+}
+```
 
-{/* eslint-enable prettier/prettier */}
+</Playground>

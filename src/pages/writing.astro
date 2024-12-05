@@ -34,7 +34,7 @@ const posts = getSortedWriting(await getCollection('writing', filterPublished))
 				</Box>
 				<Box gap={8} class={cardGridStyle}>
 					{
-						posts.map(({ data: post, slug }) => (
+						posts.map(({ data: post, id: slug }) => (
 							<Card
 								slug={slugify(slug, post.category.id)}
 								title={post.title}

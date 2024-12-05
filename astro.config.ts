@@ -1,7 +1,6 @@
 import { defineConfig, envField } from 'astro/config'
 import { imageService } from '@unpic/astro/service'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
-import netlify from '@astrojs/netlify'
 import sitemap from '@astrojs/sitemap'
 import mdx from '@astrojs/mdx'
 import { remarkSandpack } from 'remark-sandpack'
@@ -17,7 +16,6 @@ import { REDIRECTS } from './src/constants/redirects.js'
 // https://astro.build/config
 export default defineConfig({
 	output: 'static',
-	adapter: netlify(),
 	site: SITE.url,
 	trailingSlash: 'always',
 	redirects: REDIRECTS,
@@ -34,13 +32,11 @@ export default defineConfig({
 	devToolbar: {
 		enabled: false,
 	},
-	experimental: {
-		env: {
-			schema: {
-				IS_PLAYWRIGHT: envField.boolean({ access: 'public', context: 'server', default: false, optional: true }),
-				GITHUB_TOKEN: envField.string({ access: 'secret', context: 'server' }),
-				FLICKR_API_KEY: envField.string({ access: 'secret', context: 'server' }),
-			},
+	env: {
+		schema: {
+			IS_PLAYWRIGHT: envField.boolean({ access: 'public', context: 'server', default: false, optional: true }),
+			GITHUB_TOKEN: envField.string({ access: 'secret', context: 'server' }),
+			FLICKR_API_KEY: envField.string({ access: 'secret', context: 'server' }),
 		},
 	},
 	markdown: {

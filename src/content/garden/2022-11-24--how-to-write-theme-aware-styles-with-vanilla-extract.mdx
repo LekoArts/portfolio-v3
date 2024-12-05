@@ -136,14 +136,13 @@ An explanation on the arguments:
 
 You can play around with the function and its output in the box below:
 
-{/* eslint-disable prettier/prettier */}
-
 <Playground
   title="themeAwareStyles"
   template="react-ts"
-  files={{
-    "/demo.ts": {
-      code: `import { themeAwareStyles } from "./utils"
+>
+
+```ts demo.ts active
+import { themeAwareStyles } from "./utils"
 
 const defaultTheme = "light"
 const darkThemeClass = "dark"
@@ -154,11 +153,11 @@ export const output = themeAwareStyles({
   defaultTheme,
   alternateThemeClass: darkThemeClass,
   // rootClass: ".root",
-})`,
-      active: true,
-    },
-    "/utils.ts": {
-      code: `const isObject = (value: unknown) => !!(value && typeof value === "object" && !Array.isArray(value))
+})
+```
+
+```ts utils.ts
+const isObject = (value: unknown) => !!(value && typeof value === "object" && !Array.isArray(value))
 const isString = (value: unknown) => typeof value === "string"
 export const THEMES = ["light", "dark"] as const
 
@@ -169,23 +168,23 @@ export const themeAwareStyles = ({
   rootClass = "",
 }) => {
   const selectors = {}
-  const r = rootClass ? \`$\{rootClass} \` : ""
+  const r = rootClass ? `${rootClass} ` : ""
   const alternate = defaultTheme === "light" ? THEMES[1] : THEMES[0]
 
   Object.entries(selectorMap).forEach(([selector, selectorStyle]) => {
     Object.entries(selectorStyle).forEach(([property, cssOrObject]) => {
       if (isObject(cssOrObject)) {
-        selectors[\`$\{r}$\{selector}\`] = {
-          ...selectors[\`$\{r}$\{selector}\`],
+        selectors[`${r}${selector}`] = {
+          ...selectors[`${r}${selector}`],
           [property]: cssOrObject[defaultTheme],
         }
-        selectors[\`html.$\{alternateThemeClass} $\{r}$\{selector}\`] = {
-          ...selectors[\`html.$\{alternateThemeClass} $\{r}$\{selector}\`],
+        selectors[`html.${alternateThemeClass} ${r}${selector}`] = {
+          ...selectors[`html.${alternateThemeClass} ${r}${selector}`],
           [property]: cssOrObject[alternate],
         }
       } else if (isString(cssOrObject)) {
-        selectors[\`\${r}$\{selector}\`] = {
-          ...selectors[\`$\{r}$\{selector}\`],
+        selectors[`${r}${selector}`] = {
+          ...selectors[`${r}${selector}`],
           [property]: cssOrObject,
         }
       }
@@ -193,10 +192,11 @@ export const themeAwareStyles = ({
   })
 
   return selectors
-}`
-    },
-    "/App.tsx": {
-      code: `import React from "react"
+}
+```
+
+```tsx App.tsx hidden
+import React from "react"
 import { output } from "./demo"
 
 export default function App() {
@@ -207,13 +207,10 @@ export default function App() {
       </code>
     </pre>
   )
-}`,
-      hidden: true,
-    }
-  }}
-/>
+}
+```
 
-{/* eslint-enable prettier/prettier */}
+</Playground>
 
 ## Usage
 

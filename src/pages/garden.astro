@@ -42,7 +42,7 @@ const garden = getSortedGarden(await getCollection('garden'))
 			<Spacer size={20} axis="vertical" />
 			<div class={gardenItemWrapperStyle}>
 				{
-					garden.map(({ data: post, slug }, index) => {
+					garden.map(({ data: post, id: slug }, index) => {
 						return (
 							<>
 								<Link

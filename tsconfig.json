@@ -34,5 +34,6 @@
 			"vitest/globals"
 		]
 	},
+	"include": [".astro/types.d.ts", "**/*"],
 	"exclude": ["dist", "node_modules", "overrides", "public", "netlify"]
 }

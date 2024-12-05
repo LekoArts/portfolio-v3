@@ -21,7 +21,7 @@ const posts: Array<CardProps> = _posts.map((post) => ({
 	title: post.data.title,
 	subtitle: post.data.subtitle,
 	description: post.data.description,
-	slug: slugify(post.slug, post.data.category.id),
+	slug: slugify(post.id, post.data.category.id),
 }))
 
 const title = 'Tutorials'

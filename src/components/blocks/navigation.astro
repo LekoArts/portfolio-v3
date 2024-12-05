@@ -6,7 +6,13 @@ import Spacer from '@components/primitives/spacer.astro'
 import ThemeToggle from '@components/blocks/theme-toggle.astro'
 import Link from '@components/primitives/link.astro'
 
-const { data: primaryNavigation } = await getEntry('navigations', 'primary')
+const entry = await getEntry('navigations', 'primary')
+
+if (!entry) {
+	throw new Error('No primary navigation found')
+}
+
+const { data: primaryNavigation } = entry
 const pathname = Astro.url.pathname
 
 function activeClassName(link: string | undefined) {
