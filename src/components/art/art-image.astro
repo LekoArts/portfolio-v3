@@ -1,58 +1,41 @@
 ---
 import type { HTMLAttributes } from 'astro/types'
-import { artAnchorStyle, artImageStyle } from './art-image.css'
+import type { DataEntryMap } from 'astro:content'
+import { artImageWrapperStyle, artImageStyle } from './art-image.css'
 
-interface Props extends HTMLAttributes<'a'> {
-	images: IImages
-	photoId: string
-	alt: string
+type ImageUrls = DataEntryMap['art3d'][string]['data']['imageUrls']
+
+interface Props extends HTMLAttributes<'div'> {
+	imageUrls: ImageUrls
+	alt?: string
 	imgClass?: string
 }
 
-interface IImageSize {
-	url: string
-	width: number
-	height: number
-}
-
-interface IImages {
-	lg: IImageSize
-	md: IImageSize
-	sm: IImageSize
-}
-
-const USER_ID = '192975453@N04'
-
-const getSrcSet = (images: IImages) => {
-	const { lg, md, sm } = images
+const getSrcSet = (imageUrls: ImageUrls) => {
+	const { '640px': sm, '800px': md, '1024px': lg } = imageUrls
 
 	return `
-    ${lg.url} ${lg.width}w,
-    ${md.url} ${md.width}w,
-    ${sm.url} ${sm.width}w
+    ${lg!.url} ${lg!.width}w,
+    ${md!.url} ${md!.width}w,
+    ${sm!.url} ${sm!.width}w
   `
 }
 
-const { photoId, images, alt, class: className, imgClass, ...rest } = Astro.props
+const { imageUrls, alt, class: className, imgClass, ...rest } = Astro.props
 
-const src = images.lg.url
-const { width: maxWidth, height: maxHeight } = images.lg
+const src = imageUrls['1024px']!.url
+const { width: maxWidth, height: maxHeight } = imageUrls['1024px']!
 const aspectRatio = maxWidth / maxHeight
 ---
 
-<a
-	href={`https://www.flickr.com/photos/${USER_ID}/${photoId}`}
-	target="_blank"
-	class:list={[artAnchorStyle, className]}
-	{...rest}
->
+<div class:list={[artImageWrapperStyle, className]} {...rest}>
 	<img
 		loading="lazy"
 		decoding="async"
 		src={src}
 		sizes={`(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`}
-		srcset={getSrcSet(images)}
-		alt={alt}
+		srcset={getSrcSet(imageUrls)}
+		alt={alt ?? ''}
 		class:list={[artImageStyle, imgClass]}
 		style={{
 			maxWidth: `${maxWidth}px`,
@@ -61,4 +44,4 @@ const aspectRatio = maxWidth / maxHeight
 			width: '100%',
 		}}
 	/>
-</a>
+</div>

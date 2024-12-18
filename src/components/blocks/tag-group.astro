@@ -32,10 +32,10 @@ const { id, items } = Astro.props
 </lekoarts-tag-group>
 
 <script>
-	import type { TagGroupKeys } from '@stores/tag-group'
-	import { queryStringTags } from '@utils/url'
-	import { $tagGroup, addTag, removeTag } from '@stores/tag-group'
 	import type { Tag } from '@constants/types'
+	import type { TagGroupKeys } from '@stores/tag-group'
+	import { $tagGroup, addTag, removeTag } from '@stores/tag-group'
+	import { queryStringTags } from '@utils/url'
 	import { listenKeys } from 'nanostores'
 
 	class LekoArtsTagGroup extends HTMLElement {
@@ -87,7 +87,7 @@ const { id, items } = Astro.props
 		initialize(id: TagGroupKeys) {
 			// Parse query params when loading the page
 			const parsed = queryStringTags.from(window.location.search)
-			const items = document.querySelectorAll<HTMLLinkElement>(this.itemSelector)
+			const items = document.querySelectorAll<HTMLDivElement | HTMLLinkElement>(this.itemSelector)
 
 			// If tags in the query params (?tags=MDX,Astro) are present, set them in the store and filter the items
 			if (parsed?.tags && parsed.tags.length > 0) {
@@ -109,7 +109,7 @@ const { id, items } = Astro.props
 		subscribe(id: TagGroupKeys) {
 			// When $tagGroup changes, update the list by only showing items with the selectedTags
 			listenKeys($tagGroup, [id], ({ [id]: selectedTags }) => {
-				const items = document.querySelectorAll<HTMLLinkElement>(this.itemSelector)
+				const items = document.querySelectorAll<HTMLDivElement | HTMLLinkElement>(this.itemSelector)
 
 				// If no tags are selected, show all items
 				if (selectedTags.length === 0) {

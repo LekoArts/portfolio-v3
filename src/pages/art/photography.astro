@@ -6,12 +6,6 @@ import Container from '@components/primitives/container.astro'
 import Prose from '@components/typography/prose.astro'
 import Seo from '@components/seo.astro'
 import Spacer from '@components/primitives/spacer.astro'
-import { fetchFlickr, transformFlickrPhoto } from '@lib/flickr'
-import type {
-	FlickrPhotosetsGetListResponse,
-	FlickrPhotosetsGetPhotosResponse,
-	TransformedFlickrPhoto,
-} from '@constants/types'
 import { explanationLayoutWrapperStyle, layoutIconStyle } from './_photography.css'
 import Text from '@components/typography/text.astro'
 import Box from '@components/primitives/box.astro'
@@ -19,53 +13,16 @@ import SvgIcon from '@components/primitives/svg-icon.astro'
 import Button from '@components/primitives/button/base.astro'
 import TagGroup from '@components/blocks/tag-group.astro'
 import ArtImage from '@components/art/art-image.astro'
+import { getCollection } from 'astro:content'
 
-// 3D, Design
-const EXCLUDED_PHOTOSET_IDS = ['72177720300732809', '72177720300725772']
 const LAYOUT_TYPES = [`masonry`, `grid`, `list`] as const
 
-const {
-	photosets: { photoset: photosetList },
-} = await fetchFlickr<FlickrPhotosetsGetListResponse>({
-	method: 'photosets.getList',
-	query: {},
-})
+const photosets = await getCollection('photography')
 
-let photosetTitles: Array<string> = []
-let photos = [] as Array<TransformedFlickrPhoto>
-
-for (const item of photosetList) {
-	if (!item.id) {
-		continue
-	}
-
-	if (EXCLUDED_PHOTOSET_IDS.includes(item.id)) {
-		continue
-	}
-
-	const title = item.title._content
-	photosetTitles.push(title)
-
-	const res = await fetchFlickr<FlickrPhotosetsGetPhotosResponse>({
-		method: 'photosets.getPhotos',
-		query: {
-			photoset_id: item.id,
-		},
-	})
-
-	for (const photo of res.photoset.photo) {
-		if (!photo.id) {
-			continue
-		}
-
-		const transformedPhoto = transformFlickrPhoto(photo, {
-			photoset_title: title,
-		})
-		photos.push(transformedPhoto)
-	}
-}
-
-photosetTitles.sort((a, b) => a.localeCompare(b))
+const photosetTitles = photosets.map((photoset) => photoset.data.title).sort((a, b) => a.localeCompare(b))
+const photos = photosets.flatMap((photoset) =>
+	photoset.data.photos.map((photo) => ({ ...photo, photoset_title: photoset.data.title })),
+)
 ---
 
 <Base>
@@ -120,8 +77,7 @@ photosetTitles.sort((a, b) => a.localeCompare(b))
 				photos.map((photo) => (
 					<ArtImage
 						alt={photo.description}
-						images={photo.images}
-						photoId={photo.id}
+						imageUrls={photo.imageUrls}
 						class="tag-group-item"
 						data-tags={photo.photoset_title}
 					/>
@@ -133,8 +89,8 @@ photosetTitles.sort((a, b) => a.localeCompare(b))
 </Base>
 
 <script>
-	import { $ui, type LayoutType } from '@stores/ui'
 	import { artImageStyle } from '@components/art/art-image.css'
+	import { $ui, type LayoutType } from '@stores/ui'
 	import { gridImagesVariants, imageWrapperVariants } from './_photography.css'
 
 	const layoutButtons = document.querySelectorAll<HTMLButtonElement>('.button-layout')

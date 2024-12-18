@@ -33,6 +33,9 @@ importers:
       '@ctrl/tinycolor':
         specifier: ^4.1.0
         version: 4.1.0
+      '@lekoarts/flickr-loader':
+        specifier: ^1.2.0
+        version: 1.2.0(astro@5.0.9(@types/node@22.10.2)(rollup@4.28.1)(typescript@5.7.2)(yaml@2.6.1))
       '@nanostores/persistent':
         specifier: ^0.10.2
         version: 0.10.2(nanostores@0.11.3)
@@ -1109,6 +1112,11 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
+  '@lekoarts/flickr-loader@1.2.0':
+    resolution: {integrity: sha512-RcLmeKEVHMyWJFhQWDXIuHBNoo+NXOTe7V42PsoqtgHwyCHML3sbClHl8wJeLZameEcO59VuN7aRUqDdVEA2cQ==}
+    peerDependencies:
+      astro: ^5.0.0
+
   '@lezer/common@1.2.1':
     resolution: {integrity: sha512-yemX0ZD2xS/73llMZIK6KplkjIjf2EvAHcinDi/TfJ9hS25G0388+ClHt6/3but0oOxinTcQHJLDXh6w1crzFQ==}
 
@@ -1175,6 +1183,10 @@ packages:
     resolution: {integrity: sha512-IwEphTD75liO8g+6taS+4oqz+nnroocNfWVHWz7j+N+ZO2vYrc6PV1q7GQhuahL0IOR7JccFTsFKQ/mb6iZWAg==}
     peerDependencies:
       react: '>=16.8'
+
+  '@rgrove/parse-xml@4.2.0':
+    resolution: {integrity: sha512-UuBOt7BOsKVOkFXRe4Ypd/lADuNIfqJXv8GvHqtXaTYXPPKkj2nS2zPllVsrtRjcomDhIJVBnZwfmlI222WH8g==}
+    engines: {node: '>=14.0.0'}
 
   '@rollup/pluginutils@5.1.3':
     resolution: {integrity: sha512-Pnsb6f32CD2W3uCaLZIzDmeFyQ2b8UWMFI7xtwUezpcGBDVDW6y9XgAWIlARiGAo6eNF5FK5aQTr0LFyNyqq5A==}
@@ -2509,6 +2521,10 @@ packages:
   flattie@1.1.1:
     resolution: {integrity: sha512-9UbaD6XdAL97+k/n+N7JwX46K/M6Zc6KcFYskrYL8wbBV/Uyk0CTAMY0VT+qiK5PM7AIc9aTWYtq65U7T+aCNQ==}
     engines: {node: '>=8'}
+
+  flickr-sdk@7.0.0-beta.9:
+    resolution: {integrity: sha512-uB9S0yu3E16+zdxkrqIegQJlzP9HkZGZVmFyM0Z8PwFOLBP/tPHIxndT3Tx1uVojNPlMZ1GZPADs1L2tCrbqvg==}
+    engines: {node: '>= 18'}
 
   fs-readdir-recursive@1.1.0:
     resolution: {integrity: sha512-GNanXlVr2pf02+sPN40XN8HG+ePaNcvM0q5mZBd668Obwb0yD5GiUbZOFgwn8kGMY6I3mdyDJzieUy3PTYyTRA==}
@@ -5105,6 +5121,11 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
+  '@lekoarts/flickr-loader@1.2.0(astro@5.0.9(@types/node@22.10.2)(rollup@4.28.1)(typescript@5.7.2)(yaml@2.6.1))':
+    dependencies:
+      astro: 5.0.9(@types/node@22.10.2)(rollup@4.28.1)(typescript@5.7.2)(yaml@2.6.1)
+      flickr-sdk: 7.0.0-beta.9
+
   '@lezer/common@1.2.1': {}
 
   '@lezer/css@1.1.8':
@@ -5200,6 +5221,8 @@ snapshots:
   '@react-hook/passive-layout-effect@1.2.1(react@18.3.1)':
     dependencies:
       react: 18.3.1
+
+  '@rgrove/parse-xml@4.2.0': {}
 
   '@rollup/pluginutils@5.1.3(rollup@4.28.1)':
     dependencies:
@@ -6847,6 +6870,10 @@ snapshots:
   flatted@3.3.2: {}
 
   flattie@1.1.1: {}
+
+  flickr-sdk@7.0.0-beta.9:
+    dependencies:
+      '@rgrove/parse-xml': 4.2.0
 
   fs-readdir-recursive@1.1.0: {}
 
