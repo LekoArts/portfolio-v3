@@ -1,11 +1,11 @@
 import type { StyleRule } from '@vanilla-extract/css'
-import { createVar, globalStyle, style, styleVariants } from '@vanilla-extract/css'
 import { themesSelectors } from '@styles/atoms.css'
 import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
 import { transition } from '@styles/tokens/motion'
+import { createVar, globalStyle, style, styleVariants } from '@vanilla-extract/css'
 
 const buttonBaseStyle = style({
 	display: 'inline-flex',

@@ -1,6 +1,6 @@
-import { globalStyle, style } from '@vanilla-extract/css'
 import { vars } from '@styles/themes/contract.css'
 import { colorPalette } from '@styles/tokens/colors'
+import { globalStyle, style } from '@vanilla-extract/css'
 
 export const toggleIconStyle = style({
 })

@@ -1,5 +1,5 @@
-import { map } from 'nanostores'
 import type { Tag } from '@constants/types'
+import { map } from 'nanostores'
 
 interface TagGroupStore {
 	garden: Array<Tag>

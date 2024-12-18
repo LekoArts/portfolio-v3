@@ -1,10 +1,10 @@
+import type { ContainerVariants } from '@components/primitives/container.css'
 import type { StyleRule } from '@vanilla-extract/css'
-import { createVar, style, styleVariants } from '@vanilla-extract/css'
 import { themesSelectors } from '@styles/atoms.css'
 import { vars } from '@styles/themes/contract.css'
 import { colorPalette } from '@styles/tokens/colors'
 import { zIndices } from '@styles/tokens/z-indices'
-import type { ContainerVariants } from '@components/primitives/container.css'
+import { createVar, style, styleVariants } from '@vanilla-extract/css'
 
 export type FullWidthContainerVariants = Exclude<ContainerVariants, 'proseRoot'>
 

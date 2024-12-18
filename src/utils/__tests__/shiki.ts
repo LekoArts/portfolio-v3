@@ -13,8 +13,8 @@ describe('parseMeta', () => {
 
 		expect(parseMeta('{{ "title": "test.js" }}')).toEqual({ title: 'test.js' })
 		expect(parseMeta('{{ title: "test.js" }}')).toEqual({ title: 'test.js' })
-		expect(parseMeta(`{{ title: 'test.js' }}`)).toEqual({ title: 'test.js' })
-		expect(parseMeta(`{{ 'title': 'test.js' }}`)).toEqual({ title: 'test.js' })
+		expect(parseMeta('{{ title: \'test.js\' }}')).toEqual({ title: 'test.js' })
+		expect(parseMeta('{{ \'title\': \'test.js\' }}')).toEqual({ title: 'test.js' })
 
 		expect(parseMeta('{{ title: "test.js", highlight: [1, [3, 5]], numbers: true }}')).toEqual({ title: 'test.js', highlight: [1, [3, 5]], numbers: true })
 	})

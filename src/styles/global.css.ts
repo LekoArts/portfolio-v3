@@ -1,12 +1,12 @@
-import { type GlobalStyleRule, globalStyle } from '@vanilla-extract/css'
-import { space } from '@styles/tokens/space'
+import { visuallyHidden } from '@components/a11y/visually-hidden.css'
 import { vars } from '@styles/themes/contract.css'
-import { colorPalette } from '@styles/tokens/colors'
 import { darkThemeClass } from '@styles/themes/dark.css'
+import { minMediaQuery } from '@styles/tokens/breakpoints'
+import { colorPalette } from '@styles/tokens/colors'
+import { space } from '@styles/tokens/space'
 import { fonts } from '@styles/tokens/typography'
 import { em, round } from '@utils/css'
-import { minMediaQuery } from '@styles/tokens/breakpoints'
-import { visuallyHidden } from '@components/a11y/visually-hidden.css'
+import { globalStyle, type GlobalStyleRule } from '@vanilla-extract/css'
 
 globalStyle('html', {
 	scrollPaddingTop: `calc(${space.navigationHeight} + ${vars.space[4]})`,
@@ -21,7 +21,7 @@ globalStyle('body', {
 	transitionDuration: '0.3s',
 	position: 'relative',
 	minHeight: vars.space.full,
-	fontFeatureSettings: `'kern'`,
+	fontFeatureSettings: '\'kern\'',
 })
 
 globalStyle('*', {

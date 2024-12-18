@@ -1,6 +1,6 @@
-import React from 'https://esm.sh/react@18.2.0'
 import type { Config } from '@netlify/edge-functions'
 import { ImageResponse } from 'https://deno.land/x/og_edge/mod.ts'
+import React from 'https://esm.sh/react@18.2.0'
 
 const WIDTH = 1600
 const HEIGHT = 836

@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css'
 import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
+import { style } from '@vanilla-extract/css'
 
 export const copyButtonStyle = style({
 	transition: 'all 0.3s ease-in-out',

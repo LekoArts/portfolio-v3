@@ -107,7 +107,7 @@ describe('responsiveStyles', () => {
 			a: [{ fontSize: '1rem' }],
 		})
 	})
-	it(`supports 'null' as value to signal a skip`, () => {
+	it('supports \'null\' as value to signal a skip', () => {
 		const result = responsiveStyles([
 			{
 				p: {

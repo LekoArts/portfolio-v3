@@ -1,6 +1,6 @@
 import type { StyleRule } from '@vanilla-extract/css'
-import { style, styleVariants } from '@vanilla-extract/css'
 import { vars } from '@styles/themes/contract.css'
+import { style, styleVariants } from '@vanilla-extract/css'
 
 export type AspectRatios = '1:1' | '16:9' | '4:3' | '3:2' | '8:5'
 

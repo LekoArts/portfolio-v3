@@ -1,10 +1,10 @@
 import type { RSSFeedItem } from '@astrojs/rss'
+import type { APIRoute } from 'astro'
 import rss from '@astrojs/rss'
 import { SITE } from '@constants/meta'
-import type { APIRoute } from 'astro'
-import { getCollection } from 'astro:content'
 import { filterPublished } from '@utils/collection'
 import { slugify } from '@utils/slugify'
+import { getCollection } from 'astro:content'
 
 export const GET: APIRoute = async () => {
 	const writing = (await getCollection('writing', filterPublished)).map(entry => ({
