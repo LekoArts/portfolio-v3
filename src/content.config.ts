@@ -3,7 +3,7 @@ import { defineCollection, reference, z } from 'astro:content'
 import { glob } from 'astro/loaders'
 
 const writing = defineCollection({
-	loader: glob({ pattern: '**\/[^_]*.mdx', base: './src/content/writing' }),
+	loader: glob({ pattern: '**\/[^_]*.mdx', base: './content/writing' }),
 	schema: z.object({
 		title: z.string(),
 		subtitle: z.string().optional().default(''),
@@ -18,7 +18,7 @@ const writing = defineCollection({
 })
 
 const garden = defineCollection({
-	loader: glob({ pattern: '**\/[^_]*.mdx', base: './src/content/garden' }),
+	loader: glob({ pattern: '**\/[^_]*.mdx', base: './content/garden' }),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
@@ -30,7 +30,7 @@ const garden = defineCollection({
 })
 
 const categories = defineCollection({
-	loader: glob({ pattern: '**\/[^_]*.yaml', base: './src/content/categories' }),
+	loader: glob({ pattern: '**\/[^_]*.yaml', base: './content/categories' }),
 	schema: ({ image }) => z.object({
 		name: z.string(),
 		description: z.string(),
@@ -40,7 +40,7 @@ const categories = defineCollection({
 })
 
 const navigations = defineCollection({
-	loader: glob({ pattern: '**\/[^_]*.yaml', base: './src/content/navigations' }),
+	loader: glob({ pattern: '**\/[^_]*.yaml', base: './content/navigations' }),
 	schema: z.array(z.object({
 		name: z.string(),
 		link: z.string().optional(),
