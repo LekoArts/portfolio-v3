@@ -6,7 +6,7 @@ import { defineCollection, reference, z } from 'astro:content'
 const FLICKR_USERNAME = 'ars_aurea'
 
 const writing = defineCollection({
-	loader: glob({ pattern: '**\/[^_]*.mdx', base: './content/writing' }),
+	loader: glob({ pattern: '**/*.mdx', base: './content/writing' }),
 	schema: z.object({
 		title: z.string(),
 		subtitle: z.string().optional().default(''),
@@ -21,7 +21,7 @@ const writing = defineCollection({
 })
 
 const garden = defineCollection({
-	loader: glob({ pattern: '**\/[^_]*.mdx', base: './content/garden' }),
+	loader: glob({ pattern: '**/*.mdx', base: './content/garden' }),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
@@ -33,7 +33,7 @@ const garden = defineCollection({
 })
 
 const categories = defineCollection({
-	loader: glob({ pattern: '**\/[^_]*.yaml', base: './content/categories' }),
+	loader: glob({ pattern: '**/*.yaml', base: './src/data/categories' }),
 	schema: ({ image }) => z.object({
 		name: z.string(),
 		description: z.string(),
@@ -43,7 +43,7 @@ const categories = defineCollection({
 })
 
 const navigations = defineCollection({
-	loader: glob({ pattern: '**\/[^_]*.yaml', base: './content/navigations' }),
+	loader: glob({ pattern: '**/*.yaml', base: './src/data/navigations' }),
 	schema: z.array(z.object({
 		name: z.string(),
 		link: z.string().optional(),

@@ -30,7 +30,7 @@ pub fn get_file_info(
     };
 
     let filename = format!("{}--{}.mdx", date, slug);
-    let directory_path = current_dir.join("src").join("content").join(content_dir);
+    let directory_path = current_dir.join("content").join(content_dir);
     let filepath = directory_path.join(&filename);
 
     Ok((directory_path, filepath, filename))

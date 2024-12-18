@@ -6,7 +6,7 @@ import { getCollection } from 'astro:content'
 import { filterPublished, getSortedWriting } from '@utils/collection'
 import type { CardProps } from '@constants/types'
 import { slugify } from '@utils/slugify'
-import lightbulbImage from '../../content/categories/_img/tutorials.png'
+import lightbulbImage from '../data/categories/_img/tutorials.png'
 
 const _posts = getSortedWriting(
 	await getCollection('writing', (entry) => {

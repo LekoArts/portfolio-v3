@@ -13,11 +13,7 @@ const linkAttributesMap: Record<string, any> = {
 
 const entry = await getEntry('navigations', 'footer')
 
-if (!entry) {
-	throw new Error('No footer navigation found')
-}
-
-const { data: footerNavigation } = entry
+const footerNavigation = entry?.data ?? []
 ---
 
 <FullWidthContainer variant="dark">

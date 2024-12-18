@@ -8,11 +8,7 @@ import Link from '@components/primitives/link.astro'
 
 const entry = await getEntry('navigations', 'primary')
 
-if (!entry) {
-	throw new Error('No primary navigation found')
-}
-
-const { data: primaryNavigation } = entry
+const primaryNavigation = entry?.data ?? []
 const pathname = Astro.url.pathname
 
 function activeClassName(link: string | undefined) {
