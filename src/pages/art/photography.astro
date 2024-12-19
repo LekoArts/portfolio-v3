@@ -17,7 +17,7 @@ import { getCollection } from 'astro:content'
 
 const LAYOUT_TYPES = [`masonry`, `grid`, `list`] as const
 
-const photosets = await getCollection('photography')
+const photosets = []
 
 const photosetTitles = photosets.map((photoset) => photoset.data.title).sort((a, b) => a.localeCompare(b))
 const photos = photosets.flatMap((photoset) =>
