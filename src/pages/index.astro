@@ -30,8 +30,6 @@ import MotionBox from '@components/primitives/motion-box.astro'
 import PhotographyImage from '../assets/pages-index-photography-preview.jpg'
 import ArtImage from '../assets/pages-index-3d-preview.jpg'
 import Container from '@components/primitives/container.astro'
-import Tag from '@components/primitives/tag.astro'
-import { fetchGithub } from '@lib/github'
 
 const cardGradients = [
 	`linear-gradient(to right top, #A774F2, #F25D76, #FF964F)`,
@@ -77,31 +75,6 @@ interface GitHubResponse {
 		}
 	}
 }
-
-const githubResponse = await fetchGithub<GitHubResponse>(
-	JSON.stringify({
-		query: `#graphql
-			query {
-				primary: repository(name: "gatsby-themes", owner: "LekoArts") {
-					stargazerCount
-					description
-					name
-					url
-				}
-				secondary: repository(name: "secco", owner: "LekoArts") {
-					stargazerCount
-					description
-					name
-					url
-				}
-			}
-		`,
-	}),
-)
-
-const {
-	data: { primary, secondary },
-} = githubResponse
 
 const writing = getSortedWriting(await getCollection('writing', filterPublished)).slice(0, 4)
 const garden = getSortedGarden(await getCollection('garden')).slice(0, 3)
@@ -237,51 +210,7 @@ const [firstPost, ...otherPosts] = writing
 							GitHub
 						</SecondaryButton>
 					</Box>
-					<Box gap={6} class={repositoriesGridStyle}>
-						{
-							primary && secondary ? (
-								<>
-									<Box bg="primaryAsBg" p={6} borderRadius="lg" __color="#e7f1ff">
-										<Box display="flex" flexDirection="row" justifyContent="space-between" marginBottom={6}>
-											<Link
-												fontSize={[`lg`, null, null, null, `lgx`]}
-												fontWeight="bold"
-												href={primary.url}
-												target="_blank"
-												__color="white"
-											>
-												{primary.name}
-											</Link>
-											<Tag colorScheme="blue" iconId="star">
-												{primary.stargazerCount}
-											</Tag>
-										</Box>
-										<Text>{primary.description}</Text>
-									</Box>
-									<Box bg="mutedAsBg" p={6} borderRadius="lg">
-										<Box display="flex" flexDirection="row" justifyContent="space-between" marginBottom={6}>
-											<Link
-												fontSize={[`lg`, null, null, null, `lgx`]}
-												fontWeight="bold"
-												target="_blank"
-												href={secondary.url}
-											>
-												{secondary.name}
-											</Link>
-											<Tag colorScheme="gray" iconId="star">
-												{secondary.stargazerCount}
-											</Tag>
-										</Box>
-										<Text>{secondary.description}</Text>
-									</Box>
-								</>
-							) : (
-								<Box p={2} borderRadius="lg">
-									<strong>GITHUB_TOKEN</strong> required for fetching GitHub stars
-								</Box>
-							)
-						}
-					</Box>
+
 					<Box display="flex" justifyContent="space-between" flexWrap="wrap">
 						{
 							openSourceRepos.map((repo) => (

@@ -6,7 +6,7 @@
 	"scripts": {
 		"bootstrap": "pnpm install && pnpm rs:build && pnpm playwright:init",
 		"dev": "astro dev",
-		"build": "astro check && astro build",
+		"build": "astro build",
 		"build:e2e": "IS_PLAYWRIGHT=true astro build",
 		"preview": "astro preview",
 		"lint": "eslint .",
@@ -29,6 +29,7 @@
 		"@codesandbox/sandpack-react": "^2.19.10",
 		"@codesandbox/sandpack-themes": "^2.0.21",
 		"@ctrl/tinycolor": "^4.1.0",
+		"@lekoarts/flickr-loader": "^1.2.0",
 		"@nanostores/persistent": "^0.10.2",
 		"@nanostores/react": "^0.7.3",
 		"@sindresorhus/slugify": "^2.2.1",

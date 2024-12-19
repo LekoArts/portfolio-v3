@@ -1,7 +1,7 @@
-import { style } from '@vanilla-extract/css'
 import { vars } from '@styles/themes/contract.css'
+import { style } from '@vanilla-extract/css'
 
-export const artAnchorStyle = style({
+export const artImageWrapperStyle = style({
 	display: 'block',
 	selectors: {
 		'&.hidden': {
