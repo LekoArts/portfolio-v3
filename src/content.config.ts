@@ -1,6 +1,9 @@
 import { ICON_CHOICES, TAGS_CHOICES, TYPE_CHOICES } from '@constants/content'
+import { flickrPhotosetsGetListWithPhotosLoader, flickrPhotosetsGetPhotosLoader } from '@lekoarts/flickr-loader'
 import { defineCollection, reference, z } from 'astro:content'
 import { glob } from 'astro/loaders'
+
+const FLICKR_USERNAME = 'ars_aurea'
 
 const writing = defineCollection({
 	loader: glob({ pattern: '**\/[^_]*.mdx', base: './src/content/writing' }),
@@ -52,9 +55,33 @@ const navigations = defineCollection({
 	})),
 })
 
+const art3d = defineCollection({
+	loader: flickrPhotosetsGetPhotosLoader({
+		photoset_id: '72177720300732809',
+		username: FLICKR_USERNAME,
+	}),
+})
+
+const artDesign = defineCollection({
+	loader: flickrPhotosetsGetPhotosLoader({
+		photoset_id: '72177720300725772',
+		username: FLICKR_USERNAME,
+	}),
+})
+
+const photography = defineCollection({
+	loader: flickrPhotosetsGetListWithPhotosLoader({
+		username: FLICKR_USERNAME,
+		nin: ['72177720300732809', '72177720300725772'],
+	}),
+})
+
 export const collections = {
 	categories,
 	navigations,
 	garden,
 	writing,
+	art3d,
+	artDesign,
+	photography,
 }
