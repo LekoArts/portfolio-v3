@@ -61,7 +61,7 @@ const art3d = defineCollection({
 		username: FLICKR_USERNAME,
 	}),
 })
-/*
+
 const artDesign = defineCollection({
 	loader: flickrPhotosetsGetPhotosLoader({
 		photoset_id: '72177720300725772',
@@ -69,14 +69,12 @@ const artDesign = defineCollection({
 	}),
 })
 
-
 const photography = defineCollection({
 	loader: flickrPhotosetsGetListWithPhotosLoader({
 		username: FLICKR_USERNAME,
 		nin: ['72177720300732809', '72177720300725772'],
 	}),
 })
-	*/
 
 export const collections = {
 	categories,
@@ -84,6 +82,6 @@ export const collections = {
 	garden,
 	writing,
 	art3d,
-	// artDesign,
-	// photography,
+	artDesign,
+	photography,
 }

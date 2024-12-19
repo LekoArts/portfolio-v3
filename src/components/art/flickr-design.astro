@@ -2,7 +2,7 @@
 import ArtImage from '@components/art/art-image.astro'
 import { getCollection } from 'astro:content'
 
-const photos = []
+const photos = await getCollection('artDesign')
 ---
 
 {

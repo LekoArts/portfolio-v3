@@ -35,7 +35,7 @@ export default defineConfig({
 	env: {
 		schema: {
 			IS_PLAYWRIGHT: envField.boolean({ access: 'public', context: 'server', default: false, optional: true }),
-			// GITHUB_TOKEN: envField.string({ access: 'secret', context: 'server' }),
+			GITHUB_TOKEN: envField.string({ access: 'secret', context: 'server' }),
 			FLICKR_API_KEY: envField.string({ access: 'secret', context: 'server' }),
 		},
 	},

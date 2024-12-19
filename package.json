@@ -6,7 +6,7 @@
 	"scripts": {
 		"bootstrap": "pnpm install && pnpm rs:build && pnpm playwright:init",
 		"dev": "astro dev",
-		"build": "astro build",
+		"build": "astro check && astro build",
 		"build:e2e": "IS_PLAYWRIGHT=true astro build",
 		"preview": "astro preview",
 		"lint": "eslint .",
