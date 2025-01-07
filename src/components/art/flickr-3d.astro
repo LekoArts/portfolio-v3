@@ -1,22 +1,12 @@
 ---
-import type { FlickrPhotosetsGetPhotosResponse } from '@constants/types'
-import { fetchFlickr, transformFlickrPhoto } from '@lib/flickr'
 import ArtImage from '@components/art/art-image.astro'
+import { getCollection } from 'astro:content'
 
-const PHOTOSET_ID = '72177720300732809'
-
-const res = await fetchFlickr<FlickrPhotosetsGetPhotosResponse>({
-	method: 'photosets.getPhotos',
-	query: {
-		photoset_id: PHOTOSET_ID,
-	},
-})
-
-const photos = res.photoset.photo.map((photo) => transformFlickrPhoto(photo))
+const photos = await getCollection('art3d')
 ---
 
 {
 	photos
-		.sort((a, b) => new Date(b.date_taken).getTime() - new Date(a.date_taken).getTime())
-		.map((photo) => <ArtImage images={photo.images} alt={photo.description} photoId={photo.id} />)
+		.sort((a, b) => b.data.date_taken!.getTime() - a.data.date_taken!.getTime())
+		.map((photo) => <ArtImage imageUrls={photo.data.imageUrls} alt={photo.data.description} />)
 }

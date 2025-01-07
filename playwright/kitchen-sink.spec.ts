@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
 
 test.describe('Smoke Test', () => {
 	test('should have MDX content', async ({ page }) => {
-		page.locator('h2:has-text("Buttons")')
+		page.locator('h2:has-text("Example Heading")')
 	})
 })
 
