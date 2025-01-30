@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 
 import { getViteConfig } from 'astro/config'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default getViteConfig({
 	test: {
@@ -10,4 +11,5 @@ export default getViteConfig({
 			reporter: ['text', 'json', 'html'],
 		},
 	},
+	plugins: [tsconfigPaths()],
 })
