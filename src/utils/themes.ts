@@ -1,4 +1,5 @@
-import { ATTRS, STORAGE_KEY, THEMES, type Theme, VALUE } from '@constants/themes'
+import type { Theme } from '@constants/themes'
+import { ATTRS, STORAGE_KEY, THEMES, VALUE } from '@constants/themes'
 
 const THEME_STATES = Object.values(THEMES)
 

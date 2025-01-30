@@ -1,8 +1,8 @@
 import type { StyleRule } from '@vanilla-extract/css'
-import { style, styleVariants } from '@vanilla-extract/css'
 import { themesSelectors } from '@styles/atoms.css'
 import { vars } from '@styles/themes/contract.css'
 import { colorPalette } from '@styles/tokens/colors'
+import { style, styleVariants } from '@vanilla-extract/css'
 
 export type Badges = 'light' | 'dark'
 

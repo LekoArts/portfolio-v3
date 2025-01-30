@@ -1,10 +1,10 @@
-import { globalStyle, style } from '@vanilla-extract/css'
 import { themesSelectors } from '@styles/atoms.css'
 import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { darkThemeClass } from '@styles/themes/dark.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
+import { globalStyle, style } from '@vanilla-extract/css'
 
 export const tagGroupStyle = style({
 	display: 'flex',

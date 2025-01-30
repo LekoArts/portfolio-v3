@@ -12,7 +12,7 @@ import { STORAGE_KEY, THEMES, VALUE, ATTRS } from '@constants/themes'
 		}
 
 		function getSystemTheme(e) {
-			if (!e) 
+			if (!e)
 e = PREFERS_LIGHT
 			return e.matches ? THEMES.light : THEMES.dark
 		}

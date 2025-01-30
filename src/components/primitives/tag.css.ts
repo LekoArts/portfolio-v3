@@ -1,9 +1,9 @@
 import type { StyleRule } from '@vanilla-extract/css'
-import { style, styleVariants } from '@vanilla-extract/css'
-import { getColor, transparentizeDict } from '@utils/color'
 import { themesSelectors } from '@styles/atoms.css'
 import { vars } from '@styles/themes/contract.css'
 import { colorPalette } from '@styles/tokens/colors'
+import { getColor, transparentizeDict } from '@utils/color'
+import { style, styleVariants } from '@vanilla-extract/css'
 
 const tagBaseStyle = style({
 	fontWeight: vars.fontWeight.medium,

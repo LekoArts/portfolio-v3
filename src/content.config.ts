@@ -1,7 +1,7 @@
 import { ICON_CHOICES, TAGS_CHOICES, TYPE_CHOICES } from '@constants/content'
 import { flickrPhotosetsGetListWithPhotosLoader, flickrPhotosetsGetPhotosLoader } from '@lekoarts/flickr-loader'
-import { defineCollection, reference, z } from 'astro:content'
 import { glob } from 'astro/loaders'
+import { defineCollection, reference, z } from 'astro:content'
 
 const FLICKR_USERNAME = 'ars_aurea'
 

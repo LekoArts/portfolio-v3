@@ -1,9 +1,9 @@
-import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
-import { breakpointNames, minMediaQuery } from '@styles/tokens/breakpoints'
 import { responsiveProperties, unresponsiveProperties } from '@styles/atomic-properties'
-import { lightThemeClass } from '@styles/themes/light.css'
-import { darkThemeClass } from '@styles/themes/dark.css'
 import { vars } from '@styles/themes/contract.css'
+import { darkThemeClass } from '@styles/themes/dark.css'
+import { lightThemeClass } from '@styles/themes/light.css'
+import { breakpointNames, minMediaQuery } from '@styles/tokens/breakpoints'
+import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
 const unresponsiveAtomicProperties = defineProperties({
 	properties: unresponsiveProperties,

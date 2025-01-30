@@ -1,5 +1,5 @@
-import { SITE } from '@constants/meta'
 import type { BreadcrumbListItem } from '@constants/types'
+import { SITE } from '@constants/meta'
 
 export const IDENTITY = {
 	'@id': `${SITE.url}/#identity`,

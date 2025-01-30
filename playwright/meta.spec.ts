@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test'
 import { SITE } from '@constants/meta'
+import { expect, test } from '@playwright/test'
 
 const metaTagAssertions = [
 	{

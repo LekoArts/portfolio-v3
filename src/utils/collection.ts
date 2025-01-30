@@ -1,6 +1,6 @@
 import type { CollectionEntry } from 'astro:content'
-import { IS_PLAYWRIGHT } from 'astro:env/server'
 import { slugify } from '@utils/slugify'
+import { IS_PLAYWRIGHT } from 'astro:env/server'
 
 /**
  * Get all distinct categories from the collection and add a slug for each

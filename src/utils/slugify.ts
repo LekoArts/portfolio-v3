@@ -1,4 +1,5 @@
-import sindresorhusSlugify, { type Options } from '@sindresorhus/slugify'
+import type { Options } from '@sindresorhus/slugify'
+import sindresorhusSlugify from '@sindresorhus/slugify'
 import { withTrailingSlash } from '@utils/url'
 
 export const slugifyOptions = {

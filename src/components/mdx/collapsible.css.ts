@@ -1,9 +1,9 @@
-import { createVar, globalStyle, style } from '@vanilla-extract/css'
+import { codeBlockWrapper, codeHeaderStyle } from '@components/mdx/code.css'
 import { themesSelectors } from '@styles/atoms.css'
 import { vars } from '@styles/themes/contract.css'
 import { colorPalette } from '@styles/tokens/colors'
 import { prominent } from '@styles/typography.css'
-import { codeBlockWrapper, codeHeaderStyle } from '@components/mdx/code.css'
+import { createVar, globalStyle, style } from '@vanilla-extract/css'
 
 const linkDecorationVar = createVar()
 

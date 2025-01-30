@@ -1,8 +1,8 @@
-import { mergeWith } from 'lodash-es'
 import type { CSSProperties } from '@vanilla-extract/css'
 import type { CSSVarFunction } from '@vanilla-extract/private'
 import type { Properties } from 'csstype'
 import { COLOR_SCHEMES } from '@constants/themes'
+import { mergeWith } from 'lodash-es'
 
 const isObject = (value: unknown) => !!(value && typeof value === 'object' && !Array.isArray(value))
 
