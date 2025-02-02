@@ -9,6 +9,7 @@ import { h, s } from 'hastscript'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 import { remarkSandpack } from 'remark-sandpack'
+import tsconfigPaths from 'vite-tsconfig-paths'
 import { SITE } from './src/constants/meta.js'
 import { REDIRECTS } from './src/constants/redirects.js'
 import { transformerCodeMeta } from './src/utils/shiki'
@@ -20,7 +21,7 @@ export default defineConfig({
 	trailingSlash: 'always',
 	redirects: REDIRECTS,
 	vite: {
-		plugins: [vanillaExtractPlugin()],
+		plugins: [tsconfigPaths(), vanillaExtractPlugin()],
 	},
 	integrations: [sitemap({
 		filter: page => page !== `${SITE.url}/privacy-policy/` && page !== `${SITE.url}/legal-notice/`,

@@ -11,5 +11,4 @@ export default getViteConfig({
 			reporter: ['text', 'json', 'html'],
 		},
 	},
-	plugins: [tsconfigPaths()],
 })
