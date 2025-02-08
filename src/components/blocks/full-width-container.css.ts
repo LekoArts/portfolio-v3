@@ -4,7 +4,7 @@ import { themesSelectors } from '@styles/atoms.css'
 import { vars } from '@styles/themes/contract.css'
 import { colorPalette } from '@styles/tokens/colors'
 import { zIndices } from '@styles/tokens/z-indices'
-import { createVar, style, styleVariants } from '@vanilla-extract/css'
+import { createVar, globalStyle, style, styleVariants } from '@vanilla-extract/css'
 
 export type FullWidthContainerVariants = Exclude<ContainerVariants, 'proseRoot'>
 
@@ -71,9 +71,17 @@ export const backdropStyle = style({
 
 const edgeThickness = createVar()
 
-export const backdropEdgeStyle = style({
+export const backdropEdgeStyleId = 'backdrop-edge-style'
+
+globalStyle(`#${backdropEdgeStyleId}[data-scrolled="true"]`, {
 	vars: {
 		[edgeThickness]: '2px',
+	},
+})
+
+export const backdropEdgeStyle = style({
+	vars: {
+		[edgeThickness]: '0px',
 	},
 	position: 'absolute',
 	inset: 0,
