@@ -1,8 +1,8 @@
 import type { StyleRule } from '@vanilla-extract/css'
-import { style, styleVariants } from '@vanilla-extract/css'
-import { vars } from '@styles/themes/contract.css'
 import { pseudoSelectors } from '@styles/selectors'
+import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
+import { style, styleVariants } from '@vanilla-extract/css'
 
 export const layoutIconStyle = style({
 	color: vars.color.textMuted,

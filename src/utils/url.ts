@@ -1,5 +1,5 @@
-import queryString from 'query-string'
 import { SITE } from '@constants/meta'
+import queryString from 'query-string'
 
 const base = new URL(SITE.url)
 

@@ -1,8 +1,8 @@
-import { globalStyle, style } from '@vanilla-extract/css'
 import { vars } from '@styles/themes/contract.css'
 import { darkThemeClass } from '@styles/themes/dark.css'
 import { breakpointNames, minMediaQuery } from '@styles/tokens/breakpoints'
 import { responsiveStyles, themeAwareStyles } from '@utils/vanilla-extract'
+import { globalStyle, style } from '@vanilla-extract/css'
 import {
 	proseBaseStyle,
 	proseLgVariant,

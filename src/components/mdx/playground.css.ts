@@ -1,8 +1,8 @@
-import { globalStyle, style } from '@vanilla-extract/css'
 import { nightOwl } from '@codesandbox/sandpack-themes'
 import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { colorPalette } from '@styles/tokens/colors'
+import { globalStyle, style } from '@vanilla-extract/css'
 
 export const spTabButton = style({
 	borderBottom: '1px solid transparent',

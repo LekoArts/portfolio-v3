@@ -1,7 +1,7 @@
-import { style } from '@vanilla-extract/css'
 import { vars } from '@styles/themes/contract.css'
-import { colorPalette } from '@styles/tokens/colors'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
+import { colorPalette } from '@styles/tokens/colors'
+import { style } from '@vanilla-extract/css'
 
 export const contentWrapperStyle = style({
 	'display': 'grid',

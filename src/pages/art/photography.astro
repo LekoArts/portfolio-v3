@@ -89,8 +89,9 @@ const photos = photosets.flatMap((photoset) =>
 </Base>
 
 <script>
+	import type { LayoutType } from '@stores/ui'
 	import { artImageStyle } from '@components/art/art-image.css'
-	import { $ui, type LayoutType } from '@stores/ui'
+	import { $ui } from '@stores/ui'
 	import { gridImagesVariants, imageWrapperVariants } from './_photography.css'
 
 	const layoutButtons = document.querySelectorAll<HTMLButtonElement>('.button-layout')

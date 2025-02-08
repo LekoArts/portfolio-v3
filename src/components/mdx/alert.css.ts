@@ -1,12 +1,12 @@
 import type { StyleRule } from '@vanilla-extract/css'
-import { createVar, globalStyle, style, styleVariants } from '@vanilla-extract/css'
-import { transparentize } from '@utils/color'
+import { codeBlockWrapper, codeHeaderStyle } from '@components/mdx/code.css'
 import { themesSelectors } from '@styles/atoms.css'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
+import { transparentize } from '@utils/color'
 import { em } from '@utils/css'
-import { codeBlockWrapper, codeHeaderStyle } from '@components/mdx/code.css'
+import { createVar, globalStyle, style, styleVariants } from '@vanilla-extract/css'
 
 export type AlertStatus = 'info' | 'warning' | 'error' | 'success'
 

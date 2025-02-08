@@ -1,17 +1,18 @@
-import { defineConfig, envField } from 'astro/config'
+import mdx from '@astrojs/mdx'
+import react from '@astrojs/react'
+import sitemap from '@astrojs/sitemap'
 import { imageService } from '@unpic/astro/service'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
-import sitemap from '@astrojs/sitemap'
-import mdx from '@astrojs/mdx'
-import { remarkSandpack } from 'remark-sandpack'
-import rehypeSlug from 'rehype-slug'
-import { h, s } from 'hastscript'
+import { defineConfig, envField } from 'astro/config'
 import { toString } from 'hast-util-to-string'
+import { h, s } from 'hastscript'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import react from '@astrojs/react'
-import { transformerCodeMeta } from './src/utils/shiki'
+import rehypeSlug from 'rehype-slug'
+import { remarkSandpack } from 'remark-sandpack'
+import tsconfigPaths from 'vite-tsconfig-paths'
 import { SITE } from './src/constants/meta.js'
 import { REDIRECTS } from './src/constants/redirects.js'
+import { transformerCodeMeta } from './src/utils/shiki'
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,7 +21,7 @@ export default defineConfig({
 	trailingSlash: 'always',
 	redirects: REDIRECTS,
 	vite: {
-		plugins: [vanillaExtractPlugin()],
+		plugins: [tsconfigPaths(), vanillaExtractPlugin()],
 	},
 	integrations: [sitemap({
 		filter: page => page !== `${SITE.url}/privacy-policy/` && page !== `${SITE.url}/legal-notice/`,

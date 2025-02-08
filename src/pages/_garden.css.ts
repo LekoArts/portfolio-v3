@@ -1,7 +1,7 @@
-import { createVar, globalStyle, style } from '@vanilla-extract/css'
 import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
+import { createVar, globalStyle, style } from '@vanilla-extract/css'
 
 const mis = '25px'
 const smis = '35px'

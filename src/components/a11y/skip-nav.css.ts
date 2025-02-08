@@ -1,7 +1,7 @@
-import { style } from '@vanilla-extract/css'
 import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { zIndices } from '@styles/tokens/z-indices'
+import { style } from '@vanilla-extract/css'
 
 export const skipNavLinkStyle = style({
 	border: 0,

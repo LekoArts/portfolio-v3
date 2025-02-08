@@ -1,12 +1,12 @@
-import { createVar, globalStyle, style } from '@vanilla-extract/css'
+import type { SelectorMap } from '@utils/vanilla-extract'
 import { themesSelectors } from '@styles/atoms.css'
 import { vars } from '@styles/themes/contract.css'
 import { darkThemeClass } from '@styles/themes/dark.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
 import { em, rem } from '@utils/css'
-import type { SelectorMap } from '@utils/vanilla-extract'
 import { themeAwareStyles } from '@utils/vanilla-extract'
+import { createVar, globalStyle, style } from '@vanilla-extract/css'
 
 export const codeBlockWrapper = style({})
 

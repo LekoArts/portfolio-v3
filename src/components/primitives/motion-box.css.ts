@@ -1,6 +1,6 @@
-import { createVar, style } from '@vanilla-extract/css'
 import { pseudoSelectors } from '@styles/selectors'
 import { transforms } from '@styles/tokens/motion'
+import { createVar, style } from '@vanilla-extract/css'
 
 const boxShadowVar = createVar()
 const transformVar = createVar()

@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
+import { style } from '@vanilla-extract/css'
 
 export const wrapperStyle = style({
 	'display': 'block',

@@ -1,8 +1,8 @@
 import type { StyleRule } from '@vanilla-extract/css'
-import { globalStyle, style, styleVariants } from '@vanilla-extract/css'
 import { headingFontFamilyClass } from '@styles/fonts.css'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
+import { globalStyle, style, styleVariants } from '@vanilla-extract/css'
 
 export const prominent = style({
 	'fontSize': vars.fontSize.md,

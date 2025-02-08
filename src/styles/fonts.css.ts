@@ -1,6 +1,6 @@
-import { globalFontFace, style } from '@vanilla-extract/css'
 import { FONT_URLS } from '@constants/fonts'
 import { fontFamily, fonts } from '@styles/tokens/typography'
+import { globalFontFace, style } from '@vanilla-extract/css'
 
 globalFontFace(fontFamily.interUI, {
 	fontWeight: '400 700',

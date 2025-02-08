@@ -1,4 +1,9 @@
-import * as React from 'react'
+import type {
+	SandpackPredefinedTemplate,
+	SandpackProviderProps,
+	SandpackSetup,
+} from '@codesandbox/sandpack-react'
+import type { SVGIconNames } from '@constants/types'
 import {
 	SandpackCodeEditor,
 	SandpackPreview,
@@ -8,14 +13,9 @@ import {
 	useSandpack,
 	useSandpackNavigation,
 } from '@codesandbox/sandpack-react'
-import type {
-	SandpackPredefinedTemplate,
-	SandpackProviderProps,
-	SandpackSetup,
-} from '@codesandbox/sandpack-react'
 import { nightOwl } from '@codesandbox/sandpack-themes'
-import type { SVGIconNames } from '@constants/types'
 import { visuallyHiddenStyle } from '@components/a11y/visually-hidden.css'
+import * as React from 'react'
 import {
 	backwardButton,
 	exportButton,

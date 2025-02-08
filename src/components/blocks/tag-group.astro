@@ -32,10 +32,10 @@ const { id, items } = Astro.props
 </lekoarts-tag-group>
 
 <script>
-	import type { TagGroupKeys } from '@stores/tag-group'
-	import { queryStringTags } from '@utils/url'
-	import { $tagGroup, addTag, removeTag } from '@stores/tag-group'
 	import type { Tag } from '@constants/types'
+	import type { TagGroupKeys } from '@stores/tag-group'
+	import { $tagGroup, addTag, removeTag } from '@stores/tag-group'
+	import { queryStringTags } from '@utils/url'
 	import { listenKeys } from 'nanostores'
 
 	class LekoArtsTagGroup extends HTMLElement {

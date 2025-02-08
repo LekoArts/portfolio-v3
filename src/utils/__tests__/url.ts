@@ -1,4 +1,4 @@
-import { hasTrailingSlash, isInternalUrl, withTrailingSlash, withoutTrailingSlash } from '../url'
+import { hasTrailingSlash, isInternalUrl, withoutTrailingSlash, withTrailingSlash } from '../url'
 
 describe('hasTrailingSlash', () => {
 	it('should return true if URL has a trailing slash', () => {

@@ -1,9 +1,9 @@
 import type { StyleRule } from '@vanilla-extract/css'
-import { style, styleVariants } from '@vanilla-extract/css'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
 import { zIndices } from '@styles/tokens/z-indices'
+import { style, styleVariants } from '@vanilla-extract/css'
 
 const containerBaseStyle = style({
 	'width': vars.space.full,
