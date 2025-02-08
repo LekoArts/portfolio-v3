@@ -21,20 +21,23 @@ import { gardenCtaStyle, metaStyle, plantIconStyle } from './_garden_item.css'
 import { getGardenEditLink, getMastodonShareLink, getBlueskyShareLink } from '@utils/sharing'
 import SvgIcon from '@components/primitives/svg-icon.astro'
 import FormattedDate from '@components/primitives/formatted-date.astro'
+import { getSeriesPosts } from '@utils/collection'
+import SeriesCallout from '@components/writing/series-callout.astro'
 
 export async function getStaticPaths() {
 	const entries = await getCollection('garden')
 	return entries.map((entry) => {
 		const slug = slugify(entry.id, 'garden')
+		const postsInSeries = getSeriesPosts(entries, entry.data.series?.id)
 
 		return {
 			params: { garden: slug },
-			props: { entry, slug },
+			props: { entry, slug, postsInSeries },
 		}
 	})
 }
 
-const { entry, slug } = Astro.props
+const { entry, slug, postsInSeries } = Astro.props
 const { data: garden } = entry
 const { Content } = await render(entry)
 
@@ -45,6 +48,7 @@ ogURL.searchParams.set(`tags`, garden.tags.join(`,`))
 const ogImage = `${ogURL.pathname}${ogURL.search}`
 
 const timeToRead = getReadingTime(entry.body ?? '')
+const isPartOfSeries = !!(garden.series?.id && postsInSeries.length > 1)
 ---
 
 <Base>
@@ -93,8 +97,13 @@ const timeToRead = getReadingTime(entry.body ?? '')
 					<Link href="/garden/">Digital Garden</Link>
 				</Tag>
 			</Box>
-			<Spacer size={12} axis="vertical" />
+			<Spacer size={isPartOfSeries ? 4 : 12} axis="vertical" />
 			<Prose>
+				{
+					isPartOfSeries ? (
+						<SeriesCallout id={garden!.series!.id} currentPart={garden!.series!.part} postsInSeries={postsInSeries} /><Spacer size={8} axis="vertical" />
+					) : null
+				}
 				<Content components={components} />
 			</Prose>
 			<Spacer size={12} axis="vertical" />

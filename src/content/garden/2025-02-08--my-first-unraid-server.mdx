@@ -1,0 +1,67 @@
+---
+title: My First Unraid Server
+slug: my-first-unraid-server
+description: My journey from a Synology NAS to building my first Unraid server, detailing my initial hardware and software choices.
+date: 2025-02-08
+lastUpdated: 2025-02-08
+icon: unraid
+tags:
+- Unraid
+series:
+  id: my-first-unraid-server
+  part: 1
+---
+
+In late 2024 I built my first [Unraid](https://unraid.net/) server 🎉. After owning an entry-level Synology NAS for a while I felt comfortable increasing the complexity and maintenance cost. I was using it heavily and hit its limit more and more often. In this post I want to explain why I chose Unraid, which components I bought, and which software I initially installed.
+
+## Why Unraid?
+
+While browsing the internet and looking through communities like [/r/selfhosted](https://www.reddit.com/r/selfhosted/) I was presented with a lot of opinions on which hardware and software to choose. Having your own home server is quite accessible these days with hardware like the aforementioned Synology NAS. A lot of people will be happy with this plug-and-play setup, other people want to run a bare-metal Linux server, use NixOS, or in other words have full control.
+
+I wanted to find an OS that fulfilled these requirements:
+
+- No subscription or at least an option for one-time purchase
+- GUI with optional SSH access
+- Big community and large selection of apps
+- Ability to run Docker containers
+- Ability to use an SSD as a cache drive
+- Reliable and small maintenance cost
+
+There were three OS on the shortlist:
+
+- Unraid
+- TrueNAS
+- Proxmox
+
+Choosing either one of those is probably fine, in the end I chose Unraid because I thought that it was the easiest to setup and maintain. It's nice that I can use HDD in varying sizes and ZFS but those were nice to haves. A couple of months in now I'm still happy with that decision 👍🏻
+
+## Hardware
+
+I knew that I wanted to have a low TDP CPU that had harware video encoding/decoding capabilities inside a small form factor. Other than that I was open to using anything. I'll share my hardware list but be aware that this post can quickly be outdated when new hardware comes out and availability in your country can greatly influence decisions.
+
+- Motherboard and CPU: Intel N100 on a [CWWK Motherboard](https://cwwk.net/products/cwwk-12th-gen-i3-n305-n100-2-intel-i226-v-2-5g-nas-motherboard-6-sata3-0-6-bay-soft-rout-1-ddr5-4800mhz-firewall-itx-mainboard)
+  - CPU Fan: Noctua NH-L9i
+- PSU: Corsair Platinum SF750W SFX
+- Case: Jonsbo N2 Mini-ITX
+  - Replace Jonsbo fan with: Noctua NF-A12x15 PWM, 120mm
+- Memory: Crucial SO-DIMM 32GB DDR5-4800 CL40-39-39
+- SSD: 2x Lexar NM620 512GB M.2
+- HDD: 2x WD Red Plus 8TB
+- Boot USB Stick: Transcend JetFlash 350 32GB
+- UPS: Eaton Ellipse ECO 650 USB
+
+## My initial setup
+
+I followed the [official quickstart guide](https://docs.unraid.net/unraid-os/getting-started/quick-install-guide/) without any major hiccups. At the time I was even brave enough to use the beta version of Unraid 7 as I didn't want to migrate (and enough people said it was stable). As a quick follow-up I followed the [TRaSH guide](https://trash-guides.info/File-and-Folder-Structure/How-to-set-up/Unraid/) on setting up shares and a bunch of [Spaceinvader One](https://www.youtube.com/c/SpaceinvaderOne) videos.
+
+Since I needed to copy my contents from my old Synology NAS HDD to the new array I followed [Spaceinvader's](https://www.youtube.com/watch?v=dkp_BUgJGqE) video on using `rsync`.
+
+The apps/docker containers I installed initially were:
+
+- [HomeAssistant_inabox](https://github.com/SpaceinvaderOne/Home_Assistant_inabox)
+- [Emby](https://emby.media/)
+- [paperless-ngx](https://docs.paperless-ngx.com/) (+ Redis)
+- [homepage](https://gethomepage.dev/)
+- [duplicati](https://duplicati.com/)
+
+Be sure to read other parts of this "My first Unraid server" series as I'll go in more depth on specific apps and share the ones I added over time.

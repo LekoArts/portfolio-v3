@@ -1,0 +1,23 @@
+---
+import Box from '@components/primitives/box.astro'
+import { detailsStyle, summaryStyle } from './series-callout.css'
+import type { SeriesPartItem } from '@utils/collection'
+
+interface Props {
+	currentPart: number
+	id: string
+	postsInSeries: Array<SeriesPartItem>
+}
+
+const { currentPart, id: seriesId, postsInSeries } = Astro.props
+
+const mapSeriesIdToTitle: Record<string, string> = {
+	'my-first-unraid-server': 'My First Unraid Server',
+}
+---
+
+<Box as="details" px={[2, null, 4]} py={[2, null, 4]} borderRadius="lg" class={detailsStyle}>
+	<Box as="summary" class={summaryStyle}>
+		<em>“{mapSeriesIdToTitle[seriesId]}” ({postsInSeries.length} Part Series)</em>
+	</Box><ol>{postsInSeries.map(entry => (<li data-is-current={currentPart === entry.part}>{currentPart === entry.part ? <span>{entry.title}</span> : <a href={entry.slug}>{entry.title}</a>}</li>))}</ol></Box
+>

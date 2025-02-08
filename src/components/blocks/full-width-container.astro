@@ -5,6 +5,7 @@ import {
 	type FullWidthContainerVariants,
 	backdropEdgeStyle,
 	backdropStyle,
+	backdropEdgeStyleId,
 } from './full-width-container.css'
 import Container from '@components/primitives/container.astro'
 
@@ -18,5 +19,40 @@ const { variant = 'default', ...rest } = Astro.props
 <Box class={fullWidthContainerVariants[variant]} {...rest}>
 	<Container variant={variant}><slot /></Container>
 	{variant === 'navigation' ? <div class={backdropStyle} /> : null}
-	{variant === 'navigation' ? <div class={backdropEdgeStyle} /> : null}
+	{variant === 'navigation' ? <div id={backdropEdgeStyleId} class={backdropEdgeStyle} /> : null}
 </Box>
+
+<script>
+	import { throttle } from '@utils/throttle'
+
+	const el = document.querySelector('#backdrop-edge-style')
+	const SCROLL_THRESHOLD = 50
+
+	const throttledScroll = throttle(() => {
+		if (!el) {
+			return
+		}
+
+		if (window.scrollY > SCROLL_THRESHOLD) {
+			el.dataset.scrolled = 'true'
+		} else {
+			el.dataset.scrolled = 'false'
+		}
+	}, 100)
+
+	function handleScroll() {
+		if (!el) {
+			return
+		}
+
+		if (window.scrollY === 0) {
+			el.dataset.scrolled = 'false'
+		} else {
+			throttledScroll()
+		}
+	}
+
+	handleScroll()
+
+	window.addEventListener('scroll', handleScroll, { passive: true })
+</script>

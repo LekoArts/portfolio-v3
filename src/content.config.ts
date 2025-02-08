@@ -29,6 +29,10 @@ const garden = defineCollection({
 		lastUpdated: z.date(),
 		tags: z.array(z.enum(TAGS_CHOICES)),
 		icon: z.enum(ICON_CHOICES),
+		series: z.object({
+			id: z.string(),
+			part: z.number(),
+		}).optional(),
 	}),
 })
 
