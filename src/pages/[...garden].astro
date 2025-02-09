@@ -101,7 +101,10 @@ const isPartOfSeries = !!(garden.series?.id && postsInSeries.length > 1)
 			<Prose>
 				{
 					isPartOfSeries ? (
-						<SeriesCallout id={garden!.series!.id} currentPart={garden!.series!.part} postsInSeries={postsInSeries} /><Spacer size={8} axis="vertical" />
+						<>
+							<SeriesCallout id={garden!.series!.id} currentPart={garden!.series!.part} postsInSeries={postsInSeries} />
+							<Spacer size={8} axis="vertical" />
+						</>
 					) : null
 				}
 				<Content components={components} />
