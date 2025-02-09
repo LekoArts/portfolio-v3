@@ -6,10 +6,15 @@ import { filterPublished } from '@utils/collection'
 import { slugify } from '@utils/slugify'
 import { getCollection } from 'astro:content'
 
+function generateContent(description: string, link: string) {
+	return `<p>${description}</p><div style="margin-top: 50px; font-style: italic;"><strong><a href="${SITE.url}${link}">Keep reading</a>.</strong></div>`
+}
+
 export const GET: APIRoute = async () => {
 	const writing = (await getCollection('writing', filterPublished)).map(entry => ({
 		title: entry.data.title,
 		description: entry.data.description,
+		content: generateContent(entry.data.description, slugify(entry.id, entry.data.category.id)),
 		link: slugify(entry.id, entry.data.category.id),
 		pubDate: entry.data.date,
 	} satisfies RSSFeedItem))
@@ -17,6 +22,7 @@ export const GET: APIRoute = async () => {
 	const garden = (await getCollection('garden')).map(entry => ({
 		title: entry.data.title,
 		description: entry.data.description,
+		content: generateContent(entry.data.description, slugify(entry.id, 'garden')),
 		link: slugify(entry.id, 'garden'),
 		pubDate: entry.data.date,
 	} satisfies RSSFeedItem))
