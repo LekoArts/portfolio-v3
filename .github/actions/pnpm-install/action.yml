@@ -17,11 +17,11 @@ runs:
       uses: actions/setup-node@v4
       with:
         node-version: lts/*
+        check-latest: true
     - name: ⚙️ Enable Corepack
       if: ${{ inputs.enable-corepack == 'true' }}
       shell: bash
       run: |
-        npm i -g --force corepack
         corepack enable
         echo "Corepack enabled"
 
