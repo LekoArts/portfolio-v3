@@ -1,0 +1,54 @@
+---
+title: Essential Unraid Apps
+slug: essential-unraid-apps
+description: Apps that I will always install when setting up a new Unraid server
+date: 2025-02-23
+lastUpdated: 2025-02-23
+icon: unraid
+tags:
+- Unraid
+series:
+  id: my-first-unraid-server
+  part: 2
+---
+
+In the first part of this series, I mentioned some of the apps I installed when setting up Unraid. This time, I’ll go deeper into the ones I consider essential — apps that improve reliability, reduce power draw, and automate tedious tasks.
+
+## Backup & recovery
+
+- [Appdata Backup](https://forums.unraid.net/topic/137710-plugin-appdatabackup/)
+  - I use it to backup both appdata and the USB flash drive. That backup is also periodically copied to an offsite location. I don't want to deal with setting up everything from scratch again in the future, so this is surely my most important app to have!
+- [Parity Check Tuning](https://forums.unraid.net/topic/78394-plugin-parity-check-tuning/)
+  - With this app you can split up the parity check into increments, it'll save the progress (so you can stop and resume in between reboots), and it can run it only during a specific time frame, e.g. night time.
+
+## Performance tweaks
+
+- [AutoTweak](https://forums.unraid.net/topic/160719-plugin-autotweak)
+  - Use this to tweak certain power settings and lower the power consumption of your server.
+- [Intel GPU TOP](https://forums.unraid.net/topic/92865-support-ich777-nvidiadvb-kernel-helperbuilder-docker/)
+  - If you have an Intel CPU with iGPU, install this one **for sure**. With it you can use hardware encoding/decoding in apps like Plex, Jellyfin or Emby.
+
+## Otherwise useful
+
+- [Dynamix Stop Shell](http://forums.unraid.net/index.php?topic=36543.0)
+- [Fix Common Problems](https://forums.unraid.net/topic/47266-plugin-ca-fix-common-problems/)
+  - This app will scan your server and helps detect common configuration issues before they cause problems. It's nice that it links to explanations and also allows you to ignore certain things (if you know what you're doing). I personally didn't need to ignore anything, all suggestions were reasonable.
+- [Tips and Tweaks](https://forums.unraid.net/topic/47527-tips-and-tweaks-plugin-to-possibly-improve-performance-of-unraid-and-vms/?tab=comments#comment-468361)
+- [Unassigned Devices](https://forums.unraid.net/topic/92462-unassigned-devices-managing-disk-drives-and-remote-shares-outside-of-the-unraid-array/), [Unassigned Devices Plus](https://forums.unraid.net/topic/92462-unassigned-devices-managing-disk-drives-and-remote-shares-outside-of-the-unraid-array/), and [USB Manager](https://forums.unraid.net/topic/100511-plugin-usbip-commands/)
+  - With the combination of these apps I was able to transfer data from external hard drives (with differing file formats) onto the Unraid array through USB.
+- [User Scripts](https://forums.unraid.net/topic/48286-plugin-ca-user-scripts/)
+  - You can run cron jobs for things like deleting `.DS_Store` files. But you can pretty much do anything with these scripts, so it's worthwhile to investigate what the community has built, e.g. on [Reddit](https://www.reddit.com/r/unRAID/comments/18ygc8y/any_essential_or_custom_user_scripts_you_use/).
+
+## Monitoring & debugging
+
+I wouldn't consider them essential but they are definitely nice to have. They make debugging easier and show some useful information on the dashboard.
+
+- [Dynamix Cache Directories](http://forums.unraid.net/index.php?topic=36543.0)
+- [Dynamix System Buttons](http://forums.unraid.net/index.php?topic=36543.0)
+- [Dynamix System Information](http://forums.unraid.net/index.php?topic=36543.0)
+- [Dynamix System Statistics](http://forums.unraid.net/index.php?topic=36543.0)
+- [Dynamix System Temperature](http://forums.unraid.net/index.php?topic=36543.0)
+- [File Activity](https://forums.unraid.net/topic/54808-file-activity-plugin-how-can-i-figure-out-what-keeps-spinning-up-my-disks/)
+- [iotop (C Version) for UNRAID](https://forums.unraid.net/topic/167319-plugin-iotop-c-version-for-unraid/)
+- [ITE IT87 Driver](https://forums.unraid.net/topic/92865-support-ich777-nvidiadvb-kernel-helperbuilder-docker/) and [Nuvoton NC6687 Driver](https://forums.unraid.net/topic/92865-support-ich777-nvidiadvb-kernel-helperbuilder-docker/)
+- [Open Files](https://forums.unraid.net/topic/41196-open-files-plugin-can-help-with-troubleshooting-why-server-wont-shut-down/)
