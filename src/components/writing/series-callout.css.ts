@@ -47,7 +47,7 @@ globalStyle(`${detailsStyle} ol li:last-of-type`, {
 })
 
 globalStyle(`${detailsStyle} ol li:before`, {
-	content: 'counter(list-item)',
+	content: 'counter(list-item) !important',
 	position: 'absolute',
 	top: '0.25em',
 	width: '1.3em',
