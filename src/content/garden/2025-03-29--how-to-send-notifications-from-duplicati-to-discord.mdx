@@ -14,9 +14,10 @@ In most cases a [Duplicati](https://github.com/duplicati/duplicati) backup runs 
 
 If you, like me, consolidate notifications for self-hosted services in a Discord server, this guide will show you how to integrate Duplicati's HTTP notifications with Discord's webhooks.
 
-<Alert status="note" title="Intended audience">
-  This guide assumes that you have Node.js and pnpm installed on your machine and that you're familiar with Git, pnpm, and the terminal. You'll also have to use Cloudflare. If you don't want to use Cloudflare you'll have to fork the mentioned repository and adapt it to your deployment platform of choice.
-</Alert>
+> [!NOTE]
+> **Intended audience**
+>
+> This guide assumes that you have Node.js and pnpm installed on your machine and that you're familiar with Git, pnpm, and the terminal. You'll also have to use Cloudflare. If you don't want to use Cloudflare you'll have to fork the mentioned repository and adapt it to your deployment platform of choice.
 
 ## Set up a Cloudflare worker
 
@@ -43,9 +44,10 @@ Inside your Discord server, select **"Edit Channel"** for the channel that shoul
 
 Give the newly created webhook a name and select **"Copy Webhook URL"** to copy the webhook URL to your clipboard.
 
-<Alert status="warning" title="A webhook URL should be kept secret">
-  Make sure to keep the webhook URL secret. Anyone who has the URL can send messages to your server!
-</Alert>
+> [!WARNING]
+> **A webhook URL should be kept secret**
+>
+> Make sure to keep the webhook URL secret. Anyone who has the URL can send messages to your server!
 
 The URL will be in this format:
 
