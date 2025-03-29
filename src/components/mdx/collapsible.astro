@@ -9,8 +9,15 @@ interface Props {
 const { summary } = Astro.props
 ---
 
-<Box as="details" px={[4, null, 6]} py={[4, null, 6]} borderRadius="lg" class={detailsStyle}>
-	<Box as="summary" class={summaryStyle}>
+<Box
+	as="details"
+	px={[4, null, 6]}
+	py={[4, null, 6]}
+	borderRadius="lg"
+	class={detailsStyle}
+	data-testid="collapsible-wrapper"
+>
+	<Box as="summary" class={summaryStyle} data-testid="collapsible-summary">
 		<em>{summary}</em>
 	</Box><slot /></Box
 >

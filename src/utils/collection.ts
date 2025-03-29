@@ -48,7 +48,7 @@ export interface SeriesPartItem {
  * Find all posts in a series. The series object can be defined on the frontmatter field of a garden post. It'll have an id and a part number.
  *
  * Only return the slug and title of the individual posts in the series.
- * 
+ *
  * The result is sorted by the part number.
  */
 export function getSeriesPosts(data: Array<CollectionEntry<'garden'>>, seriesId: string | undefined) {

@@ -26,9 +26,10 @@ const hello = () => {
 
 The first and third to fifth line will be highlighted.
 
-<Alert status="info" title="Note">
-  The following instructions require you to use at least `gatsby@^5.3.0`, `gatsby-plugin-mdx@^4.0.0`, and `@mdx-js/react@^2.0.0`.
-</Alert>
+> [!NOTE]
+> **Dependency versions**
+>
+> The following instructions require you to use at least `gatsby@^5.3.0`, `gatsby-plugin-mdx@^4.0.0`, and `@mdx-js/react@^2.0.0`.
 
 First, make sure that you have a MDX blog set up. If you have that already, you can skip to the packages. If not, you should first read [Getting Started with MDX](https://www.gatsbyjs.com/docs/how-to/routing/mdx/) on Gatsby's documentation.
 
@@ -136,9 +137,10 @@ const rehypeMetaAsAttributes = () => transformer
 export default rehypeMetaAsAttributes
 ```
 
-<Alert status="info" title="Note">
-  The instructions were adapted from the MDX Guide [Syntax Highlighting with the `meta` field](https://mdxjs.com/guides/syntax-highlighting/#syntax-highlighting-with-the-meta-field).
-</Alert>
+> [!NOTE]
+> **Reference**
+>
+> The instructions were adapted from the MDX Guide [Syntax Highlighting with the `meta` field](https://mdxjs.com/guides/syntax-highlighting/#syntax-highlighting-with-the-meta-field).
 
 In your `gatsby-config.mjs`, import the newly created `rehype-meta-as-attributes` and use it inside `mdxOptions.rehypePlugins`:
 

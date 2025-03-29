@@ -1,3 +1,4 @@
+import type { AlertStatus } from '@constants/types'
 import type { StyleRule } from '@vanilla-extract/css'
 import { codeBlockWrapper, codeHeaderStyle } from '@components/mdx/code.css'
 import { themesSelectors } from '@styles/atoms.css'
@@ -7,8 +8,6 @@ import { colorPalette } from '@styles/tokens/colors'
 import { transparentize } from '@utils/color'
 import { em } from '@utils/css'
 import { createVar, globalStyle, style, styleVariants } from '@vanilla-extract/css'
-
-export type AlertStatus = 'info' | 'warning' | 'error' | 'success'
 
 const bgVar = createVar()
 const colorVar = createVar()
@@ -121,7 +120,7 @@ globalStyle(`${alertBaseStyle} .${codeBlockWrapper} .${codeHeaderStyle}`, {
 })
 
 const alerts: Record<AlertStatus, StyleRule> = {
-	info: {
+	note: {
 		vars: {
 			[bgVar]: colorPalette[colorMap.info][bg],
 			[colorVar]: colorPalette[colorMap.info][color],
@@ -169,7 +168,7 @@ const alerts: Record<AlertStatus, StyleRule> = {
 			},
 		},
 	},
-	error: {
+	caution: {
 		vars: {
 			[bgVar]: colorPalette[colorMap.error][bg],
 			[colorVar]: colorPalette[colorMap.error][color],

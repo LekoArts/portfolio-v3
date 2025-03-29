@@ -28,9 +28,10 @@ Here's what you'll build. You can pull a random image from [Unsplash](https://un
 
 The finished project is available on GitHub at [figma-plugin-svelte-example](https://github.com/LekoArts/figma-plugin-svelte-example). You can also use this as a template for your next project.
 
-<Alert status="info" title="Prerequisites">
-  If you want to follow this tutorial step-by-step you'll need to have a Figma Account ([Sign Up for an account](https://www.figma.com/signup)) and the desktop app installed ([download](https://www.figma.com/downloads/)).
-</Alert>
+> [!NOTE]
+> **Prerequisites**
+>
+> If you want to follow this tutorial step-by-step you'll need to have a Figma Account ([Sign Up for an account](https://www.figma.com/signup)) and the desktop app installed ([download](https://www.figma.com/downloads/)).
 
 ## Conceptual Guide
 
@@ -253,9 +254,10 @@ const config = [mainConfig, codeConfig]
 export default config
 ```
 
-<Alert status="info" title="Rollup Configuration">
-  I don't want to focus too much on Rollup in this guide as it's just a build tool. If you have specific questions about this setup, feel free to ask me on [Bluesky](https://bsky.app/profile/lekoarts.de).
-</Alert>
+> [!NOTE]
+> **Rollup configuration**
+>
+> I don't want to focus too much on Rollup in this guide as it's just a build tool. If you have specific questions about this setup, feel free to ask me on [Bluesky](https://bsky.app/profile/lekoarts.de).
 
 Now it's time you try out what you have so far in Figma. In your terminal, run:
 
@@ -276,9 +278,10 @@ created dist/code.js in 357ms
 
 The `manifest.json` now points to these compiled files. Go back to Figma and open the draft design file that you created earlier. You now can run your plugin by doing a _Right click => Plugins => Development => SvelteTutorial_. You should a new window pop-up with the name of your plugin and a "Hello World" as text.
 
-<Alert status="success" title="What you just learned">
-  Congrats, you successfully set up a boilerplate for creating Figma plugins with Svelte! You now know how to initialize a new plugin from Figma and how to configure the `manifest.json` file. After that you've installed Rollup to compile Svelte and TypeScript files.
-</Alert>
+> [!SUCCESS]
+> **What you just learned**
+>
+> Congrats, you successfully set up a boilerplate for creating Figma plugins with Svelte! You now know how to initialize a new plugin from Figma and how to configure the `manifest.json` file. After that you've installed Rollup to compile Svelte and TypeScript files.
 
 ## Svelte App
 
@@ -328,9 +331,10 @@ Then you have the utility classes (similar to Tailwind CSS) and CSS variables av
 
 This is the syntax you should be familiar with when using Svelte. When you run the plugin inside Figma again, you should see "Contents" and "Footer" aligned and formatted in the pop-up box.
 
-<Alert status="info" title="style block in App.svelte">
-  In the rest of this tutorial the `<style>` block inside `App.svelte` won't change anymore. For the sake of keeping code snippets more concise the `<style>` block will be omitted from any intermediate steps. The end result will contain everything again.
-</Alert>
+> [!NOTE]
+> **style block in App.svelte**
+>
+> In the rest of this tutorial the `<style>` block inside `App.svelte` won't change anymore. For the sake of keeping code snippets more concise the `<style>` block will be omitted from any intermediate steps. The end result will contain everything again.
 
 Time to add some inputs. For this, add the `Type`, `Label`, and `Button` component to your `App.svelte`:
 
@@ -488,9 +492,10 @@ You're binding the value that is coming from the inputs to variables called `wid
 
 The `disabled` property to control this behavior is a [reactive declaration](https://svelte.dev/tutorial/reactive-declarations). It tells Svelte to re-run this code whenever one of these values changes (so it coerces the boolean when `width` and `height` changes again and again).
 
-<Alert status="success" title="What you just learned">
-  You can use multiple ways of styling and CSS with Svelte, in this example you've used a combination of global CSS (provided by a third-party package) and defining your own `<style>` blocks. You've also created your own `<Input />` component to correctly handle number inputs. Lastly, using the reactive declaration syntax the "Add Image" button gets disabled if not every necessary input is provided.
-</Alert>
+> [!SUCCESS]
+> **What you just learned**
+>
+> You can use multiple ways of styling and CSS with Svelte, in this example you've used a combination of global CSS (provided by a third-party package) and defining your own `<style>` blocks. You've also created your own `<Input />` component to correctly handle number inputs. Lastly, using the reactive declaration syntax the "Add Image" button gets disabled if not every necessary input is provided.
 
 ### UI Functionality
 
@@ -750,13 +755,14 @@ Your `App.svelte` is now complete and should look like this:
 </style>
 ```
 
-<Alert status="success" title="What you just learned">
-  You successfully finished the Svelte portion of this tutorial! Everything is now wired up to the Figma plugin API and in the last part you can place images onto the canvas.
-
-  You've learned how to use Unsplash's `/random` API to fetch an image and returning it in a format that Figma understands. In the next step you added loading and error logic to gracefully handle those API calls. Lastly, you've used Figma's `postMessage` handler to communicate the image information to Figma.
-
-  You can now try out what you have so far in Figma. If you enter valid entries for `width` and `height`, you should get a loading state. If you e.g. enter `-1` for `width` you should see an error message.
-</Alert>
+> [!SUCCESS]
+> **What you just learned**
+>
+> You successfully finished the Svelte portion of this tutorial! Everything is now wired up to the Figma plugin API and in the last part you can place images onto the canvas.
+>
+> You've learned how to use Unsplash's `/random` API to fetch an image and returning it in a format that Figma understands. In the next step you added loading and error logic to gracefully handle those API calls. Lastly, you've used Figma's `postMessage` handler to communicate the image information to Figma.
+>
+> You can now try out what you have so far in Figma. If you enter valid entries for `width` and `height`, you should get a loading state. If you e.g. enter `-1` for `width` you should see an error message.
 
 ### Placing Images
 
@@ -885,9 +891,10 @@ figma.ui.onmessage = (msg: IMessage) => {
 
 Try it out! You should get an image onto your canvas now when pressing the "Add Image" button 🎉
 
-<Alert status="success" title="What you just learned">
-  You've finished this tutorial, congrats! Using the `createImage` API from Figma you created an `Image` object. Then you've applied this as a fill to a shape (since images in Figma are shapes with a image fill type) and then wired it all up with the UI.
-</Alert>
+> [!SUCCESS]
+> **What you just learned**
+>
+> You've finished this tutorial, congrats! Using the `createImage` API from Figma you created an `Image` object. Then you've applied this as a fill to a shape (since images in Figma are shapes with a image fill type) and then wired it all up with the UI.
 
 ## Publishing
 

@@ -96,3 +96,15 @@ export function transformerCodeMeta(): ShikiTransformer {
 		},
 	}
 }
+
+/**
+ * Remove line breaks between lines.
+ * Useful when you override `display: block` to `.line` in CSS.
+ */
+export function removeLineBreaks(): ShikiTransformer {
+	return {
+		code(code) {
+			code.children = code.children.filter(line => !(line.type === 'text' && line.value === '\n'))
+		},
+	}
+}
