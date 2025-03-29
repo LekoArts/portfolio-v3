@@ -1,5 +1,7 @@
 import type { CATEGORY_CHOICES, TAGS_CHOICES } from '@constants/content'
 
+export type AlertStatus = 'note' | 'warning' | 'caution' | 'success'
+
 export type SVGIconNames =
 	| 'cli'
 	| 'discord'

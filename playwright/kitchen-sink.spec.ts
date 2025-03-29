@@ -10,18 +10,22 @@ test.describe('Smoke Test', () => {
 	})
 })
 
+test.describe('Headings', () => {
+	// TODO
+})
+
 test.describe('Alerts', () => {
 	test('should have titles', async ({ page }) => {
-		page.locator('data-testid=alert-success >> text=Success Note')
-		page.locator('data-testid=alert-info >> text=Info Note')
-		page.locator('data-testid=alert-warning >> text=Warning Note')
-		page.locator('data-testid=alert-error >> text=Error Note')
+		page.locator('data-testid=alert-success >> text=Success Title')
+		page.locator('data-testid=alert-note >> text=Note Title')
+		page.locator('data-testid=alert-warning >> text=Warning Title')
+		page.locator('data-testid=alert-caution >> text=Caution Title')
 	})
 	test('should have contents', async ({ page }) => {
 		page.locator('data-testid=alert-success >> text=This is a success.')
-		page.locator('data-testid=alert-info >> text=This is an info.')
+		page.locator('data-testid=alert-note >> text=This is a note.')
 		page.locator('data-testid=alert-warning >> text=This is a warning.')
-		page.locator('data-testid=alert-error >> text=This is an error.')
+		page.locator('data-testid=alert-caution >> text=This is a caution.')
 	})
 })
 
@@ -90,4 +94,8 @@ test.describe('Code', () => {
 		await expect(highlighted).toHaveCSS('background', highlightCSS)
 		await expect(normal).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)')
 	})
+})
+
+test.describe('Playground', () => {
+	// TODO
 })

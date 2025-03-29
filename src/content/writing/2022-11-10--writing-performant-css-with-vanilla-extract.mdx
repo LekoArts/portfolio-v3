@@ -26,7 +26,7 @@ I suspect that vanilla-extract will be _very_ popular in the near future so it's
 
 You'll rebuild a [Tailwind UI mockup](https://tailwindui.com/components/application-ui/data-display/stats#component-72704cac437a06d94cdb941c274591ba) from scratch. It'll have support for light & dark mode, and also have two color variants. You can [see a live demo](https://vanilla-extract-tutorial.pages.dev/) and can find the code also on GitHub: [vanilla-extract-tutorial][tutorial-repo].
 
-<Alert status="info" title="Intended audience">
+<Alert status="note" title="Intended audience">
   You should have beginner knowledge in CSS and TypeScript as it'll enable you to navigate easier around the code and understand the CSS itself. The guide won't focus on the specifics of the CSS itself, but rather how to apply it with vanilla-extract. However, understanding TypeScript syntax and knowing the basics of CSS will really help you.
 
   You'll use [Vite](https://vitejs.dev/) to build the demo site but no prior knowledge is necessary.
@@ -137,7 +137,7 @@ globalStyle(`${parentClass} > a`, {
 })
 ```
 
-<Alert status="info" title="globalStyle restrictions">
+<Alert status="note" title="globalStyle restrictions">
   Please note, that you can't use [complex selectors][complex-selectors] (using the `selectors` key) or pseudo selectors inside `globalStyle`. So this here won't work:
 
   ```ts
@@ -276,7 +276,7 @@ As you can see this file also defines a [system font stack](https://systemfontst
 
 One important note about the colors: They all have to be flat, you can't nest them, e.g. `blue: { 100: '#dbeafe' }`. That's why the colors are defined as `blue100`.
 
-<Alert status="info" title="Abbreviated code blocks">
+<Alert status="note" title="Abbreviated code blocks">
   For the sake of keeping code block examples short I'll omit these design tokens in the following examples. They still exist though!
 </Alert>
 
@@ -621,7 +621,7 @@ export const wrapper = style({})
 
 You can define CSS rules by passing an array of class names and/or style objects to `style`. CSS Variables, simple pseudo elements, selectors, and media/feature queries are also supported (refer to the [`style` docs][style-api] for more information). By exporting `wrapper` you have access to its class name and can use it inside your React component.
 
-<Alert status="info" title="style() inputs">
+<Alert status="note" title="style() inputs">
   As said above, `style` not only accepts a style object, but also an array of class names. Or in other words: You can use other `style` definitions in `style`.
 
   ```ts
@@ -748,7 +748,7 @@ return (
 
 When visiting the browser preview, you should now already see "Last 30 Days" on the very left, and a styled "Toggle Variant" button the right.
 
-<Alert status="info" title="vanilla-extract file names">
+<Alert status="note" title="vanilla-extract file names">
   You named the vanilla-extract stylesheet for the `app.tsx` component `app.css.ts` and placed it as a sibling to the React component. This shows my recommended way of creating vanilla-extract stylesheets. When looking at a React component you can more easily find the associated CSS for it as it's a direct sibling and through file search you can look for `<component-name>.css.ts`.
 </Alert>
 
@@ -794,7 +794,7 @@ A lot is going on here, so let's unpack it.
 - You can use [style composition][style-composition] to more easily re-use styles. In this example you're re-using `topBarHeadingBase` and `footerBase` to apply to both variants (light and dark).
 - You can define style rules not only as an style object but also as an array of class names and/or style objects (see `[topBarHeadingBase, { color: 'black' }]` or `[footerBase, { color }]`).
 
-<Alert status="info" title="styleVariants mapping function">
+<Alert status="note" title="styleVariants mapping function">
   You'll probably most often use `styleVariants` with a mapping function, at least that's for me the case. You can of course also use nested properties for different style variants, for example:
 
   ```ts
@@ -971,7 +971,7 @@ const unresponsiveProperties = defineProperties({
 
 We don't need these properties to have conditions on e.g. screen size or light/dark mode. They don't need to change when these things change.
 
-<Alert status="info" title="Ways of defining properties">
+<Alert status="note" title="Ways of defining properties">
   You can define properties as an array, as an object, or use vanilla-extract themes.
 
   ```ts
@@ -1183,7 +1183,7 @@ const className = sprinkles(myStyles)
 
 Basically the `sprinkles` function you created in the last section returns a class list which you can use as if it were a single class. This means that you can use `sprinkles` on its own (directly in React components or `.css.ts` files) or use it inside `style`, `styleVariants`, `globalStyle` or Recipes API (more on that later).
 
-<Alert status="info" title="Sprinkles: Usage">
+<Alert status="note" title="Sprinkles: Usage">
   Inside a React component:
 
   ```tsx

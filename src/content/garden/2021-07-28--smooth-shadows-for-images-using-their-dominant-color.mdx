@@ -21,7 +21,7 @@ You can see a preview of the effect on my [Emilia Theme](https://emilia.lekoarts
 While not necessary for this technique to work I'm using [Gatsby](https://www.gatsbyjs.com) and [`gatsby-plugin-image`](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/) to handle and display the images. I'm doing this because `gatsby-plugin-image` and its `gatsbyImageData` supports the placeholder value `DOMINANT_COLOR` and gives back this value as `backgroundColor` – so you can directly query the dominant color of an image.\
 Set up a new site and install the necessary plugins for `gatsby-plugin-image` following its instructions, e.g. with `npm init gatsby` and the `Add responsive images` option at the end.
 
-<Alert status="info" title="Not using Gatsby or even React?">
+<Alert status="note" title="Not using Gatsby or even React?">
   You can use [Color Thief](https://lokeshdhakar.com/projects/color-thief/) to
   process your images and get back information like the dominant color in any JS framework. For React there's also [color-thief-react](https://github.com/jonyw4/color-thief-react) (although I haven't tried that personally). The library [polished](https://polished.js.org/) will also work in any JS framework.
 </Alert>
@@ -110,7 +110,7 @@ box-shadow:
 
 But that's a black shadow 😬 Time to make a colourful one. You can translate the generated values into their respective arrays.
 
-<Alert status="info" title="How to read box-shadow?">
+<Alert status="note" title="How to read box-shadow?">
   As always, MDN has a good explanation on [box-shadow](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow). The generated CSS from "Smooth Shadow" is in this syntax:
 
   ```css

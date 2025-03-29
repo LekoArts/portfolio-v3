@@ -19,7 +19,7 @@ But what if you want to create your own component that fits into the existing pr
 
 By the end of this tutorial, you'll be able to create a multipart component in Chakra UI that is controllable by variant, size, color schemes and respects the color mode. You'll create a _Container_ component that you can use to display your main content (e.g. an article like this) or full-bleed content. [See the live preview](https://chakra-ui-advanced-components.netlify.app/).
 
-<Alert status="info" title="Intended audience">
+<Alert status="note" title="Intended audience">
   This tutorial assumes that you have used Chakra UI in the past or are familiar with its usage, especially how you use themes and different modifiers like size, variant, etc. I'd suggest following their [getting started guide](https://chakra-ui.com/docs/getting-started) or browsing their [resources](https://chakra-ui.com/resources) to learn the basics.
 
   You'll use [Vite](https://vitejs.dev/) to build the demo site but no prior knowledge is necessary.
@@ -97,7 +97,7 @@ export default theme
 
 By using `extendTheme` you only overwrite the properties you define, the rest will be the default theme.
 
-<Alert status="info" title="Organizing the theme file">
+<Alert status="note" title="Organizing the theme file">
   It's a good idea to split out the properties going into `extendTheme` if your theme file itself gets to large. Chakra UI documents this process here: [Scaling out your project](https://chakra-ui.com/docs/theming/customize-theme#scaling-out-your-project).
 </Alert>
 
@@ -332,7 +332,7 @@ const CustomContainer: ComponentStyleConfig = {
 export default CustomContainer
 ```
 
-<Alert status="info" title="Pro Tip: Reading Source Code">
+<Alert status="note" title="Pro Tip: Reading Source Code">
   The way I figured out the styles for multipart components and all the content below is by reading the source code of Chakra UI. In there, you can find really comprehensive examples like the [Button component](https://github.com/chakra-ui/chakra-ui/blob/5f9038b3f7479f1c0afd527ca6c9e5f64190af93/packages/theme/src/components/button.ts).
 </Alert>
 
