@@ -84,7 +84,7 @@ function PlaygroundContents({ title }: Pick<IPlaygroundProps, 'title'>) {
 	return (
 		<div className={rootWrapper}>
 			<header className={header}>
-				<div>{title}</div>
+				<div data-testid="playground-title">{title}</div>
 				<div className={headerButtonWrapper}>
 					<IconButton
 						onClick={() => sandpack.resetAllFiles()}
@@ -103,6 +103,7 @@ function PlaygroundContents({ title }: Pick<IPlaygroundProps, 'title'>) {
 				showLineNumbers={false}
 				showTabs
 				closableTabs={false}
+				data-testid="playground-code-editor"
 			/>
 			<div className={middleWrapper}>
 				<div className={whiteText}>Result</div>
@@ -121,7 +122,7 @@ function PlaygroundContents({ title }: Pick<IPlaygroundProps, 'title'>) {
 					</IconButton>
 				</div>
 			</div>
-			<div className={previewWrapper}>
+			<div data-testid="playground-preview" className={previewWrapper}>
 				<SandpackPreview
 					showNavigator={false}
 					showOpenInCodeSandbox={false}
