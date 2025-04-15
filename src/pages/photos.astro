@@ -6,7 +6,7 @@ import Container from '@components/primitives/container.astro'
 import Prose from '@components/typography/prose.astro'
 import Seo from '@components/seo.astro'
 import Spacer from '@components/primitives/spacer.astro'
-import { explanationLayoutWrapperStyle, layoutIconStyle } from './_photos.css'
+import { explanationLayoutWrapperStyle, layoutIconStyle, LAYOUT_TYPES } from './_photos.css'
 import Text from '@components/typography/text.astro'
 import Box from '@components/primitives/box.astro'
 import SvgIcon from '@components/primitives/svg-icon.astro'
@@ -15,9 +15,7 @@ import TagGroup from '@components/blocks/tag-group.astro'
 import ArtImage from '@components/art/art-image.astro'
 import { getCollection } from 'astro:content'
 
-const LAYOUT_TYPES = [`masonry`, `grid`, `list`] as const
-
-const photosets = await getCollection('photography')
+const photosets = await getCollection('photos')
 
 const photosetTitles = photosets.map((photoset) => photoset.data.title).sort((a, b) => a.localeCompare(b))
 const photos = photosets.flatMap((photoset) =>
@@ -28,14 +26,14 @@ const photos = photosets.flatMap((photoset) =>
 <Base>
 	<Seo
 		slot="seo"
-		title="Photography"
-		description="With my Fujifilm cameras and lenses I primarily shoot landscape photography. I love Fuji's color science and enjoy editing my photos with Capture One."
+		title="Photos"
+		description="With my Fujifilm cameras and lenses I primarily shoot landscape photos. I love Fuji's color science and enjoy editing my photos with Capture One."
 		breadcrumbListItems={[{ name: `Photos`, url: `/photos/` }]}
 	/>
 	<SkipNavContent>
 		<Container paddingTop={16}>
 			<Prose>
-				<h1>Photography</h1>
+				<h1>Photos</h1>
 				<PhotographyText />
 			</Prose>
 			<Spacer axis="vertical" size={6} />
@@ -66,7 +64,7 @@ const photos = photosets.flatMap((photoset) =>
 				</Box>
 			</div>
 			<Spacer axis="vertical" size={6} />
-			<TagGroup id="photography" items={photosetTitles} />
+			<TagGroup id="photos" items={photosetTitles} />
 		</Container>
 		<Spacer size={20} axis="vertical" />
 		<div id="photography-img-wrapper">
@@ -97,19 +95,19 @@ const photos = photosets.flatMap((photoset) =>
 
 	layoutButtons.forEach((btn) => {
 		btn.addEventListener('click', () => {
-			$ui.setKey('photographyLayout', btn.dataset.layout as LayoutType)
+			$ui.setKey('photosLayout', btn.dataset.layout as LayoutType)
 		})
 	})
 
-	$ui.subscribe(({ photographyLayout }) => {
-		imgWrapper.className = imageWrapperVariants[photographyLayout]
+	$ui.subscribe(({ photosLayout }) => {
+		imgWrapper.className = imageWrapperVariants[photosLayout]
 
 		images.forEach((img) => {
-			img.className = `${gridImagesVariants[photographyLayout]} ${artImageStyle}`
+			img.className = `${gridImagesVariants[photosLayout]} ${artImageStyle}`
 		})
 
 		layoutButtons.forEach((btn) => {
-			btn.classList.toggle('active', btn.dataset.layout === photographyLayout)
+			btn.classList.toggle('active', btn.dataset.layout === photosLayout)
 		})
 	})
 </script>

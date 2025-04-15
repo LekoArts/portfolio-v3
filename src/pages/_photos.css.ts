@@ -31,14 +31,14 @@ export const explanationLayoutWrapperStyle = style({
 	},
 })
 
-export type ImageWrapperVariants = 'grid' | 'masonry' | 'list'
+export const LAYOUT_TYPES = ['masonry', 'grid'] as const
+export type ImageWrapperVariants = typeof LAYOUT_TYPES[number]
 
 const imageWrapper: Record<ImageWrapperVariants, StyleRule> = {
-	list: {
-		'width': vars.space.full,
-		'marginLeft': vars.space.auto,
-		'marginRight': vars.space.auto,
-		'maxWidth': '1024px',
+	grid: {
+		'display': 'grid',
+		'gridTemplateColumns': 'repeat(auto-fit, minmax(200px, 1fr))',
+		'gap': vars.space[4],
 		'paddingLeft': vars.space[4],
 		'paddingRight': vars.space[4],
 		'@media': {
@@ -46,17 +46,11 @@ const imageWrapper: Record<ImageWrapperVariants, StyleRule> = {
 				paddingLeft: vars.space[6],
 				paddingRight: vars.space[6],
 			},
-		},
-	},
-	grid: {
-		'display': 'grid',
-		'gridTemplateColumns': 'repeat(auto-fit, minmax(200px, 1fr))',
-		'@media': {
 			[minMediaQuery('lg')]: {
 				gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
 			},
 			[minMediaQuery('xl')]: {
-				gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+				gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
 			},
 		},
 	},
@@ -85,21 +79,11 @@ const imageWrapper: Record<ImageWrapperVariants, StyleRule> = {
 export const imageWrapperVariants = styleVariants(imageWrapper, variant => [variant])
 
 const gridImages: Record<ImageWrapperVariants, StyleRule> = {
-	list: {
-		'borderRadius': vars.borderRadius.lg,
-		'marginTop': vars.space[8],
-		'marginBottom': vars.space[8],
-		'@media': {
-			[minMediaQuery('sm')]: {
-				marginTop: vars.space[10],
-				marginBottom: vars.space[10],
-			},
-		},
-	},
 	grid: {
 		aspectRatio: '1 !important',
 		objectFit: 'cover',
 		maxHeight: '100% !important',
+		borderRadius: vars.borderRadius.lg,
 	},
 	masonry: {
 		'width': '100%',

@@ -59,7 +59,7 @@ const navigations = defineCollection({
 	})),
 })
 
-const photography = defineCollection({
+const photos = defineCollection({
 	loader: flickrPhotosetsGetListWithPhotosLoader({
 		username: FLICKR_USERNAME,
 	}),
@@ -70,5 +70,5 @@ export const collections = {
 	navigations,
 	garden,
 	writing,
-	photography,
+	photos,
 }
