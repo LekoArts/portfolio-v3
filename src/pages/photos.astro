@@ -6,7 +6,7 @@ import Container from '@components/primitives/container.astro'
 import Prose from '@components/typography/prose.astro'
 import Seo from '@components/seo.astro'
 import Spacer from '@components/primitives/spacer.astro'
-import { explanationLayoutWrapperStyle, layoutIconStyle } from './_photography.css'
+import { explanationLayoutWrapperStyle, layoutIconStyle } from './_photos.css'
 import Text from '@components/typography/text.astro'
 import Box from '@components/primitives/box.astro'
 import SvgIcon from '@components/primitives/svg-icon.astro'
@@ -30,10 +30,7 @@ const photos = photosets.flatMap((photoset) =>
 		slot="seo"
 		title="Photography"
 		description="With my Fujifilm cameras and lenses I primarily shoot landscape photography. I love Fuji's color science and enjoy editing my photos with Capture One."
-		breadcrumbListItems={[
-			{ name: `Art`, url: `/art/` },
-			{ name: `Photography`, url: `/art/photography/` },
-		]}
+		breadcrumbListItems={[{ name: `Photos`, url: `/photos/` }]}
 	/>
 	<SkipNavContent>
 		<Container paddingTop={16}>
@@ -92,7 +89,7 @@ const photos = photosets.flatMap((photoset) =>
 	import type { LayoutType } from '@stores/ui'
 	import { artImageStyle } from '@components/art/art-image.css'
 	import { $ui } from '@stores/ui'
-	import { gridImagesVariants, imageWrapperVariants } from './_photography.css'
+	import { gridImagesVariants, imageWrapperVariants } from './_photos.css'
 
 	const layoutButtons = document.querySelectorAll<HTMLButtonElement>('.button-layout')
 	const imgWrapper = document.getElementById('photography-img-wrapper') as HTMLElement

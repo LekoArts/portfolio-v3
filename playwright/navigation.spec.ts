@@ -16,8 +16,8 @@ test.describe('Navigation', () => {
 		await click(page, '[aria-label="Primary navigation"] >> text=Writing')
 		await expect(page).toHaveURL('/writing/')
 
-		await click(page, '[aria-label="Primary navigation"] >> text=Art')
-		await expect(page).toHaveURL('/art/')
+		await click(page, '[aria-label="Primary navigation"] >> text=Photos')
+		await expect(page).toHaveURL('/photos/')
 
 		await click(page, '[aria-label="Primary navigation"] >> text=About')
 		await expect(page).toHaveURL('/about/')
@@ -56,9 +56,9 @@ test.describe('Navigation', () => {
 		await expect(page).toHaveURL('/community/kitchen-sink/')
 	})
 	test('art pages', async ({ page }) => {
-		await page.goto('/art/design/')
-		await page.goto('/art/3d/')
-		await page.goto('/art/photography/')
+		await page.goto('/photos/?tags=Design')
+		await page.goto('/photos/?tags=3D')
+		await page.goto('/photos/')
 	})
 	test('footer navigation', async ({ page }) => {
 		await page.goto('/')

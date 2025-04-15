@@ -11,14 +11,13 @@
       link: /rss.xml
       isExternal: true
 - name: Art
-  link: /art/
   items:
+    - name: Photos
+      link: /photos/
     - name: Design
-      link: /art/design/
+      link: /photos/?tags=Design
     - name: 3D Art
-      link: /art/3d/
-    - name: Photography
-      link: /art/photography/
+      link: /photos/?tags=3D
 - name: About
   link: /about/
   items:

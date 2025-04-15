@@ -52,8 +52,8 @@ const openSourceRepos = [
 		url: `https://github.com/LekoArts/annum`,
 	},
 	{
-		name: `figma-theme-ui`,
-		url: `https://github.com/LekoArts/figma-theme-ui`,
+		name: `astro-loaders`,
+		url: `https://github.com/LekoArts/astro-loaders`,
 	},
 	{
 		name: `lekoarts-stats`,
@@ -204,16 +204,16 @@ const [firstPost, ...otherPosts] = writing
 				</Box>
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
 					<Box display="flex" justifyContent="space-between" alignItems="center">
-						<Badge variant="light">Art</Badge>
-						<SecondaryButton href="/art/">See all art</SecondaryButton>
+						<Badge variant="light">Photos</Badge>
+						<SecondaryButton href="/photos/">All photos</SecondaryButton>
 					</Box>
 					<Box class={artGridStyle}>
-						<Link href="/art/photography/" aria-label="View my photography" borderRadius="lg" class={cardLinkStyle}>
+						<Link href="/photos/" borderRadius="lg" class={cardLinkStyle}>
 							<MotionBox class={staticImageOverride}
 								><Image alt="" src={PhotographyImage} aspectRatio={16 / 9} width={720} /></MotionBox
 							>
 						</Link>
-						<Link href="/art/3d/" aria-label="View my 3D art" borderRadius="lg" class={cardLinkStyle}>
+						<Link href="/photos/" borderRadius="lg" class={cardLinkStyle}>
 							<MotionBox class={staticImageOverride}
 								><Image alt="" src={ArtImage} aspectRatio={16 / 9} width={720} /></MotionBox
 							>
