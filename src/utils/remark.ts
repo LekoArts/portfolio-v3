@@ -40,7 +40,7 @@ export function codemodAlerts() {
 			}
 
 			if (
-			  // Should contain two children: the alert status and the title
+			// Should contain two children: the alert status and the title
 				first.type === 'paragraph' && first.children.length === 2
 				// Status will be a text
 				&& first.children[0].type === 'text' && AlertRe.test(first.children[0].value)
@@ -56,24 +56,24 @@ export function codemodAlerts() {
 				const title = first.children[1].children[0].value
 
 				const attributes: MdxJsxFlowElement['attributes'] = [
-          {
-            type: 'mdxJsxAttribute',
-            name: 'status',
-            value: status,
-          },
-          {
-            type: 'mdxJsxAttribute',
-            name: 'title',
-            value: title,
-          },
-        ]
+					{
+						type: 'mdxJsxAttribute',
+						name: 'status',
+						value: status,
+					},
+					{
+						type: 'mdxJsxAttribute',
+						name: 'title',
+						value: title,
+					},
+				]
 
-        parent.children.splice(nodeIndex, 1, {
-          type: 'mdxJsxFlowElement',
-          name: 'Alert',
-          attributes,
-          children: node.children.slice(1)
-        })
+				parent.children.splice(nodeIndex, 1, {
+					type: 'mdxJsxFlowElement',
+					name: 'Alert',
+					attributes,
+					children: node.children.slice(1),
+				})
 			}
 		})
 	}
