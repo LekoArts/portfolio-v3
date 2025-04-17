@@ -12,8 +12,10 @@ import Box from '@components/primitives/box.astro'
 import SvgIcon from '@components/primitives/svg-icon.astro'
 import Button from '@components/primitives/button/base.astro'
 import TagGroup from '@components/blocks/tag-group.astro'
-import ArtImage from '@components/art/art-image.astro'
+import FlickrImage from '@components/images/flickr-image.astro'
+import Lightbox from '@components/images/lightbox.astro'
 import { getCollection } from 'astro:content'
+import WithLightbox from '@components/images/with-lightbox.astro'
 
 const photosets = await getCollection('photos')
 
@@ -67,30 +69,34 @@ const photos = photosets.flatMap((photoset) =>
 			<TagGroup id="photos" items={photosetTitles} />
 		</Container>
 		<Spacer size={20} axis="vertical" />
-		<div id="photography-img-wrapper">
-			{
-				photos.map((photo) => (
-					<ArtImage
-						alt={photo.description}
-						imageUrls={photo.imageUrls}
-						class="tag-group-item"
-						data-tags={photo.photoset_title}
-					/>
-				))
-			}
-		</div>
+		<Lightbox selector="lekoarts-lightbox">
+			<div id="photos-img-wrapper">
+				{
+					photos.map((photo, index) => (
+						<WithLightbox
+							class="tag-group-item"
+							data-tags={photo.photoset_title}
+							data-index={index}
+							imageUrls={photo.imageUrls}
+							selector="lekoarts-lightbox"
+						>
+							<FlickrImage alt={photo.description} imageUrls={photo.imageUrls} />
+						</WithLightbox>
+					))
+				}
+			</div>
+		</Lightbox>
 		<Spacer axis="vertical" size={[20, null, null, 24]} />
 	</SkipNavContent>
 </Base>
 
 <script>
 	import type { LayoutType } from '@stores/ui'
-	import { artImageStyle } from '@components/art/art-image.css'
 	import { $ui } from '@stores/ui'
 	import { gridImagesVariants, imageWrapperVariants } from './_photos.css'
 
 	const layoutButtons = document.querySelectorAll<HTMLButtonElement>('.button-layout')
-	const imgWrapper = document.getElementById('photography-img-wrapper') as HTMLElement
+	const imgWrapper = document.getElementById('photos-img-wrapper') as HTMLElement
 	const images = imgWrapper.querySelectorAll('img')
 
 	layoutButtons.forEach((btn) => {
@@ -99,11 +105,16 @@ const photos = photosets.flatMap((photoset) =>
 		})
 	})
 
-	$ui.subscribe(({ photosLayout }) => {
+	$ui.subscribe(({ photosLayout }, oldValue) => {
 		imgWrapper.className = imageWrapperVariants[photosLayout]
 
 		images.forEach((img) => {
-			img.className = `${gridImagesVariants[photosLayout]} ${artImageStyle}`
+			if (!oldValue) {
+				img.classList.add(gridImagesVariants[photosLayout])
+				// eslint-disable-next-line style/brace-style
+			} else {
+				img.classList.replace(gridImagesVariants[oldValue.photosLayout], gridImagesVariants[photosLayout])
+			}
 		})
 
 		layoutButtons.forEach((btn) => {

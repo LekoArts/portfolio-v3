@@ -1,5 +1,5 @@
 import { ICON_CHOICES, TAGS_CHOICES, TYPE_CHOICES } from '@constants/content'
-import { flickrPhotosetsGetListWithPhotosLoader, flickrPhotosetsGetPhotosLoader } from '@lekoarts/flickr-loader'
+import { flickrPhotosetsGetListWithPhotosLoader } from '@lekoarts/flickr-loader'
 import { glob } from 'astro/loaders'
 import { defineCollection, reference, z } from 'astro:content'
 

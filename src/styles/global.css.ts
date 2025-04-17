@@ -123,6 +123,10 @@ globalStyle('img, video', {
 
 globalStyle('.visually-hidden', visuallyHidden as GlobalStyleRule)
 
+globalStyle('.hidden', {
+	display: 'none !important',
+})
+
 /* Shiki CSS - Begin */
 
 globalStyle(`html.${darkThemeClass} .astro-code, html.${darkThemeClass} .astro-code span`, {

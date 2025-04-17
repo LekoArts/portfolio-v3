@@ -1,4 +1,7 @@
 import type { CATEGORY_CHOICES, TAGS_CHOICES } from '@constants/content'
+import type { DataEntryMap } from 'astro:content'
+
+export type FlickrImageUrls = DataEntryMap['photos'][string]['data']['photos'][number]['imageUrls']
 
 export type AlertStatus = 'note' | 'warning' | 'caution' | 'success'
 

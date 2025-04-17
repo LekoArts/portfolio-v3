@@ -25,7 +25,7 @@ const { variant = 'default', ...rest } = Astro.props
 <script>
 	import { throttle } from '@utils/throttle'
 
-	const el = document.querySelector('#backdrop-edge-style')
+	const el = document.querySelector<HTMLDivElement>('#backdrop-edge-style')
 	const SCROLL_THRESHOLD = 50
 
 	const throttledScroll = throttle(() => {
@@ -35,6 +35,7 @@ const { variant = 'default', ...rest } = Astro.props
 
 		if (window.scrollY > SCROLL_THRESHOLD) {
 			el.dataset.scrolled = 'true'
+			// eslint-disable-next-line style/brace-style
 		} else {
 			el.dataset.scrolled = 'false'
 		}
@@ -47,6 +48,7 @@ const { variant = 'default', ...rest } = Astro.props
 
 		if (window.scrollY === 0) {
 			el.dataset.scrolled = 'false'
+			// eslint-disable-next-line style/brace-style
 		} else {
 			throttledScroll()
 		}
