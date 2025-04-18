@@ -92,7 +92,7 @@ const gridImages: Record<ImageWrapperVariants, StyleRule> = {
 		'borderRadius': vars.borderRadius.lg,
 		'@media': {
 			[minMediaQuery('sm')]: {
-				marginBottom: vars.space[6],
+				marginBottom: vars.space[5],
 			},
 		},
 	},
