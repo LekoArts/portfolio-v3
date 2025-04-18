@@ -1,0 +1,33 @@
+---
+import type { DataEntryMap } from 'astro:content'
+import { withLightboxButtonStyle } from './with-lightbox.css'
+import type { HTMLAttributes } from 'astro/types'
+
+type ImageUrls = DataEntryMap['photos'][string]['data']['photos'][number]['imageUrls']
+
+interface Props extends HTMLAttributes<'button'> {
+	imageUrls: ImageUrls
+	selector: string
+	'data-index': number
+}
+
+const { imageUrls, selector, class: className, ...rest } = Astro.props
+
+const urls = imageUrls['1600px'] ?? imageUrls['1024px']
+
+if (!urls) {
+	throw new Error('No image URLs provided')
+}
+
+const src = urls.url
+const { width: maxWidth } = urls
+---
+
+<button
+	class:list={[withLightboxButtonStyle, className]}
+	aria-haspopup="dialog"
+	data-selector={selector}
+	data-src={src}
+	data-sizes={`(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`}
+	{...rest}><slot /></button
+>

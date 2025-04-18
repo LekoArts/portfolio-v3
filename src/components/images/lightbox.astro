@@ -1,0 +1,151 @@
+---
+import { lightboxImageStyle, lightboxStyle } from './lightbox.css'
+
+type Props = {
+	selector: string
+}
+
+const { selector } = Astro.props
+---
+
+<lekoarts-lightbox data-selector={selector}>
+	<dialog class={lightboxStyle}>
+		<img src="" alt="" autofocus class={lightboxImageStyle} />
+	</dialog>
+	<slot />
+</lekoarts-lightbox>
+
+<script>
+	class LekoArtsLightbox extends HTMLElement {
+		selector: string
+
+		constructor() {
+			super()
+
+			if (!this.dataset.selector) {
+				throw new Error('No selector provided')
+			}
+
+			this.selector = this.dataset.selector
+
+			const openLightboxButtons = this.querySelectorAll(
+				`button[data-selector="${this.selector}"]`,
+			) as NodeListOf<HTMLButtonElement>
+			const buttonByIndexMap = new Map<number, HTMLButtonElement>()
+
+			for (const btn of openLightboxButtons) {
+				const index = Number.parseInt(btn.dataset.index ?? '', 10)
+
+				if (Number.isNaN(index)) {
+					throw new TypeError('No index provided')
+				}
+
+				if (buttonByIndexMap.has(index)) {
+					throw new Error(`Duplicate index found: ${index}`)
+				}
+
+				buttonByIndexMap.set(index, btn)
+			}
+			const dialog = this.querySelector('dialog') as HTMLDialogElement
+			const closeAction = this.querySelector('img[autofocus]') as HTMLButtonElement
+
+			/**
+			 * Set the thumbnail image in the lightbox
+			 * @param item The button that was clicked
+			 */
+			function setImage(item: HTMLButtonElement) {
+				/**
+				 * This is the thumbnail image that is clicked to open the lightbox
+				 */
+				const thumbnailImg = item.querySelector('img') as HTMLImageElement
+
+				/**
+				 * The button has these data attributes:
+				 * - data-src
+				 * - data-sizes
+				 * - data-index
+				 */
+				const { src, sizes, index } = item.dataset
+
+				if (!src || !sizes) {
+					throw new Error('Missing data attributes')
+				}
+
+				/**
+				 * Replace the image in the dialog with the one from the button
+				 */
+				const dialogImg = dialog.querySelector('img') as HTMLImageElement
+				dialogImg.src = src
+				dialogImg.sizes = sizes
+				dialogImg.alt = thumbnailImg.alt
+				dialogImg.srcset = thumbnailImg.srcset
+				dialogImg.dataset.index = index
+			}
+
+			function openLightbox(event: MouseEvent | KeyboardEvent) {
+				const button = event.currentTarget as HTMLButtonElement
+
+				setImage(button)
+
+				if (dialog) {
+					dialog.showModal()
+				}
+			}
+
+			function handlePrevNextNavigation(event: KeyboardEvent) {
+				if (!dialog.open) {
+					return
+				}
+
+				if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+					const currentDialogImg = dialog.querySelector('img') as HTMLImageElement
+					const currentIndex = Number.parseInt(currentDialogImg.dataset.index!, 10)
+
+					const nextIndex = event.key === 'ArrowRight' ? currentIndex + 1 : currentIndex - 1
+
+					const nextButton = buttonByIndexMap.get(nextIndex)
+
+					/**
+					 * If the next button has the class 'hidden' the current thumbnail list is filtered by tags. Do not navigate further to these hidden images.
+					 */
+					if (nextButton?.classList.contains('hidden')) {
+						return
+					}
+
+					if (nextButton) {
+						setImage(nextButton)
+					}
+				}
+			}
+
+			/**
+			 * Close the dialog when the user clicks outside of it
+			 */
+			dialog.addEventListener('click', (event) => event.target === dialog && dialog.close())
+
+			/**
+			 * Close the dialog when the user clicks the close button
+			 */
+			closeAction.addEventListener('click', () => {
+				dialog.close()
+			})
+
+			/**
+			 * Open the dialog when the user clicks an image
+			 */
+			openLightboxButtons.forEach((button) => {
+				button.addEventListener('click', openLightbox)
+				button.addEventListener('keydown', (event) => {
+					if (event.key === 'Enter' || event.key === ' ') {
+						event.preventDefault()
+						openLightbox(event)
+					}
+				})
+			})
+
+			document.addEventListener('keydown', handlePrevNextNavigation)
+		}
+	}
+
+	customElements.define('lekoarts-lightbox', LekoArtsLightbox)
+</script>

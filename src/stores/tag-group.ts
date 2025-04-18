@@ -3,14 +3,14 @@ import { map } from 'nanostores'
 
 interface TagGroupStore {
 	garden: Array<Tag>
-	photography: Array<string>
+	photos: Array<string>
 }
 
 export type TagGroupKeys = keyof TagGroupStore
 
 const initialValue: TagGroupStore = {
 	garden: [],
-	photography: [],
+	photos: [],
 }
 
 export const $tagGroup = map(initialValue)

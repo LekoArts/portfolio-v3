@@ -1,13 +1,13 @@
 import { persistentMap } from '@nanostores/persistent'
 
-export type LayoutType = 'masonry' | 'grid' | 'list'
+export type LayoutType = 'masonry' | 'grid'
 
 export interface UIStore {
-	photographyLayout: LayoutType
+	photosLayout: LayoutType
 }
 
 export const $ui = persistentMap<UIStore>('lekoarts-ui:', {
-	photographyLayout: 'masonry',
+	photosLayout: 'masonry',
 }, {
 	encode: JSON.stringify,
 	decode: JSON.parse,

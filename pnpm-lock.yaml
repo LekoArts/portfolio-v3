@@ -27,8 +27,8 @@ importers:
         specifier: ^2.0.21
         version: 2.0.21
       '@lekoarts/flickr-loader':
-        specifier: ^1.2.3
-        version: 1.2.3(astro@5.7.0(@types/node@22.14.1)(jiti@2.4.2)(rollup@4.40.0)(typescript@5.8.3)(yaml@2.7.1))
+        specifier: ^1.2.4
+        version: 1.2.4(astro@5.7.0(@types/node@22.14.1)(jiti@2.4.2)(rollup@4.40.0)(typescript@5.8.3)(yaml@2.7.1))
       '@nanostores/persistent':
         specifier: ^0.10.2
         version: 0.10.2(nanostores@0.11.4)
@@ -792,8 +792,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@lekoarts/flickr-loader@1.2.3':
-    resolution: {integrity: sha512-z5V4zpawl8Gd8CTWHS+SayvfbNK4UpJQSIMb/A8aHDkqNgwh4ynTwZBtbM7kTUVvGxI1eL8OGgYb/jumiObkxw==}
+  '@lekoarts/flickr-loader@1.2.4':
+    resolution: {integrity: sha512-RDI0fiM2arcCKlVLfuUrFQeGhQ6ZJePQ89cAEg96L0otSshJELYPgZexQO2UFLgEimVHwClfVNYdRAGLWqHVdw==}
     peerDependencies:
       astro: ^5.0.0
 
@@ -4369,7 +4369,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@lekoarts/flickr-loader@1.2.3(astro@5.7.0(@types/node@22.14.1)(jiti@2.4.2)(rollup@4.40.0)(typescript@5.8.3)(yaml@2.7.1))':
+  '@lekoarts/flickr-loader@1.2.4(astro@5.7.0(@types/node@22.14.1)(jiti@2.4.2)(rollup@4.40.0)(typescript@5.8.3)(yaml@2.7.1))':
     dependencies:
       astro: 5.7.0(@types/node@22.14.1)(jiti@2.4.2)(rollup@4.40.0)(typescript@5.8.3)(yaml@2.7.1)
       ky: 1.8.1

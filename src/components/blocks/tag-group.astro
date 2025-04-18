@@ -9,7 +9,7 @@ type Props =
 			items: Array<Tag>
 	  }
 	| {
-			id: 'photography'
+			id: 'photos'
 			items: Array<string>
 	  }
 
@@ -74,6 +74,7 @@ const { id, items } = Astro.props
 					if (isActive) {
 						removeTag(this.id, item)
 						button.classList.remove('active')
+						// eslint-disable-next-line style/brace-style
 					} else {
 						addTag(this.id, item)
 						button.classList.add('active')
@@ -99,6 +100,7 @@ const { id, items } = Astro.props
 
 					if (isActive) {
 						item.classList.remove('hidden')
+						// eslint-disable-next-line style/brace-style
 					} else {
 						item.classList.add('hidden')
 					}
@@ -127,6 +129,7 @@ const { id, items } = Astro.props
 
 					if (isActive) {
 						item.classList.remove('hidden')
+						// eslint-disable-next-line style/brace-style
 					} else {
 						item.classList.add('hidden')
 					}

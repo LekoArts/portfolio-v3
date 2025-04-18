@@ -14,7 +14,7 @@ const _REDIRECTS: Array<Redirect> = [
 	},
 	{
 		fromPath: '/projects/',
-		toPath: '/art/',
+		toPath: '/photos/',
 	},
 	{
 		fromPath: '/blog/',
@@ -142,7 +142,7 @@ const _REDIRECTS: Array<Redirect> = [
 	},
 	{
 		fromPath: '/projekte/',
-		toPath: '/art/',
+		toPath: '/photos/',
 	},
 	{
 		fromPath: '/en/',
@@ -150,7 +150,7 @@ const _REDIRECTS: Array<Redirect> = [
 	},
 	{
 		fromPath: '/en/projects/',
-		toPath: '/art/',
+		toPath: '/photos/',
 	},
 	{
 		fromPath: '/en/blog/',
@@ -311,6 +311,18 @@ const _REDIRECTS: Array<Redirect> = [
 	{
 		fromPath: '/garden/gatsby-starter-for-prismic-io/',
 		toPath: '/garden/',
+	},
+	{
+		fromPath: '/art/',
+		toPath: '/photos/',
+	},
+	{
+		fromPath: '/art/design/',
+		toPath: '/photos/',
+	},
+	{
+		fromPath: '/art/3d/',
+		toPath: '/photos/',
 	},
 ]
 

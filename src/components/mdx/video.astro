@@ -95,6 +95,7 @@ const MB_VARIANT = description ? `withDescription` : `default`
 							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes)
 						}
 					}
+					// eslint-disable-next-line style/brace-style
 				} else {
 					video.play()
 					this.state = 'play'
