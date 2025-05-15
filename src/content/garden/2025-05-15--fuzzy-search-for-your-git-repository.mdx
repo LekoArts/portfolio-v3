@@ -1,0 +1,43 @@
+---
+title: Fuzzy Search for Your Git Repository
+slug: fuzzy-search-for-your-git-repository
+description: Use the power of fzf to fuzzy search files, branches, tags, and more inside your Git repository.
+date: 2025-05-15
+lastUpdated: 2025-05-15
+icon: cli
+tags:
+- CLI
+---
+
+In this article, you'll learn how to use [fzf-git](https://github.com/junegunn/fzf-git.sh) to fuzzy search your local git repository.
+
+Here’s what a branch search looks like:
+
+![A screenshot of a terminal window. The command "gcos" was run and underneath it two entries in a list are shown: main and revamp-photos. These represent branch names. Divided with a horizontal ruler below these two items a vertical list of commits is shown. These commits correspond with the selected/highlighted branch.](./_img/fzf-git-gcos-example.png)
+
+You can also use it to search through your files, tags, and more inside your CLI. The screenshot above shows a custom zsh function `gcos()` which uses `fzf-git` under the hood. You can also use `fzf-git` directly though.
+
+## Installation
+
+1. Install [fzf](https://github.com/junegunn/fzf).
+1. Install [bat](https://github.com/sharkdp/bat) for advanced syntax highlighting.
+1. Locate your `.bashrc` or `.zshrc` file (typically in your `$HOME` directory). Download the `fzf-git.sh` file from [fzf-git](https://github.com/junegunn/fzf-git.sh) to this directory or a subdirectory.
+1. Source `fzf-git.sh` in your `.bashrc` or `.zshrc` file:
+
+    ```sh {{ title: '.zshrc' }}
+    source "$HOME/fzf-git.sh"
+    ```
+1. Try out the keybindings defined in [fzf-git usage section](https://github.com/junegunn/fzf-git.sh#usage). For example, <kbd>CTRL-G</kbd> <kbd>CTRL-B</kbd> for branches.
+
+## Defining shortcuts
+
+To get the `gcos()` function shown in the screenshot, define a shortcut like so:
+
+```sh {{ title: '.zshrc' }}
+# Fuzzy-search branches
+gcos() {
+  _fzf_git_branches --no-multi | xargs git checkout
+}
+```
+
+You can check the `fzf-git.sh` script for a list of all available functions.
