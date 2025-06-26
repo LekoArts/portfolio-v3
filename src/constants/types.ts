@@ -5,41 +5,41 @@ export type FlickrImageUrls = DataEntryMap['photos'][string]['data']['photos'][n
 
 export type AlertStatus = 'note' | 'warning' | 'caution' | 'success'
 
-export type SVGIconNames =
-	| 'cli'
-	| 'discord'
-	| 'elitepvpers'
-	| 'gatsby'
-	| 'general'
-	| 'javascript'
-	| 'logo'
-	| 'mdx'
-	| 'python'
-	| 'react'
-	| 'typescript'
-	| 'pause'
-	| 'play'
-	| 'close'
-	| 'check'
-	| 'info'
-	| 'warning'
-	| 'lightbulb'
-	| 'star'
-	| 'arrow-right'
-	| 'share'
-	| 'moon'
-	| 'sun'
-	| 'computer'
-	| 'refresh'
-	| 'export'
-	| 'backward'
-	| 'download'
-	| 'rust'
-	| 'grid'
-	| 'list'
-	| 'masonry'
-	| 'astro'
-	| 'unraid'
+export type SVGIconNames
+	= | 'cli'
+		| 'discord'
+		| 'elitepvpers'
+		| 'gatsby'
+		| 'general'
+		| 'javascript'
+		| 'logo'
+		| 'mdx'
+		| 'python'
+		| 'react'
+		| 'typescript'
+		| 'pause'
+		| 'play'
+		| 'close'
+		| 'check'
+		| 'info'
+		| 'warning'
+		| 'lightbulb'
+		| 'star'
+		| 'arrow-right'
+		| 'share'
+		| 'moon'
+		| 'sun'
+		| 'computer'
+		| 'refresh'
+		| 'export'
+		| 'backward'
+		| 'download'
+		| 'rust'
+		| 'grid'
+		| 'list'
+		| 'masonry'
+		| 'astro'
+		| 'unraid'
 
 export interface CardProps {
 	slug: string
@@ -48,8 +48,8 @@ export interface CardProps {
 	description: string
 }
 
-export type ArrayElement<ArrayType extends readonly unknown[] | undefined> =
-  ArrayType extends readonly (infer ElementType)[] ? ElementType : never
+export type ArrayElement<ArrayType extends readonly unknown[] | undefined>
+  = ArrayType extends readonly (infer ElementType)[] ? ElementType : never
 
 export type Tag = typeof TAGS_CHOICES[number] | (string & {})
 export type Category = (typeof CATEGORY_CHOICES)[number]
