@@ -141,7 +141,7 @@ You can play around with the function and its output in the box below:
   template="react-ts"
 >
 
-```ts demo.ts active
+```ts name=demo.ts active
 import { themeAwareStyles } from "./utils"
 
 const defaultTheme = "light"
@@ -156,7 +156,7 @@ export const output = themeAwareStyles({
 })
 ```
 
-```ts utils.ts
+```ts name=utils.ts
 const isObject = (value: unknown) => !!(value && typeof value === "object" && !Array.isArray(value))
 const isString = (value: unknown) => typeof value === "string"
 export const THEMES = ["light", "dark"] as const
@@ -195,7 +195,7 @@ export const themeAwareStyles = ({
 }
 ```
 
-```tsx App.tsx hidden
+```tsx name=App.tsx hidden
 import React from "react"
 import { output } from "./demo"
 

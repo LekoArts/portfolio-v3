@@ -40,7 +40,7 @@ Oh, and in case you're wondering how I use the table data, here's a small code p
   template="react-ts"
 >
 
-```ts parsing.ts active
+```ts name=parsing.ts active
 const incoming = "Name Max Current PlaceA 144 51 PlaceB 50 25 PlaceC 200 130"
 
 function chunk(arr: Array<string>, size = 3): Array<Array<string>> {
@@ -80,7 +80,7 @@ type ParseStringResponse = {
 }
 ```
 
-```tsx App.tsx hidden
+```tsx name=App.tsx hidden
 import React from "react"
 import { output } from "./parsing"
 

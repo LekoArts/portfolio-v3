@@ -1,12 +1,12 @@
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
+import remarkSandpack from '@lekoarts/remark-sandpack'
 import { imageService } from '@unpic/astro/service'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import { defineConfig, envField } from 'astro/config'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
-import { remarkSandpack } from 'remark-sandpack'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { SITE } from './src/constants/meta.js'
 import { REDIRECTS } from './src/constants/redirects.js'
@@ -45,8 +45,7 @@ export default defineConfig({
 		smartypants: true,
 		gfm: true,
 		rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions]],
-		// @ts-expect-error - Incorrect types in remark-sandpack
-		remarkPlugins: [[remarkSandpack, { componentName: 'Playground' }], codemodAlerts],
+		remarkPlugins: [[remarkSandpack, { componentName: ['Playground'] }], codemodAlerts],
 		shikiConfig: {
 			themes: {
 				light: 'one-light',

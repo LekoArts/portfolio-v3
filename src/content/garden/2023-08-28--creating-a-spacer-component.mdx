@@ -22,7 +22,7 @@ You can pass in any `number` here as there are no style tokens and type-safety o
   template="react-ts"
 >
 
-```tsx spacer.tsx active
+```tsx name=spacer.tsx active
 import React from "react"
 
 type SpacerProps = {
@@ -49,7 +49,7 @@ export const Spacer = ({ size, axis, ...rest }: SpacerProps) => {
 }
 ```
 
-```tsx App.tsx
+```tsx name=App.tsx
 import React from "react"
 import { Spacer } from "./spacer"
 
@@ -83,7 +83,7 @@ You'll be using Chakra UI's built-in scale for the spacing props (coming from `w
   }}
 >
 
-```tsx spacer.tsx active
+```tsx name=spacer.tsx active
 import React from "react"
 import { Box, BoxProps } from "@chakra-ui/react"
 
@@ -109,7 +109,7 @@ export const Spacer = ({ size, axis, ...rest }: ISpacerProps) => {
 }
 ```
 
-```tsx App.tsx
+```tsx name=App.tsx
 import React from "react"
 import { ChakraProvider } from "@chakra-ui/react"
 import { Spacer } from "./spacer"

@@ -30,6 +30,7 @@
 		"@codesandbox/sandpack-react": "^2.20.0",
 		"@codesandbox/sandpack-themes": "^2.0.21",
 		"@lekoarts/flickr-loader": "^1.2.4",
+		"@lekoarts/remark-sandpack": "^1.0.0",
 		"@nanostores/persistent": "^0.10.2",
 		"@nanostores/react": "^0.8.4",
 		"@sindresorhus/slugify": "^2.2.1",
@@ -51,7 +52,6 @@
 		"reading-time": "^1.5.0",
 		"rehype-autolink-headings": "^7.1.0",
 		"rehype-slug": "^6.0.0",
-		"remark-sandpack": "^0.0.3",
 		"sharp": "^0.33.5",
 		"typescript": "^5.8.3",
 		"unist-util-visit": "^5.0.0"
