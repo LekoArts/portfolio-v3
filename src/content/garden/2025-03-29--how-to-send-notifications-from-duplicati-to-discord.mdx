@@ -3,7 +3,7 @@ title: How to Send Notifications From Duplicati to Discord
 slug: how-to-send-notifications-from-duplicati-to-discord
 description: Learn how to send notifications for your Duplicati backups to Discord through webhooks
 date: 2025-03-29
-lastUpdated: 2025-03-29
+lastUpdated: 2025-06-26
 icon: discord
 tags:
 - Discord
@@ -17,7 +17,7 @@ If you, like me, consolidate notifications for self-hosted services in a Discord
 > [!NOTE]
 > **Intended audience**
 >
-> This guide assumes that you have Node.js and pnpm installed on your machine and that you're familiar with Git, pnpm, and the terminal. You'll also have to use Cloudflare. If you don't want to use Cloudflare you'll have to fork the mentioned repository and adapt it to your deployment platform of choice.
+> This guide assumes that you have a Cloudflare account. If you don't want to use Cloudflare you'll have to fork the mentioned repository and adapt it to your deployment platform of choice.
 
 ## Set up a Cloudflare worker
 
@@ -28,9 +28,7 @@ Since I don't want to host this proxy for you, you'll need to create your own wo
 Here's how you can set up your own worker:
 
 1. Create a [Cloudflare](https://www.cloudflare.com) account
-1. Clone the [duplicati-discord-cloudflare-worker](https://github.com/LekoArts/duplicati-discord-cloudflare-worker) repository
-1. Install dependencies with `pnpm install`
-1. Deploy the Cloudflare worker to your account by running `pnpm run deploy`
+1. [Deploy to Cloudflare](https://deploy.workers.cloudflare.com/?url=https://github.com/LekoArts/duplicati-discord-cloudflare-worker)
 
 If everything goes smoothly you should end up with a deployed Cloudflare worker that has a URL similar to this one:
 
@@ -65,7 +63,7 @@ Now it's time to tie everything together inside Duplicati.
 1. Inside **"Configuration"** select the **"Edit..."** button
 1. Navigate to the **"Options"** tab
 1. Inside **"Advanced options"**, select `send-http-json-urls` from the **Add advanced option** select dropdown
-1. Add your Cloudflare worker URL together with the portion you copied from the Discord webhook URL to the `send-http-json-urls` text field
+1. Add your Cloudflare worker URL together with the portion you copied from the Discord webhook URL to the `send-http-json-urls` text field:
 
     ```shell
     https://duplicati-discord-cloudflare-worker.your-name.workers.dev/12345/foobar123
@@ -73,3 +71,24 @@ Now it's time to tie everything together inside Duplicati.
 1. Save your edit to the backup
 
 You can repeat these steps for every Duplicati backup that you'd like to receive notifications for.
+
+## Discord thread / forum channel support
+
+If you want to send notifications to a [Discord thread](https://support.discord.com/hc/en-us/articles/4403205878423-Threads-FAQ) or to a post inside a [forum channel](https://support.discord.com/hc/en-us/articles/6208479917079-Forum-Channels-FAQ), you need to pass a `thread_id` to the Cloudflare worker. Here's how you can do that:
+
+1. Navigate to the thread / forum post, right-click it, and choose **"Copy Link"**.
+
+   It will be in the following format:
+
+   ```shell
+   https://discord.com/channels/123/456
+   ```
+
+   The `456` is your `thread_id`.
+
+1. Adjust the URL you're passing to the `send-http-json-urls` flag by adding `?thread_id=<your-thread-id>` to the end of it:
+
+   ```diff
+   - https://duplicati-discord-cloudflare-worker.your-name.workers.dev/12345/foobar123
+   + https://duplicati-discord-cloudflare-worker.your-name.workers.dev/12345/foobar123?thread_id=456
+   ```
