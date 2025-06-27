@@ -14,7 +14,7 @@ const { imageUrls, alt, class: className, ...rest } = Astro.props
 const urls = imageUrls['1024px']
 
 if (!urls) {
-	throw new Error('No image URLs provided')
+	throw new Error('No image URLs provided to flickr-image component.')
 }
 
 const src = urls.url

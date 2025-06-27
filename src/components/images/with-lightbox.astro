@@ -16,7 +16,7 @@ const { imageUrls, selector, class: className, ...rest } = Astro.props
 const urls = imageUrls['1600px'] ?? imageUrls['1024px']
 
 if (!urls) {
-	throw new Error('No image URLs provided')
+	throw new Error('No image URLs provided to with-lightbox component.')
 }
 
 const src = urls.url

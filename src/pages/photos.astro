@@ -16,8 +16,9 @@ import FlickrImage from '@components/images/flickr-image.astro'
 import Lightbox from '@components/images/lightbox.astro'
 import { getCollection } from 'astro:content'
 import WithLightbox from '@components/images/with-lightbox.astro'
+import { getSortedPhotosets } from '@utils/collection'
 
-const photosets = await getCollection('photos')
+const photosets = getSortedPhotosets(await getCollection('photos'))
 
 const photosetTitles = photosets.map((photoset) => photoset.data.title).sort((a, b) => a.localeCompare(b))
 const photos = photosets.flatMap((photoset) =>
