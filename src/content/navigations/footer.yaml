@@ -30,7 +30,7 @@
 - name: Social
   items:
     - name: Email
-      link: mailto:hello@lekoarts.de
+      link: mailto:lekoarts@gmail.com
       isExternal: true
     - name: Bluesky
       link: https://bsky.app/profile/lekoarts.de

@@ -6,7 +6,7 @@ export const IDENTITY = {
 	'@type': 'Organization',
 	'alternateName': 'Lennart Jörgens',
 	'description': SITE.description,
-	'email': 'hello@lekoarts.de',
+	'email': '',
 	'founder': 'Lennart Jörgens',
 	'foundingDate': '2017-12-08',
 	'image': {
@@ -38,7 +38,7 @@ export const CREATOR = {
 	'@type': 'Organization',
 	'alternateName': 'Lennart Jörgens',
 	'description': SITE.description,
-	'email': 'hello@lekoarts.de',
+	'email': '',
 	'founder': 'Lennart Jörgens',
 	'foundingDate': '2017-12-08',
 	'image': {
