@@ -1,0 +1,121 @@
+---
+title: How I Use Home Assistant on Unraid
+slug: how-i-use-home-assistant-on-unraid
+description: A collection of notes and thoughts for running Home Assistant on Unraid
+date: 2025-07-29
+lastUpdated: 2025-07-29
+icon: unraid
+tags:
+- Unraid
+series:
+  id: my-first-unraid-server
+  part: 4
+---
+
+One of my main use cases for my home server is running Home Assistant to integrate my various smart home devices. I use HomeKit as my daily UI, but I don’t want to be locked into a single, often expensive, ecosystem. Home Assistant provides the flexibility I need.
+
+All of my devices are either Zigbee or Matter over Thread, and I integrate them using [Zigbee2MQTT](https://www.zigbee2mqtt.io/) with a [Conbee 3](https://phoscon.de/en/conbee3) USB stick that establishes the Zigbee network.
+
+> [!NOTE]
+> **Note**
+>
+> This post is not a structured, step-by-step installation guide for Home Assistant on Unraid. Instead, it's a collection of notes and thoughts I found worth sharing during my setup.
+
+## Installation
+
+Before anything else, you need to decide how to [install Home Assistant](https://www.home-assistant.io/installation/). I wanted to run Home Assistant OS so I could install Add-ons directly within the interface.
+
+I chose [HomeAssistant_inabox](https://github.com/SpaceinvaderOne/Home_Assistant_inabox), and so far it’s working great. In short, it’s a Docker container that downloads, installs, and manages a Home Assistant VM on your Unraid server.
+
+You’ll need to pass through the Conbee USB stick to the Home Assistant VM. For that, I use the Unraid plugin [USB Manager](https://forums.unraid.net/topic/100511-plugin-usb_manager/). After installing the plugin, navigate to the **USB** tab in the main navigation and configure the device with the following settings:
+
+- Auto connect at USB device plugin: Enabled
+- At plugin start / Resume VM if not running: Disabled
+- Auto connect to VM at VM start: Enabled
+- Connect as serial only: Enabled
+
+In **Zigbee2MQTT**, I configure the serial port as `/dev/ttyUSB0`.
+
+> [!NOTE]
+> **Note**
+> 
+> You may come across advice online suggesting that you use the serial ID instead of the port number, as the device path can change after a disconnection or reboot. This is good advice — I’ve just been too lazy to implement it myself.
+
+## Add-ons
+
+These are the add-ons I’ve installed:
+
+- [Advanced SSH & Web Terminal](https://github.com/hassio-addons/addon-ssh). Easier for debugging/logging inside the VM than going through Unraid.
+- [File editor](https://github.com/home-assistant/addons/tree/master/configurator). Handy for quick YAML edits.
+- [Get HACS](https://github.com/hacs/addons/tree/main/get). This installs HACS; it doesn't run it.
+- [Matter Server](https://github.com/home-assistant/addons/tree/master/matter_server)
+- [MQTT broker](https://github.com/home-assistant/addons/tree/master/mosquitto)
+- [Zigbee2MQTT](https://github.com/zigbee2mqtt/hassio-zigbee2mqtt/tree/master/zigbee2mqtt)
+
+### HACS Integrations
+
+A few HACS integrations I find especially useful:
+
+- [Thermal Comfort](https://github.com/dolezsa/thermal_comfort). I use it to calculate dew point, “feels like” temperature, and absolute humidity, which helps me decide when to open windows (just looking at temperature or humidity alone isn’t reliable).
+- [Powercalc](https://docs.powercalc.nl/). Estimates power consumption for devices that don’t have built-in power meters.
+- [Spook](https://spook.boo/). Adds a collection of advanced tools and diagnostics.
+
+## Areas & Labels
+
+Since my apartment is on one floor, I assign each room as an area. In addition, I created two extra areas:
+
+- Control: For entities that aren’t physically located in a specific room (e.g. the devices “Sun” or “Workday”).
+- Outdoor: For any external sensors or devices.
+
+I use the following labels to organize entities by type:
+
+- Helper
+- Light
+- Manual / Button
+- Notify
+- Power / Energy
+- Presence
+- Sensor
+
+## Naming Conventions
+
+When adding a new device, I follow a consistent naming scheme:
+
+```yaml
+type_room_identifier
+```
+
+Examples:
+
+```yaml
+sensor_bedroom_temperature
+plug_kitchen_dishwasher
+light_living-room_sideboard
+```
+
+The `identifier` doesn't have to be the device type, it can be a specific function or location, too.
+
+## Presence Detection
+
+Some automations should only run when people are home (or not). The simplest approach is to use the Home Assistant mobile app with location tracking enabled.
+
+However, I found the location services a bit unreliable and didn’t want the additional battery drain on my iPhone. Instead, I use HomeKit to detect presence and report it to Home Assistant.
+
+Here's how you can do that:
+
+1. Create an [input_boolean](https://www.home-assistant.io/integrations/input_boolean/) helper in Home Assistant.
+1. Name it something like `sensor_helpers_lekoarts-present`.
+1. Expose the helper to HomeKit using the [HomeKit Bridge](https://www.home-assistant.io/integrations/homekit/) integration. It will appear as a switch in HomeKit.
+1. In the Home app, create two automations:
+   - When you arrive home, toggle the switch **on**.
+   - When you leave, toggle it **off**.
+
+This setup gives you reliable presence detection without draining your phone battery.
+
+## Automation Blueprints
+
+A few blueprints I use and recommend:
+
+- [**Contact Sensor (Door/Window) Left Open Notification**](https://community.home-assistant.io/t/contact-sensor-door-or-window-left-open-notification/652571)
+- [**IKEA E2001/E2002 STYRBAR Remote Control**](https://epmatt.github.io/awesome-ha-blueprints/docs/blueprints/controllers/ikea_e2001_e2002/). Lets me control lights with an IKEA remote.
+- [**Light Wake-Up Alarm**](https://community.home-assistant.io/t/simple-light-wake-up-alarm-with-parabolic-sunrise-effect/673747). Gradually increases light intensity in the morning as an alarm.

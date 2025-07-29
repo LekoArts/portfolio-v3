@@ -1,0 +1,119 @@
+---
+title: My Unraid Settings
+slug: my-unraid-settings
+description: An overview of the Unraid settings I chose while setting up my first server
+date: 2025-07-29
+lastUpdated: 2025-07-29
+icon: unraid
+tags:
+- Unraid
+series:
+  id: my-first-unraid-server
+  part: 3
+---
+
+In Part 1 of this series, I explained my initial Unraid setup and which guides I followed. In Part 2, I shared a list of apps I consider essential when using Unraid.
+
+In this part, I'll go into more detail about how I configured certain settings and apps. This setup works well for me and you're free to copy it. But please keep in mind that your experience might vary. You can't really break anything (permanently) while tweaking these settings so don't be afraid to experiment and see what works best for your environment.
+
+Most of the options I changed show a little _?_ while hovering the description. This means that you can click the option description and a longer explanation will be shown. Reference these explanations and online documentation if you want to learn more about what each individual option does as I won't go into detail here.
+
+From the main navigation, navigate to the _Settings_ tab.
+
+## System Settings
+
+### Disk Settings
+
+Together with auto starting Docker containers, this ensures that I don't have to handhold the server during restarts. Everything will just start automatically. Since I only access my server during certain periods of time throughout the day, it makes sense to quite aggressively spin down the disks. That way, they remain off for most of the day.
+
+- Enable auto start: Yes
+- Default spin down delay: 30 minutes
+
+### Management Access
+
+I've changed the default Unraid ports to avoid conflicts with that Nginx Proxy Manager and my Docker setup (explained in next heading).
+
+- HTTP Port: 5000
+- HTTPS Port: 5001
+
+### Docker
+
+These settings _really_ depend on your local setup. I use a [FRITZ!Box](https://fritz.com/produkte/fritzbox/) as my router and it handles internal DNS resolution different than other routers might do. So I'm laying out my setup here in case you also use a FRITZ!Box but I strongly recommend to read up on these settings to figure out what's best for you.
+
+- Created a custom docker network by opening up the terminal and entering:
+    ```shell
+    docker network create customName
+    ```
+- Docker custom network type: ipvlan
+- Host access to custom networks: Enabled
+
+Inside the _Docker_ tab pane of the navigation, the Nginx Proxy Manager has the `host` network type while most other docker containers use the `customName` network. Only HomeAssistant_inabox and Emby use the `bridge` network mode.
+
+With this setup, the reverse proxy and internal communication between the docker containers works reliably.
+
+### Network Services: SMB
+
+With these settings I get the full bandwidth both on my Windows PC and Mac.
+
+- Enable SMB Multi Channel: Yes
+- Enhanced macOS interoperability: Yes
+- Samba extra configuration:
+    ```text
+    #vfs_fruit compatibility for Apple SMB
+    [global]
+    vfs objects = catia fruit streams_xattr
+    fruit:nfs_aces = no
+    fruit:zero_file_id = yes
+    fruit:encoding = native
+    spotlight backend = tracker
+
+    fruit:metadata = stream
+    fruit:posix_rename = yes
+    readdir_attr:aapl_max_access = no
+    readdir_attr:aapl_finder_info = no
+    readdir_attr:aapl_rsize = no
+    ```
+
+### Scheduler
+
+#### Parity Check
+
+- Month of the year: January, April, July, October (so every 3 months)
+
+#### Parity Check Tuning
+
+- Use increments for scheduled Parity Check: Yes
+- Increment resume time: 00:15
+- Increment pause time: 06:00
+
+#### Mover Settings
+
+- Mover schedule: Daily
+- Time of day: 03:40
+
+#### TRIM Settings
+
+- TRIM schedule: Weekly
+
+### Backup/Restore Appdata
+
+I'm using [Duplicati](https://duplicati.com/) to backup the destination folder of this plugin. That's why my settings here are not geared towards long-term storage.
+
+- Backup type: Stop, backup, start for each container
+- Delete backups if older than x days: 7
+- Keep at least this many backups: 3
+- Use compression? Yes, normal
+- Backup the flash drive? Yes
+
+### AutoTweak
+
+- Power Profile: Balanced
+- Otherwise default options
+
+### Tips And Tweaks
+
+Enabled the scheduled performance boost during evening hours when it's most likely that content is watched on Emby.
+
+## Docker
+
+On the Docker container overview I've enabled the autostart for most containers. They are ordered in their importance, with Nginx Proxy Manager being first.
