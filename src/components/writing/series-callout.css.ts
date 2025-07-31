@@ -21,7 +21,7 @@ export const detailsStyle = style({
 		[themesSelectors.dark]: {
 			backgroundColor: colorPalette.blueGray[800],
 			vars: {
-				[listItemActiveBgVar]: colorPalette.orange[400],
+				[listItemActiveBgVar]: colorPalette.blue[400],
 				[listItemBgVar]: colorPalette.blueGray[600],
 				[listItemActiveColorVar]: colorPalette.black,
 				[listItemColorVar]: colorPalette.blueGray[200],

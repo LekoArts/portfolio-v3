@@ -41,7 +41,7 @@ export type VariantNames = 'primary' | 'link' | 'outline' | 'ghost'
 const buttons: Record<VariantNames, StyleRule> = {
 	primary: {
 		background: vars.color.primary,
-		color: 'white !important',
+		color: vars.color.textPrimaryButton,
 		textDecoration: 'none !important',
 		selectors: {
 			[pseudoSelectors.hover]: {
