@@ -27,9 +27,9 @@ const posts = getSortedWriting(await getCollection('writing', filterPublished))
 				<Box display="flex" flexDirection="column" gap={3} alignItems="center">
 					<Heading as="h1">Writing</Heading>
 					<Text variant="prominent" textAlign="center" style={{ maxWidth: `45ch` }}>
-						So far I’ve written {posts.length} longform tutorials & articles. For more compact content visit my <Link
-							href="/garden/">Digital Garden</Link
-						>. <Link href="/rss.xml">RSS</Link>.
+						Browse my <Link href="/garden/">Digital Garden</Link> for short-form content. Subscribe via <Link
+							href="/rss.xml">RSS Feed</Link
+						>.
 					</Text>
 				</Box>
 				<Box gap={8} class={cardGridStyle}>
