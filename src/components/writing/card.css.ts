@@ -154,4 +154,11 @@ export const iconStyle = style({
 			display: 'block',
 		},
 	},
+	'selectors': {
+		[themesSelectors.dark]: {
+			vars: {
+				'--icon-bg': 'transparent',
+			},
+		},
+	},
 })

@@ -1,6 +1,8 @@
+import { themesSelectors } from '@styles/atoms.css'
 import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
+import { colorPalette } from '@styles/tokens/colors'
 import { createVar, globalStyle, style } from '@vanilla-extract/css'
 
 const mis = '25px'
@@ -49,6 +51,11 @@ export const gardenItemStyle = style({
 		},
 	},
 	'selectors': {
+		[themesSelectors.dark]: {
+			vars: {
+				'--icon-bg': colorPalette.blueGray[700],
+			},
+		},
 		[pseudoSelectors.hover]: {
 			textDecoration: 'none',
 			backgroundColor: vars.color.bgHover,
