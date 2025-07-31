@@ -1,8 +1,8 @@
 ---
-import MotionBox from '@components/primitives/motion-box.astro'
+import Box from '@components/primitives/box.astro'
 import Link from '@components/primitives/link.astro'
 import Text from '@components/typography/text.astro'
-import { cardStyle, headingStyle, linkStyle } from './card.css'
+import { cardStyle, headingStyle, linkStyle, linkTargetStyle } from './card.css'
 import type { CardProps } from '@constants/types'
 
 interface Props extends CardProps {}
@@ -10,7 +10,7 @@ interface Props extends CardProps {}
 const { slug, title, subtitle, description } = Astro.props
 ---
 
-<MotionBox p={6} borderRadius="lg" bg="cardBg" class={cardStyle}>
+<Box p={6} borderRadius="lg" bg="cardBg" class={cardStyle}>
 	<Link href={slug} class={linkStyle}>
 		<Text as="h2" fontSize="lgx" fontWeight="bold" color="heading" class={headingStyle}>
 			{title}
@@ -23,5 +23,6 @@ const { slug, title, subtitle, description } = Astro.props
 			)
 		}
 		<Text marginTop={6}>{description}</Text>
+		<span class={linkTargetStyle}></span>
 	</Link>
-</MotionBox>
+</Box>
