@@ -17,30 +17,13 @@ import Spacer from '@components/primitives/spacer.astro'
 import PrimaryButton from '@components/primitives/button/primary.astro'
 import SecondaryButton from '@components/primitives/button/secondary.astro'
 import { slugify } from '@utils/slugify'
-import {
-	artGridStyle,
-	cardLinkStyle,
-	cardsGridStyle,
-	gardenBoxStyle,
-	postBoxStyle,
-	repositoriesGridStyle,
-	staticImageOverride,
-} from './_index.css'
-import MotionBox from '@components/primitives/motion-box.astro'
+import { artGridStyle, photoLinkStyle, cardsGridStyle, repositoriesGridStyle, staticImageStyle } from './_index.css'
+import Card from '@components/writing/card.astro'
 import PhotoOne from '../assets/pages-index-01.jpg'
 import PhotoTwo from '../assets/pages-index-02.jpg'
 import Container from '@components/primitives/container.astro'
 import Tag from '@components/primitives/tag.astro'
 import { fetchGithub } from '@lib/github'
-
-const cardGradients = [
-	`linear-gradient(to right top, oklch(66.61% 0.1837 300.15), oklch(67.74% 0.1832 13.36), oklch(77.11% 0.1522 52.47))`,
-	`linear-gradient(to right top, oklch(67.36% 0.1872 291.84), oklch(73.93% 0.1247 238.43), oklch(87.84% 0.1422 152.56))`,
-	`linear-gradient(to right top, oklch(50.08% 0.1631 329), oklch(72.27% 0.1086 9.85), oklch(75.24% 0.1116 317.64), oklch(85.99% 0.0276 292.7))`,
-	`linear-gradient(to right top, oklch(57.37% 0.1784 279.18), oklch(58.58% 0.1302 265.82), oklch(81.69% 0.0634 185.86), oklch(85.79% 0.07861185785477327 239.70856913766124))`,
-	`linear-gradient(to right top, oklch(33.04% 0.1265 296.73), oklch(51.79% 0.1531 20), oklch(64.37% 0.1502 43.75), oklch(84.52% 0.1717 98.2))`,
-	`linear-gradient(to right top, oklch(30.91% 0.0837 5.42), oklch(62.18% 0.1548 354.01), oklch(60.24% 0.2012 319.11), oklch(84.41% 0.0889 326.33))`,
-]
 
 const openSourceRepos = [
 	{
@@ -104,7 +87,7 @@ const {
 } = githubResponse
 
 const writing = getSortedWriting(await getCollection('writing', filterPublished)).slice(0, 4)
-const garden = getSortedGarden(await getCollection('garden')).slice(0, 3)
+const garden = getSortedGarden(await getCollection('garden')).slice(0, 6)
 
 const [firstPost, ...otherPosts] = writing
 ---
@@ -155,24 +138,12 @@ const [firstPost, ...otherPosts] = writing
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
 					<Box display="flex" justifyContent="space-between" alignItems="center">
 						<Badge variant="light">More Posts</Badge>
-						<SecondaryButton aria-label="Read all long-form posts" href="/writing/"> Read all </SecondaryButton>
+						<SecondaryButton aria-label="Read all long-form posts" href="/writing/">Read all</SecondaryButton>
 					</Box>
 					<Box class={cardsGridStyle}>
 						{
-							otherPosts.map((item, index) => (
-								<Link href={slugify(item.id, item.data.category.id)} borderRadius="lg" class={cardLinkStyle}>
-									<MotionBox
-										p={4}
-										borderRadius="lg"
-										display="flex"
-										alignItems="flex-end"
-										fontSize={[`lg`, null, `md`, `lg`, `lgx`]}
-										class={postBoxStyle}
-										__background={cardGradients[index]}
-									>
-										{item.data.title}
-									</MotionBox>
-								</Link>
+							otherPosts.map((post) => (
+								<Card slug={slugify(post.id, post.data.category.id)} title={post.data.title} variant="title-only" />
 							))
 						}
 					</Box>
@@ -180,24 +151,17 @@ const [firstPost, ...otherPosts] = writing
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
 					<Box display="flex" justifyContent="space-between" alignItems="center">
 						<Badge variant="light">Digital Garden</Badge>
-						<SecondaryButton aria-label="Read all Digital Garden posts" href="/garden/"> Read all </SecondaryButton>
+						<SecondaryButton aria-label="Read all Digital Garden posts" href="/garden/">Read all</SecondaryButton>
 					</Box>
 					<Box class={cardsGridStyle}>
 						{
-							garden.map((item, index) => (
-								<Link href={slugify(item.id, 'garden')} borderRadius="lg" class={cardLinkStyle}>
-									<MotionBox
-										p={4}
-										borderRadius="lg"
-										display="flex"
-										alignItems="flex-end"
-										fontSize={[`lg`, null, `md`, `lg`, `lgx`]}
-										class={gardenBoxStyle}
-										__background={cardGradients[index + 3]}
-									>
-										{item.data.title}
-									</MotionBox>
-								</Link>
+							garden.map((post) => (
+								<Card
+									slug={slugify(post.id, 'garden')}
+									title={post.data.title}
+									icon={post.data.icon}
+									variant="title-only"
+								/>
 							))
 						}
 					</Box>
@@ -208,15 +172,11 @@ const [firstPost, ...otherPosts] = writing
 						<SecondaryButton href="/photos/">All photos</SecondaryButton>
 					</Box>
 					<Box class={artGridStyle}>
-						<Link href="/photos/" borderRadius="lg" class={cardLinkStyle}>
-							<MotionBox class={staticImageOverride}
-								><Image alt="" src={PhotoOne} aspectRatio={16 / 9} width={720} /></MotionBox
-							>
+						<Link href="/photos/" borderRadius="lg" class={photoLinkStyle}>
+							<Image alt="" src={PhotoOne} aspectRatio={16 / 9} width={720} class={staticImageStyle} />
 						</Link>
-						<Link href="/photos/" borderRadius="lg" class={cardLinkStyle}>
-							<MotionBox class={staticImageOverride}
-								><Image alt="" src={PhotoTwo} aspectRatio={16 / 9} width={720} /></MotionBox
-							>
+						<Link href="/photos/" borderRadius="lg" class={photoLinkStyle}>
+							<Image alt="" src={PhotoTwo} aspectRatio={16 / 9} width={720} class={staticImageStyle} />
 						</Link>
 					</Box>
 				</Box>

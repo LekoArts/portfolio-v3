@@ -1,4 +1,4 @@
-import { globalStyle, style } from '@vanilla-extract/css'
+import { style } from '@vanilla-extract/css'
 import { pseudoSelectors } from '../styles/selectors'
 import { vars } from '../styles/themes/contract.css'
 import { minMediaQuery } from '../styles/tokens/breakpoints'
@@ -26,73 +26,37 @@ export const artGridStyle = style([
 	},
 ])
 
-export const cardLinkStyle = style({
-	'selectors': {
-		[pseudoSelectors.hover]: {
-			textDecoration: 'none',
-			boxShadow: 'none',
-		},
-	},
-	'@media': {
-		'(prefers-reduced-motion: reduce)': {
-			selectors: {
-				[pseudoSelectors.hover]: {
-					boxShadow: vars.shadow.outline,
-				},
-			},
-		},
-	},
+const photoCardBaseStyle = style({
+	borderRadius: vars.borderRadius.lg,
 })
 
-const colorfulCardStyle = style({
-	color: 'white',
-	textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)',
+export const photoLinkStyle = style([photoCardBaseStyle, {
 	boxShadow: vars.shadow.lg,
-	textWrap: 'balance',
-})
-
-export const postBoxStyle = style([
-	colorfulCardStyle,
-	{
-		'height': '150px',
-		'@media': {
-			[minMediaQuery('lg')]: {
-				height: '200px',
-			},
-			[minMediaQuery('xl')]: {
-				height: '250px',
-			},
+	position: 'relative',
+	selectors: {
+		[pseudoSelectors.after]: {
+			content: '""',
+			position: 'absolute',
+			width: vars.space.full,
+			height: vars.space.full,
+			transitionProperty: 'box-shadow',
+			transitionDuration: '.3s',
+			transitionTimingFunction: 'cubic-bezier(.4,0,.2,1)',
+			boxShadow: 'inset 0 0 0 2px rgba(255, 255, 255, 0.2)',
+			opacity: 1,
+			borderRadius: vars.borderRadius.lg,
+			top: 0,
+			left: 0,
+			right: 0,
+			bottom: 0,
+		},
+		'&:hover:after': {
+			boxShadow: 'inset 0 0 0 2px rgba(255, 255, 255, 0.5)',
 		},
 	},
-])
+}])
 
-export const gardenBoxStyle = style([
-	colorfulCardStyle,
-	{
-		'height': '125px',
-		'@media': {
-			[minMediaQuery('lg')]: {
-				height: '175px',
-			},
-		},
-	},
-])
-
-export const staticImageOverride = style({
-	boxShadow: vars.shadow.lg,
-	height: vars.space.full,
-	width: vars.space.full,
-	borderRadius: vars.borderRadius.lg,
-})
-
-globalStyle(`${staticImageOverride} img`, {
-	borderRadius: vars.borderRadius.lg,
-})
-
-globalStyle(`${staticImageOverride} .gatsby-image-wrapper`, {
-	borderRadius: vars.borderRadius.lg,
-	verticalAlign: 'top',
-})
+export const staticImageStyle = style([photoCardBaseStyle, {}])
 
 export const repositoriesGridStyle = style({
 	'display': 'grid',

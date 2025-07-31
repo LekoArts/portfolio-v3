@@ -41,11 +41,15 @@ export type SVGIconNames
 		| 'astro'
 		| 'unraid'
 
+export type CardVariants = 'default' | 'title-only'
+
 export interface CardProps {
 	slug: string
 	title: string
 	subtitle?: string
-	description: string
+	description?: string
+	variant?: CardVariants
+	icon?: SVGIconNames
 }
 
 export type ArrayElement<ArrayType extends readonly unknown[] | undefined>
