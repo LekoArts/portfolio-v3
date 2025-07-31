@@ -27,8 +27,8 @@ import {
 	staticImageOverride,
 } from './_index.css'
 import MotionBox from '@components/primitives/motion-box.astro'
-import PhotographyImage from '../assets/pages-index-photography-preview.jpg'
-import ArtImage from '../assets/pages-index-3d-preview.jpg'
+import PhotoOne from '../assets/pages-index-01.jpg'
+import PhotoTwo from '../assets/pages-index-02.jpg'
 import Container from '@components/primitives/container.astro'
 import Tag from '@components/primitives/tag.astro'
 import { fetchGithub } from '@lib/github'
@@ -210,12 +210,12 @@ const [firstPost, ...otherPosts] = writing
 					<Box class={artGridStyle}>
 						<Link href="/photos/" borderRadius="lg" class={cardLinkStyle}>
 							<MotionBox class={staticImageOverride}
-								><Image alt="" src={PhotographyImage} aspectRatio={16 / 9} width={720} /></MotionBox
+								><Image alt="" src={PhotoOne} aspectRatio={16 / 9} width={720} /></MotionBox
 							>
 						</Link>
 						<Link href="/photos/" borderRadius="lg" class={cardLinkStyle}>
 							<MotionBox class={staticImageOverride}
-								><Image alt="" src={ArtImage} aspectRatio={16 / 9} width={720} /></MotionBox
+								><Image alt="" src={PhotoTwo} aspectRatio={16 / 9} width={720} /></MotionBox
 							>
 						</Link>
 					</Box>
