@@ -69,15 +69,15 @@ export const proseSmVariant = {
 		marginTop: em(24, 14),
 		marginBottom: em(24, 14),
 	},
-	'figure': {
+	'figure:not(.frame)': {
 		marginTop: em(24, 14),
 		marginBottom: em(24, 14),
 	},
-	'figure > *': {
+	'figure:not(.frame) > *': {
 		marginTop: vars.space[0],
 		marginBottom: vars.space[0],
 	},
-	'figure figcaption': {
+	'figure:not(.frame) figcaption': {
 		fontSize: em(12, 14),
 		lineHeight: round(16 / 12),
 		marginTop: em(8, 12),
@@ -228,15 +228,15 @@ export const proseMdVariant: typeof proseSmVariant = {
 		marginTop: em(32, 16),
 		marginBottom: em(32, 16),
 	},
-	'figure': {
+	'figure:not(.frame)': {
 		marginTop: em(32, 16),
 		marginBottom: em(32, 16),
 	},
-	'figure > *': {
+	'figure:not(.frame) > *': {
 		marginTop: vars.space[0],
 		marginBottom: vars.space[0],
 	},
-	'figure figcaption': {
+	'figure:not(.frame) figcaption': {
 		fontSize: em(14, 16),
 		lineHeight: round(20 / 14),
 		marginTop: em(12, 14),
@@ -387,15 +387,15 @@ export const proseLgVariant: typeof proseSmVariant = {
 		marginTop: em(32, 18),
 		marginBottom: em(32, 18),
 	},
-	'figure': {
+	'figure:not(.frame)': {
 		marginTop: em(32, 18),
 		marginBottom: em(32, 18),
 	},
-	'figure > *': {
+	'figure:not(.frame) > *': {
 		marginTop: vars.space[0],
 		marginBottom: vars.space[0],
 	},
-	'figure figcaption': {
+	'figure:not(.frame) figcaption': {
 		fontSize: em(16, 18),
 		lineHeight: round(24 / 16),
 		marginTop: em(16, 16),
@@ -546,15 +546,15 @@ export const proseXlVariant: typeof proseSmVariant = {
 		marginTop: em(40, 20),
 		marginBottom: em(40, 20),
 	},
-	'figure': {
+	'figure:not(.frame)': {
 		marginTop: em(40, 20),
 		marginBottom: em(40, 20),
 	},
-	'figure > *': {
+	'figure:not(.frame) > *': {
 		marginTop: vars.space[0],
 		marginBottom: vars.space[0],
 	},
-	'figure figcaption': {
+	'figure:not(.frame) figcaption': {
 		fontSize: em(18, 20),
 		lineHeight: round(28 / 18),
 		marginTop: em(18, 18),
@@ -696,7 +696,7 @@ export const proseBaseStyle: SelectorMap = {
 		color: vars.color.textEmphasized,
 		fontStyle: 'normal',
 	},
-	'figure img': {
+	'figure:not(.frame) img': {
 		borderRadius: vars.borderRadius.lg,
 	},
 	'img': {
@@ -743,7 +743,7 @@ export const proseBaseStyle: SelectorMap = {
 		fontWeight: vars.fontWeight.semibold,
 		fontFamily: fonts.heading,
 	},
-	'figure figcaption': {
+	'figure:not(.frame) figcaption': {
 		color: {
 			light: colorPalette.gray[500],
 			dark: colorPalette.gray[400],

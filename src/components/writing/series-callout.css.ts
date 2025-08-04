@@ -39,11 +39,11 @@ export const summaryStyle = style([
 ])
 
 globalStyle(`${detailsStyle} ol`, {
-	marginBottom: 0,
+	marginBottom: vars.space[0],
 })
 
 globalStyle(`${detailsStyle} ol li:last-of-type`, {
-	marginBottom: 0,
+	marginBottom: vars.space[0],
 })
 
 globalStyle(`${detailsStyle} ol li:before`, {

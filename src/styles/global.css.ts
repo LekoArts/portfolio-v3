@@ -79,7 +79,7 @@ globalStyle('summary', {
 	display: 'list-item',
 })
 
-globalStyle('body, blockquote, h1, h2, h3, h4, h5, h6, hr, figure, p, pre', {
+globalStyle('body, blockquote, h1, h2, h3, h4, h5, h6, hr, figure:not(.frame), p, pre', {
 	margin: vars.space[0],
 })
 

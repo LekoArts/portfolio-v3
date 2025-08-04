@@ -17,32 +17,6 @@ Kitchen Sink text to try out every MDX component and see if Prose styles all app
 
 Example MDX content written here.
 
-## Playground
-
-<Playground
-  title="Testing Things"
->
-
-```js name=App.js
-import React from 'react';
-import { sayHello } from './root';
-
-export default function App() {
-  return (
-    <>
-      <h1>Testing Playground</h1>
-      <p>{sayHello()}</p>
-    </>
-  );
-}
-```
-
-```js name=root.js
-export function sayHello() { return 'hello world' }
-```
-
-</Playground>
-
 ## Alerts
 
 > [!SUCCESS]
@@ -67,6 +41,8 @@ export function sayHello() { return 'hello world' }
 > ```js title="test.js"
 > const hello = "world"
 > ```
+>
+> And some more text.
 
 > [!NOTE]
 > **Note Title**
@@ -141,23 +117,39 @@ export function sayHello() { return 'hello world' }
 
 Here goes an `inline-code-block` code block.
 
+Next up is a code block without a language defined.
+
 ```
 without any meta
 ```
+
+This code block only defines a language.
 
 ```ts
 const language = "simple language"
 ```
 
+Here's a language and title.
+
 ```js title="title.js"
 const withTitle = "simple language with title"
 ```
+
+This shows the `shell` language.
+
+```shell
+npm install secco
+```
+
+Here you can see a title and line numbers.
 
 ```js title="titleLineNumbers.js" showLineNumbers
 const lineNumbers = "simple language with title and line numbers"
 
 console.log(lineNumbers)
 ```
+
+Lastly, title, line numbers, and line highlights.
 
 ```js title="all.js" showLineNumbers {1,4-5}
 const lineNumbers = "simple language with title and line numbers and highlight and a really long text, too"
@@ -166,6 +158,32 @@ const highlight = "hello world"
 const postfix = "!"
 console.log(lineNumbers + postfix)
 ```
+
+## Playground
+
+<Playground
+  title="Testing Things"
+>
+
+```js name=App.js
+import React from 'react';
+import { sayHello } from './root';
+
+export default function App() {
+  return (
+    <>
+      <h1>Testing Playground</h1>
+      <p>{sayHello()}</p>
+    </>
+  );
+}
+```
+
+```js name=root.js
+export function sayHello() { return 'hello world' }
+```
+
+</Playground>
 
 ## Collapsible
 

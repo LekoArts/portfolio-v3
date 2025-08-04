@@ -33,14 +33,10 @@ globalStyle(`${detailsStyle} p:first-of-type`, {
 	marginTop: vars.space[4],
 })
 
-globalStyle(`${detailsStyle} p:last-of-type`, {
-	marginBottom: vars.space[0],
-})
-
 globalStyle(`${detailsStyle} a`, {
 	textDecorationColor: linkDecorationVar,
 })
 
-globalStyle(`${detailsStyle} > *:last-child pre:last-of-type`, {
+globalStyle(`${detailsStyle} > *:last-child`, {
 	marginBottom: `${vars.space[0]} !important`,
 })
