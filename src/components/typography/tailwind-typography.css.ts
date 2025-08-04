@@ -91,20 +91,6 @@ export const proseSmVariant = {
 	'h3 code': {
 		fontSize: em(14, 18),
 	},
-	// Normally this would be "pre" but with Sandpack we need to exclude .sp-pre-placeholder
-	'pre:not(.sp-pre-placeholder)': {
-		fontSize: em(12, 14),
-		lineHeight: round(20 / 12),
-		marginTop: em(20, 12),
-		marginBottom: em(20, 12),
-		borderRadius: rem(4),
-		paddingTop: em(8, 12),
-		paddingRight: em(12, 12),
-		paddingBottom: em(8, 12),
-		paddingLeft: em(12, 12),
-		marginLeft: nullHelper,
-		marginRight: nullHelper,
-	},
 	'ol': {
 		marginTop: em(16, 14),
 		marginBottom: em(16, 14),
@@ -263,20 +249,6 @@ export const proseMdVariant: typeof proseSmVariant = {
 	},
 	'h3 code': {
 		fontSize: em(16, 20),
-	},
-	// Normally this would be "pre" but with Sandpack we need to exclude .sp-pre-placeholder
-	'pre:not(.sp-pre-placeholder)': {
-		fontSize: em(14, 16),
-		lineHeight: round(24 / 14),
-		marginTop: em(24, 14),
-		marginBottom: em(24, 14),
-		borderRadius: rem(6),
-		paddingTop: em(12, 14),
-		paddingRight: em(16, 14),
-		paddingBottom: em(12, 14),
-		paddingLeft: em(16, 14),
-		marginLeft: nullHelper,
-		marginRight: nullHelper,
 	},
 	'ol': {
 		marginTop: em(20, 16),
@@ -437,20 +409,6 @@ export const proseLgVariant: typeof proseSmVariant = {
 	'h3 code': {
 		fontSize: em(18, 24),
 	},
-	// Normally this would be "pre" but with Sandpack we need to exclude .sp-pre-placeholder
-	'pre:not(.sp-pre-placeholder)': {
-		fontSize: em(16, 18),
-		lineHeight: round(28 / 16),
-		marginTop: em(32, 16),
-		marginBottom: em(32, 16),
-		borderRadius: rem(6),
-		paddingTop: em(16, 16),
-		paddingRight: em(24, 16),
-		paddingBottom: em(16, 16),
-		paddingLeft: em(24, 16),
-		marginLeft: `-${em(24, 16)}`,
-		marginRight: `-${em(24, 16)}`,
-	},
 	'ol': {
 		marginTop: em(24, 18),
 		marginBottom: em(24, 18),
@@ -609,20 +567,6 @@ export const proseXlVariant: typeof proseSmVariant = {
 	},
 	'h3 code': {
 		fontSize: em(21, 30),
-	},
-	// Normally this would be "pre" but with Sandpack we need to exclude .sp-pre-placeholder
-	'pre:not(.sp-pre-placeholder)': {
-		fontSize: em(18, 20),
-		lineHeight: round(32 / 18),
-		marginTop: em(36, 18),
-		marginBottom: em(36, 18),
-		borderRadius: rem(8),
-		paddingTop: em(20, 18),
-		paddingRight: em(24, 18),
-		paddingBottom: em(20, 18),
-		paddingLeft: em(24, 18),
-		marginLeft: `-${em(24, 18)}`,
-		marginRight: `-${em(24, 18)}`,
 	},
 	'ol': {
 		marginTop: em(24, 20),
@@ -831,29 +775,6 @@ export const proseBaseStyle: SelectorMap = {
 			light: colorPalette.gray[400],
 			dark: colorPalette.gray[400],
 		},
-	},
-	// Normally this would be "pre" but with Sandpack we need to exclude .sp-pre-placeholder
-	'pre:not(.sp-pre-placeholder)': {
-		color: 'var(--plain-color)',
-		backgroundColor: 'var(--plain-backgroundColor)',
-		overflowX: 'auto',
-	},
-	'pre code': {
-		backgroundColor: colorPalette.transparent,
-		borderWidth: vars.space[0],
-		borderRadius: vars.space[0],
-		padding: vars.space[0],
-		fontWeight: vars.fontWeight.normal,
-		color: 'inherit',
-		fontSize: 'inherit',
-		fontFamily: 'inherit',
-		lineHeight: 'inherit',
-	},
-	'pre code::before': {
-		content: '""',
-	},
-	'pre code::after': {
-		content: '""',
 	},
 	'thead': {
 		color: {

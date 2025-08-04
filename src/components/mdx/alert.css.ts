@@ -1,6 +1,5 @@
 import type { AlertStatus } from '@constants/types'
 import type { StyleRule } from '@vanilla-extract/css'
-import { codeBlockWrapper, codeHeaderStyle } from '@components/mdx/code.css'
 import { themesSelectors } from '@styles/atoms.css'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
@@ -101,22 +100,8 @@ globalStyle(`${alertBaseStyle} p:last-of-type`, {
 	marginBottom: `${vars.space[0]} !important`,
 })
 
-globalStyle(`${alertBaseStyle} .${codeBlockWrapper}`, {
-	width: '100%',
-})
-
-globalStyle(`${alertBaseStyle} .${codeBlockWrapper} pre`, {
-	marginLeft: `${vars.space[0]} !important`,
-	marginRight: `${vars.space[0]} !important`,
-})
-
 globalStyle(`${alertBaseStyle} > *:last-child pre:last-of-type`, {
 	marginBottom: `${vars.space[0]} !important`,
-})
-
-globalStyle(`${alertBaseStyle} .${codeBlockWrapper} .${codeHeaderStyle}`, {
-	marginLeft: `${vars.space[0]} !important`,
-	marginRight: `${vars.space[0]} !important`,
 })
 
 const alerts: Record<AlertStatus, StyleRule> = {

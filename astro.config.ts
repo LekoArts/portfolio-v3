@@ -4,6 +4,7 @@ import sitemap from '@astrojs/sitemap'
 import remarkSandpack from '@lekoarts/remark-sandpack'
 import { imageService } from '@unpic/astro/service'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
+import expressiveCode from 'astro-expressive-code'
 import { defineConfig, envField } from 'astro/config'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
@@ -12,7 +13,6 @@ import { SITE } from './src/constants/meta.js'
 import { REDIRECTS } from './src/constants/redirects.js'
 import { rehypeAutolinkHeadingsOptions } from './src/utils/rehype'
 import { codemodAlerts } from './src/utils/remark'
-import { removeLineBreaks, transformerCodeMeta } from './src/utils/shiki'
 
 // https://astro.build/config
 export default defineConfig({
@@ -23,9 +23,9 @@ export default defineConfig({
 	vite: {
 		plugins: [tsconfigPaths(), vanillaExtractPlugin()],
 	},
-	integrations: [sitemap({
+	integrations: [expressiveCode(), mdx(), react(), sitemap({
 		filter: page => page !== `${SITE.url}/privacy-policy/` && page !== `${SITE.url}/legal-notice/`,
-	}), mdx(), react()],
+	})],
 	image: {
 		service: imageService(),
 	},
@@ -41,21 +41,9 @@ export default defineConfig({
 		},
 	},
 	markdown: {
-		syntaxHighlight: 'shiki',
 		smartypants: true,
 		gfm: true,
 		rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions]],
 		remarkPlugins: [[remarkSandpack, { componentName: ['Playground'] }], codemodAlerts],
-		shikiConfig: {
-			themes: {
-				light: 'one-light',
-				dark: 'night-owl',
-			},
-			wrap: true,
-			transformers: [
-				transformerCodeMeta(),
-				removeLineBreaks(),
-			],
-		},
 	},
 })
