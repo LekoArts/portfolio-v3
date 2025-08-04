@@ -27,7 +27,7 @@ npm install -D @testing-library/jest-dom @testing-library/react c8 jsdom vitest
 
 Create a `vitest.config.ts`:
 
-```ts {{ title: 'vitest.config.ts' }}
+```ts title="vitest.config.ts"
 import { defineConfig } from "vitest/config"
 
 export default defineConfig({
@@ -44,7 +44,7 @@ export default defineConfig({
 
 Create a `vitest-setup.ts` file:
 
-```ts {{ title: 'vitest-setup.ts' }}
+```ts title="vitest-setup.ts"
 import { vi } from "vitest"
 import React from "react"
 import "@testing-library/jest-dom"
@@ -69,7 +69,7 @@ vi.mock(`gatsby`, async () => {
 
 Add scripts to `package.json`:
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 "test:watch": "vitest watch",
 "test:ci": "vitest run",
 "test:coverage": "vitest run --coverage",
@@ -79,7 +79,7 @@ If you followed the [Adding an SEO component guide](https://www.gatsbyjs.com/doc
 
 Here's an example test file for an SEO component:
 
-```ts {{ title: 'src/components/__tests__/seo.tsx' }}
+```ts title="src/components/__tests__/seo.tsx"
 /**
  * @vitest-environment jsdom
  */
@@ -151,7 +151,7 @@ Choose `e2e` as your folder name and don't install any GitHub actions (unless yo
 
 Once installation is done, add the following scripts to `package.json`:
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 "playwright": "playwright test",
 "playwright:debug": "playwright test --debug",
 "playwright:init": "playwright install chromium",
@@ -161,7 +161,7 @@ While the initial installation added more devices than only `chromium`, I'm only
 
 Change the automatically created `playwright.config.ts` to the following:
 
-```ts {{ title: 'playwright.config.ts' }}
+```ts title="playwright.config.ts"
 import type { PlaywrightTestConfig } from "@playwright/test"
 import { devices } from "@playwright/test"
 
@@ -199,7 +199,7 @@ export default config
 
 Delete `tests-examples` folder and delete the `example.spec.ts` in `e2e` folder. Create a new file called `meta.spec.ts` inside `e2e`:
 
-```ts {{ title: 'e2e/meta.spec.ts' }}
+```ts title="e2e/meta.spec.ts"
 import { test, expect } from "@playwright/test"
 
 const siteTitle = `Testing Gatsby Head API`

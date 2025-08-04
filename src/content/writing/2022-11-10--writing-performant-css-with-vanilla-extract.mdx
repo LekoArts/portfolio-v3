@@ -107,7 +107,7 @@ With `globalStyle` you can create styles that are attached to a global selector.
 
 vanilla-extract requires you to create every stylesheet as a `.css.ts` file as otherwise it can't find your defined styles. Navigate to the `src/styles` folder and create a new file called `global.css.ts`. Start with the following contents:
 
-```ts {{ title: 'src/styles/global.css.ts' }}
+```ts title="src/styles/global.css.ts"
 import { globalStyle } from "@vanilla-extract/css"
 
 globalStyle(`*`, {
@@ -158,7 +158,7 @@ globalStyle(`${parentClass} > a`, {
 
 Add the rest of the necessary styles to the file:
 
-```ts {{ title: 'src/styles/global.css.ts' }}
+```ts title="src/styles/global.css.ts"
 import { globalStyle } from "@vanilla-extract/css"
 
 globalStyle(`*`, {
@@ -216,7 +216,7 @@ The [`createTheme`][create-theme] and [`createThemeContract`][create-theme-contr
 
 Start by creating a new file inside the `src/styles` directory called `themes.css.ts`. As a start, it'll contain the necessary imports from `@vanilla-extract/css` and some design tokens. You can take the design tokens from anywhere, in this instance I used parts of the Tailwind CSS color palette for the colors.
 
-```ts {{ title: 'src/styles/themes.css.ts' }}
+```ts title="src/styles/themes.css.ts"
 import { createThemeContract, createTheme } from "@vanilla-extract/css"
 
 const SYSTEM_FONT_STACK = `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -300,7 +300,7 @@ When `isDark` is truthy, this will fail as `dark.button` doesn't exist. With `cr
 
 When creating the contract the values of the input are ignored so you can pass in an empty string, `null` or real values. Add the following to your `themes.css.ts` file:
 
-```ts {{ title: 'src/styles/themes.css.ts' }}
+```ts title="src/styles/themes.css.ts"
 // Rest of the imports and design tokens...
 
 export const vars = createThemeContract({
@@ -355,7 +355,7 @@ Now that you have a theme contract, it's time to define your light and dark them
 
 Edit your `themes.css.ts`:
 
-```ts {{ title: 'src/styles/themes.css.ts' }}
+```ts title="src/styles/themes.css.ts"
 // Rest of the imports, design tokens, and theme contract...
 
 export const lightThemeClass = createTheme(vars, {
@@ -385,7 +385,7 @@ TypeScript should now yell at you, saying something like `No overload matches th
 
 Of course, you could now manually write out the missing CSS for each theme, but if it doesn't change between themes then it makes sense to put that into its own variable. Add a `commonVars` to the file:
 
-```ts {{ title: 'src/styles/themes.css.ts' }}
+```ts title="src/styles/themes.css.ts"
 const commonVars = {
   font: {
     body: SYSTEM_FONT_STACK,
@@ -450,14 +450,14 @@ Congrats, you successfully created a light and dark theme using a theme contract
 <Collapsible summary="Pro Tip: Using Open Props">
   Some food for thought: You could use [Open Props](https://open-props.style/) together with vanilla-extract. You can use it in your themes or directly in the styles of a component.
 
-  ```ts {{ title: 'themes.css.ts' }}
+  ```ts title="themes.css.ts"
   import { style, createVar } from "@vanilla-extract/css"
   import OPColors from "open-props/src/colors"
 
   export const colors = OPColors
   ```
 
-  ```ts {{ title: 'button.css.ts' }}
+  ```ts title="button.css.ts"
   import { style, createVar } from "@vanilla-extract/css"
   import OP from "open-props"
 
@@ -531,7 +531,7 @@ After setting up a lot of boilerplate, it's now finally time to write some CSS f
 
   The vanilla-extract stylesheet:
 
-  ```ts {{ title: 'alert.css.ts' }}
+  ```ts title="alert.css.ts"
   import {
     createVar,
     style,
@@ -596,7 +596,7 @@ After setting up a lot of boilerplate, it's now finally time to write some CSS f
 
   The base style defines the `bgVar` CSS variable and assigns it to `background`. Then, depending on the `AlertStatus`, the CSS variable is overridden. The `selectors` key is used to handle the dark mode case. How it's used in the React component:
 
-  ```tsx {{ title: 'alert.tsx' }}
+  ```tsx title="alert.tsx"
   import { AlertStatus, alertVariants } from "./alert.css"
 
   interface IAlertProps {
@@ -615,7 +615,7 @@ After setting up a lot of boilerplate, it's now finally time to write some CSS f
 
 Create a new vanilla-extract stylesheet called `app.css.ts` but this time inside `src/components`:
 
-```ts {{ title: 'src/components/app.css.ts' }}
+```ts title="src/components/app.css.ts"
 import { style } from "@vanilla-extract/css"
 import { vars } from "../styles/themes.css"
 
@@ -654,7 +654,7 @@ Next, add the `styles.wrapper` class name to the wrapper component (currently `<
 
 I'd recommend using [clsx](https://github.com/lukeed/clsx) in production, for the sake of this tutorial you'll be using `.join(' ')`.
 
-```tsx {{ title: 'src/components/app.tsx' }}
+```tsx title="src/components/app.tsx"
 return (
   <div className={[schemeClass, styles.wrapper].join(` `)}>
     <main>
@@ -662,7 +662,7 @@ return (
 
 If you look at your browser, nothing should have changed just yet as the style rule is still empty. Switch back to `app.css.ts` and apply the following:
 
-```ts {{ title: 'src/components/app.css.ts' }}
+```ts title="src/components/app.css.ts"
 import { style } from "@vanilla-extract/css"
 import { vars } from "../styles/themes.css"
 
@@ -695,7 +695,7 @@ You're using the `vars` from your previously created theme contract now. You can
 
 Add other `style` definitions to `app.css.ts`:
 
-```ts {{ title: 'src/components/app.css.ts' }}
+```ts title="src/components/app.css.ts"
 export const innerWrapper = style({
   maxWidth: `1200px`,
   width: `100%`,
@@ -761,7 +761,7 @@ When visiting the browser preview, you should now already see "Last 30 Days" on 
 
 In the next step you'll be using `styleVariants` to style the heading in the `topBar` and the `footer` depending on light and dark theme. Add the `styleVariants` import to `app.css.ts` and add the following:
 
-```ts {{ title: 'src/components/app.css.ts' }}
+```ts title="src/components/app.css.ts"
 import { style, styleVariants } from "@vanilla-extract/css"
 import { vars } from "../styles/themes.css"
 // Rest of styles...
@@ -896,11 +896,11 @@ So far I've shown vanilla-extract APIs that are part of `@vanilla-extract/css`, 
 <Collapsible summary="Tailwind to Sprinkles Comparisons">
   Here's how you would write Tailwind-like utility classes with Sprinkles:
 
-  ```html {{ title: 'Tailwind' }}
+  ```html title="Tailwind"
   <main class="text-xl max-w-xl p-4">Hello World</main>
   ```
 
-  ```tsx {{ title: 'Sprinkles' }}
+  ```tsx title="Sprinkles"
   import { sprinkles as s } from "./sprinkles.css"
 
   const Page = () => (
@@ -912,13 +912,13 @@ So far I've shown vanilla-extract APIs that are part of `@vanilla-extract/css`, 
 
   Tailwind supports responsive design and dark mode but with the right configuration Sprinkles can do that, too!
 
-  ```html {{ title: 'Tailwind' }}
+  ```html title="Tailwind"
   <main class="w-16 sm:w-32 text-center sm:text-left bg-white dark:bg-slate-800">
     Hello World
   </main>
   ```
 
-  ```tsx {{ title: 'Sprinkles' }}
+  ```tsx title="Sprinkles"
   import { sprinkles as s } from "./sprinkles.css"
 
   // You can use object notation or array notation for conditions
@@ -944,7 +944,7 @@ Without further ado, let's add Sprinkles to your design ✨
 
 Inside the `src/styles` folder, create a new file called `sprinkles.css.ts` and import the necessary functions and constants:
 
-```ts {{ title: 'src/styles/sprinkles.css.ts' }}
+```ts title="src/styles/sprinkles.css.ts"
 import { createSprinkles, defineProperties } from "@vanilla-extract/sprinkles"
 import { breakpoints, vars } from "./themes.css"
 
@@ -958,7 +958,7 @@ const { space, colors, fontSize, radii, boxShadow } = vars
 
 Start by adding unresponsive properties to the file. This showcases the most basic form of using `defineProperties` as you only provide `properties`:
 
-```ts {{ title: 'src/styles/sprinkles.css.ts' }}
+```ts title="src/styles/sprinkles.css.ts"
 // Imports...
 
 const unresponsiveProperties = defineProperties({
@@ -1007,7 +1007,7 @@ We don't need these properties to have conditions on e.g. screen size or light/d
 
 Next, define properties that rely on `colors`. Remember the big `colors` object you defined earlier in `themes.css.ts`? It'll be used now for `color`, `background`, and `borderColor`:
 
-```ts {{ title: 'src/styles/sprinkles.css.ts' }}
+```ts title="src/styles/sprinkles.css.ts"
 // Imports and unresponsiveProperties...
 
 const colorProperties = defineProperties({
@@ -1058,7 +1058,7 @@ TypeScript should be happy now and the code `sprinkles({ color: 'black' })` auto
 
 The last `defineProperties` call will add properties that should be responsive to CSS media queries. Add it to your `sprinkles.css.ts` file:
 
-```ts {{ title: 'src/styles/sprinkles.css.ts' }}
+```ts title="src/styles/sprinkles.css.ts"
 // Imports, unresponsiveProperties, colorProperties...
 
 function transformBreakpoints<Output>(input: Record<string, any>) {
@@ -1154,7 +1154,7 @@ The `responsiveProperties` has two new keys: `responsiveArray` and `shorthands`.
 
 Last but not least, it's time to create the Sprinkles function. Add the following to your `sprinkles.css.ts`:
 
-```ts {{ title: 'src/styles/sprinkles.css.ts' }}
+```ts title="src/styles/sprinkles.css.ts"
 // Rest of the file...
 
 export const sprinkles = createSprinkles(
@@ -1249,7 +1249,7 @@ Basically the `sprinkles` function you created in the last section returns a cla
 
 Coming back to the tutorial app, create a new file inside `src/components` called `stats.css.ts`. Add the following contents:
 
-```ts {{ title: 'src/components/stats.css.ts' }}
+```ts title="src/components/stats.css.ts"
 import { style, styleVariants } from "@vanilla-extract/css"
 import { sprinkles, Sprinkles } from "../styles/sprinkles.css"
 import { breakpoints, vars } from "../styles/themes.css"
@@ -1334,7 +1334,7 @@ import { wrapper, toValue, arrowUp, arrowDown } from "./stats.css"
 
 Notice that `sprinkles` was renamed on import to `s` so that one can use `s` instead of `sprinkles` as a function. It's time now to finally use it in the React components. While applying the styles is not necessarily super exciting (as you already know how to apply it), you can at least see some progress in the browser preview. First, replace the `<StatsItem>` component with the styled code:
 
-```tsx {{ title: 'src/components/stats.tsx' }}
+```tsx title="src/components/stats.tsx"
 // Rest of imports and components...
 
 export const StatsItem: React.FC<IStatsItemProps> = ({
@@ -1387,7 +1387,7 @@ When looking at the browser preview you should see the the individual statistics
 
 Next, change the `<Trend>` component:
 
-```tsx {{ title: 'src/components/stats.tsx' }}
+```tsx title="src/components/stats.tsx"
 // Rest of file...
 
 export const Trend: React.FC<{ percentage: number }> = ({ percentage }) => {
@@ -1516,7 +1516,7 @@ And then behind the scenes the `colorScheme` can modify the `background` and `bo
 
 Create a new file called `recipes.css.ts` inside `src/styles`, add the imports, and your first recipe:
 
-```ts {{ title: 'src/styles/recipes.css.ts' }}
+```ts title="src/styles/recipes.css.ts"
 import { recipe } from "@vanilla-extract/recipes"
 import { sprinkles } from "./sprinkles.css"
 import { vars } from "./themes.css"
@@ -1536,7 +1536,7 @@ export const stats = recipe({
 
 The `stats` recipe is supposed to be used later in the `<Stats>` component on the `<section>` element. So it wraps all `<StatsItem>`. I needs to change its `color` and `background`. The names for the two variants you'll implement are `default` and `invert`. Update the `stats` recipe to account for that:
 
-```ts {{ title: 'src/styles/recipes.css.ts' }}
+```ts title="src/styles/recipes.css.ts"
 import { recipe } from "@vanilla-extract/recipes"
 import { sprinkles } from "./sprinkles.css"
 import { vars } from "./themes.css"
@@ -1564,7 +1564,7 @@ You should get TypeScript autocompletion while filling out the `defaultVariants`
 
 As you have seen in other APIs already, you can use the other styling APIs to add styles to a recipe. A simple style object will do it, but you can also use `style` or `sprinkles`. Add the following styles:
 
-```ts {{ title: 'src/styles/recipes.css.ts' }}
+```ts title="src/styles/recipes.css.ts"
 import { recipe } from "@vanilla-extract/recipes"
 import { sprinkles } from "./sprinkles.css"
 import { vars } from "./themes.css"
@@ -1604,7 +1604,7 @@ As a last step, you'll also define a `trend` recipe, to be used in the `<Trend>`
 
 Here's the complete `recipes.css.ts` file:
 
-```ts {{ title: 'src/styles/recipes.css.ts' }}
+```ts title="src/styles/recipes.css.ts"
 import { recipe } from "@vanilla-extract/recipes"
 import { sprinkles } from "./sprinkles.css"
 import { vars } from "./themes.css"

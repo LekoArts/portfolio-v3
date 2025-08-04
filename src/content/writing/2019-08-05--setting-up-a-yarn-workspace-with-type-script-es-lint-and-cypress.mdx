@@ -21,7 +21,7 @@ You'll need to have yarn installed, if you haven't already you can [see their in
 
 Initialize a `package.json` in the root of your site with `yarn init`. Once you have a `package.json` you can add the `workspaces` key:
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 {
   "name": "gatsby-starter-theme-workspace",
   "private": true,
@@ -33,7 +33,7 @@ Initialize a `package.json` in the root of your site with `yarn init`. Once you 
 
 In this configuration the folders `gatsby-theme-minimal` and `example` are each a package inside the yarn workspace. If you'd have multiple packages inside a folder (e.g. `folder/package-01`, `folder/package-02` etc.) you can write:
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 {
   "workspaces": ["folder/*", "another-folder/*"]
 }
@@ -59,7 +59,7 @@ yarn add -D -W typescript
 
 Add two scripts to the root `package.json`:
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 {
   "scripts": {
     "tsc": "tsc",
@@ -70,7 +70,7 @@ Add two scripts to the root `package.json`:
 
 To initialize a `tsconfig.json` file you can run `yarn tsc --init`. For this guide you can change the values below and leave the rest alone or change it to your liking.
 
-```json {{ title: 'tsconfig.json' }}
+```json title="tsconfig.json"
 {
   "compilerOptions": {
     "target": "esnext",
@@ -99,7 +99,7 @@ yarn add -D -W @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint
 
 Add an `.eslintrc.js` file at the root of the project:
 
-```js {{ title: '.eslintrc.js' }}
+```js title=".eslintrc.js"
 module.exports = {
   parser: `@typescript-eslint/parser`,
   extends: [`airbnb`, `plugin:prettier/recommended`],
@@ -196,7 +196,7 @@ module.exports = {
 
 Depending on how you set up your code editor you'll already have ESLint working in your project. If you want to run it in the terminal (or in CI) you can add two npm scripts:
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 {
   "scripts": {
     "lint": "eslint . --ignore-path .gitignore --ext .ts,.tsx,.js",
@@ -222,7 +222,7 @@ The package `start-server-and-test` enables you to first run the development ser
 
 Once again you need to add some scripts to your root `package.json`:
 
-```sh {{ title: 'package.json' }}
+```sh title="package.json"
 {
   "scripts": {
     "cy:open": "cypress open",
@@ -240,7 +240,7 @@ Run `yarn cy:open` to initialize Cypress. It will automatically add files to you
 
 Delete the contents of `cypress/integration` (it contains example data) and rename it to `e2e`. Edit the `cypress.json` file:
 
-```json {{ title: 'cypress.json' }}
+```json title="cypress.json"
 {
   "baseUrl": "http://localhost:8000",
   "integrationFolder": "cypress/e2e/build",
@@ -253,20 +253,20 @@ As TypeScript will compile the tests and output it to `cypress/e2e/build` you ha
 
 Now configure the `cypress/support` folder. First, add the the custom commands from testing-library, secondly add an import for a new file you'll create later. Lastly, create a `.d.ts` file to add types for your custom command.
 
-```js {{ title: 'cypress/support/index.js' }}
+```js title="cypress/support/index.js"
 import "@testing-library/cypress/add-commands"
 import "./commands"
 ```
 
 The `assertRoute` command let's you check the current URL.
 
-```js {{ title: 'cypress/support/commands.js' }}
+```js title="cypress/support/commands.js"
 Cypress.Commands.add(`assertRoute`, (route) => {
   cy.url().should(`equal`, `${window.location.origin}${route}`)
 })
 ```
 
-```ts {{ title: 'cypress/support/index.d.ts' }}
+```ts title="cypress/support/index.d.ts"
 /// <reference types="cypress" />
 
 declare namespace Cypress {
@@ -287,7 +287,7 @@ After the basic setup is done you now can proceed to the final steps before writ
 
 Create a `tsconfig.json` file inside the cypress directory:
 
-```json {{ title: 'cypress/tsconfig.json' }}
+```json title="cypress/tsconfig.json"
 {
   "compilerOptions": {
     "baseUrl": "../node_modules",
@@ -309,7 +309,7 @@ When later running the `tsc` scripts this tsconfig will be used, not the one in 
 
 To see if everything works you can add a smoke test (a file to test if bare minimum works, e.g. the site index loads):
 
-```ts {{ title: 'cypress/e2e/smoke.ts' }}
+```ts title="cypress/e2e/smoke.ts"
 /// <reference types="../support/index" />
 /// <reference types="cypress" />
 /// <reference types="@testing-library/cypress" />
@@ -333,7 +333,7 @@ To complete this portion of the guide you'll need to add some npm scripts again 
 
 Add the following scripts to your root `package.json`.
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 {
   "scripts": {
     "tsc:compile": "tsc --project cypress/tsconfig.json",
@@ -344,7 +344,7 @@ Add the following scripts to your root `package.json`.
 
 TypeScript should use the `cypress/tsconfig.json` which in turn tells it to compile the files inside `cypress/e2e`. The `--watch` flag enables automatic re-compilation when saving a file.
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 {
   "scripts": {
     "example:dev": "yarn workspace example develop"
@@ -354,7 +354,7 @@ TypeScript should use the `cypress/tsconfig.json` which in turn tells it to comp
 
 Run the `develop` npm script inside `example/package.json` to run the example Gatsby site.
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 {
   "scripts": {
     "ssat:example:dev": "start-server-and-test example:dev http://localhost:8000 cy:open"
@@ -364,7 +364,7 @@ Run the `develop` npm script inside `example/package.json` to run the example Ga
 
 `start-server-and-test` expects the server script, then the URL it should listen to and finally the test script itself.
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 {
   "scripts": {
     "e2e:dev": "concurrently --kill-others 'yarn tsc:compile:watch' 'yarn ssat:example:dev'"
@@ -376,7 +376,7 @@ Use `concurrently` to both run the TypeScript compiler (watching your test files
 
 Your scripts section should have these new entries now after this section:
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 {
   "scripts": {
     "tsc:compile": "tsc --project cypress/tsconfig.json",
@@ -392,7 +392,7 @@ Your scripts section should have these new entries now after this section:
 
 Finally you're able to write tests! Let's do that. Create a `home.ts` inside the `e2e` folder with the following content:
 
-```ts {{ title: 'cypress/e2e/home.ts' }}
+```ts title="cypress/e2e/home.ts"
 /// <reference types="../support/index" />
 /// <reference types="cypress" />
 /// <reference types="@types/testing-library__cypress" />

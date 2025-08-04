@@ -72,7 +72,7 @@ npm install polished
 
 The `generateShadow` function will take a `color` and iterate over the arrays `shadowX`, `shadowY`, and `transparency` internally to create an array of valid `box-shadow` strings. It returns a string that you can use with `box-shadow` in CSS since you can chain them with a comma.
 
-```jsx {{ title: 'src/pages/index.js' }}
+```jsx title="src/pages/index.js"
 // Rest of imports
 import { rgba } from "polished"
 
@@ -152,7 +152,7 @@ function generateShadow(color) {
 
 Now it's time to use `generateShadow`. Your complete page now should look something like this:
 
-```jsx {{ title: 'src/pages/index.js' }}
+```jsx title="src/pages/index.js"
 import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
@@ -230,7 +230,7 @@ His generator outputs CSS Custom Properties which you can use in your `boxShadow
 
 Your page might look something like this then:
 
-```jsx {{ title: 'src/pages/index.js' }}
+```jsx title="src/pages/index.js"
 import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"

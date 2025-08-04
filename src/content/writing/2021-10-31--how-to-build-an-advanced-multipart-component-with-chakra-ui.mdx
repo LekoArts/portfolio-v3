@@ -72,7 +72,7 @@ ReactDOM.render(
 
 The `theme` doesn't exist yet so create a new file at `src/theme.ts`. By default, Chakra UI ships with a [default theme](https://chakra-ui.com/docs/theming/theme) that you can [customize](https://chakra-ui.com/docs/theming/customize-theme). For the purposes of this tutorial you'll use customized CSS media query breakpoints and define the default CSS `prefers-color-scheme` to the `light` variant (+ use the system setting to switch between light and dark mode):
 
-```ts {{ title: 'src/theme.ts' }}
+```ts title="src/theme.ts"
 import { extendTheme, ThemeConfig } from "@chakra-ui/react"
 
 const breakpoints = {
@@ -105,7 +105,7 @@ By using `extendTheme` you only overwrite the properties you define, the rest wi
 
 Before customizing the built-in `Container` component, you should first use it on the index page to visually see the changes you make. Add a color mode toggle to also test out the two different color modes:
 
-```tsx {{ title: 'src/App.tsx' }}
+```tsx title="src/App.tsx"
 import React from "react"
 import {
   Container,
@@ -175,7 +175,7 @@ export default {
 
 Create a new file at `src/chakra/container.ts` with the following contents:
 
-```ts {{ title: 'src/chakra/container.ts' }}
+```ts title="src/chakra/container.ts"
 import { ComponentStyleConfig } from "@chakra-ui/react"
 
 const Container: ComponentStyleConfig = {
@@ -249,7 +249,7 @@ After that you'll be able to use the `<MultiContainer />` component in your app.
 
 Since `MultiContainer` is not a built-in component a React component that consumes the styles is needed. For this you can use the `useStyleConfig` and `useMultiStyleConfig` React hooks. Create a file at `src/components/multi-container.tsx`:
 
-```tsx {{ title: 'src/components/multi-container.tsx' }}
+```tsx title="src/components/multi-container.tsx"
 import * as React from "react"
 import { useMultiStyleConfig, Box, Container, BoxProps } from "@chakra-ui/react"
 
@@ -301,7 +301,7 @@ I'd like to start off by defining the React component as this defines the public
 
 Create a new file at `src/chakra/custom-container.ts`. You'll notice that the shape of the config differs a little bit – for multipart components a new top-level `parts` key is needed and each part is a key inside `baseStyle`, `sizes`, `variants`, and `defaultProps`:
 
-```ts {{ title: 'src/chakra/custom-container.ts' }}
+```ts title="src/chakra/custom-container.ts"
 import { ComponentStyleConfig } from "@chakra-ui/react"
 
 const CustomContainer: ComponentStyleConfig = {
@@ -364,7 +364,7 @@ const theme = extendTheme({
 
 Edit the `src/App.tsx` to showcase some different variants & sizes of the `MultiContainer` component:
 
-```tsx {{ title: 'src/App.tsx' }}
+```tsx title="src/App.tsx"
 import React from "react"
 import {
   Container,
@@ -570,7 +570,7 @@ Let's start with the `solid` variant. Goal of it is to make both `outer` and `in
 
 Edit the `utils` file:
 
-```ts {{ title: 'src/chakra/utils.ts' }}
+```ts title="src/chakra/utils.ts"
 import {
   mode,
   transparentize,
@@ -643,7 +643,7 @@ export function variantSolid(props: StyleFunctionProps) {
 
 With this new function, edit the component style:
 
-```ts {{ title: 'src/chakra/custom-container.ts' }}
+```ts title="src/chakra/custom-container.ts"
 // Existing imports
 // ...
 import { variantSolid, percentageWidths } from "./utils"
@@ -663,7 +663,7 @@ Next up is the `ghost` variant. With this the `outer` part has a solid color, th
 
 Edit the `utils` file:
 
-```ts {{ title: 'src/chakra/utils.ts' }}
+```ts title="src/chakra/utils.ts"
 // Existing imports
 // ...
 
@@ -710,7 +710,7 @@ The functionality is split up into two functions as the `inner` part needs some 
 
 To add the new functionality, edit your component style:
 
-```ts {{ title: 'src/chakra/custom-container.ts' }}
+```ts title="src/chakra/custom-container.ts"
 // Existing imports
 // ...
 import {
@@ -737,7 +737,7 @@ And last, but not least: The `gradient` variant. This one is a bit trickier sinc
 
 Edit the `utils` file:
 
-```ts {{ title: 'src/chakra/utils.ts' }}
+```ts title="src/chakra/utils.ts"
 // Existing imports
 // ...
 
@@ -782,7 +782,7 @@ The major difference between `variantGradient` and the rest is that instead of r
 
 Maybe some day Chakra UI will add some convenience methods around gradients (with support for `colorMode`). Anyways, edit the final variant:
 
-```ts {{ title: 'src/chakra/custom-container.ts' }}
+```ts title="src/chakra/custom-container.ts"
 // Existing imports
 // ...
 import {

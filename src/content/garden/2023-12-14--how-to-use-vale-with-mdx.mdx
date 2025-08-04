@@ -36,7 +36,7 @@ If you're using MDX you're most likely working in a Node.js environment and as s
 
 1. Add the following two entries to your `package.json` scripts:
 
-   ```json {{ title: 'package.json' }}
+   ```json title="package.json"
    {
      "scripts": {
        "vale": "./node_modules/@vvago/vale/bin/vale",
@@ -79,7 +79,7 @@ MDX isn't one of Vale's supported formats so you'll need to associate an unknown
 
 Open your `.vale.ini` and add the following:
 
-```text {{ title: '.vale.ini' }}
+```text title=".vale.ini"
 # Treat MDX as Markdown
 [formats]
 mdx = md
@@ -89,7 +89,7 @@ This gives you some baseline functionality with Vale. But since MDX enables you 
 
 You should explore using `IgnoredScopes`, `SkippedScopes`, `BlockIgnores`, and `TokenIgnores` inside the [configuration options](https://vale.sh/docs/topics/config) to exclude these. An example config could look like this:
 
-```text {{ title: '.vale.ini' }}
+```text title=".vale.ini"
 IgnoredScopes = code, tt, img, url, a
 SkippedScopes = script, style, pre, figure, code
 # Ignore code surrounded by backticks or plus sign, parameters defaults, URLs, and angle brackets.

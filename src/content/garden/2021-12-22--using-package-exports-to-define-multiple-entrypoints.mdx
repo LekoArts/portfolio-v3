@@ -28,7 +28,7 @@ So in short, the setup was as following:
 
 The file inside `frontend` imports it like this:
 
-```js {{ title: 'frontend/src/link.js' }}
+```js title="frontend/src/link.js"
 import { convertPath } from "utils"
 
 export const linkHelper = (input) => {
@@ -38,11 +38,11 @@ export const linkHelper = (input) => {
 
 The `utils` package contains multiple files, for example two files:
 
-```ts {{ title: 'utils/src/convert-path.ts' }}
+```ts title="utils/src/convert-path.ts"
 export const convertPath = (path: string) => path.toUpperCase()
 ```
 
-```ts {{ title: 'utils/src/watch.ts' }}
+```ts title="utils/src/watch.ts"
 import * as path from "path"
 import * as chokidar from "chokidar"
 
@@ -56,7 +56,7 @@ export const watchDir = (path: string, glob: string) => {
 
 Those get exported in an `index.ts` file:
 
-```ts {{ title: 'utils/src/index.ts' }}
+```ts title="utils/src/index.ts"
 export { convertPath } from "./path"
 export { getDirname, watchDir } from "./watch"
 ```
@@ -71,7 +71,7 @@ But ESM and/or `exports` in `package.json` can come to the rescue here! Node.js 
 
 First, add the `exports` to utils:
 
-```json {{ title: 'utils/package.json' }}
+```json title="utils/package.json"
 "exports": {
   ".": "./dist/index.js",
   "./*": "./dist/*.js"

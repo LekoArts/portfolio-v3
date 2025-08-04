@@ -50,7 +50,7 @@ npm install gatsby-plugin-plausible
 
 Add the plugin to your `gatsby-config.mjs` and provide the necessary `domain` option.
 
-```js {{ title: 'gatsby-config.mjs' }}
+```js title="gatsby-config.mjs"
 const config = {
   plugins: [
     {
@@ -120,7 +120,7 @@ Start by creating the folder structure `/plugins/gatsby-source-plausible` and cr
 
 For the `package.json` use the following contents:
 
-```json {{ title: 'plugins/gatsby-source-plausible/package.json' }}
+```json title="plugins/gatsby-source-plausible/package.json"
 {
   "name": "gatsby-source-plausible"
 }
@@ -130,7 +130,7 @@ Go into `plugins/gatsby-source-plausible` and run `npm install node-fetch`.
 
 Lastly, create some boilerplate code inside `gatsby-node.mjs` for the next step:
 
-```js {{ title: 'plugins/gatsby-source-plausible/gatsby-node.mjs' }}
+```js title="plugins/gatsby-source-plausible/gatsby-node.mjs"
 import fetch from "node-fetch"
 const POST_NODE_TYPE = `PlausibleTopPage`
 
@@ -268,7 +268,7 @@ Now it's time for you to interpret the data you see. In this instance the index 
 
 You're nearly there! The last piece of this puzzle is to use the data you get from `allPlausibleTopPage` in your page creation logic inside `gatsby-node.js` of the project. Stop the development server (if you haven't already) and go to your `gatsby-node.js` file at the root of your project (not the `gatsby-node.mjs` of the plugin). Here's an example file that creates pages from Markdown files, you'll need to adapt the workflow to your own file below.
 
-```js {{ title: 'gatsby-node.js' }}
+```js title="gatsby-node.js"
 const templatePath = require.resolve(`./src/templates/blog-post.jsx`)
 
 exports.createPages = async ({ graphql, actions }) => {

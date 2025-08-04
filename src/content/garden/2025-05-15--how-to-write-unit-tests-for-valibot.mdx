@@ -14,7 +14,7 @@ tags:
 
 Let's start with a sample Valibot schema:
 
-```ts {{ title: 'schema.ts' }}
+```ts title="schema.ts"
 import * as v from 'valibot';
 
 const EmptyObjectSchema = v.strictObject({})
@@ -39,7 +39,7 @@ The `isEmpty()` function checks whether the input is an empty object. Meanwhile,
 
 Testing `isEmpty()` is straightforward, as you're not directly testing the Valibot schema itself. Since it uses `safeParse()`, no error is thrown, and you can simply assert the return value.
 
-```ts {{ title: 'schema.test.ts' }}
+```ts title="schema.test.ts"
 import { describe, it, expect } from "vitest"
 import { isEmpty } from "./schema"
 

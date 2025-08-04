@@ -52,7 +52,7 @@ First, it'll ask for a name (choose the name "SvelteTutorial") and whether you w
 
 The `manifest.json` will contain something like this:
 
-```json {{ title: 'manifest.json' }}
+```json title="manifest.json"
 {
   "name": "SvelteTutorial",
   "id": "1234567890123456789",
@@ -89,7 +89,7 @@ npm install @figma/plugin-typings @rollup/plugin-commonjs @rollup/plugin-html @r
 
 Also, create a `.gitignore` will the following contents:
 
-```text {{ title: '.gitignore' }}
+```text title=".gitignore"
 node_modules
 dist
 .cache
@@ -97,7 +97,7 @@ dist
 
 Since you'll use TypeScript a `tsconfig.json` for the compiler is necessary. You can use this configuration:
 
-```json {{ title: 'tsconfig.json' }}
+```json title="tsconfig.json"
 {
   "compilerOptions": {
     "target": "es6",
@@ -114,7 +114,7 @@ Since you'll use TypeScript a `tsconfig.json` for the compiler is necessary. You
 
 Lastly, add `scripts` to your `package.json` to compile files on the fly in development mode and for production when you want to publish:
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 {
   "scripts": {
     "build": "rollup -c",
@@ -133,7 +133,7 @@ Start by creating a directory called `src` and create three files in this direct
 
 The `code.ts` will be responsible for creating the iframe and listening for messages. For now it only needs to contain this:
 
-```ts {{ title: 'src/code.ts' }}
+```ts title="src/code.ts"
 figma.showUI(__html__, { width: 320, height: 220 })
 ```
 
@@ -145,7 +145,7 @@ The `__html__` is a global variable that is getting defined through the `ui` key
 
 In order to load `App.svelte` the `main.ts` file sets up the app onto the `document.body`:
 
-```ts {{ title: 'src/main.ts' }}
+```ts title="src/main.ts"
 import "svelte"
 import App from "./App.svelte"
 
@@ -158,7 +158,7 @@ export default app
 
 And now you can write Svelte code! Start with – of course 😉 – a "Hello World":
 
-```svelte {{ title: 'src/App.svelte' }}
+```svelte title="src/App.svelte"
 <div>Hello World</div>
 ```
 
@@ -296,7 +296,7 @@ The Figma Plugin DS Svelte will serve you in two ways:
 
 In order to use Figma Plugin DS Svelte you'll need to add its `GlobalCSS` import to your `App.svelte` to have the CSS styles available.
 
-```svelte {{ title: 'src/App.svelte' }}
+```svelte title="src/App.svelte"
 <script lang="ts">
   import { GlobalCSS } from "figma-plugin-ds-svelte"
 </script>
@@ -304,7 +304,7 @@ In order to use Figma Plugin DS Svelte you'll need to add its `GlobalCSS` import
 
 Then you have the utility classes (similar to Tailwind CSS) and CSS variables available. Create a wrapper component for the contents that will follow:
 
-```svelte {{ title: 'src/App.svelte' }}
+```svelte title="src/App.svelte"
 <script lang="ts">
   import { GlobalCSS } from "figma-plugin-ds-svelte"
 </script>
@@ -648,7 +648,7 @@ Below the button you can show the loading and error states:
 
 Your `App.svelte` is now complete and should look like this:
 
-```svelte {{ title: 'src/App.svelte' }}
+```svelte title="src/App.svelte"
 <script lang="ts">
   import { GlobalCSS, Type, Label, Button } from "figma-plugin-ds-svelte"
   import Input from "./Input.svelte"
@@ -770,7 +770,7 @@ Remember the `code.ts` file you created at the beginning? It's now time to come 
 
 But let's first verify, that the `postMessage` works successfully. In your `code.ts` file, add a handler for `onmessage` and log out the arguments:
 
-```ts {{ title: 'src/code.ts' }}
+```ts title="src/code.ts"
 figma.showUI(__html__, { width: 320, height: 220 })
 
 figma.ui.onmessage = (msg) => {
@@ -836,7 +836,7 @@ Your last task is to author the `createImage` function. Here's what it'll do:
 
 The complete `code.ts` should look like this:
 
-```ts {{ title: 'src/code.ts' }}
+```ts title="src/code.ts"
 figma.showUI(__html__, { width: 320, height: 220 })
 
 interface IPayload {
