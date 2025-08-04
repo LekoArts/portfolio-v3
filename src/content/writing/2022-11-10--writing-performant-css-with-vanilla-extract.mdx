@@ -127,7 +127,7 @@ vanilla-extract's styling APIs are all named imports from `@vanilla-extract/css`
 
 The `globalStyle` API can also be used to add styles depending on other scoped class names. For example:
 
-```ts {{ highlight: [5] }}
+```ts {5}
 import { globalStyle, style } from "@vanilla-extract/css"
 
 export const parentClass = style({})
@@ -195,7 +195,7 @@ globalStyle(`#root`, {
 
 In order for these styles to be picked up you'll need to import the `global.css.ts` file into one of your app files, e.g. `src/components/app.tsx`. Add the import:
 
-```tsx {{ title: 'src/components/app.tsx', highlight: [4] }}
+```tsx title="src/components/app.tsx" {4}
 import * as React from "react"
 import { Stats, StatsItem } from "./stats"
 import { useColorScheme } from "../hooks/use-color-scheme"
@@ -419,7 +419,7 @@ const commonVars = {
 
 You can now spread that object into each theme and the compiler should be happy:
 
-```ts {{ title: 'src/styles/themes.css.ts', highlight: [10, 22] }}
+```ts title="src/styles/themes.css.ts" {10, 22}
 export const lightThemeClass = createTheme(vars, {
   colors: {
     primary: colors.blue500,
@@ -492,7 +492,7 @@ Now that you have `lightThemeClass` and `darkThemeClass` available as variables,
 
 Open `src/components/app.tsx`, import both class names and adjust `schemeClass` with its values:
 
-```tsx {{ title: 'src/components/app.tsx', highlight: [2, 9] }}
+```tsx title="src/components/app.tsx" {2, 9}
 import * as React from "react"
 import { lightThemeClass, darkThemeClass } from "../styles/themes.css"
 import { Stats, StatsItem } from "./stats"
@@ -639,7 +639,7 @@ You can define CSS rules by passing an array of class names and/or style objects
 
 Switch to the `<App>` component and import the newly created style. You can either use named imports or use a splat import. The latter will be used here:
 
-```tsx {{ title: 'src/components/app.tsx', highlight: [5] }}
+```tsx title="src/components/app.tsx" {5}
 import * as React from "react"
 import { lightThemeClass, darkThemeClass } from "../styles/themes.css"
 import { Stats, StatsItem } from "./stats"
@@ -734,7 +734,7 @@ The `button` uses the `selectors` key to add `:hover` styles. You have to use th
 
 Add the CSS classes to `app.tsx`:
 
-```tsx {{ title: 'src/components/app.tsx', highlight: [3, 4, 8] }}
+```tsx title="src/components/app.tsx" {3, 4, 8}
 return (
   <div className={[schemeClass, styles.wrapper].join(` `)}>
     <main className={styles.innerWrapper}>
@@ -821,7 +821,7 @@ A lot is going on here, so let's unpack it.
 
 Add the styles to `<App>`:
 
-```tsx {{ title: 'src/components/app.tsx', highlight: [17, 50] }}
+```tsx title="src/components/app.tsx" {17, 50}
 import * as React from "react"
 import { lightThemeClass, darkThemeClass } from "../styles/themes.css"
 import { Stats, StatsItem } from "./stats"
@@ -1031,7 +1031,7 @@ This snippet showcases how to provide `conditions` for said properties. `conditi
 
 TypeScript should complain to you that a property is missing. And yes, it is! You need to define a `defaultCondition`. Most often you want to define values that are non-conditional when using Sprinkles, e.g. `sprinkles({ color: 'black' })`. Add it to your `colorProperties`:
 
-```ts {{ title: 'src/styles/sprinkles.css.ts', highlight: [12] }}
+```ts title="src/styles/sprinkles.css.ts" {12}
 // Imports and unresponsiveProperties...
 
 const colorProperties = defineProperties({
@@ -1324,7 +1324,7 @@ Time to move to the `src/components/stats.tsx` file. Open it up and get yourself
 
 Add the imports to the file:
 
-```tsx {{ title: 'src/components/stats.tsx', highlight: [2, 3] }}
+```tsx title="src/components/stats.tsx" {2, 3}
 import * as React from "react"
 import { sprinkles as s } from "../styles/sprinkles.css"
 import { wrapper, toValue, arrowUp, arrowDown } from "./stats.css"
@@ -1671,7 +1671,7 @@ export const trend = recipe({
 
 Switch to the `src/components/stats.tsx` file and add your `stats` and `trend` recipes as imports:
 
-```tsx {{ title: 'src/components/stats.tsx', highlight: [2] }}
+```tsx title="src/components/stats.tsx" {2}
 import * as React from "react"
 import { stats, trend } from "../styles/recipes.css"
 import { sprinkles as s } from "../styles/sprinkles.css"
@@ -1684,7 +1684,7 @@ When using the recipe functions, the arguments are the CSS properties you define
 
 Edit the `<Stats>` component to use the `stats` recipe and use the `variant` prop for each value:
 
-```tsx {{ title: 'src/components/stats.tsx', highlight: [8] }}
+```tsx title="src/components/stats.tsx" {8}
 // Imports
 
 export const Stats: React.FC<React.PropsWithChildren<IStatsProps>> = ({
@@ -1703,7 +1703,7 @@ export const Stats: React.FC<React.PropsWithChildren<IStatsProps>> = ({
 
 Change the `<Trend>` component to use the `trend` recipe:
 
-```tsx {{ title: 'src/components/stats.tsx', highlight: [[10, 13]] }}
+```tsx title="src/components/stats.tsx" {10-13}
 // Imports
 
 export const Trend: React.FC<{ percentage: number }> = ({ percentage }) => {

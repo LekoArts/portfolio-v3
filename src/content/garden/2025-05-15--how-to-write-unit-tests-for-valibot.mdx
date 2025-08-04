@@ -57,7 +57,7 @@ describe('isEmpty', () => {
 
 Testing the schema directly is more interesting. To do this, import `parse()` from Valibot. When you use `parse()`, your test will fail if the schema changes in a way that introduces a regression.
 
-```ts {{ title: 'schema.test.ts', highlight: [2, 3] }}
+```ts title="schema.test.ts" {2, 3}
 import { describe, it, expect } from "vitest"
 import { parse } from 'valibot'
 import { isEmpty, EmailSchema } from "./schema"
@@ -86,7 +86,7 @@ When the input is valid, Valibot returns it unchanged — this is verified in th
 
 At the time of writing, [testing types](https://vitest.dev/guide/testing-types.html) with Vitest is still experimental. Here's an explanation on how to typecheck Valibot's inferred types:
 
-```ts {{ title: 'schema.test.ts', highlight: [1, 3, 9] }}
+```ts title="schema.test.ts" {1, 3, 9}
 import { describe, it, expect, expectTypeOf } from "vitest"
 import { parse } from 'valibot'
 import { isEmpty, EmailSchema, type EmailSchemaType } from "./schema"
