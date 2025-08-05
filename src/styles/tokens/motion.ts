@@ -1,18 +1,6 @@
-import { shadows } from '@styles/tokens/shadows'
-
-export const transforms = {
-	beforeHover: {
-		transform: 'translate3d(0, 0, 0)',
-		transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-	},
-	onHover: {
-		transform: 'translate3d(0, -8px, 0)',
-		boxShadow: shadows.xl,
-	},
-}
-
 export const transition = {
 	property: {
+		all: 'all',
 		common: 'background-color, border-color, color, fill, stroke, opacity, box-shadow, transform',
 		colors: 'background-color, border-color, color, fill, stroke',
 		dimensions: 'width, height',

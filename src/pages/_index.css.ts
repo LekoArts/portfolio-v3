@@ -1,3 +1,4 @@
+import { transition } from '@styles/tokens/motion'
 import { style } from '@vanilla-extract/css'
 import { pseudoSelectors } from '../styles/selectors'
 import { vars } from '../styles/themes/contract.css'
@@ -40,8 +41,8 @@ export const photoLinkStyle = style([photoCardBaseStyle, {
 			width: vars.space.full,
 			height: vars.space.full,
 			transitionProperty: 'box-shadow',
-			transitionDuration: '.3s',
-			transitionTimingFunction: 'cubic-bezier(.4,0,.2,1)',
+			transitionDuration: transition.duration.slow,
+			transitionTimingFunction: transition.easing['ease-in-out'],
 			boxShadow: 'inset 0 0 0 2px rgba(255, 255, 255, 0.2)',
 			opacity: 1,
 			borderRadius: vars.borderRadius.lg,

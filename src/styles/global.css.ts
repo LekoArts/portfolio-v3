@@ -5,6 +5,7 @@ import { colorPalette } from '@styles/tokens/colors'
 import { space } from '@styles/tokens/space'
 import { fonts } from '@styles/tokens/typography'
 import { globalStyle } from '@vanilla-extract/css'
+import { transition } from './tokens/motion'
 
 globalStyle('html', {
 	scrollPaddingTop: `calc(${space.navigationHeight} + ${vars.space[4]})`,
@@ -16,7 +17,7 @@ globalStyle('body', {
 	background: vars.color.bg,
 	lineHeight: vars.lineHeight.base,
 	transitionProperty: 'background-color, color',
-	transitionDuration: '0.3s',
+	transitionDuration: transition.duration.slow,
 	position: 'relative',
 	minHeight: vars.space.full,
 	fontFeatureSettings: '\'kern\'',

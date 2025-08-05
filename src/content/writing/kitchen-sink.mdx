@@ -112,6 +112,12 @@ Example MDX content written here.
 > ```js title="test.js"
 > const hello = "world"
 > ```
+> ```ts title="test2.ts"
+> const foo = "bar"
+> ```
+> ```css title="test3.css"
+> .test { display: block; }
+> ```
 
 ## Code
 
@@ -157,6 +163,165 @@ const lineNumbers = "simple language with title and line numbers and highlight a
 const highlight = "hello world"
 const postfix = "!"
 console.log(lineNumbers + postfix)
+
+const test = {
+  some: 'text',
+  goes: 'here'
+}
+```
+
+### All available languages
+
+```js title="test.js"
+const greeting = 'Hello World'
+console.log(greeting)
+```
+
+```jsx title="test.jsx"
+function App() {
+  return <h1>Hello World</h1>
+}
+```
+
+```ts title="test.ts"
+interface User {
+  name: string
+}
+const user: User = { name: 'John' }
+```
+
+```tsx title="test.tsx"
+interface Props {
+  title: string
+}
+const Component: React.FC<Props> = ({ title }) => <h1>{title}</h1>
+```
+
+```html title="test.html"
+<!DOCTYPE html>
+<html>
+  <head><title>Test</title></head>
+  <body><h1>Hello World</h1></body>
+</html>
+```
+
+```xml title="test.xml"
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <item id="1">Hello World</item>
+</root>
+```
+
+```svg title="test.svg"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="40" fill="blue" />
+</svg>
+```
+
+```graphql title="test.graphql"
+query GetUser($id: ID!) {
+  user(id: $id) {
+    name
+    email
+  }
+}
+```
+
+```css title="test.css"
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+```
+
+```mdx title="test.mdx"
+# Hello World
+
+This is **MDX** with some `code`.
+
+<Component prop="value" />
+```
+
+```py title="test.py"
+def greet(name):
+    return f"Hello, {name}!"
+
+print(greet("World"))
+```
+
+```plaintext title="test.txt"
+This is plain text content.
+No syntax highlighting here.
+Just regular text.
+```
+
+```sh title="test.sh"
+#!/bin/bash
+echo "Hello World"
+npm install
+```
+
+```shell title="test.shell"
+$ cd project
+$ npm run build
+$ echo "Build complete"
+```
+
+```yaml title="test.yaml"
+name: CI
+on:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+```
+
+```md title="test.md"
+# Hello World
+
+This is **markdown** with some `code`.
+
+- Item 1
+- Item 2
+```
+
+```json title="test.json"
+{
+  "name": "test-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "react": "^18.0.0"
+  }
+}
+```
+
+```diff title="test.diff"
+- const oldValue = 'old'
++ const newValue = 'new'
+  console.log(newValue)
+```
+
+```svelte title="test.svelte"
+<script>
+  let count = 0
+</script>
+
+<button on:click={() => count++}>
+  Count: {count}
+</button>
+```
+
+```astro title="test.astro"
+---
+const title = 'Hello World'
+---
+
+<html>
+  <head><title>{title}</title></head>
+  <body><h1>{title}</h1></body>
+</html>
 ```
 
 ## Playground

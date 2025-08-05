@@ -2,11 +2,14 @@ import type { StyleRule } from '@vanilla-extract/css'
 import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
+import { transition } from '@styles/tokens/motion'
 import { style, styleVariants } from '@vanilla-extract/css'
 
 export const layoutIconStyle = style({
 	color: vars.color.textMuted,
-	transition: 'all 0.3s ease-in-out',
+	transitionProperty: transition.property.all,
+	transitionDuration: transition.duration.slow,
+	transitionTimingFunction: transition.easing['ease-in-out'],
 	selectors: {
 		[pseudoSelectors.hover]: {
 			color: vars.color.heading,

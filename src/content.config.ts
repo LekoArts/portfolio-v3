@@ -62,6 +62,7 @@ const navigations = defineCollection({
 const photos = defineCollection({
 	loader: flickrPhotosetsGetListWithPhotosLoader({
 		username: FLICKR_USERNAME,
+		in: ['72177720327892113'],
 	}),
 })
 

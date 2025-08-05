@@ -1,5 +1,6 @@
 import { vars } from '@styles/themes/contract.css'
 import { colorPalette } from '@styles/tokens/colors'
+import { transition } from '@styles/tokens/motion'
 import { globalStyle, style } from '@vanilla-extract/css'
 
 export const toggleIconStyle = style({
@@ -7,7 +8,9 @@ export const toggleIconStyle = style({
 
 globalStyle(`#lekoarts-theme-select .${toggleIconStyle}`, {
 	color: vars.color.textMuted,
-	transition: 'all 0.3s ease-in-out',
+	transitionProperty: transition.property.all,
+	transitionDuration: transition.duration.slow,
+	transitionTimingFunction: transition.easing['ease-in-out'],
 	borderRadius: vars.borderRadius.full,
 	padding: 0,
 	fontSize: vars.fontSize.md,

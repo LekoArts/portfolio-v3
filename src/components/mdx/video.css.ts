@@ -1,3 +1,4 @@
+import { transition } from '@styles/tokens/motion'
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css'
 
 export const groupStyle = style({
@@ -17,7 +18,7 @@ export const playPauseButtonStyle = style({
 	background: 'rgba(0, 0, 0, 0.6)',
 	borderRadius: '50%',
 	color: 'white',
-	transition: 'opacity 500ms ease 0s',
+	transition: `opacity ${transition.duration['ultra-slow']} ease 0s`,
 	pointerEvents: 'none',
 })
 
