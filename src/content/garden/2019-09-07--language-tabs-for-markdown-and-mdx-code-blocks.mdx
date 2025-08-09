@@ -44,7 +44,7 @@ You need to target the `.gatsby-highlight` class and `pre` tag to add the label 
 
 Create a CSS file and include it in your `gatsby-browser.js` file. The CSS itself is:
 
-```css {{ title: 'custom-prism-styles.css', numbers: true }}
+```css title="custom-prism-styles.css" showLineNumbers
 .gatsby-highlight {
   position: relative;
   -webkit-overflow-scrolling: touch;
@@ -85,7 +85,7 @@ To get the CSS from `custom-prism-styles.css` to work, you'll need to think of a
 
 The main part is to create a `<Code />` component and mapping it to the `pre` tag in MDX. The [language-tabs-mdx](https://codesandbox.io/s/language-tabs-mdx-g03g6) codesandbox shows the complete setup, here's the code component as a snippet:
 
-```js {{ title: 'src/components/code.js' }}
+```js title="src/components/code.js"
 import React from "react"
 import Highlight, { defaultProps } from "prism-react-renderer"
 

@@ -55,66 +55,17 @@ test.describe('Code', () => {
 	test('should show inline code', async ({ page }) => {
 		page.locator('code:has-text("inline-code-block)')
 	})
-	test('should not show code-header with no language/title defined', async ({ page }) => {
-		const childSelector = 'pre:has-text("without any meta")'
-		const codeWrapperLocator = page.locator('data-testid=code-wrapper', {
-			has: page.locator(childSelector),
-		})
-
-		const codeHeader = codeWrapperLocator.getByTestId('code-header')
-		await expect(codeHeader).not.toBeVisible()
+	test('should render a code block', async ({ page }) => {
+		const codeBlock = page.locator('.expressive-code pre')
+		await expect(codeBlock.first()).toBeVisible()
 	})
-	test('should show code-header with language', async ({ page }) => {
-		const childSelector = 'text=/.*"simple language".*/'
-		const codeWrapperLocator = page.locator('data-testid=code-wrapper', {
-			has: page.locator(childSelector),
-		})
-
-		const codeHeader = codeWrapperLocator.getByTestId('code-header')
-		await expect(codeHeader).toBeVisible()
-		const lang = codeHeader.locator('[data-lang="ts"]')
-		await expect(lang).toContainText('ts')
+	test('should render a code block with a title', async ({ page }) => {
+		const codeBlockWithTitle = page.locator('.expressive-code .frame .header .title')
+		await expect(codeBlockWithTitle.first()).toBeVisible()
 	})
-	test('should show code-header with language & title', async ({ page }) => {
-		const childSelector = 'text=/.*"simple language with title".*/'
-		const codeWrapperLocator = page.locator('data-testid=code-wrapper', {
-			has: page.locator(childSelector),
-		})
-
-		const codeHeader = codeWrapperLocator.getByTestId('code-header')
-		await expect(codeHeader).toBeVisible()
-		const lang = codeHeader.locator('[data-lang="js"]')
-		await expect(lang).toContainText('js')
-		const title = codeHeader.getByTestId('code-title')
-		await expect(title).toContainText('title.js')
-	})
-	test('should show line numbers', async ({ page }) => {
-		const childSelector = 'text=/.*"simple language with title and line numbers".*/'
-		const codeWrapperLocator = page.locator('data-testid=code-wrapper', {
-			has: page.locator(childSelector),
-		})
-
-		const content = await codeWrapperLocator.locator('span.line').first().evaluate(el => window.getComputedStyle(el, ':before').content)
-
-		expect(content).toContain('counter(step)')
-	})
-	test('should show line numbers and line highlights', async ({ page }) => {
-		const childSelector = 'text=/.*"simple language with title and line numbers and highlight and a really long text, too".*/'
-		const codeWrapperLocator = page.locator('data-testid=code-wrapper', {
-			has: page.locator(childSelector),
-		})
-
-		const highlighted = codeWrapperLocator.locator('span.highlighted').first()
-		const normal = codeWrapperLocator.locator('span:not(.highlighted)').first()
-
-		const content = await codeWrapperLocator.locator('span.line').first().evaluate(el => window.getComputedStyle(el, ':before').content)
-
-		expect(content).toContain('counter(step)')
-
-		const highlightCSS = /linear-gradient\(90deg, rgb\(140, 175, 255\)/g
-
-		await expect(highlighted).toHaveCSS('background', highlightCSS)
-		await expect(normal).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)')
+	test('should render line numbers in a code block', async ({ page }) => {
+		const lineNumbers = page.locator('.expressive-code .gutter .ln')
+		await expect(lineNumbers.first()).toBeVisible()
 	})
 })
 
@@ -132,7 +83,7 @@ test.describe('Collapsible', () => {
 test.describe('Video', () => {
 	test('should render correctly', async ({ page }) => {
 		const video = page.getByLabel('Video showcasing the example plugin in action.')
-		const caption = page.getByRole('figure').locator('figcaption').first()
+		const caption = page.getByTestId('video').locator('figcaption').first()
 
 		await expect(video).toBeVisible()
 		await expect(caption).toContainText('Showcasing the Figma plugin in action.')

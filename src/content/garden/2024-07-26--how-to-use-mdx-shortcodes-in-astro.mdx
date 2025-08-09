@@ -11,7 +11,7 @@ tags:
 
 Let's assume that you have the following page that uses Astro's [Content Collections](https://docs.astro.build/en/guides/content-collections/) feature:
 
-```astro {{ title: 'src/pages/[...slug].astro' }}
+```astro title="src/pages/[...slug].astro"
 ---
 import { getCollection } from 'astro:content'
 
@@ -34,7 +34,7 @@ You now want to use a `<Collapsible>` component in your MDX files without having
 
 All you have to do is to pass your custom components to `<Content>`:
 
-```astro {{ title: 'src/pages/[...slug].astro', highlight: [3, 14] }}
+```astro title="src/pages/[...slug].astro" {3, 14}
 ---
 import { getCollection } from 'astro:content'
 import Collapsible from '../components/collapsible.astro'

@@ -18,7 +18,7 @@ I didn't want to test the first case as my prompts are simple and most of secco'
 
 At the end of this post you should be able to write such tests:
 
-```ts {{ title: 'tests/config.test.ts', highlight: [8] }}
+```ts title="tests/config.test.ts" {8}
 import { join } from 'node:path'
 import { YourCLI } from './invoke-cli'
 
@@ -41,7 +41,7 @@ This guide uses Vitest but you should be able to transfer it to [Jest](https://j
 
 Create a `matcher.ts` file in order to easily check if a word or a sequence of words is found inside the CLI output (logs).
 
-```ts {{ title: 'tests/matcher.ts' }}
+```ts title="tests/matcher.ts"
 export function createLogsMatcher(output: string) {
   return {
     logOutput() {
@@ -79,7 +79,7 @@ npm install -D execa strip-ansi
 
 Next, create `invoke-cli.ts` and add the following contents:
 
-```ts {{ title: 'tests/invoke-cli.ts' }}
+```ts title="tests/invoke-cli.ts"
 import { join } from 'node:path'
 import process from 'node:process'
 import type { ExecaSyncError } from 'execa'

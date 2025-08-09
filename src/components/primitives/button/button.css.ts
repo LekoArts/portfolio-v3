@@ -29,7 +29,7 @@ const buttonBaseStyle = style({
 		[pseudoSelectors.disabled]: {
 			opacity: 0.4,
 			cursor: 'not-allowed',
-			boxShadow: 'none',
+			boxShadow: vars.shadow.none,
 		},
 	},
 })
@@ -159,7 +159,7 @@ export const arrowAnimationStyle = style({
 
 globalStyle(`${arrowAnimationStyle} > span`, {
 	transform: 'translate3d(0px, 0px, 0px)',
-	transition: 'transform .3s cubic-bezier(.73,.26,.42,1.24)',
+	transition: `transform ${transition.duration.slow} cubic-bezier(.73,.26,.42,1.24)`,
 })
 
 globalStyle(`${arrowAnimationStyle} svg`, {
@@ -169,7 +169,7 @@ globalStyle(`${arrowAnimationStyle} svg`, {
 
 globalStyle(`${arrowAnimationStyle}:hover > span`, {
 	transform: transformVar,
-	transition: 'transform .3s cubic-bezier(.73,.26,.42,1.24)',
+	transition: `transform ${transition.duration.slow} cubic-bezier(.73,.26,.42,1.24)`,
 })
 
 export const subtleButtonStyle = style({

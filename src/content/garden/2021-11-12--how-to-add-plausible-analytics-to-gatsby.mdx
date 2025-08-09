@@ -17,7 +17,7 @@ You should already have set up an account with Plausible and have your domain na
 
 Edit the `gatsby-ssr.jsx` to add the tracking script. You can choose between a variety of [script extensions](https://plausible.io/docs/script-extensions) – you can edit it in the `SCRIPT_URI` variable. This also adds the snippet for [404 error page tracking](https://plausible.io/docs/error-pages-tracking-404).
 
-```jsx {{ title: 'gatsby-ssr.jsx' }}
+```jsx title="gatsby-ssr.jsx"
 import * as React from "react"
 
 const SITE_DOMAIN = `your-domain`
@@ -55,7 +55,7 @@ export const onRenderBody = ({ setHeadComponents }) => {
 
 Edit the `gatsby-browser.jsx` to add pageview tracking:
 
-```jsx {{ title: 'gatsby-browser.jsx' }}
+```jsx title="gatsby-browser.jsx"
 export const onRouteUpdate = () => {
   if (
     process.env.NODE_ENV === `production` &&
@@ -87,7 +87,7 @@ Besides adding the custom event to the `src/pages/404.jsx` page you'll also need
 
 Here's an example of a 404 Page written in TypeScript:
 
-```tsx {{ title: 'src/pages/404.tsx', highlight: [[5, 7]] }}
+```tsx title="src/pages/404.tsx" {5-7}
 import * as React from "react"
 import { PageProps } from "gatsby"
 

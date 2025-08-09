@@ -35,7 +35,7 @@ Create an empty `generate-readme.js` file and an empty `plugin-options-schema.js
 
 Add a `generate-readme` script to the `package.json`:
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 {
   "scripts": {
     "generate-readme": "node generate-readme.js"
@@ -49,7 +49,7 @@ Suppose the plugin you're creating has two options, `api_key` is required and `u
 
 Open the `plugin-options-schema.js` file and add the following:
 
-```js {{ title: 'plugin-options-schema.js' }}
+```js title="plugin-options-schema.js"
 const wrapOptions = (innerOptions) => `{
   resolve: \`name-of-your-plugin\`,
   options: {
@@ -77,7 +77,7 @@ You've successfully defined the schema for your plugin options! The `.meta()` po
 
 As a last step you need to define the `pluginOptionsSchema` in your `gatsby-node.js`:
 
-```js {{ title: 'gatsby-node.js' }}
+```js title="gatsby-node.js"
 const { pluginOptionsSchema } = require("./plugin-options-schema")
 
 exports.pluginOptionsSchema = pluginOptionsSchema
@@ -87,7 +87,7 @@ exports.pluginOptionsSchema = pluginOptionsSchema
 
 Now that your `pluginOptionsSchema` is easily accessible you can switch over to the `generate-readme.js` file and add the following:
 
-```js {{ title: 'generate-readme.js' }}
+```js title="generate-readme.js"
 const { Joi } = require("gatsby-plugin-utils")
 const fs = require("fs-extra")
 const prettier = require("prettier")

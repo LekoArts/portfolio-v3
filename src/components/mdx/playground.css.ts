@@ -2,6 +2,7 @@ import { nightOwl } from '@codesandbox/sandpack-themes'
 import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { colorPalette } from '@styles/tokens/colors'
+import { transition } from '@styles/tokens/motion'
 import { globalStyle, style } from '@vanilla-extract/css'
 
 export const spTabButton = style({
@@ -85,7 +86,7 @@ globalStyle(`${rootWrapper} ${buttonBase}:hover`, {
 export const refreshButton = style([
 	buttonBase,
 	{
-		transition: 'color 0.3s ease-in-out, transform 0.7s linear',
+		transition: `color ${transition.duration.slow} ${transition.easing['ease-in-out']}, transform 0.7s linear`,
 		transform: 'rotate(0deg)',
 	},
 ])
@@ -93,7 +94,9 @@ export const refreshButton = style([
 export const backwardButton = style([
 	buttonBase,
 	{
-		transition: 'all 0.3s ease-in-out',
+		transitionProperty: transition.property.all,
+		transitionDuration: transition.duration.slow,
+		transitionTimingFunction: transition.easing['ease-in-out'],
 		transform: 'translate3d(0px, 0px, 0px)',
 		selectors: {
 			[pseudoSelectors.hover]: {
@@ -106,7 +109,9 @@ export const backwardButton = style([
 export const exportButton = style([
 	buttonBase,
 	{
-		transition: 'all 0.3s ease-in-out',
+		transitionProperty: transition.property.all,
+		transitionDuration: transition.duration.slow,
+		transitionTimingFunction: transition.easing['ease-in-out'],
 		transform: 'scale(1)',
 		selectors: {
 			[pseudoSelectors.hover]: {

@@ -1,12 +1,10 @@
 import type { AlertStatus } from '@constants/types'
 import type { StyleRule } from '@vanilla-extract/css'
-import { codeBlockWrapper, codeHeaderStyle } from '@components/mdx/code.css'
 import { themesSelectors } from '@styles/atoms.css'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
 import { transparentize } from '@utils/color'
-import { em } from '@utils/css'
 import { createVar, globalStyle, style, styleVariants } from '@vanilla-extract/css'
 
 const bgVar = createVar()
@@ -73,50 +71,12 @@ globalStyle(`${alertBaseStyle} a`, {
 	textDecorationColor: `${linkDecorationVar} !important`,
 })
 
-globalStyle(`${alertBaseStyle} p`, {
-	'marginBottom': `${em(16, 14)} !important`,
-	'marginTop': `${vars.space[0]} !important`,
-	'@media': {
-		[minMediaQuery('sm')]: {
-			marginBottom: `${em(20, 16)} !important`,
-			marginTop: `${vars.space[0]} !important`,
-		},
-		[minMediaQuery('lg')]: {
-			marginBottom: `${em(24, 18)} !important`,
-			marginTop: `${vars.space[0]} !important`,
-		},
-		[minMediaQuery('xl')]: {
-			marginBottom: `${em(24, 20)} !important`,
-			marginTop: `${vars.space[0]} !important`,
-		},
-	},
-})
-
 globalStyle(`${alertBaseStyle} p:first-of-type`, {
 	marginTop: `${vars.space[0]} !important`,
 })
 
-globalStyle(`${alertBaseStyle} p:last-of-type`, {
-	marginTop: `${vars.space[0]} !important`,
+globalStyle(`${alertBaseStyle} > *:last-child`, {
 	marginBottom: `${vars.space[0]} !important`,
-})
-
-globalStyle(`${alertBaseStyle} .${codeBlockWrapper}`, {
-	width: '100%',
-})
-
-globalStyle(`${alertBaseStyle} .${codeBlockWrapper} pre`, {
-	marginLeft: `${vars.space[0]} !important`,
-	marginRight: `${vars.space[0]} !important`,
-})
-
-globalStyle(`${alertBaseStyle} > *:last-child pre:last-of-type`, {
-	marginBottom: `${vars.space[0]} !important`,
-})
-
-globalStyle(`${alertBaseStyle} .${codeBlockWrapper} .${codeHeaderStyle}`, {
-	marginLeft: `${vars.space[0]} !important`,
-	marginRight: `${vars.space[0]} !important`,
 })
 
 const alerts: Record<AlertStatus, StyleRule> = {

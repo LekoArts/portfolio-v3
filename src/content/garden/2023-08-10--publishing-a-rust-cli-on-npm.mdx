@@ -46,7 +46,7 @@ So you've successfully initialized your project and wrote your Rust CLI, e.g. wi
 
 Give your exported function inside `src/lib.rs` a suitable name, for example `run`. When you run `npm run build` napi-rs will compile your native packages and create a new file at the root called `index.js`. When you inspect the file you'll see that it's quite long — it needs to figure out which package/native binary it should load for your platform. At the very bottom you'll see `run` exported as a named function:
 
-```js {{ title: 'index.js' }}
+```js title="index.js"
 const { run } = nativeBinding
 
 module.exports.run = run
@@ -58,7 +58,7 @@ You can use the `bin` property inside [package.json](https://docs.npmjs.com/cli/
 
 At the root of your project, create a `bin.js` file with the following contents:
 
-```js {{ title: 'bin.js' }}
+```js title="bin.js"
 #!/usr/bin/env node
 
 const cli = require("./index")
@@ -74,7 +74,7 @@ The first line is a [shebang](https://en.wikipedia.org/wiki/Shebang_\(Unix\)) an
 
 Last but not least, add the `bin` property to your root `package.json`:
 
-```json {{ title: 'package.json' }}
+```json title="package.json"
 {
   "bin": "bin.js"
 }

@@ -4,6 +4,7 @@ import { glob } from 'astro/loaders'
 import { defineCollection, reference, z } from 'astro:content'
 
 const FLICKR_USERNAME = 'ars_aurea'
+const IS_PROD = import.meta.env.PROD
 
 const writing = defineCollection({
 	loader: glob({ pattern: '**\/[^_]*.mdx', base: './src/content/writing' }),
@@ -59,9 +60,12 @@ const navigations = defineCollection({
 	})),
 })
 
+const flickrFilter = IS_PROD ? {} : { in: ['72177720327892113'] }
+
 const photos = defineCollection({
 	loader: flickrPhotosetsGetListWithPhotosLoader({
 		username: FLICKR_USERNAME,
+		...flickrFilter,
 	}),
 })
 

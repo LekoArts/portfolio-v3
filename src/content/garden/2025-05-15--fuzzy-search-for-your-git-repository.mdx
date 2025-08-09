@@ -24,7 +24,7 @@ You can also use it to search through your files, tags, and more inside your CLI
 1. Locate your `.bashrc` or `.zshrc` file (typically in your `$HOME` directory). Download the `fzf-git.sh` file from [fzf-git](https://github.com/junegunn/fzf-git.sh) to this directory or a subdirectory.
 1. Source `fzf-git.sh` in your `.bashrc` or `.zshrc` file:
 
-    ```sh {{ title: '.zshrc' }}
+    ```sh title=".zshrc"
     source "$HOME/fzf-git.sh"
     ```
 1. Try out the keybindings defined in [fzf-git usage section](https://github.com/junegunn/fzf-git.sh#usage). For example, <kbd>CTRL-G</kbd> <kbd>CTRL-B</kbd> for branches.
@@ -33,7 +33,7 @@ You can also use it to search through your files, tags, and more inside your CLI
 
 To get the `gcos()` function shown in the screenshot, define a shortcut like so:
 
-```sh {{ title: '.zshrc' }}
+```sh title=".zshrc"
 # Fuzzy-search branches
 gcos() {
   _fzf_git_branches --no-multi | xargs git checkout

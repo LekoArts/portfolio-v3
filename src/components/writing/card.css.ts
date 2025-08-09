@@ -5,12 +5,11 @@ import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
+import { transition } from '@styles/tokens/motion'
 import { zIndices } from '@styles/tokens/z-indices'
 import { createVar, style, styleVariants } from '@vanilla-extract/css'
 
-const cardEdgeVar = createVar()
-const cardInnerShadowVar = createVar()
-const cardOuterShadowVar = createVar()
+const cardShadow = createVar()
 
 export const linkStyle = style({
 	selectors: {
@@ -18,7 +17,7 @@ export const linkStyle = style({
 			textDecoration: 'none',
 		},
 		[pseudoSelectors.focus]: {
-			boxShadow: 'none',
+			boxShadow: vars.shadow.none,
 		},
 	},
 })
@@ -30,31 +29,27 @@ export const linkTargetStyle = style({
 
 const cardBaseStyle = style({
 	vars: {
-		[cardEdgeVar]: '0 0 0 1px rgb(33 33 38/0.075)',
-		[cardInnerShadowVar]: '0 1px 5px -4px rgba(19,19,22,0.7)',
-		[cardOuterShadowVar]: '0 4px 8px rgba(32,42,54,0.05)',
+		[cardShadow]: vars.shadow.card.default,
 	},
 	borderRadius: vars.borderRadius.lg,
 	zIndex: zIndices.docked,
 	position: 'relative',
-	boxShadow: `${cardEdgeVar}, ${cardInnerShadowVar}, ${cardOuterShadowVar}`,
+	boxShadow: cardShadow,
 	selectors: {
 		[pseudoSelectors.after]: {
 			vars: {
-				[cardEdgeVar]: '0 0 0 1px rgb(33 33 38/0.075)',
-				[cardInnerShadowVar]: '0 1px 7px -4px rgba(19,19,22,0.8)',
-				[cardOuterShadowVar]: '0 4px 11px rgba(32,42,54,0.05)',
+				[cardShadow]: vars.shadow.card.defaultHover,
 			},
 			content: '""',
 			position: 'absolute',
 			zIndex: zIndices.hide,
 			width: vars.space.full,
 			height: vars.space.full,
-			boxShadow: `${cardEdgeVar}, ${cardInnerShadowVar}, ${cardOuterShadowVar}`,
+			boxShadow: cardShadow,
 			opacity: 0,
 			transitionProperty: 'opacity',
-			transitionDuration: '.3s',
-			transitionTimingFunction: 'cubic-bezier(.4,0,.2,1)',
+			transitionDuration: transition.duration.slow,
+			transitionTimingFunction: transition.easing['ease-in-out'],
 			borderRadius: vars.borderRadius.lg,
 			top: 0,
 			left: 0,
@@ -66,9 +61,7 @@ const cardBaseStyle = style({
 		},
 		[themesSelectors.dark]: {
 			vars: {
-				[cardEdgeVar]: '0 0 0 1px rgb(87 87 113/0.5)',
-				[cardInnerShadowVar]: '0 1px 7px -4px rgba(21, 93, 252, 0.5)',
-				[cardOuterShadowVar]: '0 4px 11px rgba(57,67,79,0.1)',
+				[cardShadow]: vars.shadow.card.defaultHoverDark,
 			},
 		},
 	},
@@ -94,9 +87,7 @@ const cards: Record<CardVariants, StyleRule> = {
 			[themesSelectors.dark]: {
 				background: `linear-gradient(180deg, oklch(0.248 0.042 265.755) 0%, ${colorPalette.blueGray[900]} 10%, ${colorPalette.blueGray[900]} 100%)`,
 				vars: {
-					[cardEdgeVar]: '0 0 0 1px rgb(93 93 145/0.5)',
-					[cardInnerShadowVar]: '0 1px 7px -4px rgba(0, 17, 55, 0.5)',
-					[cardOuterShadowVar]: '0 4px 11px rgba(0,0,0,0.1)',
+					[cardShadow]: vars.shadow.card.titleOnlyDark,
 				},
 			},
 		},

@@ -69,7 +69,7 @@ When you define two (or more) `gatsby-source-filesystem` entries in your config 
 
 [CodeSandbox](https://codesandbox.io/s/ykpjk9333j)
 
-```js {{ title: 'gatsby-config.js' }}
+```js title="gatsby-config.js"
 module.exports = {
   plugins: [
     {
@@ -138,7 +138,7 @@ export const query = graphql`
 
 You can not only use async/await in `gatsby-node.js` but also use Gatsby's reporter API. Use this to throw errors. You should use `panicOnBuild` to only stop the process on `gatsby build` (so that you can debug it with GraphiQL).
 
-```js {{ title: 'gatsby-node.js' }}
+```js title="gatsby-node.js"
 const yourTemplate = require.resolve("./src/templates/yourTemplate.js")
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
@@ -169,7 +169,7 @@ Most of the time you want to show a previous/next post under your blog post to k
 
 [CodeSandbox](https://codesandbox.io/s/5k7r3ok7k)
 
-```js {{ title: 'gatsby-node.js' }}
+```js title="gatsby-node.js"
 const bookTemplate = require.resolve("./src/templates/book.js")
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
@@ -215,7 +215,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 }
 ```
 
-```js {{ title: 'src/templates/book.js' }}
+```js title="src/templates/book.js"
 import * as React from "react"
 import { graphql, Link } from "gatsby"
 
@@ -261,7 +261,7 @@ In contrast to the previous tip you can also show two (or more) random posts by 
 
 [CodeSandbox](https://codesandbox.io/s/520jv2nylk)
 
-```js {{ title: 'gatsby-node.js' }}
+```js title="gatsby-node.js"
 const _ = require("lodash")
 
 const prevNext = (list, item) => {
@@ -330,7 +330,7 @@ featuredImgAlt: Mountains with a starry sky
 ---
 ```
 
-```js {{ title: 'gatsby-node.js' }}
+```js title="gatsby-node.js"
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
 
 exports.createSchemaCustomization = ({ actions }) => {
@@ -388,7 +388,7 @@ npm install gatsby-plugin-webpack-bundle-analyser-v2 -D
 
 And in your `gatsby-config.js`:
 
-```js {{ title: 'gatsby-config.js' }}
+```js title="gatsby-config.js"
 module.exports = {
   plugins: ["gatsby-plugin-webpack-bundle-analyser-v2"],
 }

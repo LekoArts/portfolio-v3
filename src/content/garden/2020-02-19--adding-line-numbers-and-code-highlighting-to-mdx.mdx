@@ -43,7 +43,7 @@ Create a `Code` React component in `src/components/code.jsx` and leave the file 
 
 Also create a CSS file at the root of the project:
 
-```css {{ title: 'styles.css' }}
+```css title="styles.css"
 .prism-code {
   font-size: 1rem;
   padding-top: 1rem;
@@ -106,7 +106,7 @@ gatsby-highlight > code[class*="language-"],
 
 Import the `styles.css` file into `gatsby-browser.jsx` to add them to your site:
 
-```js {{ title: 'gatsby-browser.jsx' }}
+```js title="gatsby-browser.jsx"
 import "./styles.css"
 ```
 
@@ -114,7 +114,7 @@ Next, create a `rehype` plugin to add the `highlight` information to the `meta` 
 
 Create a file called `rehype-meta-as-attributes.mjs` at the root:
 
-```js {{ title: 'rehype-meta-as-attributes.mjs' }}
+```js title="rehype-meta-as-attributes.mjs"
 import { visit } from "unist-util-visit"
 const re = /\b([-\w]+)(?:=(?:"([^"]*)"|'([^']*)'|([^"'\s]+)))?/g
 
@@ -144,20 +144,23 @@ export default rehypeMetaAsAttributes
 
 In your `gatsby-config.mjs`, import the newly created `rehype-meta-as-attributes` and use it inside `mdxOptions.rehypePlugins`:
 
-```js {{ title: 'gatsby-config.mjs' }}
+```js title="gatsby-config.mjs" {1, 5-12}
 import rehypeMetaAsAttributes from "./rehype-meta-as-attributes.mjs"
 
-// Rest of config...
-
-{
-  resolve: `gatsby-plugin-mdx`,
-  options: {
-    // Rest of options...
-    mdxOptions: {
-      rehypePlugins: [rehypeMetaAsAttributes],
+const config = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        mdxOptions: {
+          rehypePlugins: [rehypeMetaAsAttributes],
+        },
+      },
     },
-  },
-},
+  ],
+}
+
+export default config
 ```
 
 You **must** use [ESM in Gatsby](https://www.gatsbyjs.com/docs/how-to/custom-configuration/es-modules/) for this to work.
@@ -166,7 +169,7 @@ Switch to your file that contains the `MDXProvider`. This is most likely your la
 
 You'll need to create a helper function called `preToCodeBlock` and define the `components` object. The `preToCodeBlock` parses the incoming props from the `pre` tag and returns a normalized object that later the `Code` component uses. Later you'll define [shortcodes](https://www.gatsbyjs.com/docs/how-to/routing/mdx/#make-components-available-globally-as-shortcodes).
 
-```js {{ title: 'src/components/layout.jsx' }}
+```js title="src/components/layout.jsx"
 import * as React from "react"
 import { MDXProvider } from "@mdx-js/react"
 import Code from "./code"
@@ -217,7 +220,7 @@ The important bit is that you pass `components` into the `MDXProvider` and the p
 
 Add the following to said component:
 
-```js {{ title: 'src/components/code.jsx' }}
+```js title="src/components/code.jsx"
 import * as React from "react"
 import Highlight, { defaultProps } from "prism-react-renderer"
 import theme from "prism-react-renderer/themes/nightOwl"

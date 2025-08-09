@@ -134,7 +134,7 @@ export default function App() {
 
 For this example I didn't want to install any third-party/additional packages for vanilla-extract. So it uses its CSS custom properties API.
 
-```ts {{ title: 'spacer.tsx' }}
+```ts title="spacer.tsx"
 import React from "react"
 import { type SpacerScale, spacerVariants } from "./spacer.css"
 
@@ -148,7 +148,7 @@ export const Spacer = ({
 }) => <span data-axis={axis} className={spacerVariants[size]} {...rest} />
 ```
 
-```ts {{ title: 'spacer.css.ts' }}
+```ts title="spacer.css.ts"
 import { style, styleVariants, createVar } from "@vanilla-extract/css"
 
 export type SpacerScale = "sm" | "md" | "lg"

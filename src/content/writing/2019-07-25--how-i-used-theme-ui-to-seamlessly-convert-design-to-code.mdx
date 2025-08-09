@@ -45,7 +45,7 @@ It's great to have the same design tokens in all places. I chose the color _Indi
 
 The bottom view of VS Code shows a snippet of the button variants — variants are a Theme UI feature (see [documentation](https://theme-ui.com/guides/variants/)). I used them for the buttons and gradients. The latter looks something like this:
 
-```js {{ title: 'src/gatsby-plugin-theme-ui/index.js' }}
+```js title="src/gatsby-plugin-theme-ui/index.js"
 const theme = {
   gradients: {
     blue: {
@@ -124,7 +124,7 @@ These are all the information that my shape components need to render the desire
 
 To give you an idea how I then added this functionality to the listing here's an excerpt of the relevant file:
 
-```tsx {{ title: 'src/components/listing.tsx' }}
+```tsx title="src/components/listing.tsx"
 <Container sx={{ py: 4 }}>
   {themes.map((theme, index) => {
     const isEven = index % 2 === 0

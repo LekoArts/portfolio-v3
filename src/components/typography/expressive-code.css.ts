@@ -2,24 +2,13 @@ import type { SelectorMap } from '@utils/vanilla-extract'
 import { EC_CSS_VARS } from '@constants/ec.mjs'
 import { vars } from '@styles/themes/contract.css'
 import { darkThemeClass } from '@styles/themes/dark.css'
-import { breakpointNames, minMediaQuery } from '@styles/tokens/breakpoints'
+import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
 import { fonts } from '@styles/tokens/typography'
 import { zIndices } from '@styles/tokens/z-indices'
 import { em, round } from '@utils/css'
-import { responsiveStyles, themeAwareStyles } from '@utils/vanilla-extract'
+import { themeAwareStyles } from '@utils/vanilla-extract'
 import { createGlobalVar, globalStyle, style } from '@vanilla-extract/css'
-import {
-	proseBaseStyle,
-	proseLgVariant,
-	proseMdVariant,
-	proseRootLg,
-	proseRootMd,
-	proseRootMobile,
-	proseRootXl,
-	proseSmVariant,
-	proseXlVariant,
-} from './tailwind-typography.css'
 
 // The ORDER of responsive array variants should be:
 // [`sm`, `md`, null, `lg`, `xl`]
@@ -31,21 +20,7 @@ const ecFontFamily = createGlobalVar(EC_CSS_VARS.fontFamily)
 const ecFrameBoxShadowCssValue = createGlobalVar(EC_CSS_VARS.frameBoxShadowCssValue)
 const ecFrameEditorTabBarBackground = createGlobalVar(EC_CSS_VARS.frameEditorTabBarBackground)
 
-const proseRootBaseStyle = style({
-	color: vars.color.textProse,
-})
-
-export const proseRootStyle = style([
-	proseRootBaseStyle,
-	proseRootMobile,
-	{
-		'@media': {
-			[minMediaQuery('sm')]: proseRootMd,
-			[minMediaQuery('lg')]: proseRootLg,
-			[minMediaQuery('xl')]: proseRootXl,
-		},
-	},
-])
+export const expressiveCodeRootStyle = style({})
 
 globalStyle('html', {
 	'vars': {
@@ -85,72 +60,16 @@ globalStyle(`html.${darkThemeClass}`, {
 	},
 })
 
-globalStyle(`${proseRootStyle} img`, {
-	boxShadow: vars.shadow.lg,
-	borderRadius: vars.borderRadius.lg,
-	marginLeft: 'auto',
-	marginRight: 'auto',
+globalStyle(`${expressiveCodeRootStyle} .expressive-code pre`, {
+	maxHeight: '70vh',
 })
 
-globalStyle(`${proseRootStyle} .markdown-heading`, {
-	position: 'relative',
-})
-
-globalStyle(`${proseRootStyle} .markdown-heading:hover .anchor`, {
-	visibility: 'visible',
-})
-
-globalStyle(`${proseRootStyle} .markdown-heading .anchor`, {
-	position: 'absolute',
-	display: 'flex',
-	margin: 'auto',
-	opacity: 1,
-	justifyContent: 'center',
-	alignItems: 'center',
-	width: vars.space[10],
-	height: vars.space[7],
-	top: '50%',
-	paddingRight: vars.space[4],
-	left: `calc(-1 * ${vars.space[9]})`,
-	transform: 'translateY(calc(-50% + 0.1rem))',
-	visibility: 'hidden',
-})
-
-globalStyle(`${proseRootStyle} .markdown-heading .anchor .anchor-icon`, {
-	display: 'inline-block',
-	overflow: 'visible !important',
-	verticalAlign: 'text-bottom',
-	fill: 'currentColor',
-	height: vars.space[5],
-	width: vars.space[5],
-})
-
-globalStyle(`${proseRootStyle} .img-left-wrap-text`, {
-	'display': 'grid',
-	'gridTemplateColumns': '1fr',
-	'gridGap': vars.space[4],
-	'@media': {
-		[minMediaQuery('sm')]: {
-			gridTemplateColumns: '1fr 2fr',
-			gridGap: vars.space[6],
-		},
-		[minMediaQuery('md')]: {
-			gridTemplateColumns: '1fr 1.75fr',
-			gridGap: vars.space[12],
-		},
-	},
-})
-
-globalStyle(`${proseRootStyle} .img-left-wrap-text img`, {
-	margin: 0,
-})
-
-globalStyle(`${proseRootStyle} .expressive-code`, {
+globalStyle(`${expressiveCodeRootStyle} .expressive-code`, {
 	fontSize: 'inherit',
 	lineHeight: 'inherit',
 })
 
-globalStyle(`${proseRootStyle} .expressive-code + .expressive-code, ${proseRootStyle} .expressive-code + details`, {
+globalStyle(`${expressiveCodeRootStyle} .expressive-code + .expressive-code, ${expressiveCodeRootStyle} .expressive-code + details`, {
 	'marginTop': em(16, 14),
 	'@media': {
 		[minMediaQuery('md')]: {
@@ -165,16 +84,16 @@ globalStyle(`${proseRootStyle} .expressive-code + .expressive-code, ${proseRootS
 	},
 })
 
-globalStyle(`${proseRootStyle} .expressive-code .frame .header .title`, {
+globalStyle(`${expressiveCodeRootStyle} .expressive-code .frame .header .title`, {
 	fontSize: `calc(${ecCodeFontSize} - 0.1em)`,
 })
 
-globalStyle(`${proseRootStyle} .expressive-code .gutter .ln`, {
+globalStyle(`${expressiveCodeRootStyle} .expressive-code .gutter .ln`, {
 	justifyContent: 'center',
 	paddingInline: '1ch',
 })
 
-globalStyle(`${proseRootStyle} .expressive-code .copy button`, {
+globalStyle(`${expressiveCodeRootStyle} .expressive-code .copy button`, {
 	'width': vars.space[8],
 	'height': vars.space[8],
 	'@media': {
@@ -185,7 +104,7 @@ globalStyle(`${proseRootStyle} .expressive-code .copy button`, {
 	},
 })
 
-globalStyle(`${proseRootStyle} .expressive-code .frame .copy`, {
+globalStyle(`${expressiveCodeRootStyle} .expressive-code .frame .copy`, {
 	'marginTop': '4px',
 	'@media': {
 		[minMediaQuery('sm')]: {
@@ -194,7 +113,7 @@ globalStyle(`${proseRootStyle} .expressive-code .frame .copy`, {
 	},
 })
 
-globalStyle(`${proseRootStyle} .expressive-code .frame.has-title .copy`, {
+globalStyle(`${expressiveCodeRootStyle} .expressive-code .frame.has-title .copy`, {
 	'marginTop': '-2px',
 	'@media': {
 		[minMediaQuery('sm')]: {
@@ -203,7 +122,7 @@ globalStyle(`${proseRootStyle} .expressive-code .frame.has-title .copy`, {
 	},
 })
 
-globalStyle(`${proseRootStyle} .expressive-code .frame.is-terminal .copy`, {
+globalStyle(`${expressiveCodeRootStyle} .expressive-code .frame.is-terminal .copy`, {
 	'marginTop': '-3px',
 	'@media': {
 		[minMediaQuery('sm')]: {
@@ -212,7 +131,7 @@ globalStyle(`${proseRootStyle} .expressive-code .frame.is-terminal .copy`, {
 	},
 })
 
-globalStyle(`${proseRootStyle} .expressive-code .frame.has-title [data-language]::before`, {
+globalStyle(`${expressiveCodeRootStyle} .expressive-code .frame.has-title [data-language]::before`, {
 	'position': 'absolute',
 	'zIndex': zIndices.docked,
 	'right': '0.4em',
@@ -228,6 +147,7 @@ globalStyle(`${proseRootStyle} .expressive-code .frame.has-title [data-language]
 	'transition': 'opacity 0.2s ease-in-out',
 	'letterSpacing': vars.letterSpacing.wide,
 	'fontWeight': vars.fontWeight.medium,
+	'boxShadow': 'inset 0 1px 0 0 rgba(255,255,255,0.15), inset 0 -1px 0 0 rgba(0,0,0,0.15), 0 1px 3px 0 rgba(0,0,0,0.15)',
 	'@media': {
 		[minMediaQuery('md')]: {
 			borderRadius: vars.borderRadius.lg,
@@ -318,46 +238,9 @@ const preparedEcColorBadgeStyles = themeAwareStyles({
 	selectorMap: badgeStyles,
 	defaultTheme: 'light',
 	alternateThemeClass: darkThemeClass,
-	rootClass: `${proseRootStyle} .expressive-code .frame.has-title`,
+	rootClass: `${expressiveCodeRootStyle} .expressive-code .frame.has-title`,
 })
 
 Object.entries(preparedEcColorBadgeStyles).forEach(([selector, selectorStyle]) => {
 	globalStyle(selector, selectorStyle)
-})
-
-const preparedBaseStyles = themeAwareStyles({
-	selectorMap: proseBaseStyle,
-	defaultTheme: 'light',
-	alternateThemeClass: darkThemeClass,
-	rootClass: proseRootStyle,
-})
-
-Object.entries(preparedBaseStyles).forEach(([selector, selectorStyle]) => {
-	globalStyle(selector, selectorStyle)
-})
-
-const proseResponsiveStyles = responsiveStyles([
-	proseSmVariant,
-	proseMdVariant,
-	proseMdVariant,
-	proseLgVariant,
-	proseXlVariant,
-])
-
-const [_, ...bpn] = breakpointNames
-
-Object.entries(proseResponsiveStyles).forEach(([selector, selectorResponsiveArray]) => {
-	const [mobileStyle, ...rest] = selectorResponsiveArray
-	const mediaQueries = {}
-
-	rest.forEach((s, index) => {
-		if (s) {
-			// @ts-expect-error - TODO: Fix this
-			mediaQueries[minMediaQuery(bpn[index])] = s
-		}
-	})
-	globalStyle(`${proseRootStyle} ${selector}`, {
-		...mobileStyle,
-		'@media': mediaQueries,
-	})
 })

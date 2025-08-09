@@ -50,7 +50,7 @@ npm install gatsby-plugin-plausible
 
 Add the plugin to your `gatsby-config.mjs` and provide the necessary `domain` option.
 
-```js {{ title: 'gatsby-config.mjs' }}
+```js title="gatsby-config.mjs"
 const config = {
   plugins: [
     {
@@ -120,7 +120,7 @@ Start by creating the folder structure `/plugins/gatsby-source-plausible` and cr
 
 For the `package.json` use the following contents:
 
-```json {{ title: 'plugins/gatsby-source-plausible/package.json' }}
+```json title="plugins/gatsby-source-plausible/package.json"
 {
   "name": "gatsby-source-plausible"
 }
@@ -130,7 +130,7 @@ Go into `plugins/gatsby-source-plausible` and run `npm install node-fetch`.
 
 Lastly, create some boilerplate code inside `gatsby-node.mjs` for the next step:
 
-```js {{ title: 'plugins/gatsby-source-plausible/gatsby-node.mjs' }}
+```js title="plugins/gatsby-source-plausible/gatsby-node.mjs"
 import fetch from "node-fetch"
 const POST_NODE_TYPE = `PlausibleTopPage`
 
@@ -153,7 +153,7 @@ curl https://plausible.io/api/v1/stats/breakdown?site_id=$SITE_ID&period=6mo&pro
 
 Here, for a period of 6 months the top 5 pages are returned for the given site id. By default, the `limit` is 100. Translating that `curl` command into the shape of `node-fetch` looks something like this:
 
-```js {{ title: 'plugins/gatsby-source-plausible/gatsby-node.mjs', highlight: [3, [11, 16]] }}
+```js title="plugins/gatsby-source-plausible/gatsby-node.mjs" {3,11-16}
 import fetch from "node-fetch"
 const POST_NODE_TYPE = `PlausibleTopPage`
 const API_ENDPOINT = `https://plausible.io/api/v1/stats/breakdown`
@@ -179,7 +179,7 @@ To authenticate your request to Plausible you set an `Authorization` header in t
 
 All that is left now is to actually create GraphQL nodes from the API response! Use [`createNode`](https://www.gatsbyjs.com/docs/reference/config-files/actions#createNode) to loop over the response and create nodes. In the next step you'll then be able to query `allPlausibleTopPage`. The complete `gatsby-node.mjs` file:
 
-```js {{ title: 'plugins/gatsby-source-plausible/gatsby-node.mjs', highlight: [[18, 31]] }}
+```js title="plugins/gatsby-source-plausible/gatsby-node.mjs" {18-31}
 import fetch from "node-fetch"
 const POST_NODE_TYPE = `PlausibleTopPage`
 const API_ENDPOINT = `https://plausible.io/api/v1/stats/breakdown`
@@ -220,7 +220,7 @@ Each node needs a unique `id` and by using the helper function `createNodeId` yo
 
 Congrats, you wrote a source plugin! Time to test it out and see if it all works. Before you can start the development server, you first need to add your newly created local plugin to `gatsby-config.mjs`. When using `.env` files you'll also need to initialize `dotenv`. You saved the `PLAUSIBLE_API_KEY` earlier in an `.env` file, and the `siteId` is the same thing as the `domain` for `gatsby-plugin-plausible`.
 
-```js {{ title: 'gatsby-config.mjs', highlight: [1, [7, 13]] }}
+```js title="gatsby-config.mjs" {1,7-13}
 require("dotenv").config()
 
 const config = {
@@ -268,7 +268,7 @@ Now it's time for you to interpret the data you see. In this instance the index 
 
 You're nearly there! The last piece of this puzzle is to use the data you get from `allPlausibleTopPage` in your page creation logic inside `gatsby-node.js` of the project. Stop the development server (if you haven't already) and go to your `gatsby-node.js` file at the root of your project (not the `gatsby-node.mjs` of the plugin). Here's an example file that creates pages from Markdown files, you'll need to adapt the workflow to your own file below.
 
-```js {{ title: 'gatsby-node.js' }}
+```js title="gatsby-node.js"
 const templatePath = require.resolve(`./src/templates/blog-post.jsx`)
 
 exports.createPages = async ({ graphql, actions }) => {
@@ -326,7 +326,7 @@ The result will be an array of objects with the `slug` key. For easier compariso
 
 The complete `gatsby-node.js` looks something like this:
 
-```js {{ title: 'gatsby-node.js', highlight: [[15, 23], 27, [30, 31], 38] }}
+```js title="gatsby-node.js" {15-23,27,30-31,38}
 const templatePath = require.resolve(`./src/templates/blog-post.jsx`)
 
 exports.createPages = async ({ graphql, actions }) => {

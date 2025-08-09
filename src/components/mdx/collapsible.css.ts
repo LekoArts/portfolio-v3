@@ -1,4 +1,3 @@
-import { codeBlockWrapper, codeHeaderStyle } from '@components/mdx/code.css'
 import { themesSelectors } from '@styles/atoms.css'
 import { vars } from '@styles/themes/contract.css'
 import { colorPalette } from '@styles/tokens/colors'
@@ -34,28 +33,10 @@ globalStyle(`${detailsStyle} p:first-of-type`, {
 	marginTop: vars.space[4],
 })
 
-globalStyle(`${detailsStyle} p:last-of-type`, {
-	marginBottom: vars.space[0],
-})
-
 globalStyle(`${detailsStyle} a`, {
 	textDecorationColor: linkDecorationVar,
 })
 
-globalStyle(`${detailsStyle} .${codeBlockWrapper}`, {
-	width: vars.space.full,
-})
-
-globalStyle(`${detailsStyle} .${codeBlockWrapper} .${codeHeaderStyle}`, {
-	marginLeft: vars.space[0],
-	marginRight: vars.space[0],
-})
-
-globalStyle(`${detailsStyle} .${codeBlockWrapper} pre`, {
-	marginLeft: `${vars.space[0]} !important`,
-	marginRight: `${vars.space[0]} !important`,
-})
-
-globalStyle(`${detailsStyle} > *:last-child pre:last-of-type`, {
+globalStyle(`${detailsStyle} > *:last-child`, {
 	marginBottom: `${vars.space[0]} !important`,
 })
