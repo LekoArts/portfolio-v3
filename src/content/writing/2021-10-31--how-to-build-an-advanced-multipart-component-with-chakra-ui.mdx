@@ -53,7 +53,7 @@ You've successfully set up the boilerplate for this tutorial! In the next steps 
 
 Go into `src/main.tsx` to wrap the `<App />` with the Chakra UI Provider:
 
-```ts title="src/main.tsx" {3,5,9-11}
+```tsx title="src/main.tsx" {3,5,9-11}
 import React from "react"
 import ReactDOM from "react-dom"
 import { ChakraProvider } from "@chakra-ui/react"
@@ -345,13 +345,24 @@ The file already contains the `variants` and `sizes` defined in the `MultiContai
 
 Let's wire up the custom component into the app so that you can see the changes made to the component style. Edit the `theme`:
 
-```ts title="src/theme.ts" {10}
-// Existing imports
-// ...
+```ts title="src/theme.ts" {3,21} collapse={5-16}
+import { extendTheme, ThemeConfig } from "@chakra-ui/react"
+import Container from "./chakra/container"
 import CustomContainer from "./chakra/custom-container"
 
-// Existing configuration
-// ...
+const breakpoints = {
+  sm: "640px",
+  md: "768px",
+  lg: "1024px",
+  xl: "1280px",
+  "2xl": "1536px",
+}
+
+const config: ThemeConfig = {
+  initialColorMode: "light",
+  useSystemColorMode: true,
+}
+
 const theme = extendTheme({
   components: {
     Container,
@@ -360,6 +371,8 @@ const theme = extendTheme({
   breakpoints,
   config,
 })
+
+export default theme
 ```
 
 Edit the `src/App.tsx` to showcase some different variants & sizes of the `MultiContainer` component:
@@ -511,9 +524,9 @@ const CustomContainer: ComponentStyleConfig = {
 export default CustomContainer
 ```
 
-The `percentageWidths` function inside `utils` doesn't exist yet. Create a new file at `src/chakra/utils.ts`:
+The `percentageWidths` function inside `utils.ts` doesn't exist yet. Create a new file at `src/chakra/utils.ts`:
 
-```ts title="src/chakra/utils.ts" showLineNumbers
+```ts title="src/chakra/utils.ts"
 export function percentageWidths(
   divisions: number,
   part: string,
@@ -568,15 +581,33 @@ The `variants` option of a component is really the most powerful one as you can 
 
 Let's start with the `solid` variant. Goal of it is to make both `outer` and `inner` a solid color by using the colors in Chakra UI's default theme.
 
-Edit the `utils` file:
+Edit the `utils.ts` file:
 
-```ts title="src/chakra/utils.ts"
+```ts title="src/chakra/utils.ts" collapse={8-24}
 import {
   mode,
   transparentize,
   getColor,
   StyleFunctionProps,
 } from "@chakra-ui/theme-tools"
+
+export function percentageWidths(
+  divisions: number,
+  part: string,
+  property = "maxW"
+) {
+  let result: Record<typeof part, any> = {}
+  for (let i = 1; i <= divisions; i++) {
+    const name = i === divisions ? "full" : `${i}/${divisions}`
+    const w = Number((i / divisions) * 100).toFixed(4)
+    result[name] = {
+      [part]: {
+        [property]: `${+w}%`,
+      },
+    }
+  }
+  return result
+}
 
 type AccessibleColor = {
   bg?: string
@@ -615,9 +646,6 @@ export function variantSolid(props: StyleFunctionProps) {
     color: mode(color, `gray.800`)(props),
   }
 }
-
-// Rest of existing functions
-// ...
 ```
 
 <Collapsible summary="Detailed look at variantSolid">
@@ -643,16 +671,50 @@ export function variantSolid(props: StyleFunctionProps) {
 
 With this new function, edit the component style:
 
-```ts title="src/chakra/custom-container.ts"
-// Existing imports
-// ...
-import { variantSolid, percentageWidths } from "./utils"
+```ts title="src/chakra/custom-container.ts" {3} collapse={5-15,20-99}
+import { ComponentStyleConfig } from "@chakra-ui/react"
+import InnerContainerStyles from "./container"
+import { percentageWidths, variantSolid } from "./utils"
 
-// Existing component style
-// ...
-solid: (props) => ({
-  outer: variantSolid(props),
-}),
+const CustomContainer: ComponentStyleConfig = {
+  parts: ["outer", "inner"],
+  baseStyle: {
+    outer: {
+      w: "100%",
+      margin: 0,
+    },
+    inner: {
+      ...InnerContainerStyles.baseStyle,
+    },
+  },
+  variants: {
+    solid: (props) => ({
+      outer: variantSolid(props),
+    }),
+    ghost: (props) => ({
+      outer: {
+        py: [8, 10],
+      },
+      inner: {},
+    }),
+    gradient: (props) => ({
+      outer: {},
+    }),
+  },
+  sizes: {
+    prose: {
+      inner: {
+        maxW: "65ch",
+      },
+    },
+    ...percentageWidths(4, "inner"),
+  },
+  defaultProps: {
+    colorScheme: "gray",
+  },
+}
+
+export default CustomContainer
 ```
 
 Check `http://localhost:3000` to see the second and third section working 🎉
@@ -661,14 +723,71 @@ Check `http://localhost:3000` to see the second and third section working 🎉
 
 Next up is the `ghost` variant. With this the `outer` part has a solid color, the `inner` part has a slightly transparent, lighter color. So you'll be able to clearly see the borders of the `inner` part.
 
-Edit the `utils` file:
+Edit the `utils.ts` file:
 
-```ts title="src/chakra/utils.ts"
-// Existing imports
-// ...
+```ts title="src/chakra/utils.ts" collapse={1-62}
+import {
+  mode,
+  transparentize,
+  getColor,
+  StyleFunctionProps,
+} from "@chakra-ui/theme-tools"
 
-// Rest of existing functions
-// ...
+export function percentageWidths(
+  divisions: number,
+  part: string,
+  property = "maxW"
+) {
+  let result: Record<typeof part, any> = {}
+  for (let i = 1; i <= divisions; i++) {
+    const name = i === divisions ? "full" : `${i}/${divisions}`
+    const w = Number((i / divisions) * 100).toFixed(4)
+    result[name] = {
+      [part]: {
+        [property]: `${+w}%`,
+      },
+    }
+  }
+  return result
+}
+
+type AccessibleColor = {
+  bg?: string
+  color?: string
+}
+
+/** Accessible color overrides for less accessible colors. */
+export const accessibleColorMap: { [key: string]: AccessibleColor } = {
+  yellow: {
+    bg: "yellow.400",
+    color: "black",
+  },
+  cyan: {
+    bg: "cyan.400",
+    color: "black",
+  },
+}
+
+export function variantSolid(props: StyleFunctionProps) {
+  const { colorScheme: c } = props
+
+  if (!c) {
+    return {}
+  }
+
+  if (c === "gray") {
+    return {
+      bg: mode(`gray.100`, `whiteAlpha.200`)(props),
+    }
+  }
+
+  const { bg = `${c}.500`, color = "white" } = accessibleColorMap[c] || {}
+
+  return {
+    bg: mode(bg, `${c}.200`)(props),
+    color: mode(color, `gray.800`)(props),
+  }
+}
 
 export function variantGhost(props: StyleFunctionProps) {
   const { colorScheme: c, theme } = props
@@ -710,9 +829,9 @@ The functionality is split up into two functions as the `inner` part needs some 
 
 To add the new functionality, edit your component style:
 
-```ts title="src/chakra/custom-container.ts"
-// Existing imports
-// ...
+```ts title="src/chakra/custom-container.ts" {3-8} collapse={10-24,32-99}
+import { ComponentStyleConfig } from "@chakra-ui/react"
+import InnerContainerStyles from "./container"
 import {
   variantSolid,
   variantGhost,
@@ -720,29 +839,152 @@ import {
   percentageWidths,
 } from "./utils"
 
-// Existing component style
-// ...
-ghost: (props) => ({
-  outer: {
-    ...variantGhostOuter(props),
-    py: [8, 10],
+const CustomContainer: ComponentStyleConfig = {
+  parts: ["outer", "inner"],
+  baseStyle: {
+    outer: {
+      w: "100%",
+      margin: 0,
+    },
+    inner: {
+      ...InnerContainerStyles.baseStyle,
+    },
   },
-  inner: variantGhost(props),
-}),
+  variants: {
+    solid: (props) => ({
+      outer: variantSolid(props),
+    }),
+    ghost: (props) => ({
+      outer: {
+        ...variantGhostOuter(props),
+        py: [8, 10],
+      },
+      inner: variantGhost(props),
+    }),
+    gradient: (props) => ({
+      outer: {},
+    }),
+  },
+  sizes: {
+    prose: {
+      inner: {
+        maxW: "65ch",
+      },
+    },
+    ...percentageWidths(4, "inner"),
+  },
+  defaultProps: {
+    colorScheme: "gray",
+  },
+}
+
+export default CustomContainer
 ```
 
 ### Gradient
 
 And last, but not least: The `gradient` variant. This one is a bit trickier since the `mode()` helper function unfortunately can't really help here and you'll need to write a bit more verbose code:
 
-Edit the `utils` file:
+Edit the `utils.ts` file:
 
-```ts title="src/chakra/utils.ts"
-// Existing imports
-// ...
+```ts title="src/chakra/utils.ts" collapse={1-97}
+import {
+  mode,
+  transparentize,
+  getColor,
+  StyleFunctionProps,
+} from "@chakra-ui/theme-tools"
 
-// Rest of existing functions
-// ...
+export function percentageWidths(
+  divisions: number,
+  part: string,
+  property = "maxW"
+) {
+  let result: Record<typeof part, any> = {}
+  for (let i = 1; i <= divisions; i++) {
+    const name = i === divisions ? "full" : `${i}/${divisions}`
+    const w = Number((i / divisions) * 100).toFixed(4)
+    result[name] = {
+      [part]: {
+        [property]: `${+w}%`,
+      },
+    }
+  }
+  return result
+}
+
+type AccessibleColor = {
+  bg?: string
+  color?: string
+}
+
+/** Accessible color overrides for less accessible colors. */
+export const accessibleColorMap: { [key: string]: AccessibleColor } = {
+  yellow: {
+    bg: "yellow.400",
+    color: "black",
+  },
+  cyan: {
+    bg: "cyan.400",
+    color: "black",
+  },
+}
+
+export function variantSolid(props: StyleFunctionProps) {
+  const { colorScheme: c } = props
+
+  if (!c) {
+    return {}
+  }
+
+  if (c === "gray") {
+    return {
+      bg: mode(`gray.100`, `whiteAlpha.200`)(props),
+    }
+  }
+
+  const { bg = `${c}.500`, color = "white" } = accessibleColorMap[c] || {}
+
+  return {
+    bg: mode(bg, `${c}.200`)(props),
+    color: mode(color, `gray.800`)(props),
+  }
+}
+
+export function variantGhost(props: StyleFunctionProps) {
+  const { colorScheme: c, theme } = props
+
+  if (c === "gray") {
+    return {
+      color: mode(`inherit`, `whiteAlpha.900`)(props),
+      bg: mode(`gray.100`, `whiteAlpha.200`)(props),
+    }
+  }
+
+  const transparentBgDark = transparentize(`${c}.200`, 0.12)(theme)
+  const transparentBgLight = transparentize(`${c}.50`, 0.8)(theme)
+
+  return {
+    color: mode(`${c}.600`, `${c}.100`)(props),
+    bg: mode(transparentBgLight, transparentBgDark)(props),
+  }
+}
+
+export function variantGhostOuter(props: StyleFunctionProps) {
+  const { colorScheme: c } = props
+
+  if (c === "gray") {
+    return {
+      color: mode(`inherit`, `whiteAlpha.900`)(props),
+      bg: mode(`gray.50`, `whiteAlpha.200`)(props),
+    }
+  }
+
+  return {
+    color: mode(`${c}.600`, `${c}.200`)(props),
+    bg: mode(`${c}.200`, `${c}.900`)(props),
+  }
+}
 
 export function variantGradient(props: StyleFunctionProps) {
   const { colorScheme: c, colorMode, theme } = props
@@ -782,9 +1024,9 @@ The major difference between `variantGradient` and the rest is that instead of r
 
 Maybe some day Chakra UI will add some convenience methods around gradients (with support for `colorMode`). Anyways, edit the final variant:
 
-```ts title="src/chakra/custom-container.ts"
-// Existing imports
-// ...
+```ts title="src/chakra/custom-container.ts" {8} collapse={11-32,36-99}
+import { ComponentStyleConfig } from "@chakra-ui/react"
+import InnerContainerStyles from "./container"
 import {
   variantSolid,
   variantGhost,
@@ -793,11 +1035,46 @@ import {
   variantGradient,
 } from "./utils"
 
-// Existing component style
-// ...
-gradient: (props) => ({
-  outer: variantGradient(props),
-}),
+const CustomContainer: ComponentStyleConfig = {
+  parts: ["outer", "inner"],
+  baseStyle: {
+    outer: {
+      w: "100%",
+      margin: 0,
+    },
+    inner: {
+      ...InnerContainerStyles.baseStyle,
+    },
+  },
+  variants: {
+    solid: (props) => ({
+      outer: variantSolid(props),
+    }),
+    ghost: (props) => ({
+      outer: {
+        ...variantGhostOuter(props),
+        py: [8, 10],
+      },
+      inner: variantGhost(props),
+    }),
+    gradient: (props) => ({
+      outer: variantGradient(props),
+    }),
+  },
+  sizes: {
+    prose: {
+      inner: {
+        maxW: "65ch",
+      },
+    },
+    ...percentageWidths(4, "inner"),
+  },
+  defaultProps: {
+    colorScheme: "gray",
+  },
+}
+
+export default CustomContainer
 ```
 
 And you're done with all options for `MultiContainer` 🎉 You now have a fully functional multipart Chakra UI component that takes the current color mode into account and can be controlled by size and color scheme.

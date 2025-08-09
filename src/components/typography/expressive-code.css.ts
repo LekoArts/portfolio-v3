@@ -60,6 +60,10 @@ globalStyle(`html.${darkThemeClass}`, {
 	},
 })
 
+globalStyle(`${expressiveCodeRootStyle} .expressive-code pre`, {
+	maxHeight: '70vh',
+})
+
 globalStyle(`${expressiveCodeRootStyle} .expressive-code`, {
 	fontSize: 'inherit',
 	lineHeight: 'inherit',

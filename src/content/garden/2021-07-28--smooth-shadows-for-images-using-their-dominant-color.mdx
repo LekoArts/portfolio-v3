@@ -72,8 +72,10 @@ npm install polished
 
 The `generateShadow` function will take a `color` and iterate over the arrays `shadowX`, `shadowY`, and `transparency` internally to create an array of valid `box-shadow` strings. It returns a string that you can use with `box-shadow` in CSS since you can chain them with a comma.
 
-```jsx title="src/pages/index.js"
-// Rest of imports
+```jsx title="src/pages/index.js" collapse={1-3,22-99}
+import React from "react"
+import { graphql } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { rgba } from "polished"
 
 function generateShadow(color) {
@@ -92,7 +94,28 @@ function generateShadow(color) {
   return shadowMap.join(", ")
 }
 
-// Rest of page
+export default function Home({ data }) {
+  return (
+    <main>
+      <h1>Images with Dominant Color Smooth Shadows</h1>
+      <div>
+        {data.images.nodes.map((image) => (
+          <GatsbyImage alt="" image={getImage(image)} />
+        ))}
+      </div>
+    </main>
+  )
+}
+
+export const query = graphql`
+  {
+    images: allImageSharp {
+      nodes {
+        gatsbyImageData(quality: 90, width: 800, placeholder: DOMINANT_COLOR)
+      }
+    }
+  }
+`
 ```
 
 But how does one get the correct values for the three arrays? [@brumm](https://twitter.com/funkensturm) created the awesome website [Smooth Shadow](https://shadows.brumm.af/) which you can use to get these values. For my purposes I used 6 layers and only changed the final transparency to `0.15`.
@@ -125,8 +148,10 @@ But that's a black shadow 😬 Time to make a colourful one. You can translate t
 
 Depending on your values your `generateShadow` function now should look something like this:
 
-```jsx title="src/pages/index.js" {5-7}
-// Rest of imports
+```jsx title="src/pages/index.js" {7-9} collapse={1-3,22-99}
+import React from "react"
+import { graphql } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { rgba } from "polished"
 
 function generateShadow(color) {
@@ -145,7 +170,28 @@ function generateShadow(color) {
   return shadowMap.join(", ")
 }
 
-// Rest of page
+export default function Home({ data }) {
+  return (
+    <main>
+      <h1>Images with Dominant Color Smooth Shadows</h1>
+      <div>
+        {data.images.nodes.map((image) => (
+          <GatsbyImage alt="" image={getImage(image)} />
+        ))}
+      </div>
+    </main>
+  )
+}
+
+export const query = graphql`
+  {
+    images: allImageSharp {
+      nodes {
+        gatsbyImageData(quality: 90, width: 800, placeholder: DOMINANT_COLOR)
+      }
+    }
+  }
+`
 ```
 
 ## Apply shadows to images

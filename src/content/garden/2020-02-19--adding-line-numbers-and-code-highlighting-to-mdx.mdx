@@ -144,20 +144,23 @@ export default rehypeMetaAsAttributes
 
 In your `gatsby-config.mjs`, import the newly created `rehype-meta-as-attributes` and use it inside `mdxOptions.rehypePlugins`:
 
-```js title="gatsby-config.mjs"
+```js title="gatsby-config.mjs" {1, 5-12}
 import rehypeMetaAsAttributes from "./rehype-meta-as-attributes.mjs"
 
-// Rest of config...
-
-{
-  resolve: `gatsby-plugin-mdx`,
-  options: {
-    // Rest of options...
-    mdxOptions: {
-      rehypePlugins: [rehypeMetaAsAttributes],
+const config = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        mdxOptions: {
+          rehypePlugins: [rehypeMetaAsAttributes],
+        },
+      },
     },
-  },
-},
+  ],
+}
+
+export default config
 ```
 
 You **must** use [ESM in Gatsby](https://www.gatsbyjs.com/docs/how-to/custom-configuration/es-modules/) for this to work.
