@@ -6,3 +6,4 @@
 2023-11-04--tsup-excluding-files-from-the-build
 2022-11-10--writing-performant-css-with-vanilla-extract
 2025-08-16--tsdown-excluding-files-from-the-build
+2025-08-16--replacing-ls-with-eza
