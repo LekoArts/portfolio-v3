@@ -21,7 +21,7 @@ tsup src
 
 This would build all files inside the `src` directory. In a configuration file it would look like this:
 
-```ts
+```ts title="tsup.config.ts"
 import { defineConfig } from "tsup"
 
 export default defineConfig({
@@ -33,7 +33,7 @@ tsup uses [globby](https://www.npmjs.com/package/globby) under the hood for its 
 
 To exclude files inside `__tests__` or `<filename>.test.<ext>` files, you can modify the `entry` to this:
 
-```ts {4}
+```ts title="tsup.config.ts" ins='"!src/**/__tests__/**"' ins='"!src/**/*.test.*"'
 import { defineConfig } from "tsup"
 
 export default defineConfig({
@@ -42,3 +42,8 @@ export default defineConfig({
 ```
 
 Feel free to use a less verbose configuration (since you can combine this logic into one pattern) and test it with e.g. [globster.xyz](https://globster.xyz/).
+
+> [!NOTE]
+> **Looking for tsdown?**
+>
+> Need a tsdown version of this? Read [tsdown: Excluding Files From the Build](/garden/tsdown-excluding-files-from-the-build/).
