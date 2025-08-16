@@ -49,7 +49,7 @@ Give the newly created webhook a name and select **"Copy Webhook URL"** to copy 
 
 The URL will be in this format:
 
-```text
+```text "12345/foobar123"
 https://discord.com/api/webhooks/12345/foobar123
 ```
 
@@ -80,7 +80,7 @@ If you want to send notifications to a [Discord thread](https://support.discord.
 
    It will be in the following format:
 
-   ```shell
+   ```shell "456"
    https://discord.com/channels/123/456
    ```
 
@@ -88,7 +88,6 @@ If you want to send notifications to a [Discord thread](https://support.discord.
 
 1. Adjust the URL you're passing to the `send-http-json-urls` flag by adding `?thread_id=<your-thread-id>` to the end of it:
 
-   ```diff
-   - https://duplicati-discord-cloudflare-worker.your-name.workers.dev/12345/foobar123
-   + https://duplicati-discord-cloudflare-worker.your-name.workers.dev/12345/foobar123?thread_id=456
+   ```text ins="?thread_id=456"
+   https://duplicati-discord-cloudflare-worker.your-name.workers.dev/12345/foobar123?thread_id=456
    ```
