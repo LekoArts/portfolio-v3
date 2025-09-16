@@ -54,7 +54,8 @@ export const gardenItemStyle = style({
 	'selectors': {
 		[themesSelectors.dark]: {
 			vars: {
-				'--icon-bg': colorPalette.blueGray[700],
+				'--icon-bg': colorPalette.blueGray[800],
+				'--icon-fg': colorPalette.blueGray[100],
 			},
 		},
 		[pseudoSelectors.hover]: {

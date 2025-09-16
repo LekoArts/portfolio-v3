@@ -1,7 +1,6 @@
 export const TAGS_CHOICES = [
 	'CLI',
 	'Discord',
-	'elitepvpers',
 	'Freebie',
 	'Gatsby',
 	'General',
@@ -19,7 +18,6 @@ export const TAGS_CHOICES = [
 export const ICON_CHOICES = [
 	'cli',
 	'discord',
-	'elitepvpers',
 	'gatsby',
 	'general',
 	'javascript',
