@@ -1,12 +1,11 @@
 ---
-import type { DataEntryMap } from 'astro:content'
 import { withLightboxButtonStyle } from './with-lightbox.css'
 import type { HTMLAttributes } from 'astro/types'
 
-type ImageUrls = DataEntryMap['photos'][string]['data']['photos'][number]['imageUrls']
+type TODO = any
 
 interface Props extends HTMLAttributes<'button'> {
-	imageUrls: ImageUrls
+	imageUrls: TODO
 	selector: string
 	'data-index': number
 }

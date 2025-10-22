@@ -14,8 +14,6 @@
   items:
     - name: Photos
       link: /photos/
-    - name: Design
-      link: /photos/?tags=Design
     - name: 3D Art
       link: /photos/?tags=3D
 - name: About

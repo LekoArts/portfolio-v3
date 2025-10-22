@@ -31,7 +31,6 @@
 		"@codesandbox/sandpack-themes": "^2.0.21",
 		"@expressive-code/plugin-collapsible-sections": "^0.41.3",
 		"@expressive-code/plugin-line-numbers": "^0.41.3",
-		"@lekoarts/flickr-loader": "^1.2.5",
 		"@lekoarts/remark-sandpack": "^1.0.0",
 		"@nanostores/persistent": "^1.2.0",
 		"@nanostores/react": "^1.0.0",

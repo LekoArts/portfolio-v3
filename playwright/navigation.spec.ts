@@ -56,7 +56,6 @@ test.describe('Navigation', () => {
 		await expect(page).toHaveURL('/community/kitchen-sink/')
 	})
 	test('art pages', async ({ page }) => {
-		await page.goto('/photos/?tags=Design')
 		await page.goto('/photos/?tags=3D')
 		await page.goto('/photos/')
 	})

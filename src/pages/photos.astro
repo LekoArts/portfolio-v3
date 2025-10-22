@@ -12,18 +12,9 @@ import Box from '@components/primitives/box.astro'
 import SvgIcon from '@components/primitives/svg-icon.astro'
 import Button from '@components/primitives/button/base.astro'
 import TagGroup from '@components/blocks/tag-group.astro'
-import FlickrImage from '@components/images/flickr-image.astro'
 import Lightbox from '@components/images/lightbox.astro'
 import { getCollection } from 'astro:content'
 import WithLightbox from '@components/images/with-lightbox.astro'
-import { getSortedPhotosets } from '@utils/collection'
-
-const photosets = getSortedPhotosets(await getCollection('photos'))
-
-const photosetTitles = photosets.map((photoset) => photoset.data.title).sort((a, b) => a.localeCompare(b))
-const photos = photosets.flatMap((photoset) =>
-	photoset.data.photos.map((photo) => ({ ...photo, photoset_title: photoset.data.title })),
-)
 ---
 
 <Base>
@@ -67,25 +58,11 @@ const photos = photosets.flatMap((photoset) =>
 				</Box>
 			</div>
 			<Spacer axis="vertical" size={6} />
-			<TagGroup id="photos" items={photosetTitles} />
+			<TagGroup id="photos" items={[]} />
 		</Container>
 		<Spacer size={20} axis="vertical" />
 		<Lightbox selector="lekoarts-lightbox">
-			<div id="photos-img-wrapper">
-				{
-					photos.map((photo, index) => (
-						<WithLightbox
-							class="tag-group-item"
-							data-tags={photo.photoset_title}
-							data-index={index}
-							imageUrls={photo.imageUrls}
-							selector="lekoarts-lightbox"
-						>
-							<FlickrImage alt={photo.description} imageUrls={photo.imageUrls} />
-						</WithLightbox>
-					))
-				}
-			</div>
+			<div id="photos-img-wrapper">TODO</div>
 		</Lightbox>
 		<Spacer axis="vertical" size={[20, null, null, 24]} />
 	</SkipNavContent>

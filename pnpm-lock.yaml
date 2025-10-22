@@ -32,9 +32,6 @@ importers:
       '@expressive-code/plugin-line-numbers':
         specifier: ^0.41.3
         version: 0.41.3
-      '@lekoarts/flickr-loader':
-        specifier: ^1.2.5
-        version: 1.2.5(astro@5.14.8(@types/node@24.9.1)(jiti@2.4.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1))
       '@lekoarts/remark-sandpack':
         specifier: ^1.0.0
         version: 1.0.0
@@ -1237,12 +1234,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
-
-  '@lekoarts/flickr-loader@1.2.5':
-    resolution: {integrity: sha512-2yyfo/uAE6U8NHiZsZAdq87hO3YZ+vXLiQkyqXwiDjZRupyIx+850S81sb7I5qGA69T4kFUP9+Rg7IPHika6yQ==}
-    engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0}
-    peerDependencies:
-      astro: ^5.0.0
 
   '@lekoarts/remark-sandpack@1.0.0':
     resolution: {integrity: sha512-GIQtJcDt8Jfp0XDvEya96k/Vj68RFx9G9r2MxZzPLLgGRzco9/8eHu8/m8nBSPa9b3BoP/5rajdmhj5ZcqjdeQ==}
@@ -3036,10 +3027,6 @@ packages:
   kleur@4.1.5:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
-
-  ky@1.8.1:
-    resolution: {integrity: sha512-7Bp3TpsE+L+TARSnnDpk3xg8Idi8RwSLdj6CMbNWoOARIrGrbuLGusV0dYwbZOm4bB3jHNxSw8Wk/ByDqJEnDw==}
-    engines: {node: '>=18'}
 
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
@@ -5445,11 +5432,6 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@lekoarts/flickr-loader@1.2.5(astro@5.14.8(@types/node@24.9.1)(jiti@2.4.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1))':
-    dependencies:
-      astro: 5.14.8(@types/node@24.9.1)(jiti@2.4.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1)
-      ky: 1.8.1
-
   '@lekoarts/remark-sandpack@1.0.0':
     dependencies:
       estree-util-value-to-estree: 3.4.0
@@ -7575,8 +7557,6 @@ snapshots:
   kleur@3.0.3: {}
 
   kleur@4.1.5: {}
-
-  ky@1.8.1: {}
 
   levn@0.4.1:
     dependencies:
