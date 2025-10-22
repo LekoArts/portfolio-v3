@@ -15,6 +15,8 @@ import { REDIRECTS } from './src/constants/redirects.js'
 import { rehypeAutolinkHeadingsOptions } from './src/utils/rehype'
 import { codemodAlerts } from './src/utils/remark'
 
+const IS_PLAYWRIGHT = Boolean(process.env.IS_PLAYWRIGHT)
+
 // https://astro.build/config
 export default defineConfig({
 	output: 'static',
@@ -46,10 +48,12 @@ export default defineConfig({
 		rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions]],
 		remarkPlugins: [[remarkSandpack, { componentName: ['Playground'] }], codemodAlerts],
 	},
-	adapter: netlify({
-		devFeatures: {
-			images: false,
-			environmentVariables: false,
-		},
-	}),
+	adapter: IS_PLAYWRIGHT
+		? undefined
+		: netlify({
+				devFeatures: {
+					images: false,
+					environmentVariables: false,
+				},
+			}),
 })
