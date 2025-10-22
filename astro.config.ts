@@ -46,5 +46,10 @@ export default defineConfig({
 		rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions]],
 		remarkPlugins: [[remarkSandpack, { componentName: ['Playground'] }], codemodAlerts],
 	},
-	adapter: netlify(),
+	adapter: netlify({
+		devFeatures: {
+			images: false,
+			environmentVariables: false,
+		},
+	}),
 })
