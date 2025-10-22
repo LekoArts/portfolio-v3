@@ -52,7 +52,7 @@ export interface CardProps {
 }
 
 export type ArrayElement<ArrayType extends readonly unknown[] | undefined>
-  = ArrayType extends readonly (infer ElementType)[] ? ElementType : never
+	= ArrayType extends readonly (infer ElementType)[] ? ElementType : never
 
 export type Tag = typeof TAGS_CHOICES[number] | (string & {})
 export type Category = (typeof CATEGORY_CHOICES)[number]

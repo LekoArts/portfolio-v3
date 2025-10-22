@@ -31,7 +31,7 @@ describe('transparentizeDict', () => {
 		expect(transparentizeDict('black', 0.5)(colorPalette)).toBe('oklch(0 0 none / 0.5)')
 	})
 	it('should get nested color property', () => {
-		expect(transparentizeDict('purple.400', 0.5)(colorPalette)).toBe('oklch(0.7216853850869135 0.1766883997516293 305.5037586794067 / 0.5)')
+		expect(transparentizeDict('purple.400', 0.5)(colorPalette)).toBe('oklch(0.7216853890638156 0.1766884240095755 305.5037550006845 / 0.5)')
 	})
 	it('should support OKLCH colors', () => {
 		expect(transparentizeDict('purple.500', 0.5)(colorPalette)).toBe('oklch(0.627 0.265 303.9 / 0.5)')
@@ -46,7 +46,7 @@ describe('transparentize', () => {
 		expect(transparentize('#000', 0.5)).toBe('oklch(0 0 none / 0.5)')
 	})
 	it('should support hex colors', () => {
-		expect(transparentize('#90a963', 0.5)).toBe('oklch(0.6989046526038842 0.09908254305424133 124.93454018901396 / 0.5)')
+		expect(transparentize('#90a963', 0.5)).toBe('oklch(0.6989046573273603 0.09908252237822639 124.93454996269939 / 0.5)')
 	})
 	it('should support OKLCH colors', () => {
 		expect(transparentize('oklch(100% 0 0)', 0.5)).toBe('oklch(1 0 0 / 0.5)')
