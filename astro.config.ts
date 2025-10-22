@@ -1,4 +1,5 @@
 import mdx from '@astrojs/mdx'
+import netlify from '@astrojs/netlify'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import remarkSandpack from '@lekoarts/remark-sandpack'
@@ -45,4 +46,5 @@ export default defineConfig({
 		rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions]],
 		remarkPlugins: [[remarkSandpack, { componentName: ['Playground'] }], codemodAlerts],
 	},
+	adapter: netlify(),
 })

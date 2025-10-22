@@ -1,25 +1,17 @@
 ---
+import type { ImageMetadata } from 'astro'
 import { withLightboxButtonStyle } from './with-lightbox.css'
 import type { HTMLAttributes } from 'astro/types'
 
-type TODO = any
-
 interface Props extends HTMLAttributes<'button'> {
-	imageUrls: TODO
+	meta: ImageMetadata
 	selector: string
 	'data-index': number
 }
 
-const { imageUrls, selector, class: className, ...rest } = Astro.props
+const { meta, selector, class: className, ...rest } = Astro.props
 
-const urls = imageUrls['1600px'] ?? imageUrls['1024px']
-
-if (!urls) {
-	throw new Error('No image URLs provided to with-lightbox component.')
-}
-
-const src = urls.url
-const { width: maxWidth } = urls
+const { src, width: maxWidth } = meta
 ---
 
 <button

@@ -27,11 +27,11 @@ import SeriesCallout from '@components/writing/series-callout.astro'
 export async function getStaticPaths() {
 	const entries = await getCollection('garden')
 	return entries.map((entry) => {
-		const slug = slugify(entry.id, 'garden')
+		const slug = slugify(entry.id)
 		const postsInSeries = getSeriesPosts(entries, entry.data.series?.id)
 
 		return {
-			params: { garden: slug },
+			params: { slug },
 			props: { entry, slug, postsInSeries },
 		}
 	})
@@ -41,6 +41,7 @@ const { entry, slug, postsInSeries } = Astro.props
 const { data: garden } = entry
 const { Content } = await render(entry)
 
+const fullRelativeSlug = `/garden${slug}`
 const ogURL = new URL(SITE.gardenOgEdge, SITE.url)
 ogURL.searchParams.set(`title`, garden.title)
 ogURL.searchParams.set(`lastUpdated`, defaultDateFormat(garden.lastUpdated))
@@ -68,7 +69,7 @@ const isPartOfSeries = !!(garden.series?.id && postsInSeries.length > 1)
 					post: {
 						title: garden.title,
 						description: garden.description,
-						slug,
+						slug: fullRelativeSlug,
 						image: ogImage,
 						date: isoDateFormat(garden.date),
 						lastUpdated: isoDateFormat(garden.lastUpdated),
@@ -126,8 +127,8 @@ const isPartOfSeries = !!(garden.series?.id && postsInSeries.length > 1)
 								<Link href={getGardenEditLink(entry.id)}>Edit on GitHub</Link> -{' '}
 							</>
 						)
-					}Share on <Link href={getBlueskyShareLink(`${SITE.url}${slug}`, garden.title)}>Bluesky</Link> / <Link
-						href={getMastodonShareLink(`${SITE.url}${slug}`, garden.title)}>Mastodon</Link
+					}Share on <Link href={getBlueskyShareLink(`${SITE.url}${fullRelativeSlug}`, garden.title)}>Bluesky</Link> / <Link
+						href={getMastodonShareLink(`${SITE.url}${fullRelativeSlug}`, garden.title)}>Mastodon</Link
 					>
 				</Box>
 			</Box>
