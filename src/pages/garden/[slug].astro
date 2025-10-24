@@ -1,0 +1,144 @@
+---
+import { slugify } from '@utils/slugify'
+import { getCollection, render } from 'astro:content'
+import Base from '@layouts/base.astro'
+import Seo from '@components/seo.astro'
+import { SITE } from '@constants/meta'
+import { defaultDateFormat, isoDateFormat, yearDateFormat } from '@utils/date'
+import { getReadingTime } from '@utils/reading-time'
+import { article } from '@constants/json-ld'
+import { components } from '@components/mdx'
+import SkipNavContent from '@components/a11y/skip-nav-content.astro'
+import Container from '@components/primitives/container.astro'
+import Heading from '@components/typography/heading.astro'
+import Spacer from '@components/primitives/spacer.astro'
+import Box from '@components/primitives/box.astro'
+import Text from '@components/typography/text.astro'
+import Tag from '@components/primitives/tag.astro'
+import Link from '@components/primitives/link.astro'
+import Prose from '@components/typography/prose.astro'
+import { gardenCtaStyle, metaStyle, plantIconStyle } from './_garden_item.css'
+import { getGardenEditLink, getMastodonShareLink, getBlueskyShareLink } from '@utils/sharing'
+import SvgIcon from '@components/primitives/svg-icon.astro'
+import FormattedDate from '@components/primitives/formatted-date.astro'
+import { getSeriesPosts } from '@utils/collection'
+import SeriesCallout from '@components/writing/series-callout.astro'
+
+export async function getStaticPaths() {
+	const entries = await getCollection('garden')
+	return entries.map((entry) => {
+		const slug = slugify(entry.id)
+		const postsInSeries = getSeriesPosts(entries, entry.data.series?.id)
+
+		return {
+			params: { slug },
+			props: { entry, slug, postsInSeries },
+		}
+	})
+}
+
+const { entry, slug, postsInSeries } = Astro.props
+const { data: garden } = entry
+const { Content } = await render(entry)
+
+const fullRelativeSlug = `/garden${slug}`
+const ogURL = new URL(SITE.gardenOgEdge, SITE.url)
+ogURL.searchParams.set(`title`, garden.title)
+ogURL.searchParams.set(`lastUpdated`, defaultDateFormat(garden.lastUpdated))
+ogURL.searchParams.set(`tags`, garden.tags.join(`,`))
+const ogImage = `${ogURL.pathname}${ogURL.search}`
+
+const timeToRead = getReadingTime(entry.body ?? '')
+const isPartOfSeries = !!(garden.series?.id && postsInSeries.length > 1)
+---
+
+<Base>
+	<Seo slot="seo" forceTitle={garden.title} description={garden.description} image={ogImage}>
+		<meta name="twitter:label1" value="Time To Read" />
+		<meta name="twitter:data1" value={timeToRead} />
+		<meta name="twitter:label2" value="Tags" />
+		<meta name="twitter:data2" value={garden.tags.join(`, `)} />
+		<meta name="article:published_time" content={isoDateFormat(garden.date)} />
+		<meta name="article:modified_time" content={isoDateFormat(garden.lastUpdated)} />
+		<script
+			type="application/ld+json"
+			is:inline
+			set:html={JSON.stringify(
+				article({
+					isGarden: true,
+					post: {
+						title: garden.title,
+						description: garden.description,
+						slug: fullRelativeSlug,
+						image: ogImage,
+						date: isoDateFormat(garden.date),
+						lastUpdated: isoDateFormat(garden.lastUpdated),
+						year: yearDateFormat(garden.date),
+					},
+					category: {
+						name: `Digital Garden`,
+						slug: `/garden/`,
+					},
+				}),
+			)}
+		/>
+	</Seo>
+	<Container variant="proseRoot">
+		<SkipNavContent>
+			<Heading as="h1">{garden.title}</Heading>
+			<Spacer size={6} axis="vertical" />
+			<Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
+			<Spacer size={4} axis="vertical" />
+			<Box class={metaStyle} fontSize={[`sm`, `md`, null, null, `lg`]}>
+				<Text>
+					Created: <FormattedDate date={garden.date} /> – Last Updated: <FormattedDate date={garden.lastUpdated} />
+				</Text>
+				<Text>Tags: {garden.tags.map((tag) => tag).join(`, `)}</Text>
+				<Tag colorScheme="green" style={{ justifySelf: `flex-start` }}>
+					<Link href="/garden/">Digital Garden</Link>
+				</Tag>
+			</Box>
+			<Spacer size={isPartOfSeries ? 4 : 12} axis="vertical" />
+			<Prose>
+				{
+					isPartOfSeries ? (
+						<>
+							<SeriesCallout id={garden!.series!.id} currentPart={garden!.series!.part} postsInSeries={postsInSeries} />
+							<Spacer size={8} axis="vertical" />
+						</>
+					) : null
+				}
+				<Content components={components} />
+			</Prose>
+			<Spacer size={12} axis="vertical" />
+			<Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
+			<Spacer size={6} axis="vertical" />
+			<Box
+				flexDirection={[`column`, `row`]}
+				display="flex"
+				justifyContent={[`flex-start`, `space-between`]}
+				alignItems={[`flex-start`, `center`]}
+				gap={5}
+			>
+				<Box fontSize={[`md`, null, null, `lg`]} fontWeight="medium">
+					{
+						SITE.isPublic && (
+							<>
+								<Link href={getGardenEditLink(entry.id)}>Edit on GitHub</Link> -{' '}
+							</>
+						)
+					}Share on <Link href={getBlueskyShareLink(`${SITE.url}${fullRelativeSlug}`, garden.title)}>Bluesky</Link> / <Link
+						href={getMastodonShareLink(`${SITE.url}${fullRelativeSlug}`, garden.title)}>Mastodon</Link
+					>
+				</Box>
+			</Box>
+			<Spacer size={[12, null, 16]} axis="vertical" />
+			<Box borderRadius="xl" p={6} display="flex" flexDirection="row" alignItems="center" class={gardenCtaStyle}>
+				<SvgIcon id="lightbulb" class={plantIconStyle} />
+				<Box>
+					Want to learn more? <Link href="/garden/" __color="white">Browse my Digital Garden</Link>
+				</Box>
+			</Box>
+		</SkipNavContent>
+	</Container>
+</Base>

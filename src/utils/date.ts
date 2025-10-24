@@ -18,7 +18,3 @@ export function yearDateFormat(date: Date): string {
 export function isoDateFormat(date: Date): string {
 	return date.toISOString()
 }
-
-/**
- * Sort
- */

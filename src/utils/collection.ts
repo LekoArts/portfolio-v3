@@ -38,13 +38,6 @@ export function getSortedGarden(data: Array<CollectionEntry<'garden'>>) {
 	return data.sort((a, b) => new Date(b.data.lastUpdated).getTime() - new Date(a.data.lastUpdated).getTime())
 }
 
-/**
- * Sort photosets by their creation date DESC
- */
-export function getSortedPhotosets(data: Array<CollectionEntry<'photos'>>) {
-	return data.sort((a, b) => new Date(b.data.date_create!).getTime() - new Date(a.data.date_create!).getTime())
-}
-
 export interface SeriesPartItem {
 	slug: string
 	title: string

@@ -77,7 +77,7 @@ const { selector } = Astro.props
 				const dialogImg = dialog.querySelector('img') as HTMLImageElement
 				dialogImg.src = src
 				dialogImg.sizes = sizes
-				dialogImg.alt = thumbnailImg.alt
+				dialogImg.alt = ''
 				dialogImg.srcset = thumbnailImg.srcset
 				dialogImg.dataset.index = index
 			}

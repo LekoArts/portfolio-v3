@@ -1,4 +1,5 @@
 import mdx from '@astrojs/mdx'
+import netlify from '@astrojs/netlify'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import remarkSandpack from '@lekoarts/remark-sandpack'
@@ -13,6 +14,8 @@ import { SITE } from './src/constants/meta.js'
 import { REDIRECTS } from './src/constants/redirects.js'
 import { rehypeAutolinkHeadingsOptions } from './src/utils/rehype'
 import { codemodAlerts } from './src/utils/remark'
+
+const IS_PLAYWRIGHT = Boolean(process.env.IS_PLAYWRIGHT)
 
 // https://astro.build/config
 export default defineConfig({
@@ -37,7 +40,6 @@ export default defineConfig({
 		schema: {
 			IS_PLAYWRIGHT: envField.boolean({ access: 'public', context: 'server', default: false, optional: true }),
 			GITHUB_TOKEN: envField.string({ access: 'secret', context: 'server' }),
-			FLICKR_API_KEY: envField.string({ access: 'secret', context: 'server' }),
 		},
 	},
 	markdown: {
@@ -46,4 +48,12 @@ export default defineConfig({
 		rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions]],
 		remarkPlugins: [[remarkSandpack, { componentName: ['Playground'] }], codemodAlerts],
 	},
+	adapter: IS_PLAYWRIGHT
+		? undefined
+		: netlify({
+				devFeatures: {
+					images: false,
+					environmentVariables: false,
+				},
+			}),
 })

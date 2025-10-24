@@ -15,6 +15,7 @@ export const lightboxStyle = style({
 	background: 'none',
 	height: vars.space.full,
 	width: vars.space.full,
+	outline: 'none',
 	selectors: {
 		'&[open]': {
 			animation: `${show} 0.25s ease-in-out alternate`,
