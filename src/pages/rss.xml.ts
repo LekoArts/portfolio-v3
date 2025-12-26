@@ -19,15 +19,7 @@ export const GET: APIRoute = async () => {
 		pubDate: entry.data.date,
 	} satisfies RSSFeedItem))
 
-	const garden = (await getCollection('garden')).map(entry => ({
-		title: entry.data.title,
-		description: entry.data.description,
-		content: generateContent(entry.data.description, normalize(entry.data.slug)),
-		link: normalize(entry.data.slug),
-		pubDate: entry.data.date,
-	} satisfies RSSFeedItem))
-
-	const items = [...writing, ...garden].sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
+	const items = writing.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
 
 	return rss({
 		title: SITE.titleDefault,

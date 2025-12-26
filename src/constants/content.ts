@@ -6,6 +6,8 @@ export const TOPICS_CHOICES = [
 	'Self-Hosting', // Unraid, Discord
 	'General', // General
 	'AI', // AI, Mastra, LLMs
+	'Outdoors', // Hiking, Outdoors
+	'Travel', // Vacation, Travel
 ] as const
 
 export const ICON_CHOICES = [
@@ -16,6 +18,8 @@ export const ICON_CHOICES = [
 	'self-hosting',
 	'general',
 	'ai',
+	'outdoors',
+	'travel',
 ] as const
 
 export const TYPE_CHOICES = ['essay', 'tutorial', 'note'] as const

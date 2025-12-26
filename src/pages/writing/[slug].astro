@@ -19,7 +19,7 @@ import Seo from '@components/seo.astro'
 import { article } from '@constants/json-ld'
 import Tag from '@components/primitives/tag.astro'
 import Toc from '@components/writing/toc.astro'
-import { sidebarWrapperStyle } from './_styles/_writing.css'
+import { sidebarWrapperStyle } from './_writing.css'
 import FormattedDate from '@components/primitives/formatted-date.astro'
 import { normalize } from '@utils/slash'
 
@@ -31,7 +31,7 @@ export async function getStaticPaths() {
 
 		return {
 			params: {
-				writing: slug,
+				slug,
 			},
 			props: {
 				entry,
