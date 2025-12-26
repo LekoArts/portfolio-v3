@@ -14,7 +14,7 @@ const writing = defineCollection({
 		type: z.enum(TYPE_CHOICES),
 		topics: z.array(z.enum(TOPICS_CHOICES)),
 		image: z.string().optional(),
-		published: z.boolean(),
+		published: z.boolean().optional().default(true),
 		icon: z.enum(ICON_CHOICES).optional(),
 		series: z.object({
 			id: z.string(),

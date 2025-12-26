@@ -6,7 +6,7 @@ import SkipNavContent from '@components/a11y/skip-nav-content.astro'
 import Base from '@layouts/base.astro'
 import Seo from '@components/seo.astro'
 import { HOMEPAGE } from '@constants/json-ld'
-import { filterPublished, getSortedGarden, getSortedWriting } from '@utils/collection'
+import { filterPublished, filterBySlugs, getSortedWriting } from '@utils/collection'
 import FullWidthContainer from '@components/blocks/full-width-container.astro'
 import { paddingResponsiveArrays } from '@styles/tokens/space'
 import Heading from '@components/typography/heading.astro'
@@ -92,8 +92,14 @@ const {
 	data: { primary, secondary },
 } = githubResponse
 
-const writing = getSortedWriting(await getCollection('writing', filterPublished)).slice(0, 4)
-const garden = getSortedGarden(await getCollection('garden')).slice(0, 6)
+const writing = getSortedWriting(await getCollection('writing', filterPublished)).slice(0, 7)
+const featured = await getCollection('writing', (entry) =>
+	filterBySlugs(entry, [
+		'writing-performant-css-with-vanilla-extract',
+		'my-first-unraid-server',
+		'fuzzy-search-for-your-git-repository',
+	]),
+)
 
 const [firstPost, ...otherPosts] = writing
 ---
@@ -143,12 +149,11 @@ const [firstPost, ...otherPosts] = writing
 				</Box>
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
 					<Box display="flex" justifyContent="space-between" alignItems="center">
-						<Badge variant="light">More Posts</Badge>
-						<SecondaryButton aria-label="Read all long-form posts" href="/writing/">Read all</SecondaryButton>
+						<Badge variant="light">Featured</Badge>
 					</Box>
 					<Box class={cardsGridStyle}>
 						{
-							otherPosts.map((post) => (
+							featured.map((post) => (
 								<Card slug={normalize(post.data.slug)} title={post.data.title} variant="title-only" />
 							))
 						}
@@ -156,18 +161,13 @@ const [firstPost, ...otherPosts] = writing
 				</Box>
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
 					<Box display="flex" justifyContent="space-between" alignItems="center">
-						<Badge variant="light">Digital Garden</Badge>
-						<SecondaryButton aria-label="Read all Digital Garden posts" href="/garden/">Read all</SecondaryButton>
+						<Badge variant="light">More Posts</Badge>
+						<SecondaryButton aria-label="Read all long-form posts" href="/writing/">Read all</SecondaryButton>
 					</Box>
 					<Box class={cardsGridStyle}>
 						{
-							garden.map((post) => (
-								<Card
-									slug={normalize(post.data.slug)}
-									title={post.data.title}
-									icon={post.data.icon}
-									variant="title-only"
-								/>
+							otherPosts.map((post) => (
+								<Card slug={normalize(post.data.slug)} title={post.data.title} variant="title-only" />
 							))
 						}
 					</Box>

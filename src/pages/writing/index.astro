@@ -38,6 +38,7 @@ const posts = getSortedWriting(await getCollection('writing', filterPublished))
 								title={post.title}
 								subtitle={post.subtitle}
 								description={post.description}
+								icon={post.icon}
 							/>
 						))
 					}

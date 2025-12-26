@@ -1,4 +1,3 @@
-2017-10-23--elitepvpers-wallpaper-2017
 2021-04-05--what-is-a-digital-garden
 2022-02-10--replacing-ls-with-exa
 2022-11-24--how-to-write-theme-aware-styles-with-vanilla-extract

@@ -1,8 +1,6 @@
 - name: Writing
   link: /writing/
   items:
-    - name: Digital Garden
-      link: /garden/
     - name: Tutorials
       link: /tutorials/
     - name: React

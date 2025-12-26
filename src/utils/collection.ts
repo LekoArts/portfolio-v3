@@ -15,17 +15,20 @@ export function filterPublished(entry: CollectionEntry<'writing'>) {
 }
 
 /**
+ * Filter by slugs
+ */
+export function filterBySlugs(
+	entry: CollectionEntry<'writing'>,
+	slugList: string[],
+) {
+	return slugList.includes(entry.data.slug)
+}
+
+/**
  * Sort published writing entries DESC by date
  */
 export function getSortedWriting(data: Array<CollectionEntry<'writing'>>) {
 	return data.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
-}
-
-/**
- * Sort garden entries DESC by date
- */
-export function getSortedGarden(data: Array<CollectionEntry<'garden'>>) {
-	return data.sort((a, b) => new Date(b.data.lastUpdated).getTime() - new Date(a.data.lastUpdated).getTime())
 }
 
 export interface SeriesPartItem {
@@ -35,13 +38,13 @@ export interface SeriesPartItem {
 }
 
 /**
- * Find all posts in a series. The series object can be defined on the frontmatter field of a garden post. It'll have an id and a part number.
+ * Find all posts in a series. The series object can be defined on the frontmatter field of a post. It'll have an id and a part number.
  *
  * Only return the slug and title of the individual posts in the series.
  *
  * The result is sorted by the part number.
  */
-export function getSeriesPosts(data: Array<CollectionEntry<'garden'>>, seriesId: string | undefined) {
+export function getSeriesPosts(data: Array<CollectionEntry<'writing'>>, seriesId: string | undefined) {
 	if (!seriesId) {
 		return []
 	}
