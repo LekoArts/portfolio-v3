@@ -33,16 +33,6 @@ const garden = defineCollection({
 	}),
 })
 
-const categories = defineCollection({
-	loader: glob({ pattern: '**\/[^_]*.yaml', base: './src/content/categories' }),
-	schema: ({ image }) => z.object({
-		name: z.string(),
-		description: z.string(),
-		gradient: z.string(),
-		image: image(),
-	}),
-})
-
 const navigations = defineCollection({
 	loader: glob({ pattern: '**\/[^_]*.yaml', base: './src/content/navigations' }),
 	schema: z.array(z.object({
@@ -57,7 +47,6 @@ const navigations = defineCollection({
 })
 
 export const collections = {
-	categories,
 	navigations,
 	garden,
 	writing,

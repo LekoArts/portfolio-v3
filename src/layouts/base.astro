@@ -13,12 +13,6 @@ const plausibleProps = {
 	src: '/js/script.tagged-events.js',
 	'data-domain': SITE.dataDomain,
 }
-
-interface Props {
-	subnavigation?: boolean
-}
-
-const { subnavigation = false } = Astro.props
 ---
 
 <html lang="en-US">
@@ -35,9 +29,7 @@ const { subnavigation = false } = Astro.props
 	</head>
 	<body>
 		<SkipNavLink />
-		<Header subnavigation={subnavigation}>
-			<slot name="subnavigation" slot="subnavigation" />
-		</Header>
+		<Header />
 		<slot />
 		<Footer />
 	</body>

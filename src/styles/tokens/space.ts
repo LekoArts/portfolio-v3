@@ -28,12 +28,6 @@ export const baseSizes = {
 
 export const navigation = {
 	navigationHeight: '61px',
-	navigationWithSubHeight: '111px',
-}
-
-export const negativeNavigation = {
-	'-navigationHeight': '-61px',
-	'-navigationWithSubHeight': '-111px',
 }
 
 export const space = {
@@ -42,7 +36,6 @@ export const space = {
 	unset: 'unset',
 	auto: 'auto',
 	...navigation,
-	...negativeNavigation,
 }
 
 export const paddingResponsiveArrays = {

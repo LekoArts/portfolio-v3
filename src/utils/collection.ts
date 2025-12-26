@@ -3,16 +3,6 @@ import { slugify } from '@utils/slugify'
 import { IS_PLAYWRIGHT } from 'astro:env/server'
 
 /**
- * Get all distinct categories from the collection and add a slug for each
- */
-export function getDistinctCategories(data: Array<CollectionEntry<'categories'>>) {
-	return data.map(category => ({
-		...category,
-		slug: slugify(category.data.name),
-	}))
-}
-
-/**
  * Filter out non-published writing entries in PROD, show them during DEV
  */
 export function filterPublished(entry: CollectionEntry<'writing'>) {
