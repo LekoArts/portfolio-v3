@@ -47,7 +47,6 @@ jobs:
         env:
           IS_PLAYWRIGHT: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FLICKR_API_KEY: ${{ secrets.FLICKR_API_KEY }}
       - name: Run Playwright
         run: pnpm run e2e:build
       - uses: actions/upload-artifact@v4
