@@ -324,6 +324,50 @@ const _REDIRECTS: Array<Redirect> = [
 		fromPath: '/art/3d/',
 		toPath: '/photos/',
 	},
+	{
+		fromPath: '/design/10-tips-for-photoshop-beginners/',
+		toPath: '/10-tips-for-photoshop-beginners/',
+	},
+	{
+		fromPath: '/react/how-gatsby-scales-with-your-expertise-and-scope/',
+		toPath: '/how-gatsby-scales-with-your-expertise-and-scope/',
+	},
+	{
+		fromPath: '/react/tips-and-tricks-for-gatsby/',
+		toPath: '/tips-and-tricks-for-gatsby/',
+	},
+	{
+		fromPath: '/javascript/how-i-used-theme-ui-to-seamlessly-convert-design-to-code/',
+		toPath: '/how-i-used-theme-ui-to-seamlessly-convert-design-to-code/',
+	},
+	{
+		fromPath: '/javascript/setting-up-a-yarn-workspace-with-typescript-eslint-and-cypress/',
+		toPath: '/setting-up-a-yarn-workspace-with-typescript-eslint-and-cypress/',
+	},
+	{
+		fromPath: '/design/introducing-the-theme-ui-plugin-for-figma/',
+		toPath: '/introducing-the-theme-ui-plugin-for-figma/',
+	},
+	{
+		fromPath: '/react/how-to-build-an-advanced-multipart-component-with-chakra-ui/',
+		toPath: '/building-an-advanced-multipart-component-with-chakra-ui/',
+	},
+	{
+		fromPath: '/react/using-deferred-static-generation-with-analytics-tools/',
+		toPath: '/using-deferred-static-generation-with-analytics-tools/',
+	},
+	{
+		fromPath: '/javascript/creating-a-figma-plugin-with-svelte/',
+		toPath: '/creating-a-figma-plugin-with-svelte/',
+	},
+	{
+		fromPath: '/javascript/writing-performant-css-with-vanilla-extract/',
+		toPath: '/writing-performant-css-with-vanilla-extract/',
+	},
+	{
+		fromPath: '/garden/[...slug]/',
+		toPath: '/[...slug]/',
+	},
 ]
 
 function formatRedirects(input: Array<Redirect>) {

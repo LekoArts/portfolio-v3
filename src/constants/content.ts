@@ -1,32 +1,21 @@
-export const TAGS_CHOICES = [
-	'CLI',
-	'Discord',
-	'Gatsby',
-	'General',
-	'JavaScript',
-	'MDX',
-	'Python',
+export const TOPICS_CHOICES = [
+	'Web Development', // Gatsby, MDX, Astro, Design
 	'React',
-	'Rust',
-	'Tooling',
-	'TypeScript',
-	'Astro',
-	'Unraid',
+	'Developer Tools', // CLI, Tooling
+	'Programming', // JS, TS, Python, Rust
+	'Self-Hosting', // Unraid, Discord
+	'General', // General
+	'AI', // AI, Mastra, LLMs
 ] as const
 
 export const ICON_CHOICES = [
-	'cli',
-	'discord',
-	'gatsby',
-	'general',
-	'javascript',
-	'mdx',
-	'python',
+	'web-development',
 	'react',
-	'rust',
-	'typescript',
-	'astro',
-	'unraid',
+	'developer-tools',
+	'programming',
+	'self-hosting',
+	'general',
+	'ai',
 ] as const
 
-export const TYPE_CHOICES = ['essay', 'tutorial'] as const
+export const TYPE_CHOICES = ['essay', 'tutorial', 'note'] as const

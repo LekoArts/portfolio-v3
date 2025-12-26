@@ -65,7 +65,6 @@ const isPartOfSeries = !!(garden.series?.id && postsInSeries.length > 1)
 			is:inline
 			set:html={JSON.stringify(
 				article({
-					isGarden: true,
 					post: {
 						title: garden.title,
 						description: garden.description,
@@ -74,10 +73,7 @@ const isPartOfSeries = !!(garden.series?.id && postsInSeries.length > 1)
 						date: isoDateFormat(garden.date),
 						lastUpdated: isoDateFormat(garden.lastUpdated),
 						year: yearDateFormat(garden.date),
-					},
-					category: {
-						name: `Digital Garden`,
-						slug: `/garden/`,
+						type: 'TODO',
 					},
 				}),
 			)}

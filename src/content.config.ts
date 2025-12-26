@@ -1,33 +1,21 @@
-import { ICON_CHOICES, TAGS_CHOICES, TYPE_CHOICES } from '@constants/content'
+import { ICON_CHOICES, TOPICS_CHOICES, TYPE_CHOICES } from '@constants/content'
 import { glob } from 'astro/loaders'
-import { defineCollection, reference, z } from 'astro:content'
+import { defineCollection, z } from 'astro:content'
 
 const writing = defineCollection({
 	loader: glob({ pattern: '**\/[^_]*.mdx', base: './src/content/writing' }),
 	schema: z.object({
 		title: z.string(),
 		subtitle: z.string().optional().default(''),
-		date: z.date(),
 		slug: z.string(),
-		lastUpdated: z.date(),
 		description: z.string(),
+		date: z.date(),
+		lastUpdated: z.date(),
 		type: z.enum(TYPE_CHOICES),
-		category: reference('categories'),
-		image: z.string(),
+		topics: z.array(z.enum(TOPICS_CHOICES)),
+		image: z.string().optional(),
 		published: z.boolean(),
-	}),
-})
-
-const garden = defineCollection({
-	loader: glob({ pattern: '**\/[^_]*.mdx', base: './src/content/garden' }),
-	schema: z.object({
-		title: z.string(),
-		slug: z.string(),
-		description: z.string(),
-		date: z.date(),
-		lastUpdated: z.date(),
-		tags: z.array(z.enum(TAGS_CHOICES)),
-		icon: z.enum(ICON_CHOICES),
+		icon: z.enum(ICON_CHOICES).optional(),
 		series: z.object({
 			id: z.string(),
 			part: z.number(),
@@ -50,6 +38,5 @@ const navigations = defineCollection({
 
 export const collections = {
 	navigations,
-	garden,
 	writing,
 }
