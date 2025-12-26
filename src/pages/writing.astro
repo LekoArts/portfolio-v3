@@ -11,8 +11,8 @@ import Link from '@components/primitives/link.astro'
 import Card from '@components/writing/card.astro'
 import { cardGridStyle } from './_styles/_writing.css'
 import { getCollection } from 'astro:content'
-import { slugify } from '@utils/slugify'
 import { filterPublished, getSortedWriting } from '@utils/collection'
+import { normalize } from '@utils/slash'
 
 const posts = getSortedWriting(await getCollection('writing', filterPublished))
 ---
@@ -32,9 +32,9 @@ const posts = getSortedWriting(await getCollection('writing', filterPublished))
 				</Box>
 				<Box gap={8} class={cardGridStyle}>
 					{
-						posts.map(({ data: post, id: slug }) => (
+						posts.map(({ data: post }) => (
 							<Card
-								slug={slugify(slug, post.category.id)}
+								slug={normalize(post.slug)}
 								title={post.title}
 								subtitle={post.subtitle}
 								description={post.description}

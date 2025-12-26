@@ -1,5 +1,5 @@
 import type { CollectionEntry } from 'astro:content'
-import { slugify } from '@utils/slugify'
+import { normalize } from '@utils/slash'
 import { IS_PLAYWRIGHT } from 'astro:env/server'
 
 /**
@@ -51,7 +51,7 @@ export function getSeriesPosts(data: Array<CollectionEntry<'garden'>>, seriesId:
 	for (const entry of data) {
 		if (entry.data.series?.id === seriesId) {
 			result.push({
-				slug: slugify(entry.id, 'garden'),
+				slug: normalize(entry.data.slug),
 				title: entry.data.title,
 				part: entry.data.series.part,
 			})

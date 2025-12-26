@@ -1,7 +1,6 @@
 export const TAGS_CHOICES = [
 	'CLI',
 	'Discord',
-	'Freebie',
 	'Gatsby',
 	'General',
 	'JavaScript',
@@ -30,6 +29,4 @@ export const ICON_CHOICES = [
 	'unraid',
 ] as const
 
-export const TYPE_CHOICES = ['prose', 'tutorial'] as const
-
-export const CATEGORY_CHOICES = ['Community', 'Design', 'JavaScript', 'React', 'Writing'] as const
+export const TYPE_CHOICES = ['essay', 'tutorial'] as const

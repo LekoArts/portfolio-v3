@@ -35,7 +35,6 @@
 		"@lekoarts/remark-sandpack": "^1.0.0",
 		"@nanostores/persistent": "^1.2.0",
 		"@nanostores/react": "^1.0.0",
-		"@sindresorhus/slugify": "^3.0.0",
 		"@unpic/astro": "^1.0.2",
 		"@vanilla-extract/css": "^1.18.0",
 		"@vanilla-extract/sprinkles": "^1.6.5",

@@ -1,8 +1,8 @@
 import { transition } from '@styles/tokens/motion'
 import { style } from '@vanilla-extract/css'
-import { pseudoSelectors } from '../styles/selectors'
-import { vars } from '../styles/themes/contract.css'
-import { minMediaQuery } from '../styles/tokens/breakpoints'
+import { pseudoSelectors } from '../../styles/selectors'
+import { vars } from '../../styles/themes/contract.css'
+import { minMediaQuery } from '../../styles/tokens/breakpoints'
 
 export const cardsGridStyle = style({
 	'display': 'grid',

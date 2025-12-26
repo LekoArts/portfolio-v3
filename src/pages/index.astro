@@ -16,7 +16,6 @@ import Badge from '@components/primitives/badge.astro'
 import Spacer from '@components/primitives/spacer.astro'
 import PrimaryButton from '@components/primitives/button/primary.astro'
 import SecondaryButton from '@components/primitives/button/secondary.astro'
-import { slugify } from '@utils/slugify'
 import {
 	artGridStyle,
 	photoLinkStyle,
@@ -30,6 +29,7 @@ import PhotoTwo from '../assets/pages-index-02.jpg'
 import Container from '@components/primitives/container.astro'
 import Tag from '@components/primitives/tag.astro'
 import { fetchGithub } from '@lib/github'
+import { normalize } from '@utils/slash'
 
 const openSourceRepos = [
 	{
@@ -139,7 +139,7 @@ const [firstPost, ...otherPosts] = writing
 						}
 						<Text>{firstPost.data.description}</Text>
 					</div>
-					<PrimaryButton href={slugify(firstPost.id, firstPost.data.category.id)}>Continue Reading</PrimaryButton>
+					<PrimaryButton href={normalize(firstPost.data.slug)}>Continue Reading</PrimaryButton>
 				</Box>
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
 					<Box display="flex" justifyContent="space-between" alignItems="center">
@@ -149,7 +149,7 @@ const [firstPost, ...otherPosts] = writing
 					<Box class={cardsGridStyle}>
 						{
 							otherPosts.map((post) => (
-								<Card slug={slugify(post.id, post.data.category.id)} title={post.data.title} variant="title-only" />
+								<Card slug={normalize(post.data.slug)} title={post.data.title} variant="title-only" />
 							))
 						}
 					</Box>
@@ -163,7 +163,7 @@ const [firstPost, ...otherPosts] = writing
 						{
 							garden.map((post) => (
 								<Card
-									slug={slugify(post.id, 'garden')}
+									slug={normalize(post.data.slug)}
 									title={post.data.title}
 									icon={post.data.icon}
 									variant="title-only"

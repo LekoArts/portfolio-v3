@@ -8,6 +8,7 @@ const writing = defineCollection({
 		title: z.string(),
 		subtitle: z.string().optional().default(''),
 		date: z.date(),
+		slug: z.string(),
 		lastUpdated: z.date(),
 		description: z.string(),
 		type: z.enum(TYPE_CHOICES),
@@ -21,6 +22,7 @@ const garden = defineCollection({
 	loader: glob({ pattern: '**\/[^_]*.mdx', base: './src/content/garden' }),
 	schema: z.object({
 		title: z.string(),
+		slug: z.string(),
 		description: z.string(),
 		date: z.date(),
 		lastUpdated: z.date(),

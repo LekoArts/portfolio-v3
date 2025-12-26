@@ -1,5 +1,4 @@
 ---
-import { slugify } from '@utils/slugify'
 import { getCollection, render } from 'astro:content'
 import Base from '@layouts/base.astro'
 import Seo from '@components/seo.astro'
@@ -23,11 +22,12 @@ import SvgIcon from '@components/primitives/svg-icon.astro'
 import FormattedDate from '@components/primitives/formatted-date.astro'
 import { getSeriesPosts } from '@utils/collection'
 import SeriesCallout from '@components/writing/series-callout.astro'
+import { normalize } from '@utils/slash'
 
 export async function getStaticPaths() {
 	const entries = await getCollection('garden')
 	return entries.map((entry) => {
-		const slug = slugify(entry.id)
+		const slug = normalize(entry.data.slug)
 		const postsInSeries = getSeriesPosts(entries, entry.data.series?.id)
 
 		return {

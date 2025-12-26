@@ -3,7 +3,7 @@ import type { APIRoute } from 'astro'
 import rss from '@astrojs/rss'
 import { SITE } from '@constants/meta'
 import { filterPublished } from '@utils/collection'
-import { slugify } from '@utils/slugify'
+import { normalize } from '@utils/slash'
 import { getCollection } from 'astro:content'
 
 function generateContent(description: string, link: string) {
@@ -14,16 +14,16 @@ export const GET: APIRoute = async () => {
 	const writing = (await getCollection('writing', filterPublished)).map(entry => ({
 		title: entry.data.title,
 		description: entry.data.description,
-		content: generateContent(entry.data.description, slugify(entry.id, entry.data.category.id)),
-		link: slugify(entry.id, entry.data.category.id),
+		content: generateContent(entry.data.description, normalize(entry.data.slug)),
+		link: normalize(entry.data.slug),
 		pubDate: entry.data.date,
 	} satisfies RSSFeedItem))
 
 	const garden = (await getCollection('garden')).map(entry => ({
 		title: entry.data.title,
 		description: entry.data.description,
-		content: generateContent(entry.data.description, slugify(entry.id, 'garden')),
-		link: slugify(entry.id, 'garden'),
+		content: generateContent(entry.data.description, normalize(entry.data.slug)),
+		link: normalize(entry.data.slug),
 		pubDate: entry.data.date,
 	} satisfies RSSFeedItem))
 

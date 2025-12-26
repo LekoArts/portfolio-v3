@@ -25,24 +25,6 @@ test.describe('Navigation', () => {
 		await click(page, '[aria-label="lekoarts.de, Back to homepage"] svg')
 		await expect(page).toHaveURL('/')
 	})
-	test('writing subnavigation', async ({ page }) => {
-		await page.goto('/writing/')
-
-		await firstClick(page, 'text=Tutorials')
-		await expect(page).toHaveURL('/tutorials/')
-
-		await firstClick(page, 'text=Community')
-		await expect(page).toHaveURL('/community/')
-
-		await firstClick(page, 'text=Design')
-		await expect(page).toHaveURL('/design/')
-
-		await firstClick(page, 'text=JavaScript')
-		await expect(page).toHaveURL('/javascript/')
-
-		await firstClick(page, 'text=React')
-		await expect(page).toHaveURL('/react/')
-	})
 	test('digital garden from /writing', async ({ page }) => {
 		await page.goto('/writing/')
 

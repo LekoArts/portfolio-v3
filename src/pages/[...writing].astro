@@ -1,5 +1,4 @@
 ---
-import { slugify } from '@utils/slugify'
 import { getCollection, render } from 'astro:content'
 import { components } from '@components/mdx'
 import Base from '@layouts/base.astro'
@@ -16,20 +15,19 @@ import { getMastodonShareLink, getBlueskyShareLink, getWritingEditLink } from '@
 import { SITE } from '@constants/meta'
 import { isoDateFormat, yearDateFormat } from '@utils/date'
 import Heading from '@components/typography/heading.astro'
-import { getEntry } from 'astro:content'
 import Seo from '@components/seo.astro'
 import { article } from '@constants/json-ld'
-import type { Category } from '@constants/types'
 import Tag from '@components/primitives/tag.astro'
 import Toc from '@components/writing/toc.astro'
 import { sidebarWrapperStyle } from './_styles/_writing.css'
 import FormattedDate from '@components/primitives/formatted-date.astro'
+import { normalize } from '@utils/slash'
 
 export async function getStaticPaths() {
 	const entries = await getCollection('writing', filterPublished)
 
 	return entries.map((entry) => {
-		const slug = slugify(entry.id, entry.data.category.id)
+		const slug = normalize(entry.data.slug)
 
 		return {
 			params: {
@@ -48,9 +46,8 @@ const { data: post } = entry
 const { Content, headings } = await render(entry)
 
 const timeToRead = getReadingTime(entry.body ?? '')
-const category = await getEntry(post.category)
 
-const tagColorSwitch = (name: Category) => {
+const tagColorSwitch = (name: string) => {
 	switch (name) {
 		case `Community`:
 			return `green`
@@ -70,8 +67,8 @@ const tagColorSwitch = (name: Category) => {
 	<Seo forceTitle={post.title} description={post.description} image={post.image} slot="seo">
 		<meta name="twitter:label1" value="Time To Read" />
 		<meta name="twitter:data1" value={timeToRead} />
-		<meta name="twitter:label2" value="Category" />
-		<meta name="twitter:data2" value={category.data.name} />
+		<meta name="twitter:label2" value="Type" />
+		<meta name="twitter:data2" value={post.type} />
 		<meta name="article:published_time" content={isoDateFormat(post.date)} />
 		<meta name="article:modified_time" content={isoDateFormat(post.lastUpdated)} />
 		<script
@@ -79,7 +76,6 @@ const tagColorSwitch = (name: Category) => {
 			is:inline
 			set:html={JSON.stringify(
 				article({
-					isGarden: false,
 					post: {
 						title: post.title,
 						description: post.description,
@@ -88,10 +84,7 @@ const tagColorSwitch = (name: Category) => {
 						year: yearDateFormat(post.date),
 						image: post.image,
 						slug,
-					},
-					category: {
-						name: category.data.name,
-						slug: `/${category.id}/`,
+						type: post.type,
 					},
 				}),
 			)}
@@ -110,12 +103,8 @@ const tagColorSwitch = (name: Category) => {
 							<Text marginBottom={2}>
 								Created: <FormattedDate date={post.date} /> – Last Updated: <FormattedDate date={post.lastUpdated} />
 							</Text>
-							<Tag
-								marginBottom={2}
-								colorScheme={tagColorSwitch(category.data.name as Category)}
-								style={{ alignSelf: `flex-start` }}
-							>
-								{category.data.name}
+							<Tag marginBottom={2} colorScheme={tagColorSwitch(post.type)} style={{ alignSelf: `flex-start` }}>
+								{post.type}
 							</Tag>
 						</Box>
 						<Spacer size={10} axis="vertical" />
@@ -128,7 +117,7 @@ const tagColorSwitch = (name: Category) => {
 							textAlign="center"
 							fontSize={[`md`, null, null, `lg`, `lgx`]}
 						>
-							{category.data.name}
+							{post.type}
 						</Text>
 						<Spacer size={6} axis="vertical" />
 						<Heading as="h1" textAlign="center">
@@ -175,7 +164,7 @@ const tagColorSwitch = (name: Category) => {
 				</Box>
 			</Box>
 			{
-				post.type === 'prose' && (
+				post.type === 'essay' && (
 					<Text marginTop={6} fontSize={[`md`, null, null, `lg`]}>
 						Last updated: <FormattedDate date={post.lastUpdated} />
 					</Text>

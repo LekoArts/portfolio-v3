@@ -40,12 +40,12 @@ const metaTagAssertions = [
 			},
 			{
 				key: 'twitter:label2',
-				value: 'Category',
+				value: 'Type',
 				type: 'name',
 			},
 			{
 				key: 'twitter:data2',
-				value: 'React',
+				value: 'Tutorial',
 				type: 'name',
 			},
 		],

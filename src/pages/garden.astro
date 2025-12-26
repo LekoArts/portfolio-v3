@@ -11,13 +11,13 @@ import Spacer from '@components/primitives/spacer.astro'
 import { gardenItemSpacerStyle, gardenItemStyle, gardenItemWrapperStyle, iconWrapperStyle } from './_styles/_garden.css'
 import { getSortedGarden } from '@utils/collection'
 import { getCollection } from 'astro:content'
-import { slugify } from '@utils/slugify'
 import SvgIcon from '@components/primitives/svg-icon.astro'
 import Box from '@components/primitives/box.astro'
 import { SITE } from '@constants/meta'
 import TagGroup from '@components/blocks/tag-group.astro'
 import { TAGS_CHOICES } from '@constants/content'
 import FormattedDate from '@components/primitives/formatted-date.astro'
+import { normalize } from '@utils/slash'
 
 const garden = getSortedGarden(await getCollection('garden'))
 ---
@@ -42,11 +42,11 @@ const garden = getSortedGarden(await getCollection('garden'))
 			<Spacer size={20} axis="vertical" />
 			<div class={gardenItemWrapperStyle}>
 				{
-					garden.map(({ data: post, id: slug }, index) => {
+					garden.map(({ data: post }, index) => {
 						return (
 							<>
 								<Link
-									href={slugify(slug, 'garden')}
+									href={normalize(post.slug)}
 									p={[2, null, null, 6]}
 									class:list={[gardenItemStyle, 'tag-group-item']}
 									data-tags={post.tags}

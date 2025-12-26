@@ -24,10 +24,7 @@ export const IDENTITY = {
 	'name': SITE.titleDefault,
 	'sameAs': [
 		'https://bsky.app/profile/lekoarts.de',
-		'https://www.youtube.com/c/LeKoArtsDE',
 		'https://github.com/LekoArts',
-		'https://dribbble.com/LekoArts',
-		'https://www.behance.net/lekoarts',
 		'https://mastodon.social/@lekoarts',
 	],
 	'url': SITE.url,
@@ -84,10 +81,6 @@ export function breadcrumbList(items: Array<BreadcrumbListItem>) {
 }
 
 interface ArticleProps {
-	category: {
-		name: string
-		slug: string
-	}
 	post: {
 		title: string
 		description: string
@@ -96,11 +89,11 @@ interface ArticleProps {
 		lastUpdated: string
 		year: string
 		image: string
+		type: string
 	}
-	isGarden: boolean
 }
 
-export function article({ category, post, isGarden }: ArticleProps) {
+export function article({ post }: ArticleProps) {
 	return {
 		'@context': 'https://schema.org',
 		'@graph': [
@@ -108,7 +101,7 @@ export function article({ category, post, isGarden }: ArticleProps) {
 			CREATOR,
 			{
 				'@type': 'Article',
-				'articleSection': isGarden ? 'Digital Garden' : 'Writing',
+				'articleSection': 'Writing',
 				'author': { '@id': `${SITE.url}/#identity` },
 				'copyrightHolder': { '@id': `${SITE.url}/#identity` },
 				'copyrightYear': post.year,
@@ -116,7 +109,7 @@ export function article({ category, post, isGarden }: ArticleProps) {
 				'dateModified': post.lastUpdated,
 				'datePublished': post.date,
 				'description': post.description,
-				'genre': category.name,
+				'genre': post.type,
 				'headline': post.title,
 				'image': {
 					'@type': 'ImageObject',
@@ -129,7 +122,6 @@ export function article({ category, post, isGarden }: ArticleProps) {
 				'url': `${SITE.url}${post.slug}`,
 			},
 			breadcrumbList([
-				{ name: category.name, url: category.slug },
 				{ name: post.title, url: post.slug },
 			]),
 		],
