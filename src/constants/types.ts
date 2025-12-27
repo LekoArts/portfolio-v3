@@ -34,7 +34,7 @@ export type SVGIconNames
 		| 'list'
 		| 'masonry'
 
-export type CardVariants = 'default' | 'title-only'
+export type CardVariants = 'default' | 'title-only' | 'ghost'
 
 export interface CardProps {
 	slug: string

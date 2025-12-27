@@ -13,6 +13,8 @@ import { cardGridStyle } from './_writing.css'
 import { getCollection } from 'astro:content'
 import { filterPublished, getSortedWriting } from '@utils/collection'
 import { normalize } from '@utils/slash'
+import Spacer from '@components/primitives/spacer.astro'
+import { truncateText } from '@utils/text'
 
 const posts = getSortedWriting(await getCollection('writing', filterPublished))
 ---
@@ -20,25 +22,23 @@ const posts = getSortedWriting(await getCollection('writing', filterPublished))
 <Base>
 	<Seo slot="seo" title="Writing" breadcrumbListItems={[{ name: `Writing`, url: `/writing/` }]} />
 	<SkipNavContent>
-		<Container py={paddingResponsiveArrays.paddingMedium}>
-			<Box display="flex" flexDirection="column" gap={20} alignItems="center">
-				<Box display="flex" flexDirection="column" gap={3} alignItems="center">
-					<Heading as="h1">Writing</Heading>
-					<Text variant="prominent" textAlign="center" style={{ maxWidth: `45ch` }}>
-						Browse my <Link href="/garden/">Digital Garden</Link> for short-form content. Subscribe via <Link
-							href="/rss.xml">RSS Feed</Link
-						>.
-					</Text>
-				</Box>
-				<Box gap={8} class={cardGridStyle}>
+		<Container py={paddingResponsiveArrays.paddingSmall}>
+			<Box display="flex" flexDirection="column" gap={3}>
+				<Heading as="h1">Writing</Heading>
+				<Text variant="prominent">TODO</Text>
+			</Box>
+			<Spacer axis="vertical" size={8} />
+			<Box display="flex" flexDirection="column" alignItems="center">
+				<Box class={cardGridStyle}>
 					{
 						posts.map(({ data: post }) => (
 							<Card
 								slug={normalize(post.slug)}
 								title={post.title}
 								subtitle={post.subtitle}
-								description={post.description}
+								description={post.type === 'note' ? truncateText(post.description, 100) : post.description}
 								icon={post.icon}
+								variant={post.type === 'note' ? 'ghost' : 'default'}
 							/>
 						))
 					}

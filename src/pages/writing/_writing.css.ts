@@ -5,13 +5,15 @@ import { style } from '@vanilla-extract/css'
 export const cardGridStyle = style({
 	'display': 'grid',
 	'gridTemplateColumns': '1fr',
-	'width': vars.space.full,
+	'width': `calc(${vars.space.full} + ${vars.space[4]})`,
+	'gap': vars.space[4],
 	'@media': {
 		[minMediaQuery('md')]: {
-			gridTemplateColumns: 'repeat(2, 1fr)',
-		},
-		[minMediaQuery('lg')]: {
 			width: `calc(${vars.space.full} + ${vars.space[12]})`,
+		},
+		[minMediaQuery('md')]: {
+			gridTemplateColumns: 'repeat(2, 1fr)',
+			gap: vars.space[6],
 		},
 	},
 })

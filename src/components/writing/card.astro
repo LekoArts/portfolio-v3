@@ -2,7 +2,7 @@
 import Box from '@components/primitives/box.astro'
 import Link from '@components/primitives/link.astro'
 import Text from '@components/typography/text.astro'
-import { cardVariants, titleVariants, iconStyle, linkStyle, linkTargetStyle } from './card.css'
+import { cardVariants, titleVariants, defaultIconStyle, ghostIconStyle, linkStyle, linkTargetStyle } from './card.css'
 import type { CardProps } from '@constants/types'
 import SvgIcon from '@components/primitives/svg-icon.astro'
 
@@ -13,18 +13,30 @@ const { slug, title, subtitle, description, variant = 'default', icon } = Astro.
 
 <Box class={cardVariants[variant]}>
 	<Link href={slug} class={linkStyle}>
-		{icon && <SvgIcon id={icon} class={iconStyle} />}
+		{icon && variant !== 'ghost' ? <SvgIcon id={icon} class={defaultIconStyle} /> : null}
 		<Text as={variant === 'default' ? 'h2' : 'p'} class={titleVariants[variant]}>
+			{icon && variant === 'ghost' ? <SvgIcon id={icon} class={ghostIconStyle} /> : null}
 			{title}
 		</Text>
 		{
-			subtitle && (
-				<Text as="h3" fontSize="lg" fontWeight="medium" color="textMuted">
+			subtitle ? (
+				<Text as="h3" fontSize={{ mobile: 'md', md: 'lg' }} fontWeight="medium" color="textMuted">
 					{subtitle}
 				</Text>
-			)
+			) : null
 		}
-		{description && <Text marginTop={6}>{description}</Text>}
+		{
+			description ? (
+				<Text
+					color="textMuted"
+					display={{ mobile: variant === 'ghost' ? 'none' : 'block', md: 'block' }}
+					fontSize={{ mobile: 'sm', md: 'md' }}
+					marginTop={6}
+				>
+					{description}
+				</Text>
+			) : null
+		}
 		<span class={linkTargetStyle}></span>
 	</Link>
 </Box>

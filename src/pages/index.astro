@@ -154,7 +154,12 @@ const [firstPost, ...otherPosts] = writing
 					<Box class={cardsGridStyle}>
 						{
 							featured.map((post) => (
-								<Card slug={normalize(post.data.slug)} title={post.data.title} variant="title-only" />
+								<Card
+									slug={normalize(post.data.slug)}
+									title={post.data.title}
+									variant="default"
+									description={post.data.description}
+								/>
 							))
 						}
 					</Box>
@@ -167,7 +172,12 @@ const [firstPost, ...otherPosts] = writing
 					<Box class={cardsGridStyle}>
 						{
 							otherPosts.map((post) => (
-								<Card slug={normalize(post.data.slug)} title={post.data.title} variant="title-only" />
+								<Card
+									slug={normalize(post.data.slug)}
+									title={post.data.title}
+									variant="title-only"
+									icon={post.data.icon}
+								/>
 							))
 						}
 					</Box>
