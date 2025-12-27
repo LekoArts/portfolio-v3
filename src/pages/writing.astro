@@ -9,7 +9,7 @@ import { paddingResponsiveArrays } from '@styles/tokens/space'
 import Text from '@components/typography/text.astro'
 import Link from '@components/primitives/link.astro'
 import Card from '@components/writing/card.astro'
-import { cardGridStyle } from './_writing.css'
+import { cardGridStyle } from './_styles/_writing.css'
 import { getCollection } from 'astro:content'
 import { filterPublished, getSortedWriting } from '@utils/collection'
 import { normalize } from '@utils/slash'
@@ -25,7 +25,11 @@ const posts = getSortedWriting(await getCollection('writing', filterPublished))
 		<Container py={paddingResponsiveArrays.paddingSmall}>
 			<Box display="flex" flexDirection="column" gap={3}>
 				<Heading as="h1">Writing</Heading>
-				<Text variant="prominent">TODO</Text>
+				<Text variant="prominent"
+					>A collection of essays, notes, and tutorials from my <Link href="/what-is-a-digital-garden/"
+						>digital garden</Link
+					>.</Text
+				>
 			</Box>
 			<Spacer axis="vertical" size={8} />
 			<Box display="flex" flexDirection="column" alignItems="center">
