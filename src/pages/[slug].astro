@@ -46,7 +46,7 @@ export async function getStaticPaths() {
 }
 
 const { entry, slug, postsInSeries } = Astro.props
-const { data: post } = entry
+const { data: post, filePath } = entry
 const { Content, headings } = await render(entry)
 
 const ogURL = new URL(SITE.gardenOgEdge, SITE.url)
@@ -160,14 +160,14 @@ const ogImage = post.image ?? fallbackOgImage
 			>
 				<Box fontSize={[`md`, null, null, `lg`]} fontWeight="medium">
 					{
-						SITE.isPublic && (
+						SITE.isPublic && filePath ? (
 							<>
-								<Link target="_blank" href={getWritingEditLink(entry.id)}>
+								<Link target="_blank" href={getWritingEditLink(filePath)}>
 									Edit on GitHub
 								</Link>{' '}
 								-{' '}
 							</>
-						)
+						) : null
 					}Share on <Link target="_blank" href={getBlueskyShareLink(`${SITE.url}${slug}`, post.title)}>Bluesky</Link> / <Link
 						target="_blank"
 						href={getMastodonShareLink(`${SITE.url}${slug}`, post.title)}>Mastodon</Link

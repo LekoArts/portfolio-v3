@@ -10,6 +10,7 @@ import { zIndices } from '@styles/tokens/z-indices'
 import { createVar, style, styleVariants } from '@vanilla-extract/css'
 
 const cardShadow = createVar()
+const cardShadowHover = createVar()
 
 export const linkStyle = style({
 	selectors: {
@@ -30,6 +31,7 @@ export const linkTargetStyle = style({
 const cardBaseStyle = style({
 	vars: {
 		[cardShadow]: vars.shadow.card.default,
+		[cardShadowHover]: vars.shadow.card.defaultHover,
 	},
 	borderRadius: vars.borderRadius.lg,
 	zIndex: zIndices.docked,
@@ -37,15 +39,12 @@ const cardBaseStyle = style({
 	boxShadow: cardShadow,
 	selectors: {
 		[pseudoSelectors.after]: {
-			vars: {
-				[cardShadow]: vars.shadow.card.defaultHover,
-			},
 			content: '""',
 			position: 'absolute',
 			zIndex: zIndices.hide,
 			width: vars.space.full,
 			height: vars.space.full,
-			boxShadow: cardShadow,
+			boxShadow: cardShadowHover,
 			opacity: 0,
 			transitionProperty: 'opacity',
 			transitionDuration: transition.duration.slow,
@@ -61,7 +60,7 @@ const cardBaseStyle = style({
 		},
 		[themesSelectors.dark]: {
 			vars: {
-				[cardShadow]: vars.shadow.card.defaultHoverDark,
+				[cardShadowHover]: vars.shadow.card.defaultHoverDark,
 			},
 		},
 	},
