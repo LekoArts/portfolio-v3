@@ -18,11 +18,10 @@ function loadFont(name: string) {
 export default async function handler(req: Request) {
 	const { searchParams } = new URL(req.url)
 
-	const hasTitle = searchParams.has('title')
-	const title = hasTitle ? (searchParams.get('title') as string) : 'Digital Garden'
-	const subTitle = hasTitle ? 'Digital Garden' : 'Lennart Jörgens'
+	const title = searchParams.get('title') ?? 'Writing'
+	const subTitle = 'Lennart Jörgens'
 	const lastUpdated = searchParams.get('lastUpdated') ?? null
-	const tags = searchParams.get('tags') ?? null
+	const topics = searchParams.get('topics') ?? null
 
 	return new ImageResponse(
 		(
@@ -105,13 +104,11 @@ export default async function handler(req: Request) {
 									textAlign: 'left',
 								}}
 							>
-								Last updated:
-								{' '}
 								{lastUpdated}
 							</div>
 						)
 					: null}
-				{tags
+				{topics
 					? (
 							<div
 								className="tags"
@@ -129,9 +126,7 @@ export default async function handler(req: Request) {
 									textAlign: 'left',
 								}}
 							>
-								Tags:
-								{' '}
-								{tags.split(',').join(', ')}
+								{topics.split(',').join(', ')}
 							</div>
 						)
 					: null}
@@ -159,5 +154,5 @@ export default async function handler(req: Request) {
 }
 
 export const config: Config = {
-	path: '/og/garden',
+	path: '/og/writing',
 }

@@ -36,6 +36,8 @@ export type SVGIconNames
 
 export type CardVariants = 'default' | 'title-only' | 'ghost'
 
+export type TagsColorSchemes = 'green' | 'blue' | 'purple' | 'yellow' | 'teal' | 'gray' | 'red' | 'orange'
+
 export interface CardProps {
 	slug: string
 	title: string
@@ -48,7 +50,7 @@ export interface CardProps {
 export type ArrayElement<ArrayType extends readonly unknown[] | undefined>
 	= ArrayType extends readonly (infer ElementType)[] ? ElementType : never
 
-export type Tag = typeof TOPICS_CHOICES[number] | (string & {})
+export type Topic = typeof TOPICS_CHOICES[number] | (string & {})
 
 export interface BreadcrumbListItem {
 	url: string

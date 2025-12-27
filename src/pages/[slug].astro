@@ -2,7 +2,7 @@
 import { getCollection, render } from 'astro:content'
 import { components } from '@components/mdx'
 import Base from '@layouts/base.astro'
-import { filterPublished } from '@utils/collection'
+import { filterPublished, getSeriesPosts } from '@utils/collection'
 import { getReadingTime } from '@utils/reading-time'
 import Container from '@components/primitives/container.astro'
 import SkipNavContent from '@components/a11y/skip-nav-content.astro'
@@ -13,7 +13,8 @@ import Link from '@components/primitives/link.astro'
 import Text from '@components/typography/text.astro'
 import { getMastodonShareLink, getBlueskyShareLink, getWritingEditLink } from '@utils/sharing'
 import { SITE } from '@constants/meta'
-import { isoDateFormat, yearDateFormat } from '@utils/date'
+import { TOPIC_TO_COLOR_MAP } from '@constants/content'
+import { defaultDateFormat, isoDateFormat, yearDateFormat } from '@utils/date'
 import Heading from '@components/typography/heading.astro'
 import Seo from '@components/seo.astro'
 import { article } from '@constants/json-ld'
@@ -22,12 +23,14 @@ import Toc from '@components/writing/toc.astro'
 import { sidebarWrapperStyle } from './_styles/_writing.css'
 import FormattedDate from '@components/primitives/formatted-date.astro'
 import { normalize } from '@utils/slash'
+import SeriesCallout from '@components/writing/series-callout.astro'
 
 export async function getStaticPaths() {
 	const entries = await getCollection('writing', filterPublished)
 
 	return entries.map((entry) => {
 		const slug = normalize(entry.data.slug)
+		const postsInSeries = getSeriesPosts(entries, entry.data.series?.id)
 
 		return {
 			params: {
@@ -36,39 +39,33 @@ export async function getStaticPaths() {
 			props: {
 				entry,
 				slug,
+				postsInSeries,
 			},
 		}
 	})
 }
 
-const { entry, slug } = Astro.props
+const { entry, slug, postsInSeries } = Astro.props
 const { data: post } = entry
 const { Content, headings } = await render(entry)
 
-const timeToRead = getReadingTime(entry.body ?? '')
+const ogURL = new URL(SITE.gardenOgEdge, SITE.url)
+ogURL.searchParams.set(`title`, post.title)
+ogURL.searchParams.set(`lastUpdated`, defaultDateFormat(post.lastUpdated))
+ogURL.searchParams.set(`topics`, post.topics.join(`,`))
+const fallbackOgImage = `${ogURL.pathname}${ogURL.search}`
 
-const tagColorSwitch = (name: string) => {
-	switch (name) {
-		case `Community`:
-			return `green`
-		case `Design`:
-			return `blue`
-		case `JavaScript`:
-			return `yellow`
-		case `React`:
-			return `teal`
-		default:
-			return `gray`
-	}
-}
+const timeToRead = getReadingTime(entry.body ?? '')
+const isPartOfSeries = !!(post.series?.id && postsInSeries.length > 1)
+const ogImage = post.image ?? fallbackOgImage
 ---
 
 <Base>
-	<Seo forceTitle={post.title} description={post.description} image={post.image} slot="seo">
+	<Seo forceTitle={post.title} description={post.description} image={ogImage} slot="seo">
 		<meta name="twitter:label1" value="Time To Read" />
 		<meta name="twitter:data1" value={timeToRead} />
-		<meta name="twitter:label2" value="Type" />
-		<meta name="twitter:data2" value={post.type} />
+		<meta name="twitter:label2" value="Topics" />
+		<meta name="twitter:data2" value={post.topics.join(`, `)} />
 		<meta name="article:published_time" content={isoDateFormat(post.date)} />
 		<meta name="article:modified_time" content={isoDateFormat(post.lastUpdated)} />
 		<script
@@ -82,8 +79,7 @@ const tagColorSwitch = (name: string) => {
 						date: isoDateFormat(post.date),
 						lastUpdated: isoDateFormat(post.lastUpdated),
 						year: yearDateFormat(post.date),
-						// TODO: Update with og-image generated for garden stuff
-						image: post.image,
+						image: ogImage,
 						slug,
 						type: post.type,
 					},
@@ -94,21 +90,25 @@ const tagColorSwitch = (name: string) => {
 	<Container variant="proseRoot">
 		<SkipNavContent>
 			{
-				post.type === 'tutorial' ? (
+				post.type === 'tutorial' || post.type === 'note' ? (
 					<>
 						<Heading as="h1">{post.title}</Heading>
 						<Spacer size={6} axis="vertical" />
 						<Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
 						<Spacer size={4} axis="vertical" />
-						<Box display="flex" justifyContent="space-between" flexDirection={[`column`, null, null, `row`]}>
-							<Text marginBottom={2}>
+						<Box display="flex" justifyContent="space-between" flexDirection={[`column`, null, null, `row`]} gap={2}>
+							<Text fontSize={{ mobile: 'sm', md: 'md' }}>
 								Created: <FormattedDate date={post.date} /> – Last Updated: <FormattedDate date={post.lastUpdated} />
 							</Text>
-							<Tag marginBottom={2} colorScheme={tagColorSwitch(post.type)} style={{ alignSelf: `flex-start` }}>
-								{post.type}
-							</Tag>
+							<Box gap={2} display="flex">
+								{post.topics.map((topic) => (
+									<Link href="/">
+										<Tag colorScheme={TOPIC_TO_COLOR_MAP[topic]}>{topic}</Tag>
+									</Link>
+								))}
+							</Box>
 						</Box>
-						<Spacer size={10} axis="vertical" />
+						<Spacer size={isPartOfSeries ? 4 : 10} axis="vertical" />
 					</>
 				) : (
 					<>
@@ -118,7 +118,7 @@ const tagColorSwitch = (name: string) => {
 							textAlign="center"
 							fontSize={[`md`, null, null, `lg`, `lgx`]}
 						>
-							{post.type}
+							{post.topics.join(', ')}
 						</Text>
 						<Spacer size={6} axis="vertical" />
 						<Heading as="h1" textAlign="center">
@@ -138,6 +138,12 @@ const tagColorSwitch = (name: string) => {
 					</Box>
 				) : (
 					<Prose>
+						{isPartOfSeries ? (
+							<>
+								<SeriesCallout id={post.series!.id} currentPart={post.series!.part} postsInSeries={postsInSeries} />
+								<Spacer size={8} axis="vertical" />
+							</>
+						) : null}
 						<Content components={components} />
 					</Prose>
 				)
@@ -156,10 +162,14 @@ const tagColorSwitch = (name: string) => {
 					{
 						SITE.isPublic && (
 							<>
-								<Link href={getWritingEditLink(entry.id)}>Edit on GitHub</Link> -{' '}
+								<Link target="_blank" href={getWritingEditLink(entry.id)}>
+									Edit on GitHub
+								</Link>{' '}
+								-{' '}
 							</>
 						)
-					}Share on <Link href={getBlueskyShareLink(`${SITE.url}${slug}`, post.title)}>Bluesky</Link> / <Link
+					}Share on <Link target="_blank" href={getBlueskyShareLink(`${SITE.url}${slug}`, post.title)}>Bluesky</Link> / <Link
+						target="_blank"
 						href={getMastodonShareLink(`${SITE.url}${slug}`, post.title)}>Mastodon</Link
 					>
 				</Box>

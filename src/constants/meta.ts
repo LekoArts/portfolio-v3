@@ -9,7 +9,7 @@ export const SITE = {
 	bluesky: '@lekoarts.de',
 	mastodon: 'https://mastodon.social/@lekoarts',
 	defaultGardenOgImage: '/social/digital-garden.png',
-	gardenOgEdge: '/og/garden',
+	gardenOgEdge: '/og/writing',
 	// Whether the repository is "public" or "private"
 	isPublic: true,
 } as const

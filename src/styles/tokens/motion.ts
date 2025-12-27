@@ -1,8 +1,8 @@
 export const transition = {
 	property: {
 		all: 'all',
-		common: 'background-color, border-color, color, fill, stroke, opacity, box-shadow, transform',
-		colors: 'background-color, border-color, color, fill, stroke',
+		common: 'background-color, border-color, border, color, fill, stroke, opacity, box-shadow, transform',
+		colors: 'background-color, border-color, border, color, fill, stroke',
 		dimensions: 'width, height',
 		position: 'left, right, top, bottom',
 		background: 'background-color, background-image, background-position',

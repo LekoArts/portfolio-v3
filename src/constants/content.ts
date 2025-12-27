@@ -1,3 +1,5 @@
+import type { TagsColorSchemes } from './types'
+
 export const TOPICS_CHOICES = [
 	'Web Development', // Gatsby, MDX, Astro, Design
 	'React',
@@ -9,6 +11,18 @@ export const TOPICS_CHOICES = [
 	'Outdoors', // Hiking, Outdoors
 	'Travel', // Vacation, Travel
 ] as const
+
+export const TOPIC_TO_COLOR_MAP: Record<typeof TOPICS_CHOICES[number], TagsColorSchemes> = {
+	'Web Development': 'yellow',
+	'React': 'blue',
+	'Developer Tools': 'teal',
+	'Programming': 'purple',
+	'Self-Hosting': 'green',
+	'General': 'gray',
+	'AI': 'purple',
+	'Outdoors': 'green',
+	'Travel': 'orange',
+}
 
 export const ICON_CHOICES = [
 	'web-development',

@@ -94,11 +94,11 @@ const metaTagAssertions = [
 			},
 			{
 				key: 'og:image',
-				value: 'https://www.lekoarts.de/og/garden?title=How+to+Add+Plausible+Analytics+to+Gatsby&lastUpdated=Aug+22%2C+2023&tags=Gatsby',
+				value: 'https://www.lekoarts.de/og/writing?title=How+to+Add+Plausible+Analytics+to+Gatsby&lastUpdated=Aug+22%2C+2023&topics=Gatsby',
 			},
 			{
 				key: 'twitter:label2',
-				value: 'Tags',
+				value: 'Topics',
 				type: 'name',
 			},
 			{

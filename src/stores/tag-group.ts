@@ -1,8 +1,8 @@
-import type { Tag } from '@constants/types'
+import type { Topic } from '@constants/types'
 import { map } from 'nanostores'
 
 interface TagGroupStore {
-	garden: Array<Tag>
+	garden: Array<Topic>
 	photos: Array<string>
 }
 
@@ -15,10 +15,10 @@ const initialValue: TagGroupStore = {
 
 export const $tagGroup = map(initialValue)
 
-export function addTag(id: TagGroupKeys, tag: Tag) {
+export function addTag(id: TagGroupKeys, tag: Topic) {
 	$tagGroup.setKey(id, [...$tagGroup.get()[id], tag])
 }
 
-export function removeTag(id: TagGroupKeys, tag: Tag) {
+export function removeTag(id: TagGroupKeys, tag: Topic) {
 	$tagGroup.setKey(id, $tagGroup.get()[id].filter(t => t !== tag))
 }
