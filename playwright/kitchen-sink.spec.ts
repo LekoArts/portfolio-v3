@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 test.beforeEach(async ({ page }) => {
-	await page.goto('/community/kitchen-sink/')
+	await page.goto('/kitchen-sink/')
 })
 
 test.describe('Smoke Test', () => {

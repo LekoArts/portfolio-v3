@@ -365,8 +365,8 @@ const _REDIRECTS: Array<Redirect> = [
 		toPath: '/writing-performant-css-with-vanilla-extract/',
 	},
 	{
-		fromPath: '/garden/[...slug]/',
-		toPath: '/[...slug]/',
+		fromPath: '/garden/[slug]',
+		toPath: '/[slug]',
 	},
 ]
 
