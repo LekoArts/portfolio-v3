@@ -35,7 +35,7 @@ napi new
 
 When you're asked for the package name, I recommend using a [npm scope](https://docs.npmjs.com/cli/v9/using-npm/scope) because for each platform a separate package will be published. This can trigger spam detection.
 
-In one of the next steps you're asked for the targets you want to support. There is a [short overview page](https://napi.rs/docs/cross-build/summary) in the napi-rs documentation but this one took me longer to figure out initially. You'll need to research where your CLI should be able to run. I've chosen these options and so far I didn't get any complaints: `darwin-arm64, darwin-x64, linux-arm-gnueabihf, linux-arm64-gnu, linux-arm64-musl, linux-x64-gnu, linux-x64-musl, win32-x64-msvc`. So I'm supporting Intel and Apple Silicon Macs, a couple of Linux flavors (including ARM), and Windows.
+In one of the next steps you're asked for the targets you want to support. There is a [short overview page](https://napi.rs/docs/cross-build) in the napi-rs documentation but this one took me longer to figure out initially. You'll need to research where your CLI should be able to run. I've chosen these options and so far I didn't get any complaints: `darwin-arm64, darwin-x64, linux-arm-gnueabihf, linux-arm64-gnu, linux-arm64-musl, linux-x64-gnu, linux-x64-musl, win32-x64-msvc`. So I'm supporting Intel and Apple Silicon Macs, a couple of Linux flavors (including ARM), and Windows.
 
 I recommend enabling GitHub actions as they'll enable you to automatically build and publish new versions in CI.
 
