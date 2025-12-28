@@ -1,4 +1,4 @@
-import type { TOPICS_CHOICES } from '@constants/content'
+import type { TAGS_CHOICES } from '@constants/content'
 
 export type AlertStatus = 'note' | 'warning' | 'caution' | 'success'
 
@@ -40,7 +40,7 @@ export type TagsColorSchemes = 'green' | 'blue' | 'purple' | 'yellow' | 'teal' |
 export type ArrayElement<ArrayType extends readonly unknown[] | undefined>
 	= ArrayType extends readonly (infer ElementType)[] ? ElementType : never
 
-export type Topic = typeof TOPICS_CHOICES[number] | (string & {})
+export type Topic = typeof TAGS_CHOICES[number] | (string & {})
 
 export interface BreadcrumbListItem {
 	url: string

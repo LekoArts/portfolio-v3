@@ -13,7 +13,7 @@ import Link from '@components/primitives/link.astro'
 import Text from '@components/typography/text.astro'
 import { getMastodonShareLink, getBlueskyShareLink, getWritingEditLink } from '@utils/sharing'
 import { SITE } from '@constants/meta'
-import { TOPIC_TO_COLOR_MAP } from '@constants/content'
+import { TAG_TO_COLOR_MAP } from '@constants/content'
 import { defaultDateFormat, isoDateFormat, yearDateFormat } from '@utils/date'
 import Heading from '@components/typography/heading.astro'
 import Seo from '@components/seo.astro'
@@ -24,6 +24,7 @@ import { sidebarWrapperStyle } from './_styles/_writing.css'
 import FormattedDate from '@components/primitives/formatted-date.astro'
 import { normalize } from '@utils/slash'
 import SeriesCallout from '@components/writing/series-callout.astro'
+import { queryStringTags } from '@utils/url'
 
 export async function getStaticPaths() {
 	const entries = await getCollection('writing', filterPublished)
@@ -52,7 +53,7 @@ const { Content, headings } = await render(entry)
 const ogURL = new URL(SITE.writingOgEdge, SITE.url)
 ogURL.searchParams.set(`title`, post.title)
 ogURL.searchParams.set(`lastUpdated`, defaultDateFormat(post.lastUpdated))
-ogURL.searchParams.set(`topics`, post.topics.join(`,`))
+ogURL.searchParams.set(`tags`, post.tags.join(`,`))
 const fallbackOgImage = `${ogURL.pathname}${ogURL.search}`
 
 const timeToRead = getReadingTime(entry.body ?? '')
@@ -64,8 +65,8 @@ const ogImage = post.image ?? fallbackOgImage
 	<Seo forceTitle={post.title} description={post.description} image={ogImage} slot="seo">
 		<meta name="twitter:label1" value="Time To Read" />
 		<meta name="twitter:data1" value={timeToRead} />
-		<meta name="twitter:label2" value="Topics" />
-		<meta name="twitter:data2" value={post.topics.join(`, `)} />
+		<meta name="twitter:label2" value="Tags" />
+		<meta name="twitter:data2" value={post.tags.join(`, `)} />
 		<meta name="article:published_time" content={isoDateFormat(post.date)} />
 		<meta name="article:modified_time" content={isoDateFormat(post.lastUpdated)} />
 		<script
@@ -101,9 +102,9 @@ const ogImage = post.image ?? fallbackOgImage
 								Created: <FormattedDate date={post.date} /> – Last Updated: <FormattedDate date={post.lastUpdated} />
 							</Text>
 							<Box gap={2} display="flex">
-								{post.topics.map((topic) => (
-									<Link href="/">
-										<Tag colorScheme={TOPIC_TO_COLOR_MAP[topic]}>{topic}</Tag>
+								{post.tags.map((tag) => (
+									<Link href={`/writing/?${queryStringTags.to({ tags: [tag] })}`}>
+										<Tag colorScheme={TAG_TO_COLOR_MAP[tag]}>{tag}</Tag>
 									</Link>
 								))}
 							</Box>
@@ -118,7 +119,7 @@ const ogImage = post.image ?? fallbackOgImage
 							textAlign="center"
 							fontSize={[`md`, null, null, `lg`, `lgx`]}
 						>
-							{post.topics.join(', ')}
+							{post.tags.join(', ')}
 						</Text>
 						<Spacer size={6} axis="vertical" />
 						<Heading as="h1" textAlign="center">

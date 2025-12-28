@@ -1,6 +1,6 @@
 import type { TagsColorSchemes } from './types'
 
-export const TOPICS_CHOICES = [
+export const TAGS_CHOICES = [
 	'Web Development', // Gatsby, MDX, Astro, Design
 	'React',
 	'Developer Tools', // CLI, Tooling
@@ -12,7 +12,7 @@ export const TOPICS_CHOICES = [
 	// 'Travel', // Vacation, Travel
 ] as const
 
-export const TOPIC_TO_COLOR_MAP: Record<typeof TOPICS_CHOICES[number], TagsColorSchemes> = {
+export const TAG_TO_COLOR_MAP: Record<typeof TAGS_CHOICES[number], TagsColorSchemes> = {
 	'Web Development': 'yellow',
 	'React': 'blue',
 	'Developer Tools': 'teal',

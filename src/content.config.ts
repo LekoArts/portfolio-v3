@@ -1,4 +1,4 @@
-import { ICON_CHOICES, TOPICS_CHOICES, TYPE_CHOICES } from '@constants/content'
+import { ICON_CHOICES, TAGS_CHOICES, TYPE_CHOICES } from '@constants/content'
 import { glob } from 'astro/loaders'
 import { defineCollection, z } from 'astro:content'
 
@@ -12,7 +12,7 @@ const writing = defineCollection({
 		date: z.date(),
 		lastUpdated: z.date(),
 		type: z.enum(TYPE_CHOICES),
-		topics: z.array(z.enum(TOPICS_CHOICES)),
+		tags: z.array(z.enum(TAGS_CHOICES)),
 		image: z.string().optional(),
 		published: z.boolean().optional().default(true),
 		icon: z.enum(ICON_CHOICES).optional(),

@@ -21,7 +21,7 @@ export default async function handler(req: Request) {
 	const title = searchParams.get('title') ?? 'Writing'
 	const subTitle = 'Lennart Jörgens'
 	const lastUpdated = searchParams.get('lastUpdated') ?? null
-	const topics = searchParams.get('topics') ?? null
+	const tags = searchParams.get('tags') ?? null
 
 	return new ImageResponse(
 		(
@@ -108,7 +108,7 @@ export default async function handler(req: Request) {
 							</div>
 						)
 					: null}
-				{topics
+				{tags
 					? (
 							<div
 								className="tags"
@@ -126,7 +126,7 @@ export default async function handler(req: Request) {
 									textAlign: 'left',
 								}}
 							>
-								{topics.split(',').join(', ')}
+								{tags.split(',').join(', ')}
 							</div>
 						)
 					: null}

@@ -16,7 +16,7 @@ import { normalize } from '@utils/slash'
 import Spacer from '@components/primitives/spacer.astro'
 import { truncateText } from '@utils/text'
 import TagGroup from '@components/blocks/tag-group.astro'
-import { TOPICS_CHOICES } from '@constants/content'
+import { TAGS_CHOICES } from '@constants/content'
 import SvgIcon from '@components/primitives/svg-icon.astro'
 
 const posts = getSortedWriting(await getCollection('writing', filterPublished))
@@ -35,7 +35,7 @@ const posts = getSortedWriting(await getCollection('writing', filterPublished))
 				</Text>
 			</Box>
 			<Spacer axis="vertical" size={6} />
-			<TagGroup id="writing" items={[...TOPICS_CHOICES]} />
+			<TagGroup id="writing" items={[...TAGS_CHOICES]} />
 			<Spacer axis="vertical" size={20} />
 			<Box display="flex" flexDirection="column" alignItems="center">
 				<Box class={cardGridStyle}>
@@ -48,7 +48,7 @@ const posts = getSortedWriting(await getCollection('writing', filterPublished))
 								description={post.type === 'note' ? truncateText(post.description, 100) : post.description}
 								icon={post.icon}
 								variant={post.type === 'note' ? 'ghost' : 'default'}
-								data-tags={post.topics}
+								data-tags={post.tags}
 								class="tag-group-item"
 							/>
 						))

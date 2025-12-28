@@ -15,3 +15,8 @@ I want to simplify the writing sections of my website. Currently I have /writing
 - Update all writing posts that have `type: 'prose'` to have `type: 'essay'`
 - Update writing post's frontmatter field `category` to be an array of `topics` instead
 - Update garden posts to change `tags` to `topics`
+
+## Change links
+
+- Update internal links
+- internal link checker?
