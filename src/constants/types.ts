@@ -33,19 +33,9 @@ export type SVGIconNames
 		| 'grid'
 		| 'list'
 		| 'masonry'
-
-export type CardVariants = 'default' | 'title-only' | 'ghost'
+		| 'rss'
 
 export type TagsColorSchemes = 'green' | 'blue' | 'purple' | 'yellow' | 'teal' | 'gray' | 'red' | 'orange'
-
-export interface CardProps {
-	slug: string
-	title: string
-	subtitle?: string
-	description?: string
-	variant?: CardVariants
-	icon?: SVGIconNames
-}
 
 export type ArrayElement<ArrayType extends readonly unknown[] | undefined>
 	= ArrayType extends readonly (infer ElementType)[] ? ElementType : never

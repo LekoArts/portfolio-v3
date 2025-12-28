@@ -7,9 +7,9 @@ export const TOPICS_CHOICES = [
 	'Programming', // JS, TS, Python, Rust
 	'Self-Hosting', // Unraid, Discord
 	'General', // General
-	'AI', // AI, Mastra, LLMs
+	// 'AI', // AI, Mastra, LLMs
 	'Outdoors', // Hiking, Outdoors
-	'Travel', // Vacation, Travel
+	// 'Travel', // Vacation, Travel
 ] as const
 
 export const TOPIC_TO_COLOR_MAP: Record<typeof TOPICS_CHOICES[number], TagsColorSchemes> = {
@@ -19,9 +19,9 @@ export const TOPIC_TO_COLOR_MAP: Record<typeof TOPICS_CHOICES[number], TagsColor
 	'Programming': 'purple',
 	'Self-Hosting': 'green',
 	'General': 'gray',
-	'AI': 'purple',
+	// 'AI': 'purple',
 	'Outdoors': 'green',
-	'Travel': 'orange',
+	// 'Travel': 'orange',
 }
 
 export const ICON_CHOICES = [

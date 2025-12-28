@@ -23,7 +23,7 @@ const metaTagAssertions = [
 	},
 	{
 		name: 'Blog Post (Tutorial)',
-		url: '/react/using-deferred-static-generation-with-analytics-tools/',
+		url: '/using-deferred-static-generation-with-analytics-tools/',
 		title: 'Using Deferred Static Generation With Analytics Tools',
 		metaTags: [
 			{
@@ -51,8 +51,8 @@ const metaTagAssertions = [
 		],
 	},
 	{
-		name: 'Blog Post (Prose)',
-		url: '/design/introducing-the-theme-ui-plugin-for-figma/',
+		name: 'Blog Post (Essay)',
+		url: '/introducing-the-theme-ui-plugin-for-figma/',
 		title: 'Introducing the Theme UI Plugin for Figma',
 		metaTags: [
 			{
@@ -80,8 +80,8 @@ const metaTagAssertions = [
 		],
 	},
 	{
-		name: 'Garden Post',
-		url: '/garden/how-to-add-plausible-analytics-to-gatsby/',
+		name: 'Blog Post (Note)',
+		url: '/how-to-add-plausible-analytics-to-gatsby/',
 		title: 'How to Add Plausible Analytics to Gatsby',
 		metaTags: [
 			{

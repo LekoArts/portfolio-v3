@@ -1,19 +1,18 @@
 - name: Writing
   link: /writing/
   items:
-    - name: Tutorials
-      link: /tutorials/
     - name: React
-      link: /react/
+      link: /writing/?tags=React
     - name: RSS Feed
       link: /rss.xml
       isExternal: true
-- name: Art
+- name: Photos
+  link: /photos/
   items:
-    - name: Photos
-      link: /photos/
-    - name: 3D Art
-      link: /photos/?tags=3D
+    - name: Hiking
+      link: /photos/?tags=Carinthia,Kitzb%C3%BChel,Salzkammergut,Verwall
+    - name: Asia
+      link: /photos/?tags=Japan,Kyoto,Osaka,Seoul,Tokyo
 - name: About
   link: /about/
   items:

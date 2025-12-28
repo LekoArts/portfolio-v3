@@ -28,7 +28,7 @@ export function filterBySlugs(
  * Sort published writing entries DESC by date
  */
 export function getSortedWriting(data: Array<CollectionEntry<'writing'>>) {
-	return data.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+	return data.sort((a, b) => new Date(b.data.lastUpdated).getTime() - new Date(a.data.lastUpdated).getTime())
 }
 
 export interface SeriesPartItem {

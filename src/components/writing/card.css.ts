@@ -1,4 +1,3 @@
-import type { CardVariants } from '@constants/types'
 import type { StyleRule } from '@vanilla-extract/css'
 import { themesSelectors } from '@styles/atoms.css'
 import { pseudoSelectors } from '@styles/selectors'
@@ -8,6 +7,8 @@ import { colorPalette } from '@styles/tokens/colors'
 import { transition } from '@styles/tokens/motion'
 import { zIndices } from '@styles/tokens/z-indices'
 import { createVar, style, styleVariants } from '@vanilla-extract/css'
+
+export type CardVariants = 'default' | 'title-only' | 'ghost'
 
 const cardShadow = createVar()
 const cardShadowHover = createVar()

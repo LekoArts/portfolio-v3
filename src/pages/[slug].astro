@@ -49,7 +49,7 @@ const { entry, slug, postsInSeries } = Astro.props
 const { data: post, filePath } = entry
 const { Content, headings } = await render(entry)
 
-const ogURL = new URL(SITE.gardenOgEdge, SITE.url)
+const ogURL = new URL(SITE.writingOgEdge, SITE.url)
 ogURL.searchParams.set(`title`, post.title)
 ogURL.searchParams.set(`lastUpdated`, defaultDateFormat(post.lastUpdated))
 ogURL.searchParams.set(`topics`, post.topics.join(`,`))

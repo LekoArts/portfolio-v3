@@ -36,7 +36,7 @@ export default async function handler(req: Request) {
 					justifyContent: 'center',
 					alignItems: 'center',
 					position: 'relative',
-					background: 'url(https://www.lekoarts.de/edge/digital-garden-template.png)',
+					background: 'url(https://www.lekoarts.de/edge/og-image-template.png)',
 				}}
 			>
 				<div
@@ -72,7 +72,7 @@ export default async function handler(req: Request) {
 						style={{
 							display: 'flex',
 							wordBreak: 'break-word',
-							background: 'linear-gradient(to bottom, #7AD28D 0%, #1B9C68 100%)',
+							background: 'linear-gradient(to bottom, #F68553 0%, #BD422D 100%)',
 							backgroundClip: 'text',
 							WebkitBackgroundClip: 'text',
 							WebkitTextFillColor: 'transparent',
@@ -95,7 +95,7 @@ export default async function handler(req: Request) {
 									position: 'absolute',
 									left: '80px',
 									bottom: '80px',
-									background: 'linear-gradient(to bottom, #FFFFFF 0%, #C3F1C3 100%)',
+									background: 'linear-gradient(to bottom, #FFFFFF 0%, #f1d3c3 100%)',
 									backgroundClip: 'text',
 									WebkitBackgroundClip: 'text',
 									WebkitTextFillColor: 'transparent',
@@ -117,7 +117,7 @@ export default async function handler(req: Request) {
 									position: 'absolute',
 									right: '80px',
 									bottom: '80px',
-									background: 'linear-gradient(to bottom, #FFFFFF 0%, #C3F1C3 100%)',
+									background: 'linear-gradient(to bottom, #FFFFFF 0%, #f1d3c3 100%)',
 									backgroundClip: 'text',
 									WebkitBackgroundClip: 'text',
 									WebkitTextFillColor: 'transparent',

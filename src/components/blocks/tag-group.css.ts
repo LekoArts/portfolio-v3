@@ -12,9 +12,9 @@ export const tagGroupStyle = style({
 })
 
 export const tagStyle = style({
-	'background': colorPalette.blueGray[100],
+	'background': colorPalette.blueGray[150],
 	'color': colorPalette.blueGray[800],
-	'minHeight': vars.space[8],
+	'minHeight': vars.space[6],
 	'minWidth': vars.space[8],
 	'fontSize': vars.fontSize.sm,
 	'paddingLeft': vars.space[3],
@@ -32,6 +32,7 @@ export const tagStyle = style({
 	'@media': {
 		[minMediaQuery('lg')]: {
 			fontSize: vars.fontSize.md,
+			minHeight: vars.space[8],
 		},
 	},
 	'selectors': {

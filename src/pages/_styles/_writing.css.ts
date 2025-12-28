@@ -26,3 +26,10 @@ export const sidebarWrapperStyle = style({
 		},
 	},
 })
+
+export const rssLinkStyle = style({
+	color: `${vars.color.primary} !important`,
+	display: 'inline-flex',
+	alignItems: 'center',
+	gap: vars.space[1],
+})

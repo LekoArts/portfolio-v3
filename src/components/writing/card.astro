@@ -1,17 +1,32 @@
 ---
-import Box from '@components/primitives/box.astro'
+import Box, { type BoxProps } from '@components/primitives/box.astro'
 import Link from '@components/primitives/link.astro'
 import Text from '@components/typography/text.astro'
-import { cardVariants, titleVariants, defaultIconStyle, ghostIconStyle, linkStyle, linkTargetStyle } from './card.css'
-import type { CardProps } from '@constants/types'
+import {
+	cardVariants,
+	titleVariants,
+	defaultIconStyle,
+	ghostIconStyle,
+	linkStyle,
+	linkTargetStyle,
+	type CardVariants,
+} from './card.css'
 import SvgIcon from '@components/primitives/svg-icon.astro'
+import type { SVGIconNames } from '@constants/types'
 
-interface Props extends CardProps {}
+interface Props extends BoxProps<'div'> {
+	slug: string
+	title: string
+	subtitle?: string
+	description?: string
+	variant?: CardVariants
+	icon?: SVGIconNames
+}
 
-const { slug, title, subtitle, description, variant = 'default', icon } = Astro.props
+const { slug, title, subtitle, description, variant = 'default', icon, class: className, ...rest } = Astro.props
 ---
 
-<Box class={cardVariants[variant]}>
+<Box class:list={[cardVariants[variant], className]} {...rest}>
 	<Link href={slug} class={linkStyle}>
 		{icon && variant !== 'ghost' ? <SvgIcon id={icon} class={defaultIconStyle} /> : null}
 		<Text as={variant === 'default' ? 'h2' : 'p'} class={titleVariants[variant]}>

@@ -6,15 +6,7 @@ export const SITE = {
 	dataDomain: 'lekoarts.de',
 	description: 'Lennart is a product-focused full stack engineer with years of experience in building large-scale projects and shipping high-quality work to millions of users. Adept at building delightful, inclusive, and well-documented solutions to customers\' needs.',
 	defaultOgImage: '/social/default-og-image.png?v=1',
-	bluesky: '@lekoarts.de',
-	mastodon: 'https://mastodon.social/@lekoarts',
-	defaultGardenOgImage: '/social/digital-garden.png',
-	gardenOgEdge: '/og/writing',
+	writingOgEdge: '/og/writing',
 	// Whether the repository is "public" or "private"
 	isPublic: true,
-} as const
-
-export const SOCIAL = {
-	bluesky: '@lekoarts.de',
-	mastodon: 'https://mastodon.social/@lekoarts',
 } as const

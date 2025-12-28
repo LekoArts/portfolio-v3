@@ -9,12 +9,15 @@ import { paddingResponsiveArrays } from '@styles/tokens/space'
 import Text from '@components/typography/text.astro'
 import Link from '@components/primitives/link.astro'
 import Card from '@components/writing/card.astro'
-import { cardGridStyle } from './_styles/_writing.css'
+import { cardGridStyle, rssLinkStyle } from './_styles/_writing.css'
 import { getCollection } from 'astro:content'
 import { filterPublished, getSortedWriting } from '@utils/collection'
 import { normalize } from '@utils/slash'
 import Spacer from '@components/primitives/spacer.astro'
 import { truncateText } from '@utils/text'
+import TagGroup from '@components/blocks/tag-group.astro'
+import { TOPICS_CHOICES } from '@constants/content'
+import SvgIcon from '@components/primitives/svg-icon.astro'
 
 const posts = getSortedWriting(await getCollection('writing', filterPublished))
 ---
@@ -24,14 +27,16 @@ const posts = getSortedWriting(await getCollection('writing', filterPublished))
 	<SkipNavContent>
 		<Container py={paddingResponsiveArrays.paddingSmall}>
 			<Box display="flex" flexDirection="column" gap={3}>
-				<Heading as="h1">Writing</Heading>
+				<Heading display="inline-block" as="h1">Writing</Heading>
 				<Text variant="prominent"
 					>A collection of essays, notes, and tutorials from my <Link href="/what-is-a-digital-garden/"
 						>digital garden</Link
-					>.</Text
-				>
+					>. <Link href="/rss.xml" class={rssLinkStyle}>RSS Feed <SvgIcon height="1em" width="1em" id="rss" /></Link>
+				</Text>
 			</Box>
-			<Spacer axis="vertical" size={8} />
+			<Spacer axis="vertical" size={6} />
+			<TagGroup id="writing" items={[...TOPICS_CHOICES]} />
+			<Spacer axis="vertical" size={20} />
 			<Box display="flex" flexDirection="column" alignItems="center">
 				<Box class={cardGridStyle}>
 					{
@@ -43,6 +48,8 @@ const posts = getSortedWriting(await getCollection('writing', filterPublished))
 								description={post.type === 'note' ? truncateText(post.description, 100) : post.description}
 								icon={post.icon}
 								variant={post.type === 'note' ? 'ghost' : 'default'}
+								data-tags={post.topics}
+								class="tag-group-item"
 							/>
 						))
 					}
