@@ -41,8 +41,3 @@ export type ArrayElement<ArrayType extends readonly unknown[] | undefined>
 	= ArrayType extends readonly (infer ElementType)[] ? ElementType : never
 
 export type Topic = typeof TAGS_CHOICES[number] | (string & {})
-
-export interface BreadcrumbListItem {
-	url: string
-	name: string
-}

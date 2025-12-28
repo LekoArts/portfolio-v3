@@ -70,12 +70,14 @@ export default config
 Be sure to commit and push your change so that the tracking goes live and you can gather some data. If you don't have many visitors yet you can also click around with a couple of devices of your own to generate some data 😋
 
 <Collapsible summary="Not using Plausible Analytics?">
-  If you're not using Plausible or don't want to, you can use different plugins to add your analytics tool to your site. For example:
 
-  - [gatsby-plugin-google-gtag](https://www.gatsbyjs.com/plugins/gatsby-plugin-google-gtag/)
-  - [Fathom](https://usefathom.com/docs/integrations/gatsby)
+If you're not using Plausible or don't want to, you can use different plugins to add your analytics tool to your site. For example:
 
-  Or use the [plugin library](https://www.gatsbyjs.com/plugins) to find the fitting plugin.
+- [gatsby-plugin-google-gtag](https://www.gatsbyjs.com/plugins/gatsby-plugin-google-gtag/)
+- [Fathom](https://usefathom.com/docs/integrations/gatsby)
+
+Or use the [plugin library](https://www.gatsbyjs.com/plugins) to find the fitting plugin.
+
 </Collapsible>
 
 ## Deploying to Netlify
@@ -93,13 +95,15 @@ So you've added analytics to your site, gathered some data, and deployed the sit
 The information from the _Top Pages_ box is what you'll need to access. And you can do that through Plausible's API. The [Stats API Reference documentation](https://plausible.io/docs/stats-api) explains how and we'll get back to the details there later. But first, go to [plausible.io/settings](https://plausible.io/settings) and obtain an API key. Save it inside an `.env` file in the root of your project with `PLAUSIBLE_API_KEY=your-key`.
 
 <Collapsible summary="Not using Plausible Analytics?">
-  While you won't be able to copy/paste the results of each step, you can still follow them. The API endpoint or authentication might be different, or the shape of the result in a slightly different form. But the general idea is the same:
 
-  1. Go to your analytics tool's API documentation and check if you need to authenticate requests with them and how. Obtain that authentication then and save it e.g. inside an `.env` file
-  1. Request the specific API endpoint to get the top pages of your site
-  1. Create GraphQL nodes with the result
+While you won't be able to copy/paste the results of each step, you can still follow them. The API endpoint or authentication might be different, or the shape of the result in a slightly different form. But the general idea is the same:
 
-  For Google Analytics there's even an existing plugin called [gatsby-source-google-analytics-reporting-api](https://www.gatsbyjs.com/plugins/gatsby-source-google-analytics-reporting-api/). For reference, you can also check out the [Creating a Source Plugin](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/creating-a-source-plugin/) guide from Gatsby.
+1. Go to your analytics tool's API documentation and check if you need to authenticate requests with them and how. Obtain that authentication then and save it e.g. inside an `.env` file
+1. Request the specific API endpoint to get the top pages of your site
+1. Create GraphQL nodes with the result
+
+For Google Analytics there's even an existing plugin called [gatsby-source-google-analytics-reporting-api](https://www.gatsbyjs.com/plugins/gatsby-source-google-analytics-reporting-api/). For reference, you can also check out the [Creating a Source Plugin](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/creating-a-source-plugin/) guide from Gatsby.
+
 </Collapsible>
 
 ### Local Plugin

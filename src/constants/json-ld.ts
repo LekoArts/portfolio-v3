@@ -1,5 +1,9 @@
-import type { BreadcrumbListItem } from '@constants/types'
 import { SITE } from '@constants/meta'
+
+interface BreadcrumbListItem {
+	url: string
+	name: string
+}
 
 export const IDENTITY = {
 	'@id': `${SITE.url}/#identity`,
@@ -80,7 +84,7 @@ export function breadcrumbList(items: Array<BreadcrumbListItem>) {
 	}
 }
 
-interface ArticleProps {
+export interface ArticleProps {
 	post: {
 		title: string
 		description: string
