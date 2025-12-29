@@ -13,10 +13,6 @@ const _REDIRECTS: Array<Redirect> = [
 		toPath: '/testing-gatsbys-head-api-with-vitest-and-playwright/',
 	},
 	{
-		fromPath: '/projects/',
-		toPath: '/photos/',
-	},
-	{
 		fromPath: '/blog/',
 		toPath: '/writing/',
 	},
@@ -370,7 +366,28 @@ const _REDIRECTS: Array<Redirect> = [
 	},
 ]
 
+function findDuplicates(arr: Array<Redirect>) {
+	const seen = new Set<string>()
+	const duplicates = new Set<string>()
+	for (const item of arr) {
+		if (seen.has(item.fromPath)) {
+			duplicates.add(item.fromPath)
+		}
+		else {
+			seen.add(item.fromPath)
+		}
+	}
+	return Array.from(duplicates)
+}
+
 function formatRedirects(input: Array<Redirect>) {
+	const duplicates = findDuplicates(input)
+	if (duplicates.length > 0) {
+		throw new Error(
+			`Duplicate redirect fromPaths found: ${duplicates.join(', ')}`,
+		)
+	}
+
 	return Object.fromEntries(input.map(r => [r.fromPath, r.toPath]))
 }
 
