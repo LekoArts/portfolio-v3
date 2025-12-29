@@ -1,7 +1,61 @@
+/**
+ * Before 2025-12-29 the garden posts existed under /garden/[slug] paths.
+ * After that date, they have been moved to the root /[slug] paths.
+ * This constant holds the slugs of the garden posts at that time to create redirects.
+ */
+const GARDEN_SLUGS = [
+	'receiving-build-notifications-via-discord-webhooks',
+	'specimens-for-gatsby-powered-design-systems',
+	'language-tabs-for-markdown-and-mdx-code-blocks',
+	'adding-a-draft-feature-to-gatsby',
+	'creating-your-own-status-dashboard-with-gatsby',
+	'adding-support-for-multiple-authors-in-gatsby',
+	'filter-future-posts-on-a-gatsby-blog',
+	'adding-line-numbers-and-code-highlighting-to-mdx',
+	'what-is-a-digital-garden',
+	'python-data-types',
+	'python-comprehensions',
+	'generating-qr-codes-from-any-string-in-gatsby',
+	'smooth-shadows-for-images-using-their-dominant-color',
+	'running-cypress-tests-with-github-actions-in-parallel',
+	'how-to-add-plausible-analytics-to-gatsby',
+	'using-package-exports-to-define-multiple-entrypoints',
+	'cleaning-up-stale-branches',
+	'replacing-ls-with-exa',
+	'testing-gatsbys-head-api-with-vitest-and-playwright',
+	'my-favourite-hiking-apps',
+	'generating-readmes-from-gatsbys-pluginoptionsschema',
+	'how-to-write-theme-aware-styles-with-vanilla-extract',
+	'how-to-turn-typescript-enums-into-string-literal-types',
+	'using-duplicati-for-your-backups',
+	'effortless-web-scraping-with-cloudflare-workers',
+	'5-reasons-why-you-should-hire-me',
+	'publishing-a-rust-cli-on-npm',
+	'creating-a-spacer-component',
+	'tsup-excluding-files-from-the-build',
+	'how-to-use-vale-with-mdx',
+	'how-to-test-cli-output-in-jest-vitest',
+	'how-to-use-mdx-shortcodes-in-astro',
+	'my-first-unraid-server',
+	'essential-unraid-apps',
+	'how-to-send-notifications-from-duplicati-to-discord',
+	'fuzzy-search-for-your-git-repository',
+	'how-to-write-unit-tests-for-valibot',
+	'how-i-use-home-assistant-on-unraid',
+	'my-unraid-settings',
+	'replacing-ls-with-eza',
+	'tsdown-excluding-files-from-the-build',
+]
+
 interface Redirect {
 	fromPath: string
 	toPath: string
 }
+
+const GARDEN_REDIRECTS: Array<Redirect> = GARDEN_SLUGS.map(slug => ({
+	fromPath: `/garden/${slug}/`,
+	toPath: `/${slug}/`,
+}))
 
 const _REDIRECTS: Array<Redirect> = [
 	{
@@ -360,10 +414,6 @@ const _REDIRECTS: Array<Redirect> = [
 		fromPath: '/javascript/writing-performant-css-with-vanilla-extract/',
 		toPath: '/writing-performant-css-with-vanilla-extract/',
 	},
-	{
-		fromPath: '/garden/[slug]',
-		toPath: '/[slug]',
-	},
 ]
 
 function findDuplicates(arr: Array<Redirect>) {
@@ -391,4 +441,4 @@ function formatRedirects(input: Array<Redirect>) {
 	return Object.fromEntries(input.map(r => [r.fromPath, r.toPath]))
 }
 
-export const REDIRECTS = formatRedirects(_REDIRECTS)
+export const REDIRECTS = formatRedirects([..._REDIRECTS, ...GARDEN_REDIRECTS])
