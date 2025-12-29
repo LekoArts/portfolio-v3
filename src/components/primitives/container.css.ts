@@ -20,7 +20,7 @@ const containerBaseStyle = style({
 	},
 })
 
-export type ContainerVariants = 'default' | 'hero' | 'light' | 'dark' | 'navigation' | 'fullBleed' | 'proseRoot'
+export type ContainerVariants = 'default' | 'hero' | 'light' | 'dark' | 'navigation' | 'proseRoot'
 
 const containers: Record<ContainerVariants, StyleRule> = {
 	default: {},
@@ -32,7 +32,6 @@ const containers: Record<ContainerVariants, StyleRule> = {
 	navigation: {
 		zIndex: zIndices.sticky,
 	},
-	fullBleed: {},
 	proseRoot: {
 		'paddingTop': vars.space[16],
 		'paddingBottom': vars.space[20],

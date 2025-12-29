@@ -1,5 +1,4 @@
 import { vars } from '@styles/themes/contract.css'
-import { colorPalette } from '@styles/tokens/colors'
 import { transition } from '@styles/tokens/motion'
 import { globalStyle, style } from '@vanilla-extract/css'
 
@@ -18,12 +17,4 @@ globalStyle(`#lekoarts-theme-select .${toggleIconStyle}`, {
 
 globalStyle(`#lekoarts-theme-select .${toggleIconStyle}:hover`, {
 	color: vars.color.heading,
-})
-
-globalStyle(`div[data-variant-name="fullBleed"] #lekoarts-theme-select .${toggleIconStyle}`, {
-	color: colorPalette.gray[100],
-})
-
-globalStyle(`div[data-variant-name="fullBleed"] #lekoarts-theme-select .${toggleIconStyle}:hover`, {
-	color: 'white',
 })
