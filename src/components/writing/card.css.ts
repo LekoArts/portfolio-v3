@@ -1,4 +1,3 @@
-import type { CardVariants } from '@constants/types'
 import type { StyleRule } from '@vanilla-extract/css'
 import { themesSelectors } from '@styles/atoms.css'
 import { pseudoSelectors } from '@styles/selectors'
@@ -9,7 +8,10 @@ import { transition } from '@styles/tokens/motion'
 import { zIndices } from '@styles/tokens/z-indices'
 import { createVar, style, styleVariants } from '@vanilla-extract/css'
 
+export type CardVariants = 'default' | 'title-only' | 'ghost'
+
 const cardShadow = createVar()
+const cardShadowHover = createVar()
 
 export const linkStyle = style({
 	selectors: {
@@ -30,6 +32,7 @@ export const linkTargetStyle = style({
 const cardBaseStyle = style({
 	vars: {
 		[cardShadow]: vars.shadow.card.default,
+		[cardShadowHover]: vars.shadow.card.defaultHover,
 	},
 	borderRadius: vars.borderRadius.lg,
 	zIndex: zIndices.docked,
@@ -37,15 +40,12 @@ const cardBaseStyle = style({
 	boxShadow: cardShadow,
 	selectors: {
 		[pseudoSelectors.after]: {
-			vars: {
-				[cardShadow]: vars.shadow.card.defaultHover,
-			},
 			content: '""',
 			position: 'absolute',
 			zIndex: zIndices.hide,
 			width: vars.space.full,
 			height: vars.space.full,
-			boxShadow: cardShadow,
+			boxShadow: cardShadowHover,
 			opacity: 0,
 			transitionProperty: 'opacity',
 			transitionDuration: transition.duration.slow,
@@ -61,7 +61,7 @@ const cardBaseStyle = style({
 		},
 		[themesSelectors.dark]: {
 			vars: {
-				[cardShadow]: vars.shadow.card.defaultHoverDark,
+				[cardShadowHover]: vars.shadow.card.defaultHoverDark,
 			},
 		},
 	},
@@ -69,11 +69,16 @@ const cardBaseStyle = style({
 
 const cards: Record<CardVariants, StyleRule> = {
 	'default': {
-		background: colorPalette.white,
-		padding: vars.space[6],
-		selectors: {
+		'background': colorPalette.white,
+		'padding': vars.space[4],
+		'selectors': {
 			[themesSelectors.dark]: {
 				background: colorPalette.blueGray[800],
+			},
+		},
+		'@media': {
+			[minMediaQuery('lg')]: {
+				padding: vars.space[6],
 			},
 		},
 	},
@@ -89,6 +94,32 @@ const cards: Record<CardVariants, StyleRule> = {
 				vars: {
 					[cardShadow]: vars.shadow.card.titleOnlyDark,
 				},
+			},
+		},
+	},
+	'ghost': {
+		'padding': vars.space[2],
+		'vars': {
+			[cardShadow]: vars.shadow.card.ghost,
+		},
+		'selectors': {
+			[pseudoSelectors.after]: {
+				vars: {
+					[cardShadow]: vars.shadow.card.defaultHover,
+				},
+			},
+			[themesSelectors.dark]: {
+				vars: {
+					[cardShadow]: vars.shadow.card.ghostDark,
+				},
+			},
+		},
+		'@media': {
+			[minMediaQuery('md')]: {
+				padding: vars.space[3],
+			},
+			[minMediaQuery('lg')]: {
+				padding: vars.space[3],
 			},
 		},
 	},
@@ -112,18 +143,35 @@ const baseTitleStyle = style({
 
 const titles: Record<CardVariants, StyleRule> = {
 	'default': {
-		fontSize: vars.fontSize.lgx,
-		fontWeight: vars.fontWeight.bold,
+		'fontSize': vars.fontSize.lg,
+		'fontWeight': vars.fontWeight.bold,
+		'@media': {
+			[minMediaQuery('md')]: {
+				fontSize: vars.fontSize.lgx,
+			},
+		},
 	},
 	'title-only': {
 		'fontSize': vars.fontSize.md,
 		'paddingTop': vars.space[0],
 		'@media': {
 			[minMediaQuery('md')]: {
-				paddingTop: vars.space[8],
+				paddingTop: vars.space[4],
 			},
 			[minMediaQuery('lg')]: {
 				fontSize: vars.fontSize.lg,
+			},
+		},
+	},
+	'ghost': {
+		'fontSize': vars.fontSize.md,
+		'display': 'flex',
+		'gap': vars.space[3],
+		'paddingTop': vars.space[0],
+		'alignItems': 'flex-start',
+		'@media': {
+			[minMediaQuery('lg')]: {
+				fontSize: vars.fontSize.lgx,
 			},
 		},
 	},
@@ -131,7 +179,7 @@ const titles: Record<CardVariants, StyleRule> = {
 
 export const titleVariants = styleVariants(titles, title => [baseTitleStyle, title])
 
-export const iconStyle = style({
+export const defaultIconStyle = style({
 	'width': vars.space[6],
 	'height': vars.space[6],
 	'position': 'absolute',
@@ -150,6 +198,25 @@ export const iconStyle = style({
 			vars: {
 				'--icon-bg': 'transparent',
 			},
+		},
+	},
+})
+
+export const ghostIconStyle = style({
+	'width': vars.space[6],
+	'height': vars.space[6],
+	'color': vars.color.textMuted,
+	'marginTop': vars.space[0],
+	'selectors': {
+		[themesSelectors.dark]: {
+			vars: {
+				'--icon-bg': 'transparent',
+			},
+		},
+	},
+	'@media': {
+		[minMediaQuery('md')]: {
+			marginTop: vars.space[1],
 		},
 	},
 })

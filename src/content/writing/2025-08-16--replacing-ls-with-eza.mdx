@@ -1,0 +1,36 @@
+---
+title: Replacing ls with eza
+slug: replacing-ls-with-eza
+description: How to use eza, the modern maintained alternative for ls. It's a fork of exa with better features, bug fixes, and improved defaults for file listing in your terminal.
+date: 2025-08-16
+lastUpdated: 2025-08-16
+icon: developer-tools
+tags:
+- Developer Tools
+type: "note"
+---
+
+I've previously written about [Replacing ls with exa](/replacing-ls-with-exa/) and I have used [exa](https://github.com/ogham/exa) for many years. But now, at the time of writing, exa is unmaintained. You should use the fork [eza](https://github.com/eza-community/eza) instead.
+
+eza describes itself similar to exa:
+
+> eza is a modern alternative for the venerable file-listing command-line program ls that ships with Unix and Linux operating systems, giving it more features and better defaults.
+
+The fork fixed some annoying bugs and added more features.
+
+Follow the [installation guide](https://github.com/eza-community/eza/blob/main/INSTALL.md) to install eza. I personally used the `cargo install` command as I have the Rust toolchain set up on my machine. Normally I'd use [MacPorts](https://www.macports.org/) but the port would install the `rust` port, too, which I don't want (because then I have to Rust versions on my machine).
+
+Don't forget to install the [completions](https://github.com/eza-community/eza/blob/main/INSTALL.md#completions).
+
+Here' are the aliases I use:
+
+```sh
+## eza
+alias ls="eza" # ls
+alias ll='eza -lbF --git' # list, size, type, git
+alias llm='eza -lbGd --git --sort=modified' # long list, modified date sort
+alias la='eza -lbhHigUmuSa --time-style=long-iso --git --color-scale' # all list
+alias lx='eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale' # all + extended list
+alias lS='eza -1' # one column, just names
+alias lt='eza --tree --level=2' # tree
+```

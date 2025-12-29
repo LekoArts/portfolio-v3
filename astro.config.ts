@@ -21,7 +21,7 @@ const IS_PLAYWRIGHT = Boolean(process.env.IS_PLAYWRIGHT)
 export default defineConfig({
 	output: 'static',
 	site: SITE.url,
-	trailingSlash: 'always',
+	trailingSlash: SITE.trailingSlash,
 	redirects: REDIRECTS,
 	vite: {
 		plugins: [tsconfigPaths(), vanillaExtractPlugin()],

@@ -1,18 +1,18 @@
-import type { CATEGORY_CHOICES, TAGS_CHOICES } from '@constants/content'
+import type { TAGS_CHOICES } from '@constants/content'
 
 export type AlertStatus = 'note' | 'warning' | 'caution' | 'success'
 
 export type SVGIconNames
-	= | 'cli'
-		| 'discord'
-		| 'gatsby'
-		| 'general'
-		| 'javascript'
+	= | 'general'
+		| 'web-development'
+		| 'developer-tools'
+		| 'programming'
+		| 'self-hosting'
+		| 'ai'
+		| 'outdoors'
+		| 'travel'
 		| 'logo'
-		| 'mdx'
-		| 'python'
 		| 'react'
-		| 'typescript'
 		| 'pause'
 		| 'play'
 		| 'close'
@@ -30,31 +30,14 @@ export type SVGIconNames
 		| 'export'
 		| 'backward'
 		| 'download'
-		| 'rust'
 		| 'grid'
 		| 'list'
 		| 'masonry'
-		| 'astro'
-		| 'unraid'
+		| 'rss'
 
-export type CardVariants = 'default' | 'title-only'
-
-export interface CardProps {
-	slug: string
-	title: string
-	subtitle?: string
-	description?: string
-	variant?: CardVariants
-	icon?: SVGIconNames
-}
+export type TagsColorSchemes = 'green' | 'blue' | 'purple' | 'yellow' | 'teal' | 'gray' | 'red' | 'orange'
 
 export type ArrayElement<ArrayType extends readonly unknown[] | undefined>
 	= ArrayType extends readonly (infer ElementType)[] ? ElementType : never
 
 export type Tag = typeof TAGS_CHOICES[number] | (string & {})
-export type Category = (typeof CATEGORY_CHOICES)[number]
-
-export interface BreadcrumbListItem {
-	url: string
-	name: string
-}

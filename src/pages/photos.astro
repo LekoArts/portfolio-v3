@@ -8,7 +8,7 @@ import Container from '@components/primitives/container.astro'
 import Prose from '@components/typography/prose.astro'
 import Seo from '@components/seo.astro'
 import Spacer from '@components/primitives/spacer.astro'
-import { explanationLayoutWrapperStyle, layoutIconStyle, LAYOUT_TYPES } from './_photos.css'
+import { explanationLayoutWrapperStyle, layoutIconStyle, LAYOUT_TYPES } from './_styles/_photos.css'
 import Text from '@components/typography/text.astro'
 import Box from '@components/primitives/box.astro'
 import SvgIcon from '@components/primitives/svg-icon.astro'
@@ -17,6 +17,7 @@ import TagGroup from '@components/blocks/tag-group.astro'
 import Lightbox from '@components/images/lightbox.astro'
 import WithLightbox from '@components/images/with-lightbox.astro'
 import { getImageMetadata } from '@utils/photos'
+import { paddingResponsiveArrays } from '@styles/tokens/space'
 
 const images = import.meta.glob<{ default: ImageMetadata }>('../content/photos/**/*.{jpeg,jpg,png}', { eager: true })
 
@@ -60,7 +61,7 @@ const photos = Array.from(albumMap.values())
 		breadcrumbListItems={[{ name: `Photos`, url: `/photos/` }]}
 	/>
 	<SkipNavContent>
-		<Container paddingTop={16}>
+		<Container py={paddingResponsiveArrays.paddingSmall}>
 			<Prose>
 				<h1>Photos</h1>
 				<PhotographyText />
@@ -95,7 +96,6 @@ const photos = Array.from(albumMap.values())
 			<Spacer axis="vertical" size={6} />
 			<TagGroup id="photos" items={albumNames} />
 		</Container>
-		<Spacer size={20} axis="vertical" />
 		<Lightbox selector="lekoarts-lightbox">
 			<div id="photos-img-wrapper">
 				{
@@ -133,7 +133,7 @@ const photos = Array.from(albumMap.values())
 <script>
 	import type { LayoutType } from '@stores/ui'
 	import { $ui } from '@stores/ui'
-	import { gridImagesVariants, imageWrapperVariants } from './_photos.css'
+	import { gridImagesVariants, imageWrapperVariants } from './_styles/_photos.css'
 
 	const layoutButtons = document.querySelectorAll<HTMLButtonElement>('.button-layout')
 	const imgWrapper = document.getElementById('photos-img-wrapper') as HTMLElement

@@ -15,7 +15,7 @@ export const unresponsiveProperties = {
 export type UnresponsiveProperties = keyof typeof unresponsiveProperties
 
 export const responsiveProperties = {
-	display: ['block', 'inline-block', 'flex', 'inline-flex'],
+	display: ['block', 'inline-block', 'flex', 'inline-flex', 'none'],
 	fontSize: vars.fontSize,
 	marginTop: vars.space,
 	marginBottom: vars.space,

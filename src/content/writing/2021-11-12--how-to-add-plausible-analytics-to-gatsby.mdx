@@ -1,0 +1,104 @@
+---
+title: "How to Add Plausible Analytics to Gatsby"
+slug: how-to-add-plausible-analytics-to-gatsby
+description: "Learn how to add Plausible Analytics to your Gatsby site. Also read how to add TypeScript types for Plausible and 404 page tracking."
+date: 2021-11-12
+lastUpdated: 2023-08-22
+icon: "web-development"
+tags:
+  - Web Development
+type: "note"
+---
+
+You're a fan of [Plausible Analytics](https://plausible.io) and [Gatsby](https://www.gatsbyjs.com/)? Great! In this guide you'll learn how to add Plausible Analytics to your Gatsby site, including support for TypeScript, 404 error page tracking, and custom events.
+
+You should already have set up an account with Plausible and have your domain name at hand. It's the name in the URL: `https://plausible.io/<your-name>`. Also want to learn how to use Deferred Static Generation with Plausible? You can also check out the post [Using Deferred Static Generation with Analytics Tools](/using-deferred-static-generation-with-analytics-tools/) afterwards.
+
+## Setup
+
+Edit the `gatsby-ssr.jsx` to add the tracking script. You can choose between a variety of [script extensions](https://plausible.io/docs/script-extensions) – you can edit it in the `SCRIPT_URI` variable. This also adds the snippet for [404 error page tracking](https://plausible.io/docs/error-pages-tracking-404).
+
+```jsx title="gatsby-ssr.jsx"
+import * as React from "react"
+
+const SITE_DOMAIN = `your-domain`
+const PLAUSIBLE_DOMAIN = `plausible.io`
+const SCRIPT_URI = `/js/script.js`
+
+export const onRenderBody = ({ setHeadComponents }) => {
+  if (process.env.NODE_ENV === `production`) {
+    const scriptProps = {
+      "data-domain": SITE_DOMAIN,
+      src: `https://${PLAUSIBLE_DOMAIN}${SCRIPT_URI}`,
+    }
+
+    return setHeadComponents([
+      <link
+        key="plausible-preconnect"
+        rel="preconnect"
+        href={`https://${PLAUSIBLE_DOMAIN}`}
+      />,
+      <script key="plausible-script" defer {...scriptProps} />,
+      // See: https://plausible.io/docs/custom-event-goals#1-trigger-custom-events-with-javascript-on-your-site
+      <script
+        key="plausible-custom-events"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) };
+          `,
+        }}
+      />,
+    ])
+  }
+  return null
+}
+```
+
+Edit the `gatsby-browser.jsx` to add pageview tracking:
+
+```jsx title="gatsby-browser.jsx"
+export const onRouteUpdate = () => {
+  if (
+    process.env.NODE_ENV === `production` &&
+    typeof window.plausible !== `undefined`
+  ) {
+    window.plausible(`pageview`)
+  }
+}
+```
+
+## TypeScript
+
+In order to have IntelliSense on the custom events you'll need to declare Plausible on the global window element. Create a declaration file or reuse your existing one with the following contents:
+
+```ts
+declare global {
+  interface Window {
+    plausible: (
+      name: string,
+      options?: { callback?: () => void; props?: { [key: string]: string } }
+    ) => void
+  }
+}
+```
+
+## 404 Error Page Tracking
+
+Besides adding the custom event to the `src/pages/404.jsx` page you'll also need to create a custom event goal in Plausible. See [their documentation](https://plausible.io/docs/error-pages-tracking-404) to learn more.
+
+Here's an example of a 404 Page written in TypeScript:
+
+```tsx title="src/pages/404.tsx" {5-7}
+import * as React from "react"
+import { PageProps } from "gatsby"
+
+const NotFound: React.FC<PageProps> = () => {
+  React.useEffect(() => {
+    window.plausible(`404`, { props: { path: document.location.pathname } })
+  }, [])
+
+  return <main>404 - Not Found</main>
+}
+
+export default NotFound
+```

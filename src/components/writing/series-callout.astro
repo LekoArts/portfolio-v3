@@ -16,7 +16,14 @@ const mapSeriesIdToTitle: Record<string, string> = {
 }
 ---
 
-<Box as="details" px={[2, null, 4]} py={[2, null, 4]} borderRadius="lg" class={detailsStyle}>
+<Box
+	as="details"
+	px={[2, null, 4]}
+	py={[2, null, 4]}
+	borderRadius="lg"
+	class={detailsStyle}
+	data-testid="series-callout"
+>
 	<Box as="summary" class={summaryStyle}>
 		<em>“{mapSeriesIdToTitle[seriesId]}” ({postsInSeries.length} Part Series)</em>
 	</Box><ol>

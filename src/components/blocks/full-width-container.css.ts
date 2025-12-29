@@ -49,12 +49,6 @@ const fullWidthContainers: Record<FullWidthContainerVariants, StyleRule> = {
 		display: 'flex',
 		zIndex: zIndices.sticky,
 	},
-	fullBleed: {
-		background: 'transparent',
-		color: 'white',
-		display: 'flex',
-		zIndex: zIndices.sticky,
-	},
 }
 
 export const fullWidthContainerVariants = styleVariants(fullWidthContainers, fwc => [fwcBaseStyle, fwc])

@@ -5,10 +5,10 @@ subtitle: ""
 date: 2020-04-22
 lastUpdated: 2021-12-25
 description: "The Theme UI plugin for Figma allows for a workflow where Theme UI is the starting point both for design & development."
-type: "prose"
-category: "design"
+type: "essay"
+tags:
+- Web Development
 image: /og-images/theme-ui-plugin.png?v=2
-published: true
 ---
 
 In the process of solidifying my knowledge about Svelte and TypeScript I did what most open source developers do: Solve their own problems! For many projects I use [Figma](https://www.figma.com/) in the design phase and [Theme UI](http://theme-ui.com/) as the styling library for the project. I often times start with an implementation of the TailwindCSS config (colors, spacing, etc.) and modify it to the individual project's needs. Out of this comes an already finished Theme UI theme file.
@@ -22,9 +22,11 @@ Introducing the [Theme UI plugin for Figma](https://www.figma.com/community/plug
 You can install the plugin directly in Figma via the Community hub. Since the plugin is still in its early stages I'd appreciate feedback or contributions to the plugin itself. The source code is [on GitHub](https://github.com/LekoArts/figma-theme-ui).
 
 <Collapsible summary="Want to create your own Figma plugin?">
-  I've used [Figsvelte](https://github.com/thomas-lowry/figsvelte) as a boilerplate for this project and can also recommend it to you. [Svelte](https://svelte.dev/) compiles down to just pure JS so there's no overhead compared to virtual DOM solutions like React or Vue. Coupled with [Rollup](https://rollupjs.org/guide/en/) you have an ecosystem of plugins at your hand (e.g. TypeScript, cssnano, etc.) that can further improve the compiled JS. Lastly, the boilerplate uses [figma-plugin-ds-svelte](https://github.com/thomas-lowry/figma-plugin-ds-svelte) which is a UI library that mimics Figma's own design.
 
-  So if you know Svelte already, go ahead and clone the boilerplate. If not, I'd encourage you do try Svelte anyways since it's an exiting technology!
+I've used [Figsvelte](https://github.com/thomas-lowry/figsvelte) as a boilerplate for this project and can also recommend it to you. [Svelte](https://svelte.dev/) compiles down to just pure JS so there's no overhead compared to virtual DOM solutions like React or Vue. Coupled with [Rollup](https://rollupjs.org/guide/en/) you have an ecosystem of plugins at your hand (e.g. TypeScript, cssnano, etc.) that can further improve the compiled JS. Lastly, the boilerplate uses [figma-plugin-ds-svelte](https://github.com/thomas-lowry/figma-plugin-ds-svelte) which is a UI library that mimics Figma's own design.
+
+So if you know Svelte already, go ahead and clone the boilerplate. If not, I'd encourage you do try Svelte anyways since it's an exiting technology!
+
 </Collapsible>
 
 ## How a typical workflow looks like

@@ -6,9 +6,9 @@ date: 2021-10-31
 lastUpdated: 2022-08-07
 description: "Chakra UI has a powerful theming system that includes component styles. Learn how to create a custom made container component that supports light/dark mode, variants, sizes, and color schemes."
 type: "tutorial"
-category: "react"
+tags:
+- React
 image: /og-images/chakra-ui.png?v=1
-published: true
 ---
 
 ## Introduction
@@ -285,11 +285,13 @@ export default MultiContainer
 I'd like to start off by defining the React component as this defines the public facing API that a user will interact with. Based off on this the creation of the component style is easier in my experience.
 
 <Collapsible summary="Detailed look at MultiContainer component">
-  For a multipart component you can define as many parts as you want. In this case it's `outer` and `inner`. The `IMultiContainerProps` TypeScript type restricts the public API that the component will have and is a good guidance for the work that still needs to be done.
 
-  By using `CustomContainer` in the `useMultiStyleConfig` hook you defined the name of the component you'll pass to `extendTheme`. The hook returns the styles for each part you declared in the component style.
+For a multipart component you can define as many parts as you want. In this case it's `outer` and `inner`. The `IMultiContainerProps` TypeScript type restricts the public API that the component will have and is a good guidance for the work that still needs to be done.
 
-  Essentially the `MultiContainer` component is a wrapper around the existing `Container` component so that you can create full bleed containers and different styles between the outer and inner part. The `<Box />` component is a generic component provided by Chakra UI that accepts all valid props. The `outer` styles are passed to the prop `__css`. It has the same API as the `sx` prop, but has a lower style priority. This means you can override the style properties with Chakra style props.
+By using `CustomContainer` in the `useMultiStyleConfig` hook you defined the name of the component you'll pass to `extendTheme`. The hook returns the styles for each part you declared in the component style.
+
+Essentially the `MultiContainer` component is a wrapper around the existing `Container` component so that you can create full bleed containers and different styles between the outer and inner part. The `<Box />` component is a generic component provided by Chakra UI that accepts all valid props. The `outer` styles are passed to the prop `__css`. It has the same API as the `sx` prop, but has a lower style priority. This means you can override the style properties with Chakra style props.
+
 </Collapsible>
 
 > [!SUCCESS]
@@ -547,9 +549,11 @@ export function percentageWidths(
 ```
 
 <Collapsible summary="Detailed look at percentageWidths">
-  The function can take three arguments: `divisions`, `part`, and `property`. In the component style it's used with `4` and `"inner"` (so for `property` it falls back to `maxW`). At the end an object is returned that can be spread into the component style.
 
-  The for-loop is 1-indexed (and not zero-indexed as usual) so that for `4` divisions the `name` starts with `"1/4"`. For the case `"4/4"` the name `full` should be used instead. `w` is calculated by first dividing `i` with `divisions` and then multiplying it by `100` to make it a percentage. Using `Number()` you're casting it to a number so that you can round the value with `.toFixed(4)`. In line 10 the empty `result` object is directly mutated for each iteration in the for-loop. Only when the for-loop is finished the now filled `result` object is returned.
+The function can take three arguments: `divisions`, `part`, and `property`. In the component style it's used with `4` and `"inner"` (so for `property` it falls back to `maxW`). At the end an object is returned that can be spread into the component style.
+
+The for-loop is 1-indexed (and not zero-indexed as usual) so that for `4` divisions the `name` starts with `"1/4"`. For the case `"4/4"` the name `full` should be used instead. `w` is calculated by first dividing `i` with `divisions` and then multiplying it by `100` to make it a percentage. Using `Number()` you're casting it to a number so that you can round the value with `.toFixed(4)`. In line 10 the empty `result` object is directly mutated for each iteration in the for-loop. Only when the for-loop is finished the now filled `result` object is returned.
+
 </Collapsible>
 
 The goal of the function is to return an object in the following shape. It's then _spread_ into the `sizes` component style. This allows the usage of e.g. `size="1/4"` on the React component.
@@ -649,24 +653,26 @@ export function variantSolid(props: StyleFunctionProps) {
 ```
 
 <Collapsible summary="Detailed look at variantSolid">
-  Inside each modifier style you can use an object to define the style or a function that returns an object. Throughout the component style for `CustomContainer` the function syntax was used as this allows access to `props`. This way you can get this information:
 
-  - `colorScheme`
-  - `colorMode`
-  - `orientation`
-  - `theme`
+Inside each modifier style you can use an object to define the style or a function that returns an object. Throughout the component style for `CustomContainer` the function syntax was used as this allows access to `props`. This way you can get this information:
 
-  Which is excellent to create a reusable function that can consider all of the above. So `props` from `solid: (props) => ()` goes into `variantSolid`. As `gray` was defined as the default `colorScheme` no early return will happen.
+- `colorScheme`
+- `colorMode`
+- `orientation`
+- `theme`
 
-  The `mode('light-mode value', 'dark-mode value')(props)` function is a helper from Chakra UI and allows one to access the theme in dot notation and setting the value depending on the current color mode (light or dark mode).
+Which is excellent to create a reusable function that can consider all of the above. So `props` from `solid: (props) => ()` goes into `variantSolid`. As `gray` was defined as the default `colorScheme` no early return will happen.
 
-  This line is also interesting:
+The `mode('light-mode value', 'dark-mode value')(props)` function is a helper from Chakra UI and allows one to access the theme in dot notation and setting the value depending on the current color mode (light or dark mode).
 
-  ```js
-  const { bg = `${c}.500`, color = "white" } = accessibleColorMap[c] || {}
-  ```
+This line is also interesting:
 
-  If the `colorScheme` is `yellow` or `cyan` the values from `accessibleColorMap` should be used. Otherwise use `${c}.500` for the `bg` and `white` for `color`. This ensures good contrast for text on otherwise too light background.
+```js
+const { bg = `${c}.500`, color = "white" } = accessibleColorMap[c] || {}
+```
+
+If the `colorScheme` is `yellow` or `cyan` the values from `accessibleColorMap` should be used. Otherwise use `${c}.500` for the `bg` and `white` for `color`. This ensures good contrast for text on otherwise too light background.
+
 </Collapsible>
 
 With this new function, edit the component style:

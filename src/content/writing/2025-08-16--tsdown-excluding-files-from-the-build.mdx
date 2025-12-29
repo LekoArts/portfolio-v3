@@ -1,0 +1,50 @@
+---
+title: 'tsdown: Excluding Files From the Build'
+slug: tsdown-excluding-files-from-the-build
+description: Learn how to exclude test files and unwanted files from your tsdown build output using negative glob patterns. Keep your dist folder clean and production-ready.
+date: 2025-08-16
+lastUpdated: 2025-08-16
+icon: developer-tools
+tags:
+- Developer Tools
+type: "note"
+---
+
+[tsdown](https://tsdown.dev/) is a bundler powered by Rolldown that can bundle individual files or whole directories for you. If you're choosing a directory as your `entry` (e.g. `src` folder) you might bundle test files, too. They'll end up in your `dist` folder and shipped to npm.
+
+So your tsdown configuration might look like this:
+
+```ts title="tsdown.config.ts"
+import { defineConfig } from 'tsdown'
+
+export default defineConfig([
+  {
+    entry: ['src'],
+    platform: 'neutral',
+    dts: true,
+  },
+])
+```
+
+The `entry` option supports [_glob patterns_](https://code.visualstudio.com/docs/editor/glob-patterns). You can use this feature to exclude test files from your `entry`.
+
+In the example below any files that have `.test.` in their name or are in the `__tests__` folder will be excluded.
+
+```ts title="tsdown.config.ts" ins="'!src/**/__tests__/**'" ins="'!src/**/*.test.*'"
+import { defineConfig } from 'tsdown'
+
+export default defineConfig([
+  {
+    entry: ['src', '!src/**/__tests__/**', '!src/**/*.test.*'],
+    platform: 'neutral',
+    dts: true,
+  },
+])
+```
+
+With `!` you can negate a pattern. If you're unsure how your glob pattern will affect the output, you can also try websites like [globster.xyz](https://globster.xyz/).
+
+> [!NOTE]
+> **Looking for tsup?**
+>
+> Need a tsup version of this? Read [tsup: Excluding Files From the Build](/tsup-excluding-files-from-the-build/).

@@ -18,9 +18,8 @@ function loadFont(name: string) {
 export default async function handler(req: Request) {
 	const { searchParams } = new URL(req.url)
 
-	const hasTitle = searchParams.has('title')
-	const title = hasTitle ? (searchParams.get('title') as string) : 'Digital Garden'
-	const subTitle = hasTitle ? 'Digital Garden' : 'Lennart Jörgens'
+	const title = searchParams.get('title') ?? 'Writing'
+	const subTitle = 'Lennart Jörgens'
 	const lastUpdated = searchParams.get('lastUpdated') ?? null
 	const tags = searchParams.get('tags') ?? null
 
@@ -37,7 +36,7 @@ export default async function handler(req: Request) {
 					justifyContent: 'center',
 					alignItems: 'center',
 					position: 'relative',
-					background: 'url(https://www.lekoarts.de/edge/digital-garden-template.png)',
+					background: 'url(https://www.lekoarts.de/edge/og-image-template.png)',
 				}}
 			>
 				<div
@@ -73,7 +72,7 @@ export default async function handler(req: Request) {
 						style={{
 							display: 'flex',
 							wordBreak: 'break-word',
-							background: 'linear-gradient(to bottom, #7AD28D 0%, #1B9C68 100%)',
+							background: 'linear-gradient(to bottom, #F68553 0%, #BD422D 100%)',
 							backgroundClip: 'text',
 							WebkitBackgroundClip: 'text',
 							WebkitTextFillColor: 'transparent',
@@ -96,7 +95,7 @@ export default async function handler(req: Request) {
 									position: 'absolute',
 									left: '80px',
 									bottom: '80px',
-									background: 'linear-gradient(to bottom, #FFFFFF 0%, #C3F1C3 100%)',
+									background: 'linear-gradient(to bottom, #FFFFFF 0%, #f1d3c3 100%)',
 									backgroundClip: 'text',
 									WebkitBackgroundClip: 'text',
 									WebkitTextFillColor: 'transparent',
@@ -105,8 +104,6 @@ export default async function handler(req: Request) {
 									textAlign: 'left',
 								}}
 							>
-								Last updated:
-								{' '}
 								{lastUpdated}
 							</div>
 						)
@@ -120,7 +117,7 @@ export default async function handler(req: Request) {
 									position: 'absolute',
 									right: '80px',
 									bottom: '80px',
-									background: 'linear-gradient(to bottom, #FFFFFF 0%, #C3F1C3 100%)',
+									background: 'linear-gradient(to bottom, #FFFFFF 0%, #f1d3c3 100%)',
 									backgroundClip: 'text',
 									WebkitBackgroundClip: 'text',
 									WebkitTextFillColor: 'transparent',
@@ -129,8 +126,6 @@ export default async function handler(req: Request) {
 									textAlign: 'left',
 								}}
 							>
-								Tags:
-								{' '}
 								{tags.split(',').join(', ')}
 							</div>
 						)
@@ -159,5 +154,5 @@ export default async function handler(req: Request) {
 }
 
 export const config: Config = {
-	path: '/og/garden',
+	path: '/og/writing',
 }

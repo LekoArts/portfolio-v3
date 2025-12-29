@@ -1,0 +1,50 @@
+---
+title: "tsup: Excluding Files From the Build"
+slug: tsup-excluding-files-from-the-build
+description: A short explainer on how you can exclude test files and other unwanted files from your tsup build output using negative glob patterns in the entry field.
+date: 2023-11-04
+lastUpdated: 2023-11-04
+icon: developer-tools
+tags:
+  - Developer Tools
+type: "note"
+---
+
+[tsup](https://tsup.egoist.dev/) is a popular bundler powered by [esbuild](https://github.com/evanw/esbuild). You can bundle, transform, and minify JavaScript and TypeScript with it.
+
+One common problem I ran into was that I needed to exclude files from the build output, namely test files. Because my Jest/Vitest files are most often inside a `__tests__` folder inside `src` or alongside the source files with a postfix of `<filename>.test.<ext>`.
+
+You can use the CLI to give tsup its inputs:
+
+```shell
+tsup src
+```
+
+This would build all files inside the `src` directory. In a configuration file it would look like this:
+
+```ts title="tsup.config.ts"
+import { defineConfig } from "tsup"
+
+export default defineConfig({
+  entry: ["src"],
+})
+```
+
+tsup uses [globby](https://www.npmjs.com/package/globby) under the hood for its pattern matching inside `entry` so you can also use `!` to notate a negative pattern.
+
+To exclude files inside `__tests__` or `<filename>.test.<ext>` files, you can modify the `entry` to this:
+
+```ts title="tsup.config.ts" ins='"!src/**/__tests__/**"' ins='"!src/**/*.test.*"'
+import { defineConfig } from "tsup"
+
+export default defineConfig({
+  entry: ["src", "!src/**/__tests__/**", "!src/**/*.test.*"],
+})
+```
+
+Feel free to use a less verbose configuration (since you can combine this logic into one pattern) and test it with e.g. [globster.xyz](https://globster.xyz/).
+
+> [!NOTE]
+> **Looking for tsdown?**
+>
+> Need a tsdown version of this? Read [tsdown: Excluding Files From the Build](/tsdown-excluding-files-from-the-build/).

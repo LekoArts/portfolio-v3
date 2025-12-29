@@ -3,7 +3,7 @@
 exports[`json-ld > article > basic output 1`] = `
 {
   "@type": "Article",
-  "articleSection": "Digital Garden",
+  "articleSection": "Writing",
   "author": {
     "@id": "https://www.lekoarts.de/#identity",
   },
@@ -17,7 +17,7 @@ exports[`json-ld > article > basic output 1`] = `
   "dateModified": "2021-07-17",
   "datePublished": "2021-07-17",
   "description": "Sci-Fi",
-  "genre": "Series",
+  "genre": "essay",
   "headline": "The Expanse",
   "image": {
     "@type": "ImageObject",

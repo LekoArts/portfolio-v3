@@ -22,8 +22,8 @@ const metaTagAssertions = [
 		],
 	},
 	{
-		name: 'Blog Post (Tutorial)',
-		url: '/react/using-deferred-static-generation-with-analytics-tools/',
+		name: 'Tutorial',
+		url: '/using-deferred-static-generation-with-analytics-tools/',
 		title: 'Using Deferred Static Generation With Analytics Tools',
 		metaTags: [
 			{
@@ -40,7 +40,7 @@ const metaTagAssertions = [
 			},
 			{
 				key: 'twitter:label2',
-				value: 'Category',
+				value: 'Tags',
 				type: 'name',
 			},
 			{
@@ -51,8 +51,8 @@ const metaTagAssertions = [
 		],
 	},
 	{
-		name: 'Blog Post (Prose)',
-		url: '/design/introducing-the-theme-ui-plugin-for-figma/',
+		name: 'Essay',
+		url: '/introducing-the-theme-ui-plugin-for-figma/',
 		title: 'Introducing the Theme UI Plugin for Figma',
 		metaTags: [
 			{
@@ -69,19 +69,19 @@ const metaTagAssertions = [
 			},
 			{
 				key: 'twitter:label2',
-				value: 'Category',
+				value: 'Tags',
 				type: 'name',
 			},
 			{
 				key: 'twitter:data2',
-				value: 'Design',
+				value: 'Web Development',
 				type: 'name',
 			},
 		],
 	},
 	{
-		name: 'Garden Post',
-		url: '/garden/how-to-add-plausible-analytics-to-gatsby/',
+		name: 'Note',
+		url: '/how-to-add-plausible-analytics-to-gatsby/',
 		title: 'How to Add Plausible Analytics to Gatsby',
 		metaTags: [
 			{
@@ -94,7 +94,7 @@ const metaTagAssertions = [
 			},
 			{
 				key: 'og:image',
-				value: 'https://www.lekoarts.de/og/garden?title=How+to+Add+Plausible+Analytics+to+Gatsby&lastUpdated=Aug+22%2C+2023&tags=Gatsby',
+				value: 'https://www.lekoarts.de/og/writing?title=How+to+Add+Plausible+Analytics+to+Gatsby&lastUpdated=Aug+22%2C+2023&tags=Web+Development',
 			},
 			{
 				key: 'twitter:label2',
@@ -103,7 +103,7 @@ const metaTagAssertions = [
 			},
 			{
 				key: 'twitter:data2',
-				value: 'Gatsby',
+				value: 'Web Development',
 				type: 'name',
 			},
 		],
@@ -159,20 +159,5 @@ test.describe('Meta Tags', () => {
 		await page.goto('/')
 		const lang = await page.locator('html').getAttribute('lang')
 		expect(lang).toBe('en-US')
-	})
-	test('should be correct on category pages', async ({ page }) => {
-		await page.goto('/tutorials/')
-		await expect(page).toHaveTitle(`Tutorials | ${SITE.title}`)
-		const desc1 = await page.locator('meta[property="og:description"]').getAttribute('content')
-		expect(desc1).toStrictEqual(
-			'Tutorials across different categories in a longform format & with interactive elements',
-		)
-
-		await page.goto('/community/')
-		await expect(page).toHaveTitle(`Community articles | ${SITE.title}`)
-		const desc2 = await page.locator('meta[property="og:description"]').getAttribute('content')
-		expect(desc2).toStrictEqual(
-			'Building an engaging & inclusive community is hard and takes work. From the perspective of an open source maintainer I want to help you achieve this goal.',
-		)
 	})
 })

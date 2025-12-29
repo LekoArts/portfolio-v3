@@ -1,11 +1,7 @@
+import type { ArticleProps } from '../json-ld'
 import { article, breadcrumbList } from '../json-ld'
 
-const category = {
-	name: 'Series',
-	slug: '/series',
-}
-
-const post = {
+const post: ArticleProps['post'] = {
 	title: 'The Expanse',
 	description: 'Sci-Fi',
 	slug: '/the-expanse',
@@ -13,6 +9,7 @@ const post = {
 	lastUpdated: '2021-07-17',
 	year: '2021',
 	image: '/path-to-image.png',
+	type: 'essay',
 }
 
 describe('json-ld', () => {
@@ -26,30 +23,8 @@ describe('json-ld', () => {
 	})
 	describe('article', () => {
 		it('basic output', () => {
-			const result = article({ category, post, isGarden: true })
+			const result = article({ post })
 			expect(result['@graph'][2]).toMatchSnapshot()
-		})
-		it('isGarden: true', () => {
-			const result = article({ category, post, isGarden: true })
-			expect(result['@graph']).toEqual(
-				expect.arrayContaining([
-					expect.objectContaining({
-						'@type': 'Article',
-						'articleSection': 'Digital Garden',
-					}),
-				]),
-			)
-		})
-		it('isGarden: false', () => {
-			const result = article({ category, post, isGarden: false })
-			expect(result['@graph']).toEqual(
-				expect.arrayContaining([
-					expect.objectContaining({
-						'@type': 'Article',
-						'articleSection': 'Writing',
-					}),
-				]),
-			)
 		})
 	})
 })

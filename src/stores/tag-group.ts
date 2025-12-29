@@ -2,14 +2,14 @@ import type { Tag } from '@constants/types'
 import { map } from 'nanostores'
 
 interface TagGroupStore {
-	garden: Array<Tag>
+	writing: Array<Tag>
 	photos: Array<string>
 }
 
 export type TagGroupKeys = keyof TagGroupStore
 
 const initialValue: TagGroupStore = {
-	garden: [],
+	writing: [],
 	photos: [],
 }
 

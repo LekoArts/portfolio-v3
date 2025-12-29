@@ -6,7 +6,7 @@ import SkipNavContent from '@components/a11y/skip-nav-content.astro'
 import Base from '@layouts/base.astro'
 import Seo from '@components/seo.astro'
 import { HOMEPAGE } from '@constants/json-ld'
-import { filterPublished, getSortedGarden, getSortedWriting } from '@utils/collection'
+import { filterPublished, filterBySlugs, getSortedWriting } from '@utils/collection'
 import FullWidthContainer from '@components/blocks/full-width-container.astro'
 import { paddingResponsiveArrays } from '@styles/tokens/space'
 import Heading from '@components/typography/heading.astro'
@@ -16,14 +16,20 @@ import Badge from '@components/primitives/badge.astro'
 import Spacer from '@components/primitives/spacer.astro'
 import PrimaryButton from '@components/primitives/button/primary.astro'
 import SecondaryButton from '@components/primitives/button/secondary.astro'
-import { slugify } from '@utils/slugify'
-import { artGridStyle, photoLinkStyle, cardsGridStyle, repositoriesGridStyle, staticImageStyle } from './_index.css'
+import {
+	artGridStyle,
+	photoLinkStyle,
+	cardsGridStyle,
+	repositoriesGridStyle,
+	staticImageStyle,
+} from './_styles/_index.css'
 import Card from '@components/writing/card.astro'
 import PhotoOne from '../assets/pages-index-01.jpg'
 import PhotoTwo from '../assets/pages-index-02.jpg'
 import Container from '@components/primitives/container.astro'
 import Tag from '@components/primitives/tag.astro'
 import { fetchGithub } from '@lib/github'
+import { normalize } from '@utils/slash'
 
 const openSourceRepos = [
 	{
@@ -65,7 +71,7 @@ const githubResponse = await fetchGithub<GitHubResponse>(
 	JSON.stringify({
 		query: `#graphql
 			query {
-				primary: repository(name: "gatsby-themes", owner: "LekoArts") {
+				primary: repository(name: "mastra", owner: "mastra-ai") {
 					stargazerCount
 					description
 					name
@@ -86,8 +92,14 @@ const {
 	data: { primary, secondary },
 } = githubResponse
 
-const writing = getSortedWriting(await getCollection('writing', filterPublished)).slice(0, 4)
-const garden = getSortedGarden(await getCollection('garden')).slice(0, 6)
+const writing = getSortedWriting(await getCollection('writing', filterPublished)).slice(0, 7)
+const featured = await getCollection('writing', (entry) =>
+	filterBySlugs(entry, [
+		'writing-performant-css-with-vanilla-extract',
+		'my-first-unraid-server',
+		'fuzzy-search-for-your-git-repository',
+	]),
+)
 
 const [firstPost, ...otherPosts] = writing
 ---
@@ -133,7 +145,24 @@ const [firstPost, ...otherPosts] = writing
 						}
 						<Text>{firstPost.data.description}</Text>
 					</div>
-					<PrimaryButton href={slugify(firstPost.id, firstPost.data.category.id)}>Continue Reading</PrimaryButton>
+					<PrimaryButton href={normalize(firstPost.data.slug)}>Continue Reading</PrimaryButton>
+				</Box>
+				<Box display="flex" flexDirection="column" width="full" gap={6}>
+					<Box display="flex" justifyContent="space-between" alignItems="center">
+						<Badge variant="light">Featured</Badge>
+					</Box>
+					<Box class={cardsGridStyle}>
+						{
+							featured.map((post) => (
+								<Card
+									slug={normalize(post.data.slug)}
+									title={post.data.title}
+									variant="default"
+									description={post.data.description}
+								/>
+							))
+						}
+					</Box>
 				</Box>
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
 					<Box display="flex" justifyContent="space-between" alignItems="center">
@@ -143,24 +172,11 @@ const [firstPost, ...otherPosts] = writing
 					<Box class={cardsGridStyle}>
 						{
 							otherPosts.map((post) => (
-								<Card slug={slugify(post.id, post.data.category.id)} title={post.data.title} variant="title-only" />
-							))
-						}
-					</Box>
-				</Box>
-				<Box display="flex" flexDirection="column" width="full" gap={6}>
-					<Box display="flex" justifyContent="space-between" alignItems="center">
-						<Badge variant="light">Digital Garden</Badge>
-						<SecondaryButton aria-label="Read all Digital Garden posts" href="/garden/">Read all</SecondaryButton>
-					</Box>
-					<Box class={cardsGridStyle}>
-						{
-							garden.map((post) => (
 								<Card
-									slug={slugify(post.id, 'garden')}
+									slug={normalize(post.data.slug)}
 									title={post.data.title}
-									icon={post.data.icon}
 									variant="title-only"
+									icon={post.data.icon}
 								/>
 							))
 						}

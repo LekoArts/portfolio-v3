@@ -6,9 +6,9 @@ date: 2022-11-10
 lastUpdated: 2022-11-10
 description: "Learn how to build a Tailwind UI component from scratch by writing performant and type-safe CSS with vanilla-extract. The component will support multiple variants and themes."
 type: "tutorial"
-category: "javascript"
+tags:
+- Programming
 image: /og-images/vanilla-extract-overview.png?v=1
-published: true
 ---
 
 ## Introduction
@@ -710,42 +710,44 @@ export const darkThemeClass = createTheme(vars, {
 Congrats, you successfully created a light and dark theme using a theme contract.
 
 <Collapsible summary="Pro Tip: Using Open Props">
-  Some food for thought: You could use [Open Props](https://open-props.style/) together with vanilla-extract. You can use it in your themes or directly in the styles of a component.
 
-  ```ts title="themes.css.ts"
-  import { style, createVar } from "@vanilla-extract/css"
-  import OPColors from "open-props/src/colors"
+Some food for thought: You could use [Open Props](https://open-props.style/) together with vanilla-extract. You can use it in your themes or directly in the styles of a component.
 
-  export const colors = OPColors
-  ```
+```ts title="themes.css.ts"
+import { style, createVar } from "@vanilla-extract/css"
+import OPColors from "open-props/src/colors"
 
-  ```ts title="button.css.ts"
-  import { style, createVar } from "@vanilla-extract/css"
-  import OP from "open-props"
+export const colors = OPColors
+```
 
-  export const accentVar = createVar()
-  export const onAccent = createVar()
+```ts title="button.css.ts"
+import { style, createVar } from "@vanilla-extract/css"
+import OP from "open-props"
 
-  export const button = style({
+export const accentVar = createVar()
+export const onAccent = createVar()
+
+export const button = style({
+  vars: {
+    [accentVar]: OP.indigo7,
+    [onAccent]: OP.indigo0,
+  },
+  backgroundColor: accentVar,
+  color: onAccent,
+  padding: `${OP.size4} ${OP.size8}`,
+  borderRadius: OP.radius2,
+  border: "none",
+  ":hover": {
     vars: {
-      [accentVar]: OP.indigo7,
-      [onAccent]: OP.indigo0,
+      [accentVar]: OP.indigo8,
+      [onAccent]: "white",
     },
-    backgroundColor: accentVar,
-    color: onAccent,
-    padding: `${OP.size4} ${OP.size8}`,
-    borderRadius: OP.radius2,
-    border: "none",
-    ":hover": {
-      vars: {
-        [accentVar]: OP.indigo8,
-        [onAccent]: "white",
-      },
-    },
-  })
-  ```
+  },
+})
+```
 
-  It doesn't have to be Open Props of course, feel free to use other libraries like Tailwind!
+It doesn't have to be Open Props of course, feel free to use other libraries like Tailwind!
+
 </Collapsible>
 
 ### Using theme classes
@@ -787,90 +789,92 @@ After setting up a lot of boilerplate, it's now finally time to write some CSS f
 `style` creates a style rule with a locally scoped class name which you then can directly import into your component. `styleVariants` creates a collection of style rules, really useful when mapping component props to styles, e.g. `<button className={styles.background[props.variant]}>`.
 
 <Collapsible summary="Why I love styleVariants ❤️">
-  `styleVariants` is probably my favourite vanilla-extract API. You can easily style your whole app only with `style` and `styleVariants`. In my personal site I often use `styleVariants` for components that have different variants, e.g. an `<Alert>` component. I think it's a really clear and easy to understand API that maps directly to the React component it is used in. You can also share TypeScript types.
 
-  Here's an example of an `<Alert>` component with multiple variants. Depending on the variant it should have a different `background`. In addition, there should also be variants for both light and dark theme. Ask yourself the question, how would you currently solve this problem in your app or at work?
+`styleVariants` is probably my favourite vanilla-extract API. You can easily style your whole app only with `style` and `styleVariants`. In my personal site I often use `styleVariants` for components that have different variants, e.g. an `<Alert>` component. I think it's a really clear and easy to understand API that maps directly to the React component it is used in. You can also share TypeScript types.
 
-  The vanilla-extract stylesheet:
+Here's an example of an `<Alert>` component with multiple variants. Depending on the variant it should have a different `background`. In addition, there should also be variants for both light and dark theme. Ask yourself the question, how would you currently solve this problem in your app or at work?
 
-  ```ts title="alert.css.ts"
-  import {
-    createVar,
-    style,
-    StyleRule,
-    styleVariants,
-  } from "@vanilla-extract/css"
-  import { themesSelectors } from "../../styles/atoms.css"
-  import { vars } from "../../styles/themes/contract.css"
-  import { colorPalette } from "../../styles/tokens/colors"
+The vanilla-extract stylesheet:
 
-  export type AlertStatus = "info" | "warning" | "error" | "success"
+```ts title="alert.css.ts"
+import {
+  createVar,
+  style,
+  StyleRule,
+  styleVariants,
+} from "@vanilla-extract/css"
+import { themesSelectors } from "../../styles/atoms.css"
+import { vars } from "../../styles/themes/contract.css"
+import { colorPalette } from "../../styles/tokens/colors"
 
-  const bgVar = createVar()
+export type AlertStatus = "info" | "warning" | "error" | "success"
 
-  const alertBaseStyle = style({
+const bgVar = createVar()
+
+const alertBaseStyle = style({
+  vars: {
+    [bgVar]: vars.color.bg,
+  },
+  background: bgVar,
+})
+
+const colorMap = {
+  info: `blue`,
+  warning: `orange`,
+} as const
+
+const darkBg = 200
+const bg = 100
+
+const alerts: Record<AlertStatus, StyleRule> = {
+  info: {
     vars: {
-      [bgVar]: vars.color.bg,
+      [bgVar]: colorPalette[colorMap.info][bg],
     },
-    background: bgVar,
-  })
-
-  const colorMap = {
-    info: `blue`,
-    warning: `orange`,
-  } as const
-
-  const darkBg = 200
-  const bg = 100
-
-  const alerts: Record<AlertStatus, StyleRule> = {
-    info: {
-      vars: {
-        [bgVar]: colorPalette[colorMap.info][bg],
-      },
-      selectors: {
-        [themesSelectors.dark]: {
-          vars: {
-            [bgVar]: colorPalette[colorMap.info][darkBg],
-          },
+    selectors: {
+      [themesSelectors.dark]: {
+        vars: {
+          [bgVar]: colorPalette[colorMap.info][darkBg],
         },
       },
     },
-    warning: {
-      vars: {
-        [bgVar]: colorPalette[colorMap.warning][bg],
-      },
-      selectors: {
-        [themesSelectors.dark]: {
-          vars: {
-            [bgVar]: colorPalette[colorMap.warning][darkBg],
-          },
+  },
+  warning: {
+    vars: {
+      [bgVar]: colorPalette[colorMap.warning][bg],
+    },
+    selectors: {
+      [themesSelectors.dark]: {
+        vars: {
+          [bgVar]: colorPalette[colorMap.warning][darkBg],
         },
       },
     },
-  }
+  },
+}
 
-  export const alertVariants = styleVariants(alerts, (alert) => [
-    alertBaseStyle,
-    alert,
-  ])
-  ```
+export const alertVariants = styleVariants(alerts, (alert) => [
+  alertBaseStyle,
+  alert,
+])
+```
 
-  The base style defines the `bgVar` CSS variable and assigns it to `background`. Then, depending on the `AlertStatus`, the CSS variable is overridden. The `selectors` key is used to handle the dark mode case. How it's used in the React component:
+The base style defines the `bgVar` CSS variable and assigns it to `background`. Then, depending on the `AlertStatus`, the CSS variable is overridden. The `selectors` key is used to handle the dark mode case. How it's used in the React component:
 
-  ```tsx title="alert.tsx"
-  import { AlertStatus, alertVariants } from "./alert.css"
+```tsx title="alert.tsx"
+import { AlertStatus, alertVariants } from "./alert.css"
 
-  interface IAlertProps {
-    title: string
-    status: AlertStatus
-  }
+interface IAlertProps {
+  title: string
+  status: AlertStatus
+}
 
-  export const Alert: React.FC<React.PropsWithChildren<IAlertProps>> = ({
-    status,
-    children,
-  }) => <div className={alertVariants[status]}>{children}</div>
-  ```
+export const Alert: React.FC<React.PropsWithChildren<IAlertProps>> = ({
+  status,
+  children,
+}) => <div className={alertVariants[status]}>{children}</div>
+```
+
 </Collapsible>
 
 ### style
@@ -1156,48 +1160,50 @@ So far I've shown vanilla-extract APIs that are part of `@vanilla-extract/css`, 
 [Sprinkles][sprinkles] generates a static set of custom utility classes that you can use throughout your app. With Sprinkles you can build your own zero-runtime, type-safe version of [Tailwind](https://tailwindcss.com/) or [Styled System](https://styled-system.com/).
 
 <Collapsible summary="Tailwind to Sprinkles Comparisons">
-  Here's how you would write Tailwind-like utility classes with Sprinkles:
 
-  ```html title="Tailwind"
-  <main class="text-xl max-w-xl p-4">Hello World</main>
-  ```
+Here's how you would write Tailwind-like utility classes with Sprinkles:
 
-  ```tsx title="Sprinkles"
-  import { sprinkles as s } from "./sprinkles.css"
+```html title="Tailwind"
+<main class="text-xl max-w-xl p-4">Hello World</main>
+```
 
-  const Page = () => (
-    <main className={s({ fontSize: `xl`, maxWidth: `xl`, p: 4 })}>
-      Hello World
-    </main>
-  )
-  ```
+```tsx title="Sprinkles"
+import { sprinkles as s } from "./sprinkles.css"
 
-  Tailwind supports responsive design and dark mode but with the right configuration Sprinkles can do that, too!
-
-  ```html title="Tailwind"
-  <main class="w-16 sm:w-32 text-center sm:text-left bg-white dark:bg-slate-800">
+const Page = () => (
+  <main className={s({ fontSize: `xl`, maxWidth: `xl`, p: 4 })}>
     Hello World
   </main>
-  ```
+)
+```
 
-  ```tsx title="Sprinkles"
-  import { sprinkles as s } from "./sprinkles.css"
+Tailwind supports responsive design and dark mode but with the right configuration Sprinkles can do that, too!
 
-  // You can use object notation or array notation for conditions
-  const Page = () => (
-    <main
-      className={s({
-        width: { default: 16, sm: 32 },
-        textAlign: [`center`, `left`],
-        background: { light: `white`, dark: `bgSlate800` },
-      })}
-    >
-      Hello World
-    </main>
-  )
-  ```
+```html title="Tailwind"
+<main class="w-16 sm:w-32 text-center sm:text-left bg-white dark:bg-slate-800">
+  Hello World
+</main>
+```
 
-  I hope these examples clicked for you and you can understand the immediate value that Sprinkles can offer. The Sprinkles version might seem more verbose but you can create your own `<Box>` component to mitigate that. At the end of this section you'll learn more about that.
+```tsx title="Sprinkles"
+import { sprinkles as s } from "./sprinkles.css"
+
+// You can use object notation or array notation for conditions
+const Page = () => (
+  <main
+    className={s({
+      width: { default: 16, sm: 32 },
+      textAlign: [`center`, `left`],
+      background: { light: `white`, dark: `bgSlate800` },
+    })}
+  >
+    Hello World
+  </main>
+)
+```
+
+I hope these examples clicked for you and you can understand the immediate value that Sprinkles can offer. The Sprinkles version might seem more verbose but you can create your own `<Box>` component to mitigate that. At the end of this section you'll learn more about that.
+
 </Collapsible>
 
 ### Defining Sprinkles
@@ -1381,29 +1387,31 @@ const responsiveProperties = defineProperties({
 ```
 
 <Collapsible summary="Insight: transformBreakpoints">
-  `transformBreakpoints` is a utility function to take in the `breakpoints` defined in `themes.css.ts` and spit out a valid `conditions` object for Sprinkles.
 
-  If you take this as an input:
+`transformBreakpoints` is a utility function to take in the `breakpoints` defined in `themes.css.ts` and spit out a valid `conditions` object for Sprinkles.
 
-  ```ts
-  export const breakpoints = {
-    mobile: 0,
-    tablet: 768,
+If you take this as an input:
+
+```ts
+export const breakpoints = {
+  mobile: 0,
+  tablet: 768,
+}
+```
+
+For the `mobile` case the `value === 0` condition will be truthy and only an empty object will be returned. For the `tablet` case a media query will be defined.
+
+The output looks something like this:
+
+```ts
+{
+  mobile: {},
+  tablet: {
+    "@media": `screen and (min-width: 768px)`
   }
-  ```
+}
+```
 
-  For the `mobile` case the `value === 0` condition will be truthy and only an empty object will be returned. For the `tablet` case a media query will be defined.
-
-  The output looks something like this:
-
-  ```ts
-  {
-    mobile: {},
-    tablet: {
-      "@media": `screen and (min-width: 768px)`
-    }
-  }
-  ```
 </Collapsible>
 
 The `responsiveProperties` has two new keys: `responsiveArray` and `shorthands`. Here's an explainer on both of them:
@@ -1675,63 +1683,65 @@ Your browser preview should now look like this:
 And that's a wrap for the Sprinkles section of this tutorial. Everything you learned so far will be enough to build out your small blog to really large company websites. And as promised, read below the pro tip about making your own `<Box>` component. This is the primary way of using Sprinkles for me.
 
 <Collapsible summary="Pro Tip: Your own Box component">
-  So, what's a `<Box>` component? It's a low-level component for binding your theme-based styles to an element. You can apply CSS properties of your design system through props to this `<Box>` component. You might have seen this in e.g. [Chakra UI](https://chakra-ui.com/docs/components/box). Here's an example usage:
 
-  ```tsx
-  import Box from "./box"
+So, what's a `<Box>` component? It's a low-level component for binding your theme-based styles to an element. You can apply CSS properties of your design system through props to this `<Box>` component. You might have seen this in e.g. [Chakra UI](https://chakra-ui.com/docs/components/box). Here's an example usage:
 
-  export default function Component() {
-    return (
-      <Box px="4" fontSize="lg">
-        Hello World
-      </Box>
-    )
-  }
-  ```
+```tsx
+import Box from "./box"
 
-  You get the type safety of Sprinkles with an (in my eyes) better developer experience as props on a React component are more concise than constantly using `sprinkles`. You can also use this `<Box>` component as the fundamental building block of your other React components. This very same `<Collapsible>` component this content is currently rendered in, is made out of `<Box>` components. Here's the actual source code:
-
-  ```tsx
-  import * as React from "react"
-  import { Box } from "../primitives"
-  import { detailsStyle, summaryStyle } from "./collapsible.css"
-
-  export const Collapsible = ({ summary, children }) => (
-    <Box
-      as="details"
-      px={[`4`, null, `6`]}
-      py="4"
-      borderRadius="lg"
-      className={detailsStyle}
-    >
-      <Box as="summary" className={summaryStyle}>
-        {summary}
-      </Box>
-      {children}
+export default function Component() {
+  return (
+    <Box px="4" fontSize="lg">
+      Hello World
     </Box>
   )
-  ```
+}
+```
 
-  So how can you make one of your own? Luckily a community member of vanilla-extract created [Dessert Box](https://github.com/TheMightyPenguin/dessert-box). (Side note, don't you also get hungry hearing all those food terms?)
+You get the type safety of Sprinkles with an (in my eyes) better developer experience as props on a React component are more concise than constantly using `sprinkles`. You can also use this `<Box>` component as the fundamental building block of your other React components. This very same `<Collapsible>` component this content is currently rendered in, is made out of `<Box>` components. Here's the actual source code:
 
-  Install the dependency:
+```tsx
+import * as React from "react"
+import { Box } from "../primitives"
+import { detailsStyle, summaryStyle } from "./collapsible.css"
 
-  ```shell
-  npm install @dessert-box/react
-  ```
+export const Collapsible = ({ summary, children }) => (
+  <Box
+    as="details"
+    px={[`4`, null, `6`]}
+    py="4"
+    borderRadius="lg"
+    className={detailsStyle}
+  >
+    <Box as="summary" className={summaryStyle}>
+      {summary}
+    </Box>
+    {children}
+  </Box>
+)
+```
 
-  After you created your `sprinkles` function (as shown above) you can create your `<Box>` component. In a new file, do the following:
+So how can you make one of your own? Luckily a community member of vanilla-extract created [Dessert Box](https://github.com/TheMightyPenguin/dessert-box). (Side note, don't you also get hungry hearing all those food terms?)
 
-  ```tsx
-  import { createBox } from "@dessert-box/react"
-  import { sprinkles } from "./sprinkles.css"
+Install the dependency:
 
-  const { Box } = createBox({ atoms: sprinkles })
+```shell
+npm install @dessert-box/react
+```
 
-  export default Box
-  ```
+After you created your `sprinkles` function (as shown above) you can create your `<Box>` component. In a new file, do the following:
 
-  And et voilà, you have your own Sprinkles-powered `<Box>` component. Read the [Dessert Box Readme](https://github.com/TheMightyPenguin/dessert-box) for more information.
+```tsx
+import { createBox } from "@dessert-box/react"
+import { sprinkles } from "./sprinkles.css"
+
+const { Box } = createBox({ atoms: sprinkles })
+
+export default Box
+```
+
+And et voilà, you have your own Sprinkles-powered `<Box>` component. Read the [Dessert Box Readme](https://github.com/TheMightyPenguin/dessert-box) for more information.
+
 </Collapsible>
 
 ## Recipes

@@ -10,7 +10,7 @@ const _REDIRECTS: Array<Redirect> = [
 	},
 	{
 		fromPath: '/garden/testing-gatsby-s-head-api-with-vitest-and-playwright',
-		toPath: '/garden/testing-gatsbys-head-api-with-vitest-and-playwright/',
+		toPath: '/testing-gatsbys-head-api-with-vitest-and-playwright/',
 	},
 	{
 		fromPath: '/projects/',
@@ -38,95 +38,95 @@ const _REDIRECTS: Array<Redirect> = [
 	},
 	{
 		fromPath: '/tags/gatsby/',
-		toPath: '/react/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/tags/gatsby-starter/',
-		toPath: '/react/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/tags/gatsby-themes/',
-		toPath: '/react/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/tags/compositing/',
-		toPath: '/design/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/tags/photoshop/',
-		toPath: '/design/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/tags/react/',
-		toPath: '/react/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/tags/figma/',
-		toPath: '/design/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/categories/tutorial/',
-		toPath: '/tutorials/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/categories/freebie/',
-		toPath: '/garden/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/categories/quicktipp/',
-		toPath: '/garden/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/blog/proprius-wallpaper-01/',
-		toPath: '/garden/proprius-wallpaper/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/blog/elitepvpers-wallpaper-2017/',
-		toPath: '/garden/elitepvpers-wallpaper-2017/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/blog/gatsby-starter-portfolio-emma/',
-		toPath: '/garden/gatsby-starter-portfolio-emma/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/blog/10-tipps-fur-photoshop-anfanger/',
-		toPath: '/design/10-tips-for-photoshop-beginners/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/blog/gatsby-starter-portfolio-emilia/',
-		toPath: '/garden/gatsby-starter-portfolio-emilia/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/blog/erstelle-dein-design-system-mit-gatsby/',
-		toPath: '/garden/specimens-for-gatsby-powered-design-systems/',
+		toPath: '/specimens-for-gatsby-powered-design-systems/',
 	},
 	{
 		fromPath: '/blog/quicktipp-netlify-discord-webhooks/',
-		toPath: '/garden/receiving-build-notifications-via-discord-webhooks/',
+		toPath: '/receiving-build-notifications-via-discord-webhooks/',
 	},
 	{
 		fromPath: '/en/blog/gatsby-starter-fuer-prismic-io/',
-		toPath: '/garden/gatsby-starter-for-prismic-io/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/blog/wie-gatsby-mit-steigenden-anforderungen-und-faehigkeiten-wachsen-kann/',
-		toPath: '/react/how-gatsby-scales-with-your-expertise-and-scope/',
+		toPath: '/how-gatsby-scales-with-your-expertise-and-scope/',
 	},
 	{
 		fromPath: '/blog/gatsby-starter-portfolio-cara/',
-		toPath: '/garden/gatsby-starter-portfolio-cara/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/blog/gatsby-starter-portfolio-jodie/',
-		toPath: '/garden/gatsby-starter-portfolio-jodie/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/blog/tipps-und-tricks-fuer-gatsby/',
-		toPath: '/react/tips-and-tricks-for-gatsby/',
+		toPath: '/tips-and-tricks-for-gatsby/',
 	},
 	{
 		fromPath: '/blog/wie-ich-mit-theme-ui-meine-gatsby-themes-bibliothek-gebaut-habe/',
-		toPath: '/javascript/how-i-used-theme-ui-to-seamlessly-convert-design-to-code/',
+		toPath: '/how-i-used-theme-ui-to-seamlessly-convert-design-to-code/',
 	},
 	{
 		fromPath: '/kontakt/',
@@ -170,139 +170,139 @@ const _REDIRECTS: Array<Redirect> = [
 	},
 	{
 		fromPath: '/en/tags/gatsby/',
-		toPath: '/react/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/tags/gatsby-starter/',
-		toPath: '/react/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/tags/gatsby-themes/',
-		toPath: '/react/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/tags/photoshop/',
-		toPath: '/design/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/tags/react/',
-		toPath: '/react/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/tags/type-script/',
-		toPath: '/javascript/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/categories/tutorial/',
-		toPath: '/tutorials/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/categories/freebie/',
-		toPath: '/garden/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/categories/quick-tip/',
-		toPath: '/garden/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/blog/proprius-wallpaper-01-en/',
-		toPath: '/garden/proprius-wallpaper/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/blog/elitepvpers-wallpaper-freebie-2017/',
-		toPath: '/garden/elitepvpers-wallpaper-2017/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/blog/gatsby-starter-portfolio-emma/',
-		toPath: '/garden/gatsby-starter-portfolio-emma/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/blog/10-tips-for-photoshop-beginners/',
-		toPath: '/design/10-tips-for-photoshop-beginners/',
+		toPath: '/10-tips-for-photoshop-beginners/',
 	},
 	{
 		fromPath: '/en/blog/gatsby-starter-portfolio-emilia/',
-		toPath: '/garden/gatsby-starter-portfolio-emilia/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/blog/quick-tips-netlify-discord-webhooks/',
-		toPath: '/garden/receiving-build-notifications-via-discord-webhooks/',
+		toPath: '/receiving-build-notifications-via-discord-webhooks/',
 	},
 	{
 		fromPath: '/en/blog/gatsby-starter-for-prismic-io/',
-		toPath: '/garden/gatsby-starter-for-prismic-io/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/blog/how-gatsby-scales-with-your-expertise-and-scope/',
-		toPath: '/react/how-gatsby-scales-with-your-expertise-and-scope/',
+		toPath: '/how-gatsby-scales-with-your-expertise-and-scope/',
 	},
 	{
 		fromPath: '/en/blog/gatsby-starter-portfolio-cara/',
-		toPath: '/garden/gatsby-starter-portfolio-cara/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/blog/gatsby-starter-portfolio-jodie/',
-		toPath: '/garden/gatsby-starter-portfolio-jodie/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/en/blog/tips-and-tricks-for-gatsby/',
-		toPath: '/react/tips-and-tricks-for-gatsby/',
+		toPath: '/tips-and-tricks-for-gatsby/',
 	},
 	{
 		fromPath: '/en/blog/how-i-used-theme-ui-to-build-my-gatsby-themes-library/',
-		toPath: '/javascript/how-i-used-theme-ui-to-seamlessly-convert-design-to-code/',
+		toPath: '/how-i-used-theme-ui-to-seamlessly-convert-design-to-code/',
 	},
 	{
 		fromPath: '/en/blog/setting-up-a-gatsby-themes-workspace-with-typescript-eslint-and-cypress/',
-		toPath: '/javascript/setting-up-a-yarn-workspace-with-typescript-eslint-and-cypress/',
+		toPath: '/setting-up-a-yarn-workspace-with-typescript-eslint-and-cypress/',
 	},
 	{
 		fromPath: '/en/blog/specimens-for-gatsby-powered-design-systems/',
-		toPath: '/garden/specimens-for-gatsby-powered-design-systems/',
+		toPath: '/specimens-for-gatsby-powered-design-systems/',
 	},
 	{
 		fromPath: '/en/blog/language-tabs-for-gatsbys-code-blocks/',
-		toPath: '/garden/language-tabs-for-markdown-and-mdx-code-blocks/',
+		toPath: '/language-tabs-for-markdown-and-mdx-code-blocks/',
 	},
 	{
 		fromPath: '/en/blog/adding-a-draft-feature-to-your-gatsby-site/',
-		toPath: '/garden/adding-a-draft-feature-to-gatsby/',
+		toPath: '/adding-a-draft-feature-to-gatsby/',
 	},
 	{
 		fromPath: '/en/blog/creating-your-own-status-dashboard-with-gatsby/',
-		toPath: '/garden/creating-your-own-status-dashboard-with-gatsby/',
+		toPath: '/creating-your-own-status-dashboard-with-gatsby/',
 	},
 	{
 		fromPath: '/en/blog/adding-support-for-multiple-authors-in-gatsby/',
-		toPath: '/garden/adding-support-for-multiple-authors-in-gatsby/',
+		toPath: '/adding-support-for-multiple-authors-in-gatsby/',
 	},
 	{
 		fromPath: '/en/blog/filter-future-posts-in-gatsby/',
-		toPath: '/garden/filter-future-posts-on-a-gatsby-blog/',
+		toPath: '/filter-future-posts-on-a-gatsby-blog/',
 	},
 	{
 		fromPath: '/en/blog/adding-line-numbers-and-code-highlighting-to-mdx-code-blocks/',
-		toPath: '/garden/adding-line-numbers-and-code-highlighting-to-mdx/',
+		toPath: '/adding-line-numbers-and-code-highlighting-to-mdx/',
 	},
 	{
 		fromPath: '/en/blog/using-theme-ui-as-the-starting-point-for-your-figma-design-and-gatsby-development/',
-		toPath: '/design/introducing-the-theme-ui-plugin-for-figma/',
+		toPath: '/introducing-the-theme-ui-plugin-for-figma/',
 	},
 	{
 		fromPath: '/gatsby/',
-		toPath: '/react/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/gatsby/how-gatsby-scales-with-your-expertise-and-scope/',
-		toPath: '/react/how-gatsby-scales-with-your-expertise-and-scope/',
+		toPath: '/how-gatsby-scales-with-your-expertise-and-scope/',
 	},
 	{
 		fromPath: '/gatsby/tips-and-tricks-for-gatsby/',
-		toPath: '/react/tips-and-tricks-for-gatsby/',
+		toPath: '/tips-and-tricks-for-gatsby/',
 	},
 	{
 		fromPath: '/gatsby/using-deferred-static-generation-with-analytics-tools/',
-		toPath: '/react/using-deferred-static-generation-with-analytics-tools/',
+		toPath: '/using-deferred-static-generation-with-analytics-tools/',
 	},
 	{
 		fromPath: '/projects/',
@@ -310,7 +310,7 @@ const _REDIRECTS: Array<Redirect> = [
 	},
 	{
 		fromPath: '/garden/gatsby-starter-for-prismic-io/',
-		toPath: '/garden/',
+		toPath: '/writing/',
 	},
 	{
 		fromPath: '/art/',
@@ -323,6 +323,50 @@ const _REDIRECTS: Array<Redirect> = [
 	{
 		fromPath: '/art/3d/',
 		toPath: '/photos/',
+	},
+	{
+		fromPath: '/design/10-tips-for-photoshop-beginners/',
+		toPath: '/10-tips-for-photoshop-beginners/',
+	},
+	{
+		fromPath: '/react/how-gatsby-scales-with-your-expertise-and-scope/',
+		toPath: '/how-gatsby-scales-with-your-expertise-and-scope/',
+	},
+	{
+		fromPath: '/react/tips-and-tricks-for-gatsby/',
+		toPath: '/tips-and-tricks-for-gatsby/',
+	},
+	{
+		fromPath: '/javascript/how-i-used-theme-ui-to-seamlessly-convert-design-to-code/',
+		toPath: '/how-i-used-theme-ui-to-seamlessly-convert-design-to-code/',
+	},
+	{
+		fromPath: '/javascript/setting-up-a-yarn-workspace-with-typescript-eslint-and-cypress/',
+		toPath: '/setting-up-a-yarn-workspace-with-typescript-eslint-and-cypress/',
+	},
+	{
+		fromPath: '/design/introducing-the-theme-ui-plugin-for-figma/',
+		toPath: '/introducing-the-theme-ui-plugin-for-figma/',
+	},
+	{
+		fromPath: '/react/how-to-build-an-advanced-multipart-component-with-chakra-ui/',
+		toPath: '/building-an-advanced-multipart-component-with-chakra-ui/',
+	},
+	{
+		fromPath: '/react/using-deferred-static-generation-with-analytics-tools/',
+		toPath: '/using-deferred-static-generation-with-analytics-tools/',
+	},
+	{
+		fromPath: '/javascript/creating-a-figma-plugin-with-svelte/',
+		toPath: '/creating-a-figma-plugin-with-svelte/',
+	},
+	{
+		fromPath: '/javascript/writing-performant-css-with-vanilla-extract/',
+		toPath: '/writing-performant-css-with-vanilla-extract/',
+	},
+	{
+		fromPath: '/garden/[slug]',
+		toPath: '/[slug]',
 	},
 ]
 
