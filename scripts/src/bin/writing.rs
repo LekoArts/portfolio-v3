@@ -3,7 +3,7 @@ use dialoguer::{theme::ColorfulTheme, Confirm, Input, MultiSelect, Select};
 use scripts::{get_current_date, get_file_info};
 use serde::Serialize;
 use slug::slugify;
-use std::{fs, path::PathBuf};
+use std::fs;
 use titlecase::titlecase;
 
 const TYPE_CHOICES: [&str; 3] = ["essay", "tutorial", "note"];
@@ -93,14 +93,13 @@ fn main() -> Result<()> {
         .interact()
         .map(|choice| ICON_CHOICES[choice])?;
 
-    let (_, filepath, filename): (PathBuf, PathBuf, String) =
-        get_file_info(current_date.to_string(), slug.clone())?;
+    let file_info = get_file_info(current_date.clone(), slug.clone())?;
 
     let fm = Frontmatter {
         title: titlecase(&title),
         slug,
         date,
-        last_updated: current_date.to_string(),
+        last_updated: current_date.clone(),
         description,
         r#type: chosen_type.to_string(),
         icon: icon.to_string(),
@@ -115,7 +114,7 @@ The file "{}" will be created with:
 
 {}
     "#,
-        filename, frontmatter
+        file_info.filename, frontmatter
     );
 
     if !Confirm::with_theme(&theme)
@@ -127,9 +126,9 @@ The file "{}" will be created with:
 
     let file_content = format!("{}{}", frontmatter, BODY_TEMPLATE);
 
-    fs::write(&filepath, file_content).unwrap();
+    fs::write(&file_info.filepath, file_content)?;
 
-    println!("Successfully created {}", filepath.display());
+    println!("Successfully created {}", file_info.filepath.display());
 
     Ok(())
 }
