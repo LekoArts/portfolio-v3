@@ -40,4 +40,4 @@ export type TagsColorSchemes = 'green' | 'blue' | 'purple' | 'yellow' | 'teal' |
 export type ArrayElement<ArrayType extends readonly unknown[] | undefined>
 	= ArrayType extends readonly (infer ElementType)[] ? ElementType : never
 
-export type Topic = typeof TAGS_CHOICES[number] | (string & {})
+export type Tag = typeof TAGS_CHOICES[number] | (string & {})

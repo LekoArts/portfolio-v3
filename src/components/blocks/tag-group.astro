@@ -1,12 +1,12 @@
 ---
-import type { Topic } from '@constants/types'
+import type { Tag } from '@constants/types'
 import { tagCloseIconStyle, tagGroupStyle, tagStyle } from './tag-group.css'
 import SvgIcon from '@components/primitives/svg-icon.astro'
 
 type Props =
 	| {
 			id: 'writing'
-			items: Array<Topic>
+			items: Array<Tag>
 	  }
 	| {
 			id: 'photos'
@@ -32,7 +32,7 @@ const { id, items } = Astro.props
 </lekoarts-tag-group>
 
 <script>
-	import type { Topic } from '@constants/types'
+	import type { Tag } from '@constants/types'
 	import type { TagGroupKeys } from '@stores/tag-group'
 	import { $tagGroup, addTag, removeTag } from '@stores/tag-group'
 	import { queryStringTags } from '@utils/url'
@@ -92,7 +92,7 @@ const { id, items } = Astro.props
 
 			// If tags in the query params (?tags=MDX,Astro) are present, set them in the store and filter the items
 			if (parsed?.tags && parsed.tags.length > 0) {
-				$tagGroup.setKey(id, parsed.tags as Array<Topic>)
+				$tagGroup.setKey(id, parsed.tags as Array<Tag>)
 
 				items.forEach((item) => {
 					const tags = item.dataset.tags?.split(',') || []
