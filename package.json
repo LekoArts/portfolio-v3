@@ -19,8 +19,7 @@
 		"e2e:dev": "cross-env IS_PLAYWRIGHT=true playwright test --ui",
 		"e2e:build": "cross-env IS_PLAYWRIGHT=true IS_BUILD=true playwright test",
 		"rs:build": "cd scripts && cargo build --release",
-		"new-garden": "./scripts/target/release/garden",
-		"new-post": "./scripts/target/release/post"
+		"new-post": "./scripts/target/release/writing"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^4.3.13",

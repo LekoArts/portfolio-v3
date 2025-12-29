@@ -13,24 +13,11 @@ pub fn get_current_date<'a>() -> DelayedFormat<StrftimeItems<'a>> {
     now.format("%Y-%m-%d")
 }
 
-pub enum ContentType {
-    Garden,
-    Writing,
-}
-
-pub fn get_file_info(
-    date: String,
-    slug: String,
-    content_type: ContentType,
-) -> Result<(PathBuf, PathBuf, String), Report> {
+pub fn get_file_info(date: String, slug: String) -> Result<(PathBuf, PathBuf, String), Report> {
     let current_dir = std::env::current_dir()?;
-    let content_dir = match content_type {
-        ContentType::Garden => String::from("garden"),
-        ContentType::Writing => String::from("writing"),
-    };
 
     let filename = format!("{}--{}.mdx", date, slug);
-    let directory_path = current_dir.join("src").join("content").join(content_dir);
+    let directory_path = current_dir.join("src").join("content").join("writing");
     let filepath = directory_path.join(&filename);
 
     Ok((directory_path, filepath, filename))
