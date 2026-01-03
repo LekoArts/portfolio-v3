@@ -1,5 +1,5 @@
 ---
-title: From MDX to Interactive Sandboxes With remark-sandpack
+title: From MDX to Interactive Sandboxes with remark-sandpack
 slug: from-mdx-to-interactive-sandboxes-with-remark-sandpack
 description: Learn how remark-sandpack transforms simple code blocks in MDX into interactive Sandpack playgrounds. No manual JSX required for live code examples.
 date: 2026-01-03
@@ -10,9 +10,9 @@ tags:
 icon: web-development
 ---
 
-If you have used [CodeSandbox](https://codesandbox.io/) in the past you might also be familiar with [Sandpack](https://sandpack.codesandbox.io/). It's a library to embed live coding environments into your documentation. Even the [React docs](https://react.dev/learn) use Sandpack!
+If you have used [CodeSandbox](https://codesandbox.io/) in the past, you might also be familiar with [Sandpack](https://sandpack.codesandbox.io/). It's a library for embedding live coding environments into your documentation. Even React's official [docs](https://react.dev/learn) use Sandpack!
 
-I published a package called [remark-sandpack](https://github.com/LekoArts/remark-sandpack) to make authoring examples for it easier. Instead of writing JSX, you can use code blocks. Normally you'd author the Sandpack examples like this:
+I published a package called [remark-sandpack](https://github.com/LekoArts/remark-sandpack) to make authoring examples easier. Instead of writing JSX by hand, you can use code blocks. Normally you'd author the Sandpack examples like this:
 
 ````mdx title="Using JSX"
 <Sandpack
@@ -23,7 +23,7 @@ I published a package called [remark-sandpack](https://github.com/LekoArts/remar
 />
 ````
 
-With `remark-sandpack` the individual files go into code blocks:
+With `remark-sandpack`, the individual files go into code blocks:
 
 ````mdx title="Using remark-sandpack"
 <Sandpack template="react">
@@ -38,24 +38,24 @@ Code goes here
 > [!NOTE]
 > **Examples**
 >
-> Visit the [examples folder](https://github.com/LekoArts/remark-sandpack/tree/main/examples) to view complete setups for Node.js and Astro.
+> Visit the [examples folder](https://github.com/LekoArts/remark-sandpack/tree/main/examples) to see complete setups for Node.js and Astro.
 
 ## Prerequisites
 
-If you already installed and set up Sandpack with MDX, you can skip this section.
+If you've already installed and set up Sandpack with MDX, you can skip this section.
 
-1. MDX set up in your project. You must be able to add remark plugins.
-1. Follow the [install instructions](https://sandpack.codesandbox.io/docs/getting-started) to set up Sandpack in your project.
+1. MDX set up in your project with support for remark plugins.
+1. Follow the [install instructions](https://sandpack.codesandbox.io/docs/getting-started) to integrate Sandpack into your project.
 
 ## Install remark-sandpack
 
-Install `@lekoarts/remark-sandpack` to your project:
+Install `@lekoarts/remark-sandpack` in your project:
 
 ```shell
 npm install @lekoarts/remark-sandpack
 ```
 
-Afterwards, add it to your list of remark plugins. The exact details depend on your setup, but here are two examples:
+Then add it to your list of remark plugins. The exact details depend on your setup, but here are two examples:
 
 ```js title="Node.js" {1,8}
 import remarkSandpack from '@lekoarts/remark-sandpack'
@@ -85,7 +85,7 @@ export default defineConfig({
 })
 ```
 
-You can also pass a `componentName` option to customize the name of the components the remark plugin should look for. By default it's `Sandpack`. For example, if you authored a custom `<Playground>` component that wraps Sandpack, you can do this:
+You can also pass a `componentName` option to customize which component names the remark plugin looks for. By default, it's `Sandpack`. For example, if you've created a custom `<Playground>` component that wraps Sandpack, you can do this:
 
 ```js title="componentName option"
 // Node.js
@@ -97,9 +97,9 @@ You can also pass a `componentName` option to customize the name of the componen
 
 ## Usage
 
-You're now ready to author Sandpack examples by just using code blocks inside your `<Sandpack>` components!
+You're now ready to author Sandpack examples by using code blocks inside your `<Sandpack>` components.
 
-As shown in the beginning, the basic usage looks like this:
+As shown in the introduction, the basic usage looks like this:
 
 ````mdx title="Basic"
 <Sandpack template="react">
@@ -111,13 +111,13 @@ Code goes here
 </Sandpack>
 ````
 
-You're **required** to provide a `name` attribute to the code block. Additionally, you can provide optional configuration (following Sandpack's [file format](https://sandpack.codesandbox.io/docs/getting-started/usage#file-format)):
+You're **required** to provide a `name` attribute on each code block. Additionally, you can provide optional configuration (following Sandpack's [file format](https://sandpack.codesandbox.io/docs/getting-started/usage#file-format)):
 
-- `hidden`
-- `active`
-- `readOnly`
+- `hidden` - Include the file but hide it in the file explorer
+- `active` - Make this the intially active file
+- `readOnly` - Prevent editing in the UI
 
-Example:
+File configuration example:
 
 ````mdx title="Configuration"
 ```js name=filename.js active
