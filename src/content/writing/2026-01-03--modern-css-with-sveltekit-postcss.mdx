@@ -1,0 +1,164 @@
+---
+title: Modern CSS with SvelteKit & PostCSS
+slug: modern-css-with-sveltekit-postcss
+description: Discover how to use postcss-preset-env with SvelteKit to write cutting-edge CSS today while maintaining compatibility across all browsers.
+date: 2026-01-03
+lastUpdated: 2026-01-03
+type: note
+tags:
+- Web Development
+icon: web-development
+---
+
+[SvelteKit](https://svelte.dev/docs/kit/introduction) (and Svelte, for that matter) has no opinions about CSS, which means you can use whatever CSS tooling you like. If you want to stick with the built-in [styling](https://svelte.dev/docs/svelte/scoped-styles), but still write modern CSS, PostCSS is a great option.
+
+In this post, you'll learn how to set up PostCSS and [postcss-preset-env](https://www.npmjs.com/package/postcss-preset-env) with SvelteKit.
+
+Afterwards, you can write modern CSS like this:
+
+```css
+@custom-media --viewport-medium (width <= 50rem);
+
+:root {
+  --mainColor: #12345678;
+}
+
+body {
+  color: var(--mainColor);
+  font-family: system-ui;
+  overflow-wrap: break-word;
+}
+
+.heading {
+  @media (--viewport-medium) {
+    margin-block: 0;
+  }
+}
+
+a {
+  color: rgb(0 0 100% / 90%);
+
+  &:hover {
+    color: rebeccapurple;
+  }
+}
+```
+
+## Prerequisites
+
+If you've already set up a SvelteKit project, you can skip this section.
+
+1. Initialize a new SvelteKit project:
+
+    ```shell
+    npx sv create postcss-example --template minimal --types ts --no-add-ons --install npm
+    ```
+
+1. Navigate to the project folder:
+
+    ```shell
+    cd postcss-example
+    ```
+
+1. Open the project in your favorite code editor.
+
+## Add PostCSS and postcss-preset-env
+
+`postcss-preset-env` enables [**Stage 2** features](https://preset-env.cssdb.org/features/) by default. In order for the [postcss-custom-media](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media) feature to work correctly with CSS modules, you also need to install [`@csstools/postcss-global-data`](https://www.npmjs.com/package/@csstools/postcss-global-data).
+
+```shell
+npm install -D @csstools/postcss-global-data postcss-preset-env
+```
+
+Create a `postcss.config.cjs` file in the root of your project with the following content:
+
+```js title="postcss.config.cjs"
+const postCssGlobalData = require('@csstools/postcss-global-data')
+const postCssPresetEnv = require('postcss-preset-env')
+
+const config = {
+	plugins: [
+		postCssGlobalData({
+			files: ['src/styles/custom-media-queries.css'],
+		}),
+		postCssPresetEnv({}),
+	],
+}
+
+module.exports = config
+```
+
+The `postCssGlobalData` plugin must come before the `postCssPresetEnv` plugin. It inserts your custom media queries into every CSS module, so they are available when `postcss-preset-env` processes the CSS.
+
+Create `src/styles/custom-media-queries.css` with your custom media queries:
+
+```css title="src/styles/custom-media-queries.css"
+@custom-media --sm (min-width: 640px);
+@custom-media --md (min-width: 768px);
+@custom-media --lg (min-width: 1024px);
+@custom-media --xl (min-width: 1350px);
+```
+
+Now everything is set up.
+
+## Usage
+
+Start the development server and open `http://localhost:5173/` in your browser:
+
+```shell
+npm run dev
+```
+
+Open your `src/routes/+page.svelte` file. If you created a minimal project from scratch, it'll only contain this:
+
+```svelte title="src/routes/+page.svelte"
+<h1>Welcome to SvelteKit</h1>
+<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+```
+
+Add a `<style lang="postcss">` block to the file. This way SvelteKit knows to process the styles with PostCSS.
+
+Inside the block, you can now write modern CSS using the features enabled by `postcss-preset-env`:
+
+```svelte title="src/routes/+page.svelte"
+<h1>Welcome to SvelteKit</h1>
+<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+
+<style lang="postcss">
+  :root {
+    --primary: #3900b4;
+  }
+
+  h1 {
+    color: var(--primary);
+    font-size: 1.75rem;
+
+    @media (--md) {
+      font-size: 2rem;
+    }
+
+    @media (--lg) {
+      font-size: 2.5rem;
+    }
+  }
+
+  p {
+    font-size: 1rem;
+
+    @media (--md) {
+      font-size: 1.25rem;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+</style>
+```
+
+The example code showcases CSS nesting and custom media queries. Have a look at the [features list](https://preset-env.cssdb.org/features/) to see what else you can do with `postcss-preset-env`. 
