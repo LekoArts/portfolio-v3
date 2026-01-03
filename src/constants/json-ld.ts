@@ -1,6 +1,6 @@
 import { SITE } from '@constants/meta'
 
-interface BreadcrumbListItem {
+export interface BreadcrumbListItem {
 	url: string
 	name: string
 }
