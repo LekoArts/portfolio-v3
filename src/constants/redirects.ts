@@ -414,6 +414,10 @@ const _REDIRECTS: Array<Redirect> = [
 		fromPath: '/javascript/writing-performant-css-with-vanilla-extract/',
 		toPath: '/writing-performant-css-with-vanilla-extract/',
 	},
+	{
+		fromPath: '/garden/',
+		toPath: '/writing/',
+	},
 ]
 
 function findDuplicates(arr: Array<Redirect>) {
