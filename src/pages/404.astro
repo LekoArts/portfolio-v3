@@ -1,5 +1,7 @@
 <h1>404</h1>
 
 <script is:inline>
-	window.plausible('404', { props: { path: Astro.url.pathname } })
+	document.addEventListener('DOMContentLoaded', () => {
+		plausible('404', { props: { path: Astro.url.pathname } })
+	})
 </script>
