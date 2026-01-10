@@ -1,5 +1,4 @@
 ---
-import { SITE } from '@constants/meta'
 import { FONT_URLS } from '@constants/fonts'
 import SkipNavLink from '@components/a11y/skip-nav-link.astro'
 import Header from '@components/blocks/header.astro'
@@ -8,11 +7,6 @@ import ThemeProvider from '@components/blocks/theme-provider.astro'
 import '@styles/reset.css'
 import '@styles/fonts.css'
 import '@styles/global.css'
-
-const plausibleProps = {
-	src: '/js/script.tagged-events.js',
-	'data-domain': SITE.dataDomain,
-}
 ---
 
 <html lang="en-US">
@@ -25,7 +19,8 @@ const plausibleProps = {
 		<link rel="preload" href={FONT_URLS.crimsonPro} as="font" type="font/woff2" crossorigin="anonymous" />
 		<slot name="seo" />
 		<ThemeProvider />
-		{import.meta.env.PROD ? <script defer is:inline {...plausibleProps} /> : null}
+		{import.meta.env.PROD ? <script is:inline async src="/js/script.js" /> : null}
+		{import.meta.env.PROD ? <script src="../lib/plausible.js" /> : null}
 	</head>
 	<body>
 		<SkipNavLink />
