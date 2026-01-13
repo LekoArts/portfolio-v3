@@ -1,0 +1,59 @@
+---
+title: How to Turn Any List Into Google My Maps
+slug: how-to-turn-any-list-into-google-my-maps
+description: Learn how AI can assist in turning unstructured lists into functional Google My Maps files.
+date: 2026-01-13
+lastUpdated: 2026-01-13
+type: note
+tags:
+- General
+icon: ai
+---
+
+Recently I wanted to turn a [100 must-visit spots](https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=145437&menuSn=218) list from a South Korean tourism website into a Google My Maps map. However, they only offered a PDF with a fancy map or HTML accordion lists with that information. Either format would require a lot of manual work to extract the data and enter it by hand into Google My Maps.
+
+So after some research I found out that you can import `.csv` files into Google My Maps. That's an easy job for an AI to turn an unstructured list into a structured CSV file.
+
+I copied the list of places into a text file. They were formatted like this:
+
+```txt
+Seoul Capital Area
+Seoul
+N Seoul Tower
+Seoul
+Gwanghwamun Square / Cheonggye Plaza
+```
+
+After a bit of formatting the output became:
+
+```md
+## Seoul Capital Area
+
+### Seoul
+- N Seoul Tower
+- Gwanghwamun Square / Cheonggye Plaza
+```
+
+Here's the prompt I used to turn this into a My Maps compatible CSV file:
+
+```shell
+I have a list of places in @LIST.md - your job is to export a list.csv file in a format compatible with Google My Maps. The file will be used for importing these places into Google My Maps.
+```
+
+You should get back a CSV file formatted like this:
+
+```
+Name,Description,Address
+N Seoul Tower,Seoul,N Seoul Tower Seoul South Korea
+Gwanghwamun Square / Cheonggye Plaza,Seoul,Gwanghwamun Square Seoul South Korea
+```
+
+Lastly, to import into Google My Maps:
+1. Go to Google My Maps
+1. Create a new map or open an existing one
+1. Click _Import_ in a layer
+1. Upload the `list.csv` file
+1. Select _Address_ as the column to position placemarks
+1. Select _Name_ as the column for marker titles
+
+And that's it! Nothing really complicated, but a great time-saver when dealing with lots of places.
