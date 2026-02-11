@@ -91,7 +91,7 @@ const ogImage = post.image ?? fallbackOgImage
 	<Container variant="proseRoot">
 		<SkipNavContent>
 			{
-				post.type === 'tutorial' || post.type === 'note' ? (
+				post.type !== 'essay' ? (
 					<>
 						<Heading as="h1">{post.title}</Heading>
 						<Spacer size={6} axis="vertical" />
@@ -130,21 +130,21 @@ const ogImage = post.image ?? fallbackOgImage
 				)
 			}
 			{
-				post.type === 'tutorial' ? (
+				post.type !== 'essay' ? (
 					<Box flexDirection="row-reverse" justifyContent="flex-end" gap={20} class={sidebarWrapperStyle}>
 						<Toc headings={headings} />
 						<Prose as="article" style={{ flex: `1 1 100%`, minWidth: `100%` }}>
+							{isPartOfSeries ? (
+								<>
+									<SeriesCallout id={post.series!.id} currentPart={post.series!.part} postsInSeries={postsInSeries} />
+									<Spacer size={8} axis="vertical" />
+								</>
+							) : null}
 							<Content components={components} />
 						</Prose>
 					</Box>
 				) : (
 					<Prose>
-						{isPartOfSeries ? (
-							<>
-								<SeriesCallout id={post.series!.id} currentPart={post.series!.part} postsInSeries={postsInSeries} />
-								<Spacer size={8} axis="vertical" />
-							</>
-						) : null}
 						<Content components={components} />
 					</Prose>
 				)

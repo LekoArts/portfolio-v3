@@ -15,11 +15,13 @@ export const asideStyle = style({
 	'position': 'relative',
 	'maxHeight': 'unset',
 	'top': 'unset',
+	'display': 'none',
 	'@media': {
 		[minMediaQuery('2xl')]: {
 			position: 'sticky',
 			maxHeight: '300px',
 			top: '80px',
+			display: 'block',
 		},
 	},
 })

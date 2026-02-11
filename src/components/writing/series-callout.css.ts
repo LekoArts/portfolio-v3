@@ -1,5 +1,6 @@
 import { themesSelectors } from '@styles/atoms.css'
 import { vars } from '@styles/themes/contract.css'
+import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
 import { prominent } from '@styles/typography.css'
 import { createVar, globalStyle, style } from '@vanilla-extract/css'
@@ -10,14 +11,19 @@ const listItemBgVar = createVar()
 const listItemColorVar = createVar()
 
 export const detailsStyle = style({
-	vars: {
+	'@media': {
+		[minMediaQuery('2xl')]: {
+			marginTop: '1.6em',
+		},
+	},
+	'vars': {
 		[listItemActiveBgVar]: colorPalette.blue[600],
 		[listItemBgVar]: colorPalette.blue[100],
 		[listItemActiveColorVar]: colorPalette.white,
 		[listItemColorVar]: colorPalette.black,
 	},
-	backgroundColor: colorPalette.blue[50],
-	selectors: {
+	'backgroundColor': colorPalette.blue[50],
+	'selectors': {
 		[themesSelectors.dark]: {
 			backgroundColor: colorPalette.blueGray[800],
 			vars: {

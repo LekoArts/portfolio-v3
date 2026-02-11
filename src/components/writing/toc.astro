@@ -15,18 +15,24 @@ const toc = buildToc(headings)
 const ids = getIds(headings)
 ---
 
-<Box as="aside" marginBottom={{ mobile: 16, '2xl': 0 }} fontSize={[`sm`, `md`]} class={asideStyle}>
-	<Box as="nav" display="flex" flexDirection="column" alignItems="flex-start" class={navStyle}>
-		<Box as="h2" color="heading" fontWeight="medium" marginBottom={{ mobile: 2, '2xl': 4 }} class={headingStyle}>
-			Table of Contents
+{
+	toc.length > 0 && (
+		<Box as="aside" marginBottom={{ mobile: 16, '2xl': 0 }} fontSize={[`sm`, `md`]} class={asideStyle}>
+			<Box as="nav" display="flex" flexDirection="column" alignItems="flex-start" class={navStyle}>
+				<Box as="h2" color="heading" fontWeight="medium" marginBottom={{ mobile: 2, '2xl': 4 }} class={headingStyle}>
+					Table of Contents
+				</Box>
+				<lekoarts-toc data-ids={ids}>
+					<ul id="toc">
+						{toc.map((heading) => (
+							<TocItem heading={heading} />
+						))}
+					</ul>
+				</lekoarts-toc>
+			</Box>
 		</Box>
-		<lekoarts-toc data-ids={ids}>
-			<ul id="toc">
-				{toc.map((heading) => <TocItem heading={heading} />)}
-			</ul>
-		</lekoarts-toc>
-	</Box>
-</Box>
+	)
+}
 
 <script>
 	class LekoArtsToc extends HTMLElement {
