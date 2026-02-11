@@ -1,0 +1,279 @@
+---
+title: "Obsidian Travel Planning"
+slug: obsidian-travel-planning
+description: "How I plan my travels inside Obsidian, showcasing templates and bases."
+date: 2026-02-12
+lastUpdated: 2026-02-12
+type: note
+icon: general
+tags:
+  - General
+---
+
+When travelling, I like to have everything organized in one place. Coming from Notion, I wasn't sure how to transfer my travel database into Obsidian. But I got something working (for now) and in this post I want to explain how my current travel database works.
+
+My philosophy is to keep it as simple as possible while being flexible enough to adapt to different types of travels (single location, roadtrip, multi-location). I want to create files, apply templates, and have them automatically show up in the right place without needing to do any manual work.
+
+The foundation for these automatic filters on Obsidian's [Bases](https://help.obsidian.md/bases) is the correct frontmatter setup. You can link bases and files, for example:
+
+```md
+---
+base: "[[Travel.base]]"
+backlink: "[[South_Korea]]"
+---
+```
+
+As you'll see, I use that feature heavily to create relationships between files and have them automatically show up in the right place. But let's start with the file structure first.
+
+## File structure
+
+You can view each file in the file explorer below:
+
+<FileExplorer
+  title="Obsidian File Structure"
+  entry="/_templates/Travel_Simple.md"
+>
+
+```md name=_templates/Travel_Simple.md
+---
+base: "[[Travel.base]]"
+banner:
+startDate: "{{date}}"
+endDate: "{{date}}"
+Persons: []
+Done: false
+---
+
+TBD
+```
+
+```md name=_templates/Travel_Advanced.md
+---
+base: "[[Travel.base]]"
+banner:
+startDate: "{{date}}"
+endDate: "{{date}}"
+Persons: []
+Done: false
+---
+
+## Itinerary
+
+![[Planning.base]]
+
+## Activities
+
+![[Activities.base]]
+```
+
+```md name=_templates/Planning.md
+---
+base: "[[_templates/Bases/Planning.base]]"
+backlink: "[[TODO]]"
+startDate: "{{date}}"
+endDate: "{{date}}"
+Activities: 
+---
+
+TBD
+```
+
+```md name=_templates/Activity.md
+---
+base: "[[_templates/Bases/Activities.base]]"
+backlink: "[[TODO]]"
+Location:
+Done: false
+---
+
+TBD
+```
+
+```md name=_templates/Bases/Activities.base
+filters:
+  and:
+    - base == link("_templates/Bases/Activities.base")
+    - file.hasLink(this)
+views:
+  - type: table
+    name: Activities
+    groupBy:
+      property: Done
+      direction: ASC
+    order:
+      - file.name
+      - Done
+    sort:
+      - property: file.name
+        direction: ASC
+    cardSize: 180
+  - type: table
+    name: Grouped by location
+    groupBy:
+      property: Location
+      direction: ASC
+    order:
+      - file.name
+      - Done
+    sort:
+      - property: file.name
+        direction: ASC
+
+```
+
+```md name=_templates/Bases/Planning.base
+filters:
+  and:
+    - base == link("_templates/Bases/Planning.base")
+    - file.hasLink(this)
+views:
+  - type: table
+    name: Planning
+    order:
+      - file.name
+      - startDate
+      - endDate
+      - Activities
+    sort:
+      - property: startDate
+        direction: ASC
+    rowHeight: medium
+
+```
+
+```md name=Travel.base
+filters:
+  and:
+    - base == link("Travel.base")
+    - file.folder.startsWith("Travel")
+formulas:
+  year: date(startDate).year
+properties:
+  file.name:
+    displayName: Name
+  Persons:
+    displayName: Persons
+views:
+  - type: table
+    name: Overview
+    groupBy:
+      property: formula.year
+      direction: DESC
+    order:
+      - file.name
+      - Done
+      - startDate
+      - endDate
+      - Persons
+    sort:
+      - property: startDate
+        direction: ASC
+  - type: cards
+    name: Cards
+    groupBy:
+      property: formula.year
+      direction: DESC
+    sort:
+      - property: startDate
+        direction: ASC
+    image: note.banner
+    imageAspectRatio: 0.55
+
+```
+
+```md name=Travel/2026/London.md
+---
+base: "[[Travel.base]]"
+banner: URL
+startDate: 2026-07-20
+endDate: 2026-07-24
+Persons: []
+Done: false
+---
+
+TBD
+```
+
+```md name=Travel/2026/South_Korea/South_Korea.md
+---
+base: "[[Travel.base]]"
+banner: URL
+startDate: 2026-07-20
+endDate: 2026-07-24
+Persons: []
+Done: false
+---
+
+## Itinerary
+
+![[Planning.base]]
+
+## Activities
+
+![[Activities.base]]
+```
+
+```md name=Travel/2026/South_Korea/Activities/Hallasan.md
+---
+base: "[[_templates/Bases/Activities.base]]"
+backlink: "[[South_Korea]]"
+Location: Jeju
+Done: true
+---
+
+TBD
+```
+
+```md name=Travel/2026/South_Korea/Planning/Day_1.md
+---
+base: "[[_templates/Bases/Planning.base]]"
+backlink: "[[South_Korea]]"
+startDate: 2025-05-21
+endDate: 2025-05-24
+Activities:
+  - "[[Hallasan]]"
+---
+
+TBD
+
+```
+
+</FileExplorer>
+
+## Workflow
+
+When I want to create a new travel entry, the workflow is pretty simple:
+
+1. Decide whether the travel is "simple" or "advanced". The "advanced" template wants me to create individual files for each activity and plan them in an itinerary. This is really helpful for detailed plans, e.g. writing down all photo spots. For shorter travels or work trips this is overkill, so I'll use the "simple" template then.
+1. Create a new file in the folder of the current year (e.g. `Travel/2026`) and apply the right template.
+1. Fill in the frontmatter details and add a `banner` image (URL from Unsplash).
+1. Using templates, create activities and itinerary items (if necessary).
+
+## Magic ✨
+
+After following the workflow, a bunch of things happen automatically:
+
+- The `Travel.base` shows the new travel entry
+- The `Travel/2026/Destination/Destination.md` file shows the `Planning.base` and `Activities.base` views, however they only show the files from the current folder
+
+How does this work? The key is in the filters of the bases:
+
+- The `Travel.base` base automatically shows all travel files because it looks for files that have a `base` property linking to it. The additional filter for the folder is there to filter out the `_templates` files.
+
+    ```text title="Travel.base"
+    filters:
+      and:
+        - base == link("Travel.base")
+        - file.folder.startsWith("Travel")
+    ```
+
+- The `Planning.base` and `Activities.base` bases only show files that link back to the current file (using the `backlink` property in the frontmatter). This means that when I create a new activity or planning item and link it to the destination file, it automatically shows up in the right place.
+
+    ```text title="Activities.base" {4}
+    filters:
+      and:
+        - base == link("_templates/Bases/Activities.base")
+        - file.hasLink(this)
+    ```
+
+    For this to work you have to define the `file.hasLink(this)` filter.
