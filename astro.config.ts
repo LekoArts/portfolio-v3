@@ -46,7 +46,7 @@ export default defineConfig({
 		smartypants: true,
 		gfm: true,
 		rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions]],
-		remarkPlugins: [[remarkSandpack, { componentName: ['Playground'] }], codemodAlerts],
+		remarkPlugins: [[remarkSandpack, { componentName: ['Playground', 'FileExplorer'] }], codemodAlerts],
 	},
 	adapter: IS_PLAYWRIGHT
 		? undefined

@@ -1,0 +1,13 @@
+---
+import { FileExplorer as FileExplorerReact } from './file-explorer'
+
+interface Props {
+	files: Record<string, string>
+	title: string
+	entry: string
+}
+
+const { files, title, entry } = Astro.props
+---
+
+<FileExplorerReact files={files} title={title} entry={entry} client:visible><slot /></FileExplorerReact>
