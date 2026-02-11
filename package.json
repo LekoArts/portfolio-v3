@@ -4,22 +4,21 @@
 	"version": "0.0.1",
 	"packageManager": "pnpm@10.4.1",
 	"scripts": {
-		"bootstrap": "pnpm install && pnpm rs:build && pnpm playwright:init",
+		"bootstrap": "pnpm install && pnpm playwright:init",
 		"dev": "astro dev",
 		"build": "astro build",
 		"build:e2e": "cross-env IS_PLAYWRIGHT=true astro build",
 		"preview": "astro preview",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
-		"lint:title-case": "./scripts/target/release/lint-title-case",
+		"lint:title-case": "tsx ./scripts/lint-title-case.ts",
 		"test:watch": "vitest watch",
 		"test": "vitest run",
 		"test:e2e": "pnpm build:e2e && pnpm e2e:build",
 		"playwright:init": "playwright install chromium",
 		"e2e:dev": "cross-env IS_PLAYWRIGHT=true playwright test --ui",
 		"e2e:build": "cross-env IS_PLAYWRIGHT=true IS_BUILD=true playwright test",
-		"rs:build": "cd scripts && cargo build --release",
-		"new-post": "./scripts/target/release/writing"
+		"new-post": "tsx ./scripts/writing.ts"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^4.3.13",
@@ -59,8 +58,10 @@
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^7.4.3",
+		"@clack/prompts": "^1.0.0",
 		"@netlify/edge-functions": "^3.0.3",
 		"@playwright/test": "^1.58.2",
+		"@sindresorhus/slugify": "^3.0.0",
 		"@types/culori": "^4.0.1",
 		"@types/lodash-es": "^4.17.12",
 		"@types/mdast": "^4.0.4",
@@ -72,11 +73,12 @@
 		"astro-eslint-parser": "^1.2.2",
 		"cross-env": "^10.1.0",
 		"csstype": "^3.2.3",
-		"eslint": "^10.0.0",
+		"eslint": "^9",
 		"eslint-plugin-astro": "^1.5.0",
 		"eslint-plugin-format": "^1.4.0",
 		"mdast-util-mdx-jsx": "^3.2.0",
 		"prettier-plugin-astro": "^0.14.1",
+		"tsx": "^4.21.0",
 		"vite-tsconfig-paths": "^6.1.0",
 		"vitest": "^4.0.18"
 	}

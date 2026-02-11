@@ -14,7 +14,7 @@ Personal portfolio website built with **Astro 5**, **MDX**, **React 19**, and **
 pnpm dev                    # Start dev server (localhost:4321)
 pnpm build                  # Production build
 pnpm preview                # Preview production build
-pnpm bootstrap              # Full setup: install + build Rust scripts + install Playwright
+pnpm bootstrap              # Full setup: install + install Playwright
 ```
 
 ### Testing
@@ -48,8 +48,7 @@ pnpm lint:title-case        # Check blog post titles (Rust binary)
 ### Custom Scripts
 
 ```bash
-pnpm new-post               # Create new blog post (Rust binary)
-pnpm rs:build               # Build Rust scripts in scripts/
+pnpm new-post               # Create new blog post
 ```
 
 ## Code Style Guidelines
@@ -239,6 +238,5 @@ Defined in `astro.config.ts` using Astro's env schema:
 ## Important Notes
 
 - **No LICENSE**: Code is viewable but not for reuse or commercial purposes
-- **Rust scripts**: Custom tooling in `scripts/` directory (requires `cargo build`)
 - **Playwright adapter**: Build excludes Netlify adapter when `IS_PLAYWRIGHT=true`
 - **Path handling**: Always use `normalize()` from `@utils/slash` for content slugs

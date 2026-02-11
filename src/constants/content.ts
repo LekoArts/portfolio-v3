@@ -8,7 +8,7 @@ export const TAGS_CHOICES = [
 	'Self-Hosting', // Unraid, Discord
 	'General', // General
 	// 'AI', // AI, Mastra, LLMs
-	'Outdoors', // Hiking, Outdoors
+	'Hiking', // Hiking, Hiking
 	// 'Travel', // Vacation, Travel
 ] as const
 
@@ -20,7 +20,7 @@ export const TAG_TO_COLOR_MAP: Record<typeof TAGS_CHOICES[number], TagsColorSche
 	'Self-Hosting': 'green',
 	'General': 'gray',
 	// 'AI': 'purple',
-	'Outdoors': 'green',
+	'Hiking': 'green',
 	// 'Travel': 'orange',
 }
 
@@ -32,7 +32,7 @@ export const ICON_CHOICES = [
 	'self-hosting',
 	'general',
 	'ai',
-	'outdoors',
+	'hiking',
 	'travel',
 ] as const
 

@@ -9,7 +9,7 @@ export type SVGIconNames
 		| 'programming'
 		| 'self-hosting'
 		| 'ai'
-		| 'outdoors'
+		| 'hiking'
 		| 'travel'
 		| 'logo'
 		| 'react'
