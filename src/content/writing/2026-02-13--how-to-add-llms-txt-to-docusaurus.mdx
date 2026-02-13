@@ -1,0 +1,210 @@
+---
+title: "How to Add llms.txt to Docusaurus"
+slug: how-to-add-llms-txt-to-docusaurus
+description: "Generate llms.txt files for your Docusaurus documentation"
+date: 2026-02-13
+lastUpdated: 2026-02-13
+type: note
+icon: developer-tools
+tags:
+  - Developer Tools
+---
+
+Like it or not, in 2026 your documentation needs to serve both humans and AI. _Good_ documentation is still the biggest lever, but there are ways to make it easier for agents to consume it, too.
+
+One of them is the [`llms.txt` proposal](https://llmstxt.org/). It basically proposes two things:
+- Provide LLM-friendly information through single `llms.txt` files
+- Allow users to append `.md` to any URL to get the markdown source
+
+In addition to that, I'd add another point: If someone requests your docs page with the `text/markdown` header, you should return the markdown version of your docs (instead of HTML).
+
+After implementing all three and trying it out, I can say that it definitely works! Since we use Docusaurus at work and I couldn't find a good writeup on how to achieve this, this post is for you.
+
+## Architecture
+
+If you want to generate `llms.txt` files for your Docusaurus site, you'll need to implement the following steps:
+
+1. A Docusaurus plugin that hooks into the [`postBuild`](https://docusaurus.io/docs/api/plugin-methods/lifecycle-apis#postBuild) lifecycle method
+1. Use the routes or directly glob the `build` output to get the HTML file contents
+1. Convert the HTML to an AST
+1. Process the AST back to markdown
+1. Generate individual markdown files for each page
+1. Generate a root `llms.txt` file with a list of all pages
+
+You might wonder: Why not take the existing markdown/MDX files and just copy them over? The main reason is that the markdown (and especially MDX) files can contain placeholders, React components, and other things that only render fully in the final HTML. By processing the HTML output, you ensure that the markdown you generate is as close as possible to what the user (or agent) would see when visiting the page.
+
+This does, however, come with the downside of having to write an HTML processor that handles weird formatting and edge cases.
+
+## To plugin or not to plugin
+
+At the time of writing, there is no official `llms.txt` plugin for Docusaurus ([feature request](https://github.com/facebook/docusaurus/issues/10899)). However, there are two notable community plugins available:
+
+- [@signalwire/docusaurus-plugin-llms-txt](https://github.com/signalwire/docusaurus-plugins/tree/main/packages/docusaurus-plugin-llms-txt)
+- [docusaurus-plugin-llms](https://github.com/rachfop/docusaurus-plugin-llms)
+
+They both do more or less the same thing, implementing the first two points of the proposal with various configuration options. If you're not after a custom implementation, these are good options to consider. They'll also handle more edge cases that weren't relevant to my use case.
+
+For various reasons (keeping it simpler, other file structure, no UI features needed) I went the route of implementing a custom plugin. The custom implementation has certainly taken inspiration from `@signalwire/docusaurus-plugin-llms-txt`, so credits to them for the great work on that plugin.
+
+## Custom implementation
+
+My custom implementation is [available on GitHub](https://github.com/mastra-ai/mastra/tree/0dee7a0ff4c2507e6eb6e6ee5f9738877ebd4ad1/docs/src/plugins/docusaurus-plugin-llms-txt). Compared to the two community plugins, it does some things differently:
+
+- **Radically simplified configuration:** No need to handle every possible option since it's tailored to our docs
+- **No UI features:** The docs theme handles that by itself
+- **`llms.txt` files only:** Instead of generating `.md` files for each page, it uses the `llms.txt` filename instead. I saw the pattern of providing individual `/llms.txt` files for each page on the [SvelteKit](https://svelte.dev/docs/kit/introduction) site, which I liked a lot — so I copied it. However, it does require [rewrites](#rewrites) so just using the `.md` output is easier.
+- **No `llms-full.txt`:** I don't see value in providing that document since for any decently sized documentation, it's just too large to be useful
+
+Here's how it works on the live site:
+
+- Normal page URL: [mastra.ai/docs/getting-started/build-with-ai](https://mastra.ai/docs/getting-started/build-with-ai)
+- `llms.txt` version: [mastra.ai/docs/getting-started/build-with-ai/llms.txt](https://mastra.ai/docs/getting-started/build-with-ai/llms.txt)
+- Root `llms.txt` file: [mastra.ai/llms.txt](https://mastra.ai/llms.txt)
+
+### Rewrites
+
+In order to enable `.md` at the end of a URL, I had to add a rewrite rule to our hosting provider. This means that the URL in the user's address bar remains the same, while the server serves a different file. When a user requests `.md`, it serves `/llms.txt`.
+
+Since [mastra.ai](https://mastra.ai) is a Next.js app and the docs are embedded in a subroute, I added the following rewrite rule to `next.config.js`:
+
+```js title="next.config.js"
+const nextConfig = {
+  async rewrites() {
+    return {
+      fallback: [
+        {
+          source: "/docs/:path*.md",
+          destination: `/docs/:path*/llms.txt`,
+        },
+      ],
+    };
+  },
+};
+```
+
+I've added similar rewrite rules to other subroutes of the docs. You should be able to add similar rules to most hosting providers. Try it out: [mastra.ai/docs/getting-started/build-with-ai.md](https://mastra.ai/docs/getting-started/build-with-ai.md)
+
+## Content negotiation
+
+Once you can serve markdown, the next step is content negotiation. Agents like Claude Code send the `Accept: text/markdown` header when requesting URLs. Your setup should detect this and serve the markdown version of the page instead of HTML.
+
+The basic mechanism is as follows:
+
+- Detect `text/plain`, `text/markdown`, `text/x-markdown` in the `Accept` header
+- Rewrite the path to the `.md` / `/llms.txt` version
+- Configure the matcher to handle every request, **except** requests to the `.md` / `/llms.txt` version (to avoid infinite loops)
+
+I've implemented this using [Next.js' Proxy](https://nextjs.org/docs/app/getting-started/proxy) but you can also do this with other middlewares or edge functions:
+
+```ts title="proxy.ts" collapse={6-42}
+import Negotiator from "negotiator";
+import { compile, match } from "path-to-regexp";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+
+function getNegotiator(request: Request) {
+  const headers: Record<string, string> = {};
+  request.headers.forEach((value, key) => {
+    headers[key] = value;
+  });
+
+  return new Negotiator({ headers });
+}
+
+/**
+ * Rewrite incoming path matching the `source` pattern into the `destination` pattern.
+ *
+ * See [`path-to-regexp`](https://github.com/pillarjs/path-to-regexp) for accepted pattern formats.
+ *
+ * @param source - the original pattern of incoming paths
+ * @param destination - the target pattern to convert into
+ * @param validate - optional function to validate extracted parameters; return `false` to skip rewrite
+ */
+function rewritePath(
+  source: string,
+  destination: string,
+  validate?: (params: Record<string, unknown>) => boolean,
+) {
+  const matcher = match(source, { decode: false });
+  const compiler = compile(destination, { encode: false });
+
+  return {
+    rewrite(pathname: string) {
+      const result = matcher(pathname);
+      if (!result) return false;
+
+      if (validate && !validate(result.params)) return false;
+
+      return compiler(result.params);
+    },
+  };
+}
+
+function isMarkdownPreferred(
+  request: Request,
+  options?: {
+    markdownMediaTypes?: string[];
+  },
+) {
+  const {
+    markdownMediaTypes = ["text/plain", "text/markdown", "text/x-markdown"],
+  } = options ?? {};
+
+  const mediaTypes = getNegotiator(request).mediaTypes();
+  return markdownMediaTypes.some((type) => mediaTypes.includes(type));
+}
+
+const ALLOWED_PREFIXES = new Set(["docs", "models", "guides", "reference"]);
+
+const { rewrite: rewriteLLM } = rewritePath(
+  "/:prefix{/*path}",
+  "/:prefix{/*path}/llms.txt",
+  (params) => ALLOWED_PREFIXES.has(params.prefix as string),
+);
+
+export function middleware(request: NextRequest) {
+  if (isMarkdownPreferred(request)) {
+    const result = rewriteLLM(request.nextUrl.pathname);
+
+    if (result) {
+      return NextResponse.rewrite(new URL(result, request.nextUrl));
+    }
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: [
+    "/docs",
+    "/docs/:path((?!.*\\.(?:md|txt)$).*)*",
+    "/models",
+    "/models/:path((?!.*\\.(?:md|txt)$).*)*",
+    "/guides",
+    "/guides/:path((?!.*\\.(?:md|txt)$).*)*",
+    "/reference",
+    "/reference/:path((?!.*\\.(?:md|txt)$).*)*",
+  ],
+};
+```
+
+As mentioned, the Mastra documentation has multiple subroutes (`/docs`, `/models`, `/guides`, `/reference`), so the matcher needs to cover all of them.
+
+## Next steps
+
+Great! You've added `llms.txt` support to your Docusaurus documentation and made it LLM-friendly.
+
+Here are some ideas on what you could do next (I've done all of these):
+
+- Add a `packages` frontmatter field to each docs page and add the relevant npm package names, for example:
+
+    ```yaml
+    ---
+    packages:
+      - @mastra/core
+    ---
+    ```
+
+    Generate a manifest file that maps packages to docs pages.
+- Use the manifest file to generate [`references/`](https://agentskills.io/specification#references/) files for your Skills, only including the relevant docs pages for the packages used in the Skill.
+- Again, using the manifest file, embed all relevant docs pages into the build output of your packages. This makes them available at `node_modules/package-name/dist/docs`. This enables agents to read versioned offline docs when using your packages.
