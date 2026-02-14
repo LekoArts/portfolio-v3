@@ -4,6 +4,7 @@ import { vars } from '@styles/themes/contract.css'
 import { darkThemeClass } from '@styles/themes/dark.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
+import { transition } from '@styles/tokens/motion'
 import { globalStyle, style } from '@vanilla-extract/css'
 
 export const tagGroupStyle = style({
@@ -29,6 +30,7 @@ export const tagStyle = style({
 	'alignItems': 'center',
 	'maxWidth': '100%',
 	'lineHeight': vars.lineHeight.shorter,
+	'transition': `${transition.property.all} ${transition.duration.normal} ${transition.easing['ease-in-out']}`,
 	'@media': {
 		[minMediaQuery('lg')]: {
 			fontSize: vars.fontSize.md,
@@ -38,6 +40,7 @@ export const tagStyle = style({
 	'selectors': {
 		[pseudoSelectors.hover]: {
 			cursor: 'pointer',
+			background: colorPalette.blueGray[200],
 		},
 		[pseudoSelectors.focus]: {
 			boxShadow: vars.shadow.outline,
@@ -54,6 +57,9 @@ export const tagStyle = style({
 		[`html${darkThemeClass} &.active`]: {
 			background: colorPalette.blue[800],
 			color: colorPalette.blue[100],
+		},
+		[`html${darkThemeClass} &:not(.active):hover`]: {
+			background: colorPalette.blueGray[700],
 		},
 	},
 })
