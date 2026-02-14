@@ -6,9 +6,9 @@ import {
 	SandpackProvider,
 	useSandpack,
 } from '@codesandbox/sandpack-react'
-import { nightOwl } from '@codesandbox/sandpack-themes'
 import * as React from 'react'
 import { header, rootWrapper, spLayout } from './file-explorer.css'
+import { customTheme } from './sandpack.css'
 
 const providerOptions: SandpackProviderProps['options'] = {
 	classes: {
@@ -43,7 +43,7 @@ function FileExplorerContents({ title }: { title: string }) {
 
 export function FileExplorer({ files, title, entry }: IFileExplorerProps) {
 	return (
-		<SandpackProvider files={files} theme={nightOwl} options={providerOptions} customSetup={{ entry }}>
+		<SandpackProvider files={files} theme={customTheme} options={providerOptions} customSetup={{ entry }}>
 			<FileExplorerContents title={title} />
 		</SandpackProvider>
 	)

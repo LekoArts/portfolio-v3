@@ -27,7 +27,6 @@
 		"@astrojs/rss": "^4.0.15",
 		"@astrojs/sitemap": "^3.7.0",
 		"@codesandbox/sandpack-react": "^2.20.0",
-		"@codesandbox/sandpack-themes": "^2.0.21",
 		"@expressive-code/plugin-collapsible-sections": "^0.41.6",
 		"@expressive-code/plugin-line-numbers": "^0.41.6",
 		"@lekoarts/remark-sandpack": "^1.0.0",

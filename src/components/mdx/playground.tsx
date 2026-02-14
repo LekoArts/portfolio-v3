@@ -13,12 +13,12 @@ import {
 	useSandpack,
 	useSandpackNavigation,
 } from '@codesandbox/sandpack-react'
-import { nightOwl } from '@codesandbox/sandpack-themes'
 import { visuallyHiddenStyle } from '@components/a11y/visually-hidden.css'
 import * as React from 'react'
 import {
 	backwardButton,
 	exportButton,
+	foregroundText,
 	header,
 	headerButtonWrapper,
 	middleWrapper,
@@ -29,8 +29,9 @@ import {
 	spCodeEditor,
 	spPreviewContainer,
 	spTabButton,
-	whiteText,
+	spWrapper,
 } from './playground.css'
+import { customTheme } from './sandpack.css'
 
 interface IPlaygroundProps {
 	files: Record<string, string>
@@ -41,6 +42,7 @@ interface IPlaygroundProps {
 
 const providerOptions: SandpackProviderProps['options'] = {
 	classes: {
+		'sp-wrapper': spWrapper,
 		'sp-code-editor': spCodeEditor,
 		'sp-tab-button': spTabButton,
 		'sp-preview-container': spPreviewContainer,
@@ -106,7 +108,7 @@ function PlaygroundContents({ title }: Pick<IPlaygroundProps, 'title'>) {
 				data-testid="playground-code-editor"
 			/>
 			<div className={middleWrapper}>
-				<div className={whiteText}>Result</div>
+				<div className={foregroundText}>Result</div>
 				<div className={middleWrapperButtonWrapper}>
 					<IconButton
 						onClick={() => {
@@ -146,7 +148,7 @@ export function Playground({
 			options={providerOptions}
 			customSetup={customSetup}
 		>
-			<SandpackThemeProvider theme={nightOwl}>
+			<SandpackThemeProvider theme={customTheme}>
 				<PlaygroundContents title={title} />
 			</SandpackThemeProvider>
 		</SandpackProvider>

@@ -1,9 +1,9 @@
-import { nightOwl } from '@codesandbox/sandpack-themes'
 import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { colorPalette } from '@styles/tokens/colors'
 import { transition } from '@styles/tokens/motion'
 import { globalStyle, style } from '@vanilla-extract/css'
+import { customTheme } from './sandpack.css'
 
 export const spTabButton = style({
 	borderBottom: '1px solid transparent',
@@ -12,6 +12,10 @@ export const spTabButton = style({
 			borderBottom: '1px solid var(--sp-colors-accent)',
 		},
 	},
+})
+
+export const spWrapper = style({
+	colorScheme: 'unset !important',
 })
 
 export const spCodeEditor = style({
@@ -69,7 +73,7 @@ export const middleWrapperButtonWrapper = style({
 	alignItems: 'center',
 })
 
-export const whiteText = style({
+export const foregroundText = style({
 	color: colorPalette.white,
 })
 
@@ -124,7 +128,7 @@ export const exportButton = style([
 export const previewWrapper = style({
 	borderTop: '1px solid rgba(214, 222, 235, 0.15)',
 	overflow: 'hidden',
-	backgroundColor: nightOwl.colors.surface1,
+	backgroundColor: customTheme.colors.surface1,
 	padding: vars.space[4],
 	height: vars.space.full,
 })
