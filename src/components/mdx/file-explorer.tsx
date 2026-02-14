@@ -8,11 +8,10 @@ import {
 } from '@codesandbox/sandpack-react'
 import { nightOwl } from '@codesandbox/sandpack-themes'
 import * as React from 'react'
-import { header, rootWrapper, spLayout, spPrePlaceholder } from './file-explorer.css'
+import { header, rootWrapper, spLayout } from './file-explorer.css'
 
 const providerOptions: SandpackProviderProps['options'] = {
 	classes: {
-		'sp-pre-placeholder': spPrePlaceholder,
 		'sp-layout': spLayout,
 	},
 }

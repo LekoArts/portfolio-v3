@@ -1,5 +1,5 @@
 import { vars } from '@styles/themes/contract.css'
-import { style } from '@vanilla-extract/css'
+import { globalStyle, style } from '@vanilla-extract/css'
 
 export const spLayout = style({
 	borderTopLeftRadius: '0px !important',
@@ -9,14 +9,18 @@ export const spLayout = style({
 	},
 })
 
-export const spPrePlaceholder = style({
-	background: 'transparent !important',
-	color: 'inherit !important',
-})
-
 export const rootWrapper = style({
 	overflow: 'hidden',
 	borderRadius: vars.borderRadius.lg,
+})
+
+globalStyle(`${rootWrapper} pre code`, {
+	color: 'var(--sp-syntax-color-plain)',
+	fontFamily: 'var(--sp-font-mono)',
+	fontSize: 'var(--sp-font-size)',
+	background: 'unset',
+	fontWeight: 'unset',
+	borderRadius: 'unset',
 })
 
 export const header = style({

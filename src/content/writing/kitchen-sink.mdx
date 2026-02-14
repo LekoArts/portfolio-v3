@@ -345,6 +345,48 @@ export function sayHello() { return 'hello world' }
 
 </Playground>
 
+## File Explorer
+
+<FileExplorer
+  title="Obsidian File Structure"
+  entry="/_templates/Travel_Advanced.md"
+>
+
+```md name=_templates/Travel_Advanced.md
+---
+base: "[[Travel.base]]"
+banner:
+startDate: "{{date}}"
+endDate: "{{date}}"
+Persons: []
+Done: false
+---
+
+## Itinerary
+
+![[Planning.base]]
+
+## Activities
+
+![[Activities.base]]
+```
+
+```md name=Travel.base
+filters:
+  and:
+    - base == link("Travel.base")
+    - file.folder.startsWith("Travel")
+formulas:
+  year: date(startDate).year
+properties:
+  file.name:
+    displayName: Name
+  Persons:
+    displayName: Persons
+```
+
+</FileExplorer>
+
 ## Collapsible
 
 <Collapsible summary="Click me here">
