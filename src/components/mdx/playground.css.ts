@@ -1,6 +1,6 @@
+import { EC_CSS_VARS } from '@constants/ec.mjs'
 import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
-import { colorPalette } from '@styles/tokens/colors'
 import { transition } from '@styles/tokens/motion'
 import { globalStyle, style } from '@vanilla-extract/css'
 import { customTheme } from './sandpack.css'
@@ -9,13 +9,15 @@ export const spTabButton = style({
 	borderBottom: '1px solid transparent',
 	selectors: {
 		'&[data-active=\'true\']': {
-			borderBottom: '1px solid var(--sp-colors-accent)',
+			borderBottom: '1.5px solid var(--sp-colors-accent)',
 		},
 	},
 })
 
 export const spWrapper = style({
 	colorScheme: 'unset !important',
+	boxShadow: `var(--${EC_CSS_VARS.frameBoxShadowCssValue}) !important`,
+	borderRadius: `${vars.borderRadius.lg} !important`,
 })
 
 export const spCodeEditor = style({
@@ -28,26 +30,17 @@ export const spPreviewContainer = style({
 
 export const spPreviewIframe = style({})
 
+export const spTabs = style({
+	borderTop: '1px solid rgba(214, 222, 235, 0.15)',
+})
+
 export const rootWrapper = style({
 	overflow: 'hidden',
 	borderRadius: vars.borderRadius.lg,
 })
 
 globalStyle(`${rootWrapper} ${spTabButton}[data-active='true']`, {
-	color: colorPalette.white,
-})
-
-export const header = style({
-	color: 'rgb(214, 222, 235)',
-	background: 'linear-gradient(to bottom, rgb(14 61 100) 0%, rgb(6 41 69) 100%)',
-	borderBottom: '1px solid rgba(214, 222, 235, 0.15)',
-	boxShadow: 'inset 0 1px 0px 0px rgba(255, 255, 255, 0.05), inset 0 -1px 0px 0px rgba(0, 0, 0, 0.05)',
-	display: 'flex',
-	flexDirection: 'row',
-	justifyContent: 'space-between',
-	alignItems: 'center',
-	fontSize: vars.fontSize.sm,
-	padding: `${vars.space[2]} ${vars.space[4]}`,
+	fontWeight: vars.fontWeight.medium,
 })
 
 export const headerButtonWrapper = style({
@@ -56,25 +49,9 @@ export const headerButtonWrapper = style({
 	gap: vars.space[4],
 })
 
-export const middleWrapper = style({
-	borderTop: '1px solid rgba(214, 222, 235, 0.15)',
-	background: 'linear-gradient(to top, rgb(1,22,39) 0%, rgb(2,32,56) 100%)',
-	boxShadow: 'inset 0 1px 0px 0px rgba(255, 255, 255, 0.05), inset 0 -1px 0px 0px rgba(0, 0, 0, 0.05)',
-	color: 'var(--sp-colors-clickable)',
-	padding: `${vars.space[2]} ${vars.space[4]}`,
-	display: 'flex',
-	flexDirection: 'row',
-	justifyContent: 'space-between',
-	alignItems: 'center',
-})
-
 export const middleWrapperButtonWrapper = style({
 	display: 'flex',
 	alignItems: 'center',
-})
-
-export const foregroundText = style({
-	color: colorPalette.white,
 })
 
 export const buttonBase = style({})

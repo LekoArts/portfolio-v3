@@ -7,12 +7,13 @@ import {
 	useSandpack,
 } from '@codesandbox/sandpack-react'
 import * as React from 'react'
-import { header, rootWrapper, spLayout } from './file-explorer.css'
-import { customTheme } from './sandpack.css'
+import { rootWrapper, spLayout, spWrapper } from './file-explorer.css'
+import { customBarStyle, customTheme } from './sandpack.css'
 
 const providerOptions: SandpackProviderProps['options'] = {
 	classes: {
 		'sp-layout': spLayout,
+		'sp-wrapper': spWrapper,
 	},
 }
 
@@ -32,7 +33,7 @@ function FileExplorerContents({ title }: { title: string }) {
 
 	return (
 		<div className={rootWrapper}>
-			<header className={header}>{title}</header>
+			<header className={customBarStyle}>{title}</header>
 			<SandpackLayout>
 				<SandpackFileExplorer />
 				<SandpackCodeEditor showTabs={false} readOnly showReadOnly={false} />

@@ -18,10 +18,7 @@ import * as React from 'react'
 import {
 	backwardButton,
 	exportButton,
-	foregroundText,
-	header,
 	headerButtonWrapper,
-	middleWrapper,
 	middleWrapperButtonWrapper,
 	previewWrapper,
 	refreshButton,
@@ -29,9 +26,10 @@ import {
 	spCodeEditor,
 	spPreviewContainer,
 	spTabButton,
+	spTabs,
 	spWrapper,
 } from './playground.css'
-import { customTheme } from './sandpack.css'
+import { customBarStyle, customTheme } from './sandpack.css'
 
 interface IPlaygroundProps {
 	files: Record<string, string>
@@ -43,6 +41,7 @@ interface IPlaygroundProps {
 const providerOptions: SandpackProviderProps['options'] = {
 	classes: {
 		'sp-wrapper': spWrapper,
+		'sp-tabs': spTabs,
 		'sp-code-editor': spCodeEditor,
 		'sp-tab-button': spTabButton,
 		'sp-preview-container': spPreviewContainer,
@@ -85,7 +84,7 @@ function PlaygroundContents({ title }: Pick<IPlaygroundProps, 'title'>) {
 
 	return (
 		<div className={rootWrapper}>
-			<header className={header}>
+			<header className={customBarStyle}>
 				<div data-testid="playground-title">{title}</div>
 				<div className={headerButtonWrapper}>
 					<IconButton
@@ -107,8 +106,8 @@ function PlaygroundContents({ title }: Pick<IPlaygroundProps, 'title'>) {
 				closableTabs={false}
 				data-testid="playground-code-editor"
 			/>
-			<div className={middleWrapper}>
-				<div className={foregroundText}>Result</div>
+			<div className={customBarStyle}>
+				<div>Result</div>
 				<div className={middleWrapperButtonWrapper}>
 					<IconButton
 						onClick={() => {
