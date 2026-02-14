@@ -15,7 +15,7 @@ export const shadows = {
 		defaultHoverDark: '0 0 0 1px rgb(87 87 113/0.5), 0 1px 7px -4px rgba(21, 93, 252, 0.5), 0 4px 11px rgba(57,67,79,0.1)',
 		titleOnlyDark: '0 0 0 1px rgb(93 93 145/0.5), 0 1px 7px -4px rgba(0, 17, 55, 0.5), 0 4px 11px rgba(0,0,0,0.1)',
 		ghost: 'none',
-		ghostDark: '0 0 0 1px rgb(87 87 113/0.06), 0 1px 7px -4px rgba(21, 93, 252, 0.3), 0 4px 11px rgba(57,67,79,0.2)',
+		ghostDark: '0 0 0 1px rgb(87 87 113/0.03), 0 1px 7px -4px rgba(21, 93, 252, 0.2), 0 4px 11px rgba(57,67,79,0.1)',
 	},
 }
 
