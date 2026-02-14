@@ -1,0 +1,74 @@
+---
+title: "Using Nginx Proxy Manager on Unraid"
+slug: using-nginx-proxy-manager-on-unraid
+description: "Learn how I use Nginx Proxy Manager (NPM) on Unraid to access all my services with a custom domain instead of their IP address"
+date: 2026-02-14
+lastUpdated: 2026-02-14
+type: note
+icon: self-hosting
+tags:
+  - Self-Hosting
+series:
+  id: my-first-unraid-server
+  part: 5
+---
+
+[Nginx Proxy Manager (NPM)](https://nginxproxymanager.com/) is a great tool for exposing your internal services through a custom domain instead of their IP address. Instead of accessing `http://192.168.178.32:3001` I can go to `https://emby.mydomain.com` and will be routed to my local Emby server — with free Let's Encrypt SSL certificates as a nice bonus. I want to share how I personally use NPM on Unraid.
+
+Three important notes before we start:
+- I **do not** use NPM to help me expose my local services to the internet; I only access my home network through a VPN. Many others show port forwarding but I don't want to do that.
+- I use a Fritz!Box router which has some quirks when it comes to internal networks. Some of the things explained here might not apply to you if you use a Unifi router, etc.
+- I've changed quite a few default settings, I'd definitely recommend watching a general installation guide for NPM in parallel to this post, as I'm trying to explain the solutions to my specific problems and not how to set up NPM in general.
+
+## Installation
+
+Install [Nginx Proxy Manager (NPM) Official](https://forums.unraid.net/topic/110245-support-nginx-proxy-manager-npm-official/) through the Community Applications. They have great [debugging instructions](https://forums.unraid.net/topic/110245-support-nginx-proxy-manager-npm-official/#findComment-1011152) for common problems.
+
+During setup I set the _Network Type_ to **Host** and left the other options as-is.
+
+## Network setup
+
+I had problems with my router and internal resolution, so I adjusted a few defaults:
+
+- In _Settings_ > _Management Access_ I set the HTTP port to `5000` and HTTPS port to `5001`
+- In _Settings_ > _Docker_ I updated these options:
+  - Docker custom network type: **ipvlan**
+  - Host access to custom networks: **Enabled**
+  - Preserve user defined networks: **Yes**
+
+I set up a custom docker network and use it for all Docker containers except NPM. By changing the stock ports of Unraid the internal IP address of the server directly points towards NPM.
+
+## DNS resolution
+
+Inside Cloudflare (where I bought my domain) I added two DNS records:
+
+- `A` record for `mydomain.com` pointing to my internal IP address (the Container IP shown for NPM in Unraid)
+- `CNAME` record for `*` pointing to `mydomain.com` (DNS only, no proxy)
+
+## Using NPM
+
+Now that everything is set up, you can go to NPM and configure some Proxy Hosts. Before adding them though, you should first set up an SSL certificate. Navigate to the _SSL Certificates_ tab and select _Add SSL Certificate_. Choose _Let's Encrypt_. You'll get a modal where you enter your domain and email address. I had success choosing _Use a DNS Challenge_ in the past, but it might vary based on your setup.
+
+If everything went smoothly you now have SSL certificates for `*.mydomain.com` and `mydomain.com`. Switch to the _Hosts_ > _Proxy Hosts_ tab and press _Add Proxy Host_.
+
+A new modal opens. I typically enter these settings:
+
+- Domain Names: `subdomain.mydomain.com`
+- Scheme: `http`
+- Forward Hostname / IP: Look at the **LAN IP:Port** column in Unraid's docker tab and enter the values here
+- Enable Websockets Support
+- SSL
+  - SSL Certificate: Select the certificate you created in the previous step
+  - Force SSL: Enabled
+  - HTTP/2 Support: Enabled
+  - HSTS Enabled
+
+## Fritz!Box specific problems
+
+I followed all these steps the first time I added NPM and it didn't work! I couldn't figure out why until I found a forum post online that solved my problem. Here's what I needed to change in my Fritz!Box router:
+
+Inside _Home Network_ > _Network_ > _Network Settings_ I had to change the **DNS-Rebind-Protection** setting. I added `mydomain.com` to the list of allowed domains and then everything worked as expected.
+
+Fritz!Box doesn't allow DNS resolution of domain names that point to private IPs to protect against DNS rebinding attacks. That's why NPM didn't work out of the box for me.
+
+With NPM set up, all my services are now accessible via clean subdomains over HTTPS — no port numbers to remember.
