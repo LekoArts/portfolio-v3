@@ -1,0 +1,37 @@
+---
+import type { MarkdownHeading } from 'astro'
+import Box from '@components/primitives/box.astro'
+import TocItem from '@components/writing/toc-item.astro'
+import { buildToc } from '@utils/toc'
+import { detailsStyle, summaryStyle } from './toc-mobile.css'
+
+interface Props {
+	headings: MarkdownHeading[]
+}
+
+const { headings } = Astro.props
+
+const toc = buildToc(headings)
+---
+
+{
+	toc.length > 0 && (
+		<Box
+			as="details"
+			display={{ mobile: 'block', '2xl': 'none' }}
+			px={[3, null, 4]}
+			py={[1, null, 2]}
+			class={detailsStyle}
+			borderRadius="lg"
+		>
+			<Box as="summary" class={summaryStyle}>
+				Table of Contents
+			</Box>
+			<ul id="toc-mobile">
+				{toc.map((heading) => (
+					<TocItem heading={heading} />
+				))}
+			</ul>
+		</Box>
+	)
+}

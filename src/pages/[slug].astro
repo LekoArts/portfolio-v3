@@ -25,6 +25,7 @@ import FormattedDate from '@components/primitives/formatted-date.astro'
 import { normalize } from '@utils/slash'
 import SeriesCallout from '@components/writing/series-callout.astro'
 import { queryStringTags } from '@utils/url'
+import TocMobile from '@components/writing/toc-mobile.astro'
 
 export async function getStaticPaths() {
 	const entries = await getCollection('writing', filterPublished)
@@ -137,9 +138,11 @@ const ogImage = post.image ?? fallbackOgImage
 							{isPartOfSeries ? (
 								<>
 									<SeriesCallout id={post.series!.id} currentPart={post.series!.part} postsInSeries={postsInSeries} />
-									<Spacer size={8} axis="vertical" />
+									<Spacer size={{ mobile: 4, '2xl': 8 }} axis="vertical" />
 								</>
 							) : null}
+							<TocMobile headings={headings} />
+							<Spacer size={{ mobile: 8, '2xl': 0 }} axis="vertical" />
 							<Content components={components} />
 						</Prose>
 					</Box>
