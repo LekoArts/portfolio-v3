@@ -26,6 +26,7 @@ import { normalize } from '@utils/slash'
 import SeriesCallout from '@components/writing/series-callout.astro'
 import { queryStringTags } from '@utils/url'
 import TocMobile from '@components/writing/toc-mobile.astro'
+import SeriesPagination from '@components/writing/series-pagination.astro'
 
 export async function getStaticPaths() {
 	const entries = await getCollection('writing', filterPublished)
@@ -153,6 +154,14 @@ const ogImage = post.image ?? fallbackOgImage
 				)
 			}
 			<Spacer size={12} axis="vertical" />
+			{
+				isPartOfSeries ? (
+					<>
+						<SeriesPagination id={post.series!.id} currentPart={post.series!.part} postsInSeries={postsInSeries} />
+						<Spacer size={8} axis="vertical" />
+					</>
+				) : null
+			}
 			<Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
 			<Spacer size={6} axis="vertical" />
 			<Box
