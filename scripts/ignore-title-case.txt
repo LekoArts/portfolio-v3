@@ -7,3 +7,4 @@
 2025-08-16--tsdown-excluding-files-from-the-build.mdx
 2025-08-16--replacing-ls-with-eza.mdx
 2026-01-03--from-mdx-to-interactive-sandboxes-with-remark-sandpack.mdx
+2026-03-04--tailwind-typography-in-vanilla-extract.mdx

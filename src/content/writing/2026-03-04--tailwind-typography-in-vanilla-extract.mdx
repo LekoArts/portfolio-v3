@@ -1,0 +1,251 @@
+---
+title: "Tailwind Typography in vanilla-extract"
+slug: tailwind-typography-in-vanilla-extract
+description: "Learn how you can replicate Tailwind CSS Typography styles in vanilla-extract"
+date: 2026-03-04
+lastUpdated: 2026-03-04
+type: note
+icon: web-development
+tags:
+  - Web Development
+---
+
+I like the simplicity of the Tailwind CSS Typography plugin. Add a `prose` class and you get sensible defaults for all your content. Since I'm using [vanilla-extract](https://vanilla-extract.style/) for this blog, I needed to replicate those styles. Here's how.
+
+> [!NOTE]
+> **Note**
+>
+> In this post, I'll only show a simplified version of the styles. For a complete implementation, check the [Tailwind source code](https://github.com/tailwindlabs/tailwindcss-typography/blob/74a3da779bb43e4e68f446395224c768704c1fb6/src/styles.js) to see all the styles they apply.
+
+## Foundation
+
+The Tailwind CSS Typography plugin defines different typography scales for each breakpoint, plus light/dark mode support. To replicate this, you need to define matching styles for each breakpoint. The plugin's [`styles.js` file](https://github.com/tailwindlabs/tailwindcss-typography/blob/74a3da779bb43e4e68f446395224c768704c1fb6/src/styles.js) contains all the values.
+
+Create a new file called `tailwind-typography.css.ts` with these contents:
+
+```ts title="tailwind-typography.css.ts"
+function round(num: number) {
+	return num
+		.toFixed(7)
+		.replace(/(\.\d+?)0+$/, '$1')
+		.replace(/\.0$/, '')
+}
+const rem = (px: number) => `${round(px / 16)}rem`
+const em = (px: number, base: number) => `${round(px / base)}em`
+
+export const proseRootMobile = {
+	fontSize: rem(14),
+	lineHeight: round(24 / 14),
+}
+
+export const proseRootMd = {
+	fontSize: rem(16),
+	lineHeight: round(28 / 16),
+}
+
+export const proseRootLg = {
+	fontSize: rem(18),
+	lineHeight: round(32 / 18),
+}
+
+export const proseSmVariant = {
+	'h1': {
+		fontSize: em(34, 14), // Changed from 30
+		marginTop: 0,
+		marginBottom: em(24, 30),
+		lineHeight: round(36 / 30),
+	},
+}
+
+export const proseMdVariant: typeof proseSmVariant = {
+	'h1': {
+		fontSize: em(40, 16), // Changed from 36
+		marginTop: 0,
+		marginBottom: em(32, 36),
+		lineHeight: round(40 / 36),
+	},
+}
+
+export const proseLgVariant: typeof proseSmVariant = {
+	'h1': {
+		fontSize: em(54, 18), // Changed from 48
+		marginTop: 0,
+		marginBottom: em(40, 48),
+		lineHeight: round(48 / 48),
+	},
+}
+
+// The { light, dark } object is a custom convention
+// used by the themeAwareStyles() utility (explained later)
+export const proseBaseStyle = {
+	'a': {
+		color: {
+      light: 'blue',
+      dark: 'lightblue',
+    },
+	},
+}
+```
+
+The `proseBaseStyle` is always applied, while the _variant_ styles are applied based on the breakpoint.
+
+Now create a `prose.css.ts` file that applies these styles at the appropriate breakpoints:
+
+```ts title="prose.css.ts"
+import { style } from '@vanilla-extract/css'
+import { proseBaseStyle, proseLgVariant, proseMdVariant, proseRootLg, proseRootMd, proseRootMobile, proseSmVariant } from './tailwind-typography.css'
+
+const breakpointNames = ['sm', 'md', 'lg'] as const
+const breakpoints = {
+	'sm': 40, // 640px
+	'md': 48, // 768px
+	'lg': 64, // 1024px
+} as const
+
+function minMediaQuery(breakpoint: keyof typeof breakpoints) {
+	return `screen and (min-width: ${breakpoints[breakpoint]}rem)`
+}
+
+export const proseRootStyle = style([
+	proseRootMobile,
+	{
+		'@media': {
+			[minMediaQuery('sm')]: proseRootMd,
+			[minMediaQuery('lg')]: proseRootLg,
+		},
+	},
+])
+```
+
+You'll add `proseRootStyle` to the root element of your content (the `prose` class so to speak). Depending on the screen size, the appropriate root styles (`font-size` and `line-height`) will be applied.
+
+## Theme-aware styles
+
+I've already written about how to create [theme-aware styles in vanilla-extract](/how-to-write-theme-aware-styles-with-vanilla-extract/) so I won't go into too much detail here. The `proseBaseStyle` contains styles both for light and dark mode.
+
+By using the `themeAwareStyles()` function, you can scope these styles to the `proseRootStyle` element.
+
+```ts title="prose.css.ts"
+import { globalStyle } from "@vanilla-extract/css"
+import { darkThemeClass } from "./themes/dark.css"
+import { themeAwareStyles } from "./utils"
+
+const preparedBaseStyles = themeAwareStyles({
+	selectorMap: proseBaseStyle,
+	defaultTheme: 'light',
+	alternateThemeClass: darkThemeClass,
+	rootClass: proseRootStyle,
+})
+
+Object.entries(preparedBaseStyles).forEach(([selector, selectorStyle]) => {
+	globalStyle(selector, selectorStyle)
+})
+```
+
+<Collapsible summary="Example output">
+
+If you're wondering how `themeAwareStyles()` works, here's a short example from my unit tests:
+
+```ts
+expect(
+  themeAwareStyles({
+    selectorMap: { '&.active': { background: { light: 'red', dark: 'blue' } } },
+    defaultTheme,
+    alternateThemeClass: darkThemeClass,
+  }),
+).toEqual({
+  '&.active': { background: 'red' },
+  'html.dark &.active': { background: 'blue' },
+})
+```
+
+</Collapsible>
+
+## Responsive variants
+
+To turn `proseSmVariant`, `proseMdVariant`, etc. into something useful, you need a `responsiveStyles()` helper. This function transforms all variant styles into an object where the keys are CSS selectors and the values are arrays of CSS properties.
+
+```ts title="utils.ts"
+import { mergeWith } from 'lodash-es'
+
+function removeEmpty(obj: Record<string, string | null>) {
+	return Object.entries(obj).reduce((a, [k, v]) => (v == null ? a : ((a[k] = v), a)), {})
+}
+
+function customizer(objValue: Array<Record<string, string>> | undefined, srcValue: Record<string, string | null>) {
+	const srcKeys = Object.keys(srcValue)
+	const srcKeysLength = srcKeys.length
+
+	// If srcValue only has one key and it's 'null', return 'null'
+	// This way the resulting array will be [{ key: 'value' }, null, { key: 'value' }]
+	if (srcKeysLength === 1 && srcValue[srcKeys[0]] === null) {
+		return (objValue || []).concat(null)
+	}
+
+	// removeEmpty will remove all keys with 'null' values
+	return (objValue || []).concat(removeEmpty(srcValue))
+}
+
+export function responsiveStyles(responsiveVariantArray: Array<Record<string, Record<string, string>>>) {
+	const styles: Record<string, Array<Record<string, string> | null>> = {}
+	mergeWith(styles, ...responsiveVariantArray, customizer)
+	return styles
+}
+```
+
+<Collapsible summary="Example output">
+
+It collects all styles for the same selector into an array.
+
+```ts
+const result = responsiveStyles([
+  {
+    p: {
+      fontSize: '1rem',
+    },
+  },
+  {
+    p: {
+      fontSize: '2rem',
+    },
+  },
+])
+
+expect(result).toEqual({
+  p: [{ fontSize: '1rem' }, { fontSize: '2rem' }],
+})
+```
+
+</Collapsible>
+
+With the `responsiveStyles()` helper, create individual `globalStyle()` rules for each selector. So if you have a `h1` selector in your variants, you'll create a `globalStyle()` rule for `proseRootStyle h1` and apply the appropriate styles based on the screen size.
+
+```ts title="prose.css.ts"
+import { responsiveStyles } from "./utils"
+
+// Array order: [mobile, sm, md, lg]
+// sm and md share the same variant here
+const proseResponsiveStyles = responsiveStyles([
+	proseSmVariant,
+	proseMdVariant,
+	proseMdVariant,
+	proseLgVariant,
+])
+
+Object.entries(proseResponsiveStyles).forEach(([selector, selectorResponsiveArray]) => {
+	const [mobileStyle, ...rest] = selectorResponsiveArray
+	const mediaQueries = {}
+
+	rest.forEach((s, index) => {
+		if (s) {
+			mediaQueries[minMediaQuery(breakpointNames[index])] = s
+		}
+	})
+	globalStyle(`${proseRootStyle} ${selector}`, {
+		...mobileStyle,
+		'@media': mediaQueries,
+	})
+})
+```
+
+And that's it! With this setup, you can now use the `proseRootStyle` class on your content and it will have the same styles as the Tailwind CSS Typography plugin, including responsive variants and theme-aware styles.
