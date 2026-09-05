@@ -1,6 +1,6 @@
 ---
 import type { ImageMetadata } from 'astro'
-import { Image } from '@unpic/astro'
+import { Image } from 'astro:assets'
 import Base from '@layouts/base.astro'
 import PhotographyText from '@assets/photography-body.mdx'
 import SkipNavContent from '@components/a11y/skip-nav-content.astro'
@@ -114,11 +114,11 @@ const photos = Array.from(albumMap.values())
 							>
 								<Image
 									alt=""
-									src={photo.props.src}
+									src={photo.props}
 									height={calculatedHeight}
 									width={MAX_WIDTH}
 									layout="constrained"
-									breakpoints={[720, 960, 1280, 1440, 2000]}
+									widths={[720, 960, 1280, 1440, 2000]}
 								/>
 							</WithLightbox>
 						)

@@ -4,7 +4,7 @@ This document provides essential information for AI coding agents working in thi
 
 ## Project Overview
 
-Personal portfolio website built with **Astro 5**, **MDX**, **React 19**, and **vanilla-extract** for styling. Uses **pnpm** as package manager and **Netlify** for deployment.
+Personal portfolio website built with **Astro 7**, **MDX**, **React 19**, and **vanilla-extract** for styling. Uses **pnpm** as package manager and **Netlify** for deployment.
 
 ## Build & Test Commands
 
@@ -20,6 +20,7 @@ pnpm bootstrap              # Full setup: install + install Playwright
 ### Testing
 
 ```bash
+pnpm check                  # Generate Astro types and run Astro Check
 pnpm test                   # Run all unit tests (vitest)
 pnpm test:watch             # Run tests in watch mode
 pnpm test:e2e               # Run E2E tests (Playwright)

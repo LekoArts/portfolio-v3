@@ -1,6 +1,7 @@
 import { ICON_CHOICES, TAGS_CHOICES, TYPE_CHOICES } from '@constants/content'
 import { glob } from 'astro/loaders'
-import { defineCollection, z } from 'astro:content'
+import { z } from 'astro/zod'
+import { defineCollection } from 'astro:content'
 
 const writing = defineCollection({
 	loader: glob({ pattern: '**\/[^_]*.mdx', base: './src/content/writing' }),

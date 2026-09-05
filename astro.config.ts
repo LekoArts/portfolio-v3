@@ -1,9 +1,9 @@
+import { unified } from '@astrojs/markdown-remark'
 import mdx from '@astrojs/mdx'
 import netlify from '@astrojs/netlify'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import remarkSandpack from '@lekoarts/remark-sandpack'
-import { imageService } from '@unpic/astro/service'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import expressiveCode from 'astro-expressive-code'
 import { defineConfig, envField } from 'astro/config'
@@ -30,7 +30,9 @@ export default defineConfig({
 		filter: page => page !== `${SITE.url}/privacy-policy/` && page !== `${SITE.url}/legal-notice/`,
 	})],
 	image: {
-		service: imageService(),
+		service: {
+			entrypoint: './src/lib/netlify-image-service.ts',
+		},
 	},
 	cacheDir: './.cache',
 	devToolbar: {
@@ -43,17 +45,22 @@ export default defineConfig({
 		},
 	},
 	markdown: {
-		smartypants: true,
-		gfm: true,
-		rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions]],
-		remarkPlugins: [[remarkSandpack, { componentName: ['Playground', 'FileExplorer'] }], codemodAlerts],
+		processor: unified({
+			smartypants: true,
+			gfm: true,
+			rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions]],
+			remarkPlugins: [[remarkSandpack, { componentName: ['Playground', 'FileExplorer'] }], codemodAlerts],
+		}),
 	},
 	adapter: IS_PLAYWRIGHT
 		? undefined
 		: netlify({
+				// Keep the custom Unpic-backed service; it generates Netlify Image CDN URLs directly.
+				imageCDN: false,
 				devFeatures: {
 					images: false,
 					environmentVariables: false,
+					edgeFunctions: false,
 				},
 			}),
 })
