@@ -68,20 +68,37 @@ describe('netlify image service', () => {
 		])
 	})
 
-	it('constructs Netlify image URLs', async () => {
+	it('constructs Netlify image URLs with provider-specific operations', async () => {
 		const url = new URL(await getURL({
 			src: importedImage,
 			width: 720,
 			height: 405,
-			fit: 'cover',
+			fit: 'contain',
+			position: 'left',
+			format: 'webp',
+			quality: 80,
 		}), 'https://example.com')
 
 		expect(url.pathname).toBe('/.netlify/images')
 		expect(Object.fromEntries(url.searchParams)).toEqual({
 			w: '720',
 			h: '405',
-			fit: 'cover',
+			fit: 'contain',
+			position: 'left',
+			fm: 'webp',
+			q: '80',
 			url: importedImage.src,
+		})
+	})
+
+	it('uses Netlify defaults for string sources without adding a position', async () => {
+		const src = 'https://example.com/photo.jpg'
+		const url = new URL(await getURL({ src, width: 960, height: 540 }), 'https://example.com')
+
+		expect(Object.fromEntries(url.searchParams)).toEqual({
+			w: '960',
+			h: '540',
+			url: src,
 		})
 	})
 

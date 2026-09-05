@@ -1,20 +1,13 @@
 import type { ExternalImageService, ImageMetadata } from 'astro'
-import type { ImageCdn, ProviderOptions } from 'unpic'
+import type { NetlifyOperations } from 'unpic/providers/netlify'
 import { env } from 'node:process'
 import { getSrcSetEntries, inferImageDimensions, transformProps } from '@unpic/core'
-import { transformUrl } from 'unpic'
+import { transform as transformNetlifyUrl } from 'unpic/providers/netlify'
+
+type ImageProvider = 'astro' | 'netlify'
 
 export interface NetlifyImageServiceConfig {
-	fallbackService?: ImageCdn
-}
-
-interface ImageConfig {
-	endpoint?: string | {
-		route?: string
-	}
-	service: {
-		config: NetlifyImageServiceConfig
-	}
+	fallbackService?: ImageProvider
 }
 
 interface ImageOptions {
@@ -37,7 +30,8 @@ interface TransformOptions {
 	format?: string
 	height?: number
 	layout?: 'constrained' | 'fixed' | 'full-width' | 'none'
-	provider: ImageCdn
+	position?: string
+	provider: ImageProvider
 	quality?: number | string
 	url: string
 	width?: number
@@ -46,7 +40,7 @@ interface TransformOptions {
 export function getDefaultImageProvider(
 	environment: NodeJS.ProcessEnv = env,
 	hasNetlifyGlobal = 'Netlify' in globalThis,
-): ImageCdn {
+): ImageProvider {
 	if (environment.IS_PLAYWRIGHT)
 		return 'astro'
 
@@ -56,19 +50,37 @@ export function getDefaultImageProvider(
 	return 'astro'
 }
 
-function getProvider(config: NetlifyImageServiceConfig): ImageCdn {
+function getProvider(config: NetlifyImageServiceConfig): ImageProvider {
 	return config.fallbackService ?? getDefaultImageProvider()
 }
 
-function getProviderOptions(imageConfig: ImageConfig): Partial<ProviderOptions> {
-	const endpoint = typeof imageConfig.endpoint === 'object'
-		? imageConfig.endpoint.route
-		: imageConfig.endpoint
+function getNetlifyOperations(options: TransformOptions): NetlifyOperations {
+	const fit = options.fit === 'contain' || options.fit === 'cover' || options.fit === 'fill'
+		? options.fit
+		: undefined
+	const format = options.format === 'avif'
+		|| options.format === 'blurhash'
+		|| options.format === 'jpeg'
+		|| options.format === 'jpg'
+		|| options.format === 'png'
+		|| options.format === 'webp'
+		? options.format
+		: undefined
+	const position = options.position === 'bottom'
+		|| options.position === 'center'
+		|| options.position === 'left'
+		|| options.position === 'right'
+		|| options.position === 'top'
+		? options.position
+		: undefined
 
 	return {
-		astro: {
-			endpoint,
-		},
+		fit,
+		format,
+		height: options.height,
+		position,
+		quality: options.quality,
+		width: options.width,
 	}
 }
 
@@ -123,7 +135,7 @@ const service: ExternalImageService<NetlifyImageServiceConfig> = {
 		if (transformOptions.provider === 'astro')
 			return transformOptions.url
 
-		return transformUrl(transformOptions, {}, getProviderOptions(imageConfig))?.toString() ?? transformOptions.url
+		return transformNetlifyUrl(transformOptions.url, getNetlifyOperations(transformOptions))
 	},
 	getHTMLAttributes(options, imageConfig) {
 		const transformOptions = getTransformOptions(options, imageConfig.service.config)
