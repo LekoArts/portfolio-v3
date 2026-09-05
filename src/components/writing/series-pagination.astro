@@ -12,7 +12,7 @@ interface Props {
 	postsInSeries: Array<SeriesPartItem>
 }
 
-const { currentPart, id: seriesId, postsInSeries } = Astro.props
+const { currentPart, postsInSeries } = Astro.props
 
 /**
  * Calculate the previous and next post in the series based on the current part.

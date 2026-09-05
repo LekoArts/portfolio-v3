@@ -14,20 +14,20 @@ test.describe('Series Callout', () => {
 		await expect(summary).toContainText('My First Unraid Server')
 
 		// Get the <ol> and its <li> children
-		const listItems = await page.getByTestId('series-callout').locator('ol > li')
-		await expect(await listItems.count()).toBeGreaterThan(1)
+		const listItems = page.getByTestId('series-callout').locator('ol > li')
+		expect(await listItems.count()).toBeGreaterThan(1)
 		await expect(listItems.nth(0)).toContainText('My First Unraid Server')
 		await expect(listItems.nth(1)).toContainText('Essential Unraid Apps')
 	})
 	test('navigates to other post in series', async ({ page }) => {
-		const callout = await page.getByTestId('series-callout')
+		const callout = page.getByTestId('series-callout')
 
 		// Expand the details if not already open
 		const isOpen = await callout.getAttribute('open')
 		if (!isOpen) {
 			await callout.locator('summary').click()
 		}
-		const listItems = await page.getByTestId('series-callout').locator('ol > li')
+		const listItems = page.getByTestId('series-callout').locator('ol > li')
 		await listItems.nth(1).locator('a').click()
 		await expect(page).toHaveURL('/essential-unraid-apps/')
 	})
