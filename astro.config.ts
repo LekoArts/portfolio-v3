@@ -3,7 +3,6 @@ import netlify from '@astrojs/netlify'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import remarkSandpack from '@lekoarts/remark-sandpack'
-import { imageService } from '@unpic/astro/service'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import expressiveCode from 'astro-expressive-code'
 import { defineConfig, envField } from 'astro/config'
@@ -30,7 +29,9 @@ export default defineConfig({
 		filter: page => page !== `${SITE.url}/privacy-policy/` && page !== `${SITE.url}/legal-notice/`,
 	})],
 	image: {
-		service: imageService(),
+		service: {
+			entrypoint: './src/lib/netlify-image-service.ts',
+		},
 	},
 	cacheDir: './.cache',
 	devToolbar: {
@@ -51,6 +52,7 @@ export default defineConfig({
 	adapter: IS_PLAYWRIGHT
 		? undefined
 		: netlify({
+				imageCDN: false,
 				devFeatures: {
 					images: false,
 					environmentVariables: false,

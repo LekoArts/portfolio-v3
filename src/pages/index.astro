@@ -1,6 +1,6 @@
 ---
+import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
-import { Image } from '@unpic/astro'
 import Box from '@components/primitives/box.astro'
 import SkipNavContent from '@components/a11y/skip-nav-content.astro'
 import Base from '@layouts/base.astro'
@@ -189,10 +189,26 @@ const [firstPost, ...otherPosts] = writing
 					</Box>
 					<Box class={artGridStyle}>
 						<Link href="/photos/" borderRadius="lg" class={photoLinkStyle}>
-							<Image alt="" src={PhotoOne} aspectRatio={16 / 9} width={720} class={staticImageStyle} />
+							<Image
+								alt=""
+								src={PhotoOne}
+								height={405}
+								width={720}
+								layout="constrained"
+								widths={[640, 720, 750, 828, 960, 1080, 1280, 1440]}
+								class={staticImageStyle}
+							/>
 						</Link>
 						<Link href="/photos/" borderRadius="lg" class={photoLinkStyle}>
-							<Image alt="" src={PhotoTwo} aspectRatio={16 / 9} width={720} class={staticImageStyle} />
+							<Image
+								alt=""
+								src={PhotoTwo}
+								height={405}
+								width={720}
+								layout="constrained"
+								widths={[640, 720, 750, 828, 960, 1080, 1280, 1440]}
+								class={staticImageStyle}
+							/>
 						</Link>
 					</Box>
 				</Box>
