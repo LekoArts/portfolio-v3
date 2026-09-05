@@ -25,6 +25,14 @@ test.describe('Navigation', () => {
 		await click(page, '[aria-label="lekoarts.de, Back to homepage"] svg')
 		await expect(page).toHaveURL('/')
 	})
+	test('requires trailing slashes in the static preview', async ({ page }) => {
+		const noSlashResponse = await page.goto('/writing')
+		expect(noSlashResponse?.status()).toBe(404)
+
+		const trailingSlashResponse = await page.goto('/writing/')
+		expect(trailingSlashResponse?.ok()).toBe(true)
+		await expect(page).toHaveURL('/writing/')
+	})
 	test('RSS from /writing', async ({ page }) => {
 		await page.goto('/writing/')
 

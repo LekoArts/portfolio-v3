@@ -17,7 +17,7 @@ export const rehypeAutolinkHeadingsOptions: Options = {
 		return { tabIndex: -1 }
 	},
 	properties(node: any) {
-		return { ariaLabel: `Permalink: ${toString(node)}`, className: 'anchor' }
+		return { ariaLabel: `Permalink: ${toString(node)}`, className: ['anchor'] }
 	},
 	content() {
 		return h('svg', { className: 'anchor-icon', viewBox: '0 0 16 16', ariaHidden: true }, [

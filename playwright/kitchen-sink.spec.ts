@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
 
 test.describe('Smoke Test', () => {
 	test('should have MDX content', async ({ page }) => {
-		page.locator('h2:has-text("Example Heading")')
+		await expect(page.locator('h2:has-text("Example Heading")')).toBeVisible()
 	})
 })
 
@@ -36,24 +36,31 @@ test.describe('Playground', () => {
 	})
 })
 
+test.describe('File Explorer', () => {
+	test('should render the configured files', async ({ page }) => {
+		await expect(page.getByText('Obsidian File Structure', { exact: true })).toBeVisible()
+		await expect(page.getByText('Travel_Advanced.md', { exact: true })).toBeVisible()
+	})
+})
+
 test.describe('Alerts', () => {
 	test('should have titles', async ({ page }) => {
-		page.locator('data-testid=alert-success >> text=Success Title')
-		page.locator('data-testid=alert-note >> text=Note Title')
-		page.locator('data-testid=alert-warning >> text=Warning Title')
-		page.locator('data-testid=alert-caution >> text=Caution Title')
+		await expect(page.getByTestId('alert-success')).toContainText('Success Title')
+		await expect(page.getByTestId('alert-note')).toContainText('Note Title')
+		await expect(page.getByTestId('alert-warning')).toContainText('Warning Title')
+		await expect(page.getByTestId('alert-caution')).toContainText('Caution Title')
 	})
 	test('should have contents', async ({ page }) => {
-		page.locator('data-testid=alert-success >> text=This is a success.')
-		page.locator('data-testid=alert-note >> text=This is a note.')
-		page.locator('data-testid=alert-warning >> text=This is a warning.')
-		page.locator('data-testid=alert-caution >> text=This is a caution.')
+		await expect(page.getByTestId('alert-success')).toContainText('This is a success.')
+		await expect(page.getByTestId('alert-note')).toContainText('This is a note.')
+		await expect(page.getByTestId('alert-warning')).toContainText('This is a warning.')
+		await expect(page.getByTestId('alert-caution')).toContainText('This is a caution.')
 	})
 })
 
 test.describe('Code', () => {
 	test('should show inline code', async ({ page }) => {
-		page.locator('code:has-text("inline-code-block)')
+		await expect(page.locator('code:has-text("inline-code-block")')).toBeVisible()
 	})
 	test('should render a code block', async ({ page }) => {
 		const codeBlock = page.locator('.expressive-code pre')
