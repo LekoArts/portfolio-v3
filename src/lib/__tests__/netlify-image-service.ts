@@ -48,15 +48,17 @@ describe('netlify image service', () => {
 		})
 	})
 
-	it('generates configured width descriptors with proportional heights', async () => {
+	it('generates configured width descriptors without mutating the widths', async () => {
+		const widths = [2000, 720, 1440, 960, 1280]
 		const srcSet = await imageService.getSrcSet!({
 			src: importedImage,
 			width: 720,
 			height: 405,
 			layout: 'constrained',
-			widths: [720, 960, 1280, 1440, 2000],
+			widths,
 		} as never, netlifyImageConfig as never, undefined as never)
 
+		expect(widths).toEqual([2000, 720, 1440, 960, 1280])
 		expect(srcSet).toEqual([
 			{ transform: expect.objectContaining({ width: 720, height: 405 }), descriptor: '720w' },
 			{ transform: expect.objectContaining({ width: 960, height: 540 }), descriptor: '960w' },

@@ -94,7 +94,7 @@ const service: ExternalImageService<NetlifyImageServiceConfig> = {
 		const transformOptions = getTransformOptions(options, imageConfig.service.config)
 		const entries = getSrcSetEntries({
 			aspectRatio: transformOptions.aspectRatio,
-			breakpoints: options.widths,
+			breakpoints: options.widths ? [...options.widths] : undefined,
 			format: transformOptions.format,
 			height: transformOptions.height,
 			layout: transformOptions.layout === 'full-width' ? 'fullWidth' : transformOptions.layout === 'none' ? undefined : transformOptions.layout,
