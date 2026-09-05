@@ -1,3 +1,4 @@
+import { unified } from '@astrojs/markdown-remark'
 import mdx from '@astrojs/mdx'
 import netlify from '@astrojs/netlify'
 import react from '@astrojs/react'
@@ -44,10 +45,12 @@ export default defineConfig({
 		},
 	},
 	markdown: {
-		smartypants: true,
-		gfm: true,
-		rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions]],
-		remarkPlugins: [[remarkSandpack, { componentName: ['Playground', 'FileExplorer'] }], codemodAlerts],
+		processor: unified({
+			smartypants: true,
+			gfm: true,
+			rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions]],
+			remarkPlugins: [[remarkSandpack, { componentName: ['Playground', 'FileExplorer'] }], codemodAlerts],
+		}),
 	},
 	adapter: IS_PLAYWRIGHT
 		? undefined
@@ -56,6 +59,7 @@ export default defineConfig({
 				devFeatures: {
 					images: false,
 					environmentVariables: false,
+					edgeFunctions: false,
 				},
 			}),
 })

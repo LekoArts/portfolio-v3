@@ -59,8 +59,12 @@ test.describe('Alerts', () => {
 })
 
 test.describe('Code', () => {
-	test('should show inline code', async ({ page }) => {
-		await expect(page.locator('code:has-text("inline-code-block")')).toBeVisible()
+	test('should preserve semantic text spacing around inline code', async ({ page }) => {
+		const paragraph = page.getByText('Here goes an inline-code-block code block.', { exact: true })
+
+		await expect(paragraph).toBeVisible()
+		await expect(paragraph).toHaveText('Here goes an inline-code-block code block.')
+		await expect(paragraph.locator('code')).toHaveText('inline-code-block')
 	})
 	test('should render a code block', async ({ page }) => {
 		const codeBlock = page.locator('.expressive-code pre')

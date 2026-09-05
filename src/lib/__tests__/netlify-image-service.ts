@@ -29,7 +29,7 @@ const astroImageConfig = {
 }
 
 async function getURL(options: Record<string, unknown>, imageConfig = netlifyImageConfig): Promise<string> {
-	return imageService.getURL!(options as never, imageConfig as never)
+	return imageService.getURL!(options as never, imageConfig as never, undefined as never)
 }
 
 describe('netlify image service', () => {
@@ -55,7 +55,7 @@ describe('netlify image service', () => {
 			height: 405,
 			layout: 'constrained',
 			widths: [720, 960, 1280, 1440, 2000],
-		} as never, netlifyImageConfig as never)
+		} as never, netlifyImageConfig as never, undefined as never)
 
 		expect(srcSet).toEqual([
 			{ transform: expect.objectContaining({ width: 720, height: 405 }), descriptor: '720w' },
@@ -107,7 +107,7 @@ describe('netlify image service', () => {
 		}
 		options['data-astro-image'] = 'constrained'
 
-		const attributes = await imageService.getHTMLAttributes!(options as never, netlifyImageConfig as never)
+		const attributes = await imageService.getHTMLAttributes!(options as never, netlifyImageConfig as never, undefined as never)
 
 		expect(attributes).toMatchObject({
 			alt: '',

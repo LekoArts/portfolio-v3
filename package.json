@@ -22,9 +22,10 @@
 		"new-post": "tsx ./scripts/writing.ts"
 	},
 	"dependencies": {
-		"@astrojs/mdx": "6.0.3",
-		"@astrojs/netlify": "7.0.13",
-		"@astrojs/react": "5.0.7",
+		"@astrojs/markdown-remark": "7.3.0",
+		"@astrojs/mdx": "8.0.0",
+		"@astrojs/netlify": "8.2.5",
+		"@astrojs/react": "6.0.5",
 		"@astrojs/rss": "4.0.19",
 		"@astrojs/sitemap": "3.7.4",
 		"@codesandbox/sandpack-react": "^2.20.0",
@@ -36,7 +37,7 @@
 		"@unpic/core": "1.0.3",
 		"@vanilla-extract/css": "^1.18.0",
 		"@vanilla-extract/sprinkles": "^1.6.5",
-		"astro": "6.4.8",
+		"astro": "7.3.1",
 		"astro-expressive-code": "0.44.2",
 		"culori": "^4.0.2",
 		"hast-util-to-string": "^3.0.1",
@@ -82,6 +83,6 @@
 		"prettier-plugin-astro": "^0.14.1",
 		"tsx": "^4.21.0",
 		"vite-tsconfig-paths": "^6.1.1",
-		"vitest": "^4.0.18"
+		"vitest": "5.0.0"
 	}
 }
