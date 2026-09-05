@@ -21,6 +21,15 @@ test.describe('Headings', () => {
 	})
 })
 
+test.describe('GitHub Flavored Markdown', () => {
+	test('should render tables', async ({ page }) => {
+		const table = page.getByRole('table')
+
+		await expect(table.getByRole('columnheader')).toHaveText(['Wrestler', 'Origin', 'Finisher'])
+		await expect(table.getByRole('cell', { name: 'Bret “The Hitman” Hart' })).toBeVisible()
+	})
+})
+
 test.describe('Playground', () => {
 	test('should render correctly', async ({ page }) => {
 		await expect(page.getByTestId('playground-title')).toHaveText('Testing Things')

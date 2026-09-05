@@ -1,19 +1,16 @@
-import { unified } from '@astrojs/markdown-remark'
+import { satteri, satteriHeadingIdsPlugin } from '@astrojs/markdown-satteri'
 import mdx from '@astrojs/mdx'
 import netlify from '@astrojs/netlify'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
-import remarkSandpack from '@lekoarts/remark-sandpack'
+import satteriSandpack from '@lekoarts/satteri-sandpack'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import expressiveCode from 'astro-expressive-code'
 import { defineConfig, envField } from 'astro/config'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import rehypeSlug from 'rehype-slug'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { SITE } from './src/constants/meta.js'
 import { REDIRECTS } from './src/constants/redirects.js'
-import { rehypeAutolinkHeadingsOptions } from './src/utils/rehype'
-import { codemodAlerts } from './src/utils/remark'
+import { satteriAlerts, satteriHeadingPermalinks } from './src/utils/satteri'
 
 const IS_PLAYWRIGHT = Boolean(process.env.IS_PLAYWRIGHT)
 
@@ -45,11 +42,13 @@ export default defineConfig({
 		},
 	},
 	markdown: {
-		processor: unified({
-			smartypants: true,
-			gfm: true,
-			rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions]],
-			remarkPlugins: [[remarkSandpack, { componentName: ['Playground', 'FileExplorer'] }], codemodAlerts],
+		processor: satteri({
+			mdastPlugins: [satteriSandpack({ componentName: ['Playground', 'FileExplorer'] }), satteriAlerts],
+			hastPlugins: [
+				// Each document needs a fresh slugger before the permalink plugin reads heading IDs.
+				() => satteriHeadingIdsPlugin(),
+				satteriHeadingPermalinks,
+			],
 		}),
 	},
 	adapter: IS_PLAYWRIGHT
