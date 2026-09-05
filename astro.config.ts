@@ -55,6 +55,7 @@ export default defineConfig({
 	adapter: IS_PLAYWRIGHT
 		? undefined
 		: netlify({
+				// Keep the custom Unpic-backed service; it generates Netlify Image CDN URLs directly.
 				imageCDN: false,
 				devFeatures: {
 					images: false,
