@@ -48,21 +48,23 @@ const { data: footerNavigation } = entry
 								alignItems="flex-start"
 								flexWrap={[`wrap`, `nowrap`]}
 							>
-								{s.items!.map((item) => {
-									if (item.isExternal) {
-										return (
-											<Link href={item.link} {...linkAttributesMap[item.name]} marginRight={[2, 0]} p={1}>
-												{item.name}
-											</Link>
-										)
-									} else {
-										return (
-											<Link href={item.link} marginRight={[2, 0]} p={1}>
-												{item.name}
-											</Link>
-										)
-									}
-								})}
+								{s.items
+									? s.items.map((item) => {
+											if (item.isExternal) {
+												return (
+													<Link href={item.link} {...linkAttributesMap[item.name]} marginRight={[2, 0]} p={1}>
+														{item.name}
+													</Link>
+												)
+											} else {
+												return (
+													<Link href={item.link} marginRight={[2, 0]} p={1}>
+														{item.name}
+													</Link>
+												)
+											}
+										})
+									: null}
 							</Box>
 						</Box>
 					))

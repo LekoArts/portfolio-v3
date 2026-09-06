@@ -1,23 +1,14 @@
 - name: Writing
   link: /writing/
   items:
-    - name: React
-      link: /writing/?tags=React
     - name: RSS Feed
       link: /rss.xml
       isExternal: true
 - name: Photos
   link: /photos/
-  items:
-    - name: Hiking
-      link: /photos/?tags=Carinthia,Kitzb%C3%BChel,Salzkammergut,Verwall
-    - name: Asia
-      link: /photos/?tags=Japan,Kyoto,Osaka,Seoul,Tokyo
 - name: About
   link: /about/
   items:
-    - name: Appearances
-      link: /appearances/
     - name: Resume
       link: /resume/
     - name: Uses
@@ -29,12 +20,6 @@
       isExternal: true
     - name: Bluesky
       link: https://bsky.app/profile/lekoarts.de
-      isExternal: true
-    - name: Mastodon
-      link: https://mastodon.social/@lekoarts
-      isExternal: true
-    - name: GitHub
-      link: https://www.github.com/LekoArts
       isExternal: true
     - name: LinkedIn
       link: https://www.linkedin.com/in/lennart-joergens/
