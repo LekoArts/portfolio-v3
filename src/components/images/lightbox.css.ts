@@ -1,12 +1,11 @@
 import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { transition } from '@styles/tokens/motion'
-import { globalStyle, keyframes, style } from '@vanilla-extract/css'
+import { globalStyle, style } from '@vanilla-extract/css'
 
-const show = keyframes({
-	from: { opacity: 0 },
-	to: { opacity: 1 },
-})
+// Exit is quicker and simpler than enter. `display`/`overlay` keep the dialog in the top layer until the fade finishes
+const exitTransition = `opacity ${transition.duration.fast} ease, display ${transition.duration.fast} allow-discrete, overlay ${transition.duration.fast} allow-discrete`
+const enterTransition = `opacity ${transition.duration.normal} ${transition.easing['ease-out']}, display ${transition.duration.normal} allow-discrete, overlay ${transition.duration.normal} allow-discrete`
 
 export const lightboxStyle = style({
 	maxWidth: '100vw',
@@ -18,13 +17,28 @@ export const lightboxStyle = style({
 	height: vars.space.full,
 	width: vars.space.full,
 	outline: 'none',
+	opacity: 0,
+	transition: exitTransition,
 	selectors: {
 		'&[open]': {
-			animation: `${show} 0.25s ease-in-out`,
+			'opacity': 1,
+			'transition': enterTransition,
+			'@starting-style': {
+				opacity: 0,
+			},
 		},
 		'&::backdrop': {
 			backgroundColor: 'rgba(0, 0, 0, 0.5)',
 			backdropFilter: 'blur(16px)',
+			opacity: 0,
+			transition: exitTransition,
+		},
+		'&[open]::backdrop': {
+			'opacity': 1,
+			'transition': enterTransition,
+			'@starting-style': {
+				opacity: 0,
+			},
 		},
 	},
 })
@@ -33,6 +47,17 @@ export const lightboxImageStyle = style({
 	width: vars.space.full,
 	height: vars.space.full,
 	objectFit: 'contain',
+})
+
+globalStyle(`${lightboxStyle}[open] ${lightboxImageStyle}`, {
+	'@media': {
+		[transition.media.motion]: {
+			'transition': `transform ${transition.duration.normal} ${transition.easing['ease-out']}`,
+			'@starting-style': {
+				transform: 'scale(0.96)',
+			},
+		},
+	},
 })
 
 export const lightboxCloseStyle = style({
