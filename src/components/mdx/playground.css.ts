@@ -1,5 +1,4 @@
 import { EC_CSS_VARS } from '@constants/ec.mjs'
-import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { transition } from '@styles/tokens/motion'
 import { globalStyle, style } from '@vanilla-extract/css'
@@ -67,7 +66,7 @@ globalStyle(`${rootWrapper} ${buttonBase}:hover`, {
 export const refreshButton = style([
 	buttonBase,
 	{
-		transition: `color ${transition.duration.fast} ease, transform 0.7s linear`,
+		transition: `color ${transition.duration.fast} ease, transform 250ms linear`,
 		transform: 'rotate(0deg)',
 	},
 ])
@@ -75,32 +74,14 @@ export const refreshButton = style([
 export const backwardButton = style([
 	buttonBase,
 	{
-		transition: `color ${transition.duration.fast} ease, transform ${transition.duration.normal} ${transition.easing['ease-out']}`,
-		selectors: {
-			[pseudoSelectors.hover]: {
-				'@media': {
-					[transition.media['hover-motion']]: {
-						transform: 'translate3d(-1px, 0px, 0px)',
-					},
-				},
-			},
-		},
+		transition: `color ${transition.duration.fast} ease`,
 	},
 ])
 
 export const exportButton = style([
 	buttonBase,
 	{
-		transition: `color ${transition.duration.fast} ease, transform ${transition.duration.normal} ${transition.easing['ease-out']}`,
-		selectors: {
-			[pseudoSelectors.hover]: {
-				'@media': {
-					[transition.media['hover-motion']]: {
-						transform: 'scale(1.05)',
-					},
-				},
-			},
-		},
+		transition: `color ${transition.duration.fast} ease`,
 	},
 ])
 
