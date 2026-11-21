@@ -18,6 +18,10 @@ test.describe('Headings', () => {
 
 		const headingLink = page.getByLabel('Permalink: Example Heading')
 		await expect(headingLink).toHaveAttribute('href', '#example-heading')
+
+		await headingLink.focus()
+		await expect(headingLink).toBeFocused()
+		await expect(headingLink).toHaveCSS('opacity', '1')
 	})
 })
 
@@ -107,5 +111,29 @@ test.describe('Video', () => {
 
 		await expect(video).toBeVisible()
 		await expect(caption).toContainText('Showcasing the Figma plugin in action.')
+	})
+
+	test('can be paused and resumed with the keyboard', async ({ page }) => {
+		const figure = page.getByTestId('video').first()
+		const video = figure.locator('video')
+		const pause = figure.getByRole('button', { name: 'Pause video' })
+
+		await pause.focus()
+		await page.keyboard.press('Enter')
+		await expect(video).toHaveJSProperty('paused', true)
+
+		const play = figure.getByRole('button', { name: 'Play video' })
+		await page.keyboard.press('Enter')
+		await expect(video).toHaveJSProperty('paused', false)
+		await expect(play).toHaveCount(0)
+	})
+
+	test('starts paused when reduced motion is preferred', async ({ page }) => {
+		await page.emulateMedia({ reducedMotion: 'reduce' })
+		await page.reload()
+
+		const figure = page.getByTestId('video').first()
+		await expect(figure.getByRole('button', { name: 'Play video' })).toBeVisible()
+		await expect(figure.locator('video')).toHaveJSProperty('paused', true)
 	})
 })

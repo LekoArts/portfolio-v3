@@ -34,7 +34,7 @@ const { previous, next } = getAdjacentPosts(currentPart, postsInSeries)
 		{previous ? (
 			<a href={previous.slug} class={itemStyle}>
 				<Box class={annotationStyle} display="flex" alignItems="center" justifyContent="flex-start" gap={2}>
-					<span data-name="previous" aria-hidden>
+					<span data-name="previous" aria-hidden="true">
 						<SvgIcon id="arrow-left" />
 					</span>
 					Previous
@@ -48,7 +48,7 @@ const { previous, next } = getAdjacentPosts(currentPart, postsInSeries)
 			<a href={next.slug} class={itemStyle} style={{ gridArea: 'right' }}>
 				<Box class={annotationStyle} display="flex" alignItems="center" justifyContent="flex-end" gap={2}>
 					Next
-					<span data-name="next" aria-hidden>
+					<span data-name="next" aria-hidden="true">
 						<SvgIcon id="arrow-right" />
 					</span>
 				</Box>

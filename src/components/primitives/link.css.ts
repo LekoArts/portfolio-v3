@@ -16,7 +16,7 @@ export const linkStyle = style({
 		[pseudoSelectors.hover]: {
 			textDecoration: 'underline',
 		},
-		[pseudoSelectors.focus]: {
+		[pseudoSelectors.focusVisible]: {
 			boxShadow: vars.shadow.outline,
 		},
 	},

@@ -18,7 +18,7 @@ export const linkStyle = style({
 		[pseudoSelectors.hover]: {
 			textDecoration: 'none',
 		},
-		[pseudoSelectors.focus]: {
+		[pseudoSelectors.focusVisible]: {
 			boxShadow: vars.shadow.none,
 		},
 	},
@@ -58,6 +58,10 @@ const cardBaseStyle = style({
 		},
 		[`&:hover:after, ${pseudoSelectors.focusWithin}:after`]: {
 			opacity: 1,
+		},
+		// The inner link drops its own ring, so the whole card shows it instead
+		'&:has(a:focus-visible)': {
+			boxShadow: `${vars.shadow.outline}, ${cardShadow}`,
 		},
 		[themesSelectors.dark]: {
 			vars: {

@@ -1,5 +1,6 @@
 ---
-import { lightboxImageStyle, lightboxStyle } from './lightbox.css'
+import SvgIcon from '@components/primitives/svg-icon.astro'
+import { lightboxCloseStyle, lightboxImageStyle, lightboxStyle } from './lightbox.css'
 
 type Props = {
 	selector: string
@@ -9,8 +10,11 @@ const { selector } = Astro.props
 ---
 
 <lekoarts-lightbox data-selector={selector}>
-	<dialog class={lightboxStyle}>
-		<img src="" alt="" autofocus class={lightboxImageStyle} />
+	<dialog class={lightboxStyle} aria-label="Photo viewer">
+		<img src="" alt="" class={lightboxImageStyle} />
+		<button type="button" class={lightboxCloseStyle} aria-label="Close photo viewer" autofocus>
+			<SvgIcon id="close" width="24" height="24" />
+		</button>
 	</dialog>
 	<slot />
 </lekoarts-lightbox>
@@ -47,7 +51,8 @@ const { selector } = Astro.props
 				buttonByIndexMap.set(index, btn)
 			}
 			const dialog = this.querySelector('dialog') as HTMLDialogElement
-			const closeAction = this.querySelector('img[autofocus]') as HTMLButtonElement
+			const dialogImg = dialog.querySelector('img') as HTMLImageElement
+			const closeButton = dialog.querySelector('button') as HTMLButtonElement
 
 			/**
 			 * Set the thumbnail image in the lightbox
@@ -65,7 +70,7 @@ const { selector } = Astro.props
 				 * - data-sizes
 				 * - data-index
 				 */
-				const { src, sizes, index } = item.dataset
+				const { src, sizes, index, label } = item.dataset
 
 				if (!src || !sizes) {
 					throw new Error('Missing data attributes')
@@ -74,10 +79,9 @@ const { selector } = Astro.props
 				/**
 				 * Replace the image in the dialog with the one from the button
 				 */
-				const dialogImg = dialog.querySelector('img') as HTMLImageElement
 				dialogImg.src = src
 				dialogImg.sizes = sizes
-				dialogImg.alt = ''
+				dialogImg.alt = label ?? ''
 				dialogImg.srcset = thumbnailImg.srcset
 				dialogImg.dataset.index = index
 			}
@@ -98,8 +102,7 @@ const { selector } = Astro.props
 				}
 
 				if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-					const currentDialogImg = dialog.querySelector('img') as HTMLImageElement
-					const currentIndex = Number.parseInt(currentDialogImg.dataset.index!, 10)
+					const currentIndex = Number.parseInt(dialogImg.dataset.index!, 10)
 
 					let nextIndex = currentIndex - 1
 					if (event.key === 'ArrowRight') {
@@ -127,11 +130,10 @@ const { selector } = Astro.props
 			dialog.addEventListener('click', (event) => event.target === dialog && dialog.close())
 
 			/**
-			 * Close the dialog when the user clicks the close button
+			 * Close the dialog when the user clicks the image or the close button
 			 */
-			closeAction.addEventListener('click', () => {
-				dialog.close()
-			})
+			dialogImg.addEventListener('click', () => dialog.close())
+			closeButton.addEventListener('click', () => dialog.close())
 
 			/**
 			 * Open the dialog when the user clicks an image

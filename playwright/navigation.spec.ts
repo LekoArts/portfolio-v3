@@ -61,10 +61,22 @@ test.describe('Navigation', () => {
 		for (const tags of await visibleCards.evaluateAll(els => els.map(el => el.getAttribute('data-tags') ?? '')))
 			expect(tags.split(',')).toContain('React')
 
+		await expect(react).toHaveAttribute('aria-pressed', 'true')
+
 		await devTools.click()
 		await expect(devTools).toHaveClass(/active/)
+		await expect(devTools).toHaveAttribute('aria-pressed', 'true')
 		expect(tagsParam()).toBe('React,Developer Tools')
 		expect(await visibleCards.count()).toBeGreaterThan(reactCount)
+
+		await page.goBack()
+		expect(tagsParam()).toBe('React')
+		await expect(devTools).toHaveAttribute('aria-pressed', 'false')
+		await expect(visibleCards).toHaveCount(reactCount)
+
+		await page.goForward()
+		expect(tagsParam()).toBe('React,Developer Tools')
+		await expect(devTools).toHaveAttribute('aria-pressed', 'true')
 
 		await react.click()
 		await devTools.click()

@@ -19,9 +19,9 @@ const { id, items } = Astro.props
 <lekoarts-tag-group data-id={id}>
 	<div class={tagGroupStyle}>
 		{items.sort().map((item) => (
-			<button class={tagStyle} data-item={item}>
+			<button class={tagStyle} data-item={item} aria-pressed="false">
 				{item}
-				<span class={tagCloseIconStyle} aria-hidden>
+				<span class={tagCloseIconStyle} aria-hidden="true">
 					<SvgIcon id="close" width="100%" height="100%" />
 				</span>
 			</button>
@@ -39,99 +39,78 @@ const { id, items } = Astro.props
 	class LekoArtsTagGroup extends HTMLElement {
 		id: TagGroupKeys
 		itemSelector: string
+		buttons: NodeListOf<HTMLButtonElement>
+		/**
+		 * Set while restoring state from the URL so that Back/Forward doesn't push new history entries
+		 */
+		isRestoring: boolean
 
 		constructor() {
 			super()
 
 			this.id = this.dataset.id as TagGroupKeys
 			this.itemSelector = '.tag-group-item'
+			this.buttons = this.querySelectorAll('button')
+			this.isRestoring = false
 
-			const buttons = this.querySelectorAll('button')
+			this.restoreFromUrl()
 
-			this.initialize(this.id)
-
-			// Check if the store already contains tags (when on page load there are tags in the query params)
-			const tags = $tagGroup.get()[this.id]
-
-			if (tags.length > 0) {
-				buttons.forEach((button) => {
-					const item = button.dataset.item as string
-					const isActive = tags.includes(item)
-
-					if (isActive) {
-						button.classList.add('active')
-					}
-				})
-			}
-
-			buttons.forEach((button) => {
+			this.buttons.forEach((button) => {
 				button.addEventListener('click', () => {
 					const item = button.dataset.item as string
-					const isActive = $tagGroup.get()[this.id].includes(item)
 
-					if (isActive) {
+					if ($tagGroup.get()[this.id].includes(item)) {
 						removeTag(this.id, item)
-						button.classList.remove('active')
 						// eslint-disable-next-line style/brace-style
 					} else {
 						addTag(this.id, item)
-						button.classList.add('active')
 					}
 				})
 			})
 
-			this.subscribe(this.id)
-		}
+			listenKeys($tagGroup, [this.id], ({ [this.id]: selectedTags }) => {
+				this.render(selectedTags)
 
-		initialize(id: TagGroupKeys) {
-			// Parse query params when loading the page
-			const parsed = queryStringTags.from(window.location.search)
-			const items = document.querySelectorAll<HTMLLinkElement | HTMLDivElement>(this.itemSelector)
-
-			// If tags in the query params (?tags=MDX,Astro) are present, set them in the store and filter the items
-			if (parsed?.tags && parsed.tags.length > 0) {
-				$tagGroup.setKey(id, parsed.tags as Array<Tag>)
-
-				items.forEach((item) => {
-					const tags = item.dataset.tags?.split(',') || []
-					const isActive = tags.some((tag) => parsed.tags?.includes(tag))
-
-					if (isActive) {
-						item.classList.remove('hidden')
-						// eslint-disable-next-line style/brace-style
-					} else {
-						item.classList.add('hidden')
+				if (!this.isRestoring) {
+					let search = ''
+					if (selectedTags.length > 0) {
+						search = `?${queryStringTags.to({ tags: selectedTags })}`
 					}
-				})
-			}
-		}
-
-		subscribe(id: TagGroupKeys) {
-			// When $tagGroup changes, update the list by only showing items with the selectedTags
-			listenKeys($tagGroup, [id], ({ [id]: selectedTags }) => {
-				const items = document.querySelectorAll<HTMLLinkElement | HTMLDivElement>(this.itemSelector)
-
-				// If no tags are selected, show all items
-				if (selectedTags.length === 0) {
-					items.forEach((item) => item.classList.remove('hidden'))
-					window.history.pushState({}, '', `${window.location.pathname}`)
-					return
+					window.history.pushState({}, '', `${window.location.pathname}${search}`)
 				}
+			})
 
-				const queryString = queryStringTags.to({ tags: selectedTags })
-				window.history.pushState({}, '', `${window.location.pathname}?${queryString}`)
+			window.addEventListener('popstate', () => {
+				this.isRestoring = true
+				this.restoreFromUrl()
+				this.isRestoring = false
+			})
+		}
 
-				items.forEach((item) => {
-					const tags = item.dataset.tags?.split(',') || []
-					const isActive = tags.some((tag) => selectedTags.includes(tag))
+		/**
+		 * Read tags from the query params (?tags=MDX,Astro) into the store and update the UI
+		 */
+		restoreFromUrl() {
+			const parsed = queryStringTags.from(window.location.search)
+			const tags = (parsed?.tags ?? []) as Array<Tag>
 
-					if (isActive) {
-						item.classList.remove('hidden')
-						// eslint-disable-next-line style/brace-style
-					} else {
-						item.classList.add('hidden')
-					}
-				})
+			$tagGroup.setKey(this.id, tags)
+			this.render(tags)
+		}
+
+		render(selectedTags: Array<string>) {
+			this.buttons.forEach((button) => {
+				const isActive = selectedTags.includes(button.dataset.item as string)
+
+				button.classList.toggle('active', isActive)
+				button.setAttribute('aria-pressed', String(isActive))
+			})
+
+			document.querySelectorAll<HTMLElement>(this.itemSelector).forEach((item) => {
+				const tags = item.dataset.tags?.split(',') || []
+				const isVisible = selectedTags.length === 0 || tags.some((tag) => selectedTags.includes(tag))
+
+				item.classList.toggle('hidden', !isVisible)
 			})
 		}
 	}

@@ -49,7 +49,7 @@ const optionalProps = kind === 'link' ? { href } : {}
 <Box as={as} class:list={[buttonVariants[variant], sizesVariants[size], className]} {...optionalProps} {...rest}>
 	<slot />
 	{icon ? (
-		<span aria-hidden class={iconButtonStyle}>
+		<span aria-hidden="true" class={iconButtonStyle}>
 			<slot name="icon" />
 		</span>
 	) : null}

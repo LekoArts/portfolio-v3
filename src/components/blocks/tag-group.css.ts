@@ -42,7 +42,7 @@ export const tagStyle = style({
 			cursor: 'pointer',
 			background: colorPalette.blueGray[200],
 		},
-		[pseudoSelectors.focus]: {
+		[pseudoSelectors.focusVisible]: {
 			boxShadow: vars.shadow.outline,
 			outline: 'none',
 		},

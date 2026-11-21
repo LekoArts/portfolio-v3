@@ -6,10 +6,14 @@ import type { HTMLAttributes } from 'astro/types'
 interface Props extends HTMLAttributes<'button'> {
 	meta: ImageMetadata
 	selector: string
+	/**
+	 * Accessible description of the photo, used for the button name and the enlarged image's alt text
+	 */
+	label: string
 	'data-index': number
 }
 
-const { meta, selector, class: className, ...rest } = Astro.props
+const { meta, selector, label, class: className, ...rest } = Astro.props
 
 const { src, width: maxWidth } = meta
 ---
@@ -17,6 +21,8 @@ const { src, width: maxWidth } = meta
 <button
 	class:list={[withLightboxButtonStyle, className]}
 	aria-haspopup="dialog"
+	aria-label={`Open ${label}`}
+	data-label={label}
 	data-selector={selector}
 	data-src={src}
 	data-sizes={`(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`}

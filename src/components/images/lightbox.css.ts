@@ -1,3 +1,4 @@
+import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { globalStyle, keyframes, style } from '@vanilla-extract/css'
 
@@ -31,6 +32,30 @@ export const lightboxImageStyle = style({
 	width: vars.space.full,
 	height: vars.space.full,
 	objectFit: 'contain',
+})
+
+export const lightboxCloseStyle = style({
+	position: 'absolute',
+	top: vars.space[4],
+	right: vars.space[4],
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	width: vars.space[12],
+	height: vars.space[12],
+	borderRadius: vars.borderRadius.full,
+	color: 'white',
+	background: 'rgba(0, 0, 0, 0.6)',
+	outline: 'none',
+	transition: 'background-color 150ms ease',
+	selectors: {
+		[pseudoSelectors.hover]: {
+			background: 'rgba(0, 0, 0, 0.8)',
+		},
+		[pseudoSelectors.focusVisible]: {
+			boxShadow: vars.shadow.outline,
+		},
+	},
 })
 
 globalStyle(`:root:has(${lightboxStyle}[open])`, {

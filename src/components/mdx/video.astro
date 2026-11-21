@@ -1,6 +1,6 @@
 ---
 import Box from '@components/primitives/box.astro'
-import { groupStyle, marginBottomVariants, playPauseButtonStyle, videoStyle } from './video.css'
+import { groupStyle, marginBottomVariants, playPauseButtonStyle, playPauseIconStyle, videoStyle } from './video.css'
 import { SITE } from '@constants/meta'
 import SvgIcon from '@components/primitives/svg-icon.astro'
 
@@ -19,19 +19,12 @@ const MB_VARIANT = description ? `withDescription` : `default`
 
 <figure data-testid="video">
 	<lekoarts-video>
-		<Box
-			position="relative"
-			m="auto"
-			role="group"
-			style={{ maxWidth }}
-			class:list={[groupStyle, 'lekoarts-video-wrapper']}
-		>
+		<Box position="relative" m="auto" style={{ maxWidth }} class={groupStyle}>
 			<Box
 				as="video"
 				position="relative"
 				display="block"
 				m="auto"
-				autoplay
 				playsinline
 				loop
 				muted
@@ -45,16 +38,11 @@ const MB_VARIANT = description ? `withDescription` : `default`
 					instead.
 				</p>
 			</Box>
-			<Box
-				position="absolute"
-				m="auto"
-				display="flex"
-				justifyContent="center"
-				alignItems="center"
-				class={playPauseButtonStyle}
-			>
-				<SvgIcon id="pause" width={ICON_SIZE} height={ICON_SIZE} style={{ strokeWidth: `2px` }} />
-			</Box>
+			<button type="button" class={playPauseButtonStyle} aria-label="Pause video" data-paused="false">
+				<span class={playPauseIconStyle}>
+					<SvgIcon id="pause" width={ICON_SIZE} height={ICON_SIZE} style={{ strokeWidth: `2px` }} />
+				</span>
+			</button>
 		</Box>
 	</lekoarts-video>
 	<figcaption>{description}</figcaption>
@@ -73,43 +61,45 @@ const MB_VARIANT = description ? `withDescription` : `default`
 
 <script>
 	class LekoArtsVideo extends HTMLElement {
-		state: 'play' | 'pause'
-
 		constructor() {
 			super()
 
-			this.state = 'play'
-
-			const wrapper = this.querySelector('.lekoarts-video-wrapper') as Element
 			const video = this.querySelector('video') as HTMLVideoElement
+			const button = this.querySelector('button') as HTMLButtonElement
 			const template = document.querySelector('#video-icons') as HTMLTemplateElement
 
-			wrapper.addEventListener('click', () => {
-				if (this.state === 'play') {
-					video.pause()
-					this.state = 'pause'
+			// The button reflects the real playback state, so a blocked autoplay never shows a stale icon
+			const sync = () => {
+				const icon = video.paused ? 'play' : 'pause'
+				const newIcon = template.content.querySelector(`.${icon}`) as SVGElement
+				const oldIcon = button.querySelector('svg') as SVGElement
 
-					const newIcon = template.content.querySelector('.play')
-					if (newIcon) {
-						const oldIcon = wrapper.querySelector('svg.svg-icon')
-						if (oldIcon) {
-							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes)
-						}
-					}
+				oldIcon.replaceWith(newIcon.cloneNode(true))
+				button.dataset.paused = String(video.paused)
+				button.setAttribute('aria-label', video.paused ? 'Play video' : 'Pause video')
+			}
+
+			video.addEventListener('play', sync)
+			video.addEventListener('pause', sync)
+
+			button.addEventListener('click', () => {
+				if (video.paused) {
+					video.play()
 					// eslint-disable-next-line style/brace-style
 				} else {
-					video.play()
-					this.state = 'play'
-
-					const newIcon = template.content.querySelector('.pause')
-					if (newIcon) {
-						const oldIcon = wrapper.querySelector('svg.svg-icon')
-						if (oldIcon) {
-							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes)
-						}
-					}
+					video.pause()
 				}
 			})
+
+			// Respect reduced motion: only autoplay when the visitor hasn't asked for less motion
+			if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+				video.play().catch(sync)
+				// eslint-disable-next-line style/brace-style
+			} else {
+				// Load enough to show the first frame while paused
+				video.preload = 'metadata'
+				sync()
+			}
 		}
 	}
 
