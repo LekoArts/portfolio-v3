@@ -14,10 +14,11 @@ type Props =
 	  }
 
 const { id, items } = Astro.props
+const label = id === 'photos' ? 'Filter by album' : 'Filter by tag'
 ---
 
 <lekoarts-tag-group data-id={id}>
-	<div class={tagGroupStyle}>
+	<div class={tagGroupStyle} role="group" aria-label={label}>
 		{items.sort().map((item) => (
 			<button class={tagStyle} data-item={item} aria-pressed="false">
 				{item}

@@ -84,6 +84,7 @@ test.describe('Navigation', () => {
 
 		await page.goto('/writing/?tags=React')
 		await expect(react).toHaveClass(/active/)
+		await expect(page.getByRole('group', { name: 'Filter by tag' }).getByRole('button', { name: 'React' })).toHaveAttribute('aria-pressed', 'true')
 		const total = await cards.count()
 		const reactCount = await visibleCards.count()
 		expect(reactCount).toBeGreaterThan(0)
