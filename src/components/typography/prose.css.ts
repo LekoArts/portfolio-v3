@@ -4,6 +4,7 @@ import { vars } from '@styles/themes/contract.css'
 import { darkThemeClass } from '@styles/themes/dark.css'
 import { breakpointNames, minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
+import { transition } from '@styles/tokens/motion'
 import { fonts } from '@styles/tokens/typography'
 import { zIndices } from '@styles/tokens/z-indices'
 import { em, round } from '@utils/css'
@@ -97,14 +98,25 @@ globalStyle(`${proseRootStyle} .markdown-heading`, {
 })
 
 globalStyle(`${proseRootStyle} .markdown-heading:hover .anchor`, {
-	visibility: 'visible',
+	'@media': {
+		[transition.media.hover]: {
+			opacity: 1,
+		},
+	},
+})
+
+// Keyboard focus reveals the permalink instantly, without the hover fade
+globalStyle(`${proseRootStyle} .markdown-heading .anchor:focus-visible`, {
+	opacity: 1,
+	transition: 'none',
 })
 
 globalStyle(`${proseRootStyle} .markdown-heading .anchor`, {
 	position: 'absolute',
 	display: 'flex',
 	margin: 'auto',
-	opacity: 1,
+	opacity: 0,
+	transition: 'opacity 150ms ease',
 	justifyContent: 'center',
 	alignItems: 'center',
 	width: vars.space[10],
@@ -113,7 +125,6 @@ globalStyle(`${proseRootStyle} .markdown-heading .anchor`, {
 	paddingRight: vars.space[4],
 	left: `calc(-1 * ${vars.space[9]})`,
 	transform: 'translateY(calc(-50% + 0.1rem))',
-	visibility: 'hidden',
 })
 
 globalStyle(`${proseRootStyle} .markdown-heading .anchor .anchor-icon`, {

@@ -14,6 +14,8 @@ export const listItemStyle = style({
 export const linkStyle = style({
 	fontWeight: vars.fontWeight.normal,
 	color: 'inherit',
+	// The active item changes constantly while scrolling, so it shouldn't animate
+	transition: 'none',
 	selectors: {
 		'&.active': {
 			fontWeight: vars.fontWeight.medium,

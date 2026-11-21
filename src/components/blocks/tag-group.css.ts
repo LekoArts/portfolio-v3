@@ -30,11 +30,18 @@ export const tagStyle = style({
 	'alignItems': 'center',
 	'maxWidth': '100%',
 	'lineHeight': vars.lineHeight.shorter,
-	'transition': `${transition.property.all} ${transition.duration.normal} ${transition.easing['ease-in-out']}`,
+	'transition': `background-color ${transition.duration.fast} ease, color ${transition.duration.fast} ease, transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
 	'@media': {
 		[minMediaQuery('lg')]: {
 			fontSize: vars.fontSize.md,
 			minHeight: vars.space[8],
+		},
+		[transition.media.motion]: {
+			selectors: {
+				'&:active': {
+					transform: transition.press,
+				},
+			},
 		},
 	},
 	'selectors': {
@@ -42,7 +49,7 @@ export const tagStyle = style({
 			cursor: 'pointer',
 			background: colorPalette.blueGray[200],
 		},
-		[pseudoSelectors.focus]: {
+		[pseudoSelectors.focusVisible]: {
 			boxShadow: vars.shadow.outline,
 			outline: 'none',
 		},

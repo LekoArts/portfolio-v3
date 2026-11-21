@@ -7,9 +7,7 @@ export const toggleIconStyle = style({
 
 globalStyle(`#lekoarts-theme-select .${toggleIconStyle}`, {
 	color: vars.color.textMuted,
-	transitionProperty: transition.property.all,
-	transitionDuration: transition.duration.slow,
-	transitionTimingFunction: transition.easing['ease-in-out'],
+	transition: `color ${transition.duration.fast} ease, background-color ${transition.duration.fast} ease, transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
 	borderRadius: vars.borderRadius.full,
 	padding: 0,
 	fontSize: vars.fontSize.md,

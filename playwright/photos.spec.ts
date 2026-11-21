@@ -51,15 +51,19 @@ test.describe('Photos', () => {
 	test('switches between masonry and grid layouts', async ({ page }) => {
 		const wrapper = page.locator('#photos-img-wrapper')
 		const firstImage = wrapper.locator('img').first()
-		const masonryButton = page.getByRole('button', { name: 'Switch to "masonry" layout' })
-		const gridButton = page.getByRole('button', { name: 'Switch to "grid" layout' })
+		const masonryButton = page.getByRole('button', { name: 'Masonry layout' })
+		const gridButton = page.getByRole('button', { name: 'Grid layout' })
 
 		await masonryButton.click()
 		await expect(masonryButton).toHaveClass(/active/)
 		await expect(wrapper).toHaveCSS('display', 'block')
 
+		await expect(masonryButton).toHaveAttribute('aria-pressed', 'true')
+
 		await gridButton.click()
 		await expect(gridButton).toHaveClass(/active/)
+		await expect(gridButton).toHaveAttribute('aria-pressed', 'true')
+		await expect(masonryButton).toHaveAttribute('aria-pressed', 'false')
 		await expect(wrapper).toHaveCSS('display', 'grid')
 		await expect(firstImage).toHaveCSS('aspect-ratio', '1 / 1')
 		await expect(firstImage).toHaveCSS('object-fit', 'cover')
@@ -67,5 +71,28 @@ test.describe('Photos', () => {
 		await page.reload()
 		await expect(gridButton).toHaveClass(/active/)
 		await expect(wrapper).toHaveCSS('display', 'grid')
+	})
+
+	test('opens a named photo in the lightbox and closes it again', async ({ page }) => {
+		const thumbnail = page.getByRole('button', { name: /^Open Photo 1 of \d+ from / }).first()
+		const dialog = page.getByRole('dialog', { name: 'Photo viewer' })
+
+		await thumbnail.click()
+		await expect(dialog).toBeVisible()
+		await expect(dialog.getByRole('img', { name: /^Photo 1 of \d+ from / })).toBeVisible()
+
+		await dialog.getByRole('button', { name: 'Close photo viewer' }).click()
+		await expect(dialog).toBeHidden()
+		await expect(thumbnail).toBeFocused()
+
+		// Keyboard activation opens the viewer without the key also triggering the newly focused close button
+		for (const key of ['Enter', 'Space']) {
+			await thumbnail.press(key)
+			await expect(dialog).toBeVisible()
+			await expect(dialog.getByRole('button', { name: 'Close photo viewer' })).toBeFocused()
+			await page.keyboard.press('Escape')
+			await expect(dialog).toBeHidden()
+			await expect(thumbnail).toBeFocused()
+		}
 	})
 })

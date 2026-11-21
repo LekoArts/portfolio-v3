@@ -17,6 +17,7 @@ import TagGroup from '@components/blocks/tag-group.astro'
 import Lightbox from '@components/images/lightbox.astro'
 import WithLightbox from '@components/images/with-lightbox.astro'
 import { getImageMetadata } from '@utils/photos'
+import { capitalize } from '@utils/capitalize'
 import { paddingResponsiveArrays } from '@styles/tokens/space'
 
 const images = import.meta.glob<{ default: ImageMetadata }>('../content/photos/**/*.{jpeg,jpg,png}', { eager: true })
@@ -50,7 +51,13 @@ for (const [path, module] of Object.entries(images)) {
 const albumNames = Array.from(albumMap.keys()).sort((a, b) => a.localeCompare(b))
 const photos = Array.from(albumMap.values())
 	.sort((a, b) => b.order - a.order)
-	.flatMap((album) => album.images.map((img) => ({ ...img, album: album.name })))
+	.flatMap((album) =>
+		album.images.map((img, i) => ({
+			...img,
+			album: album.name,
+			label: `Photo ${i + 1} of ${album.images.length} from ${album.name}`,
+		})),
+	)
 ---
 
 <Base>
@@ -73,13 +80,14 @@ const photos = Array.from(albumMap.values())
 					<Text variant="prominent">Layout:</Text>
 					<Box display="flex" flexDirection="row" gap={1}>
 						{LAYOUT_TYPES.map((layoutType) => {
-							const title = `Switch to "${layoutType}" layout`
+							const title = `${capitalize(layoutType)} layout`
 
 							return (
 								<Button
 									data-layout={layoutType}
 									title={title}
 									aria-label={title}
+									aria-pressed="false"
 									variant="ghost"
 									size="sm"
 									class:list={[layoutIconStyle, 'button-layout']}
@@ -106,6 +114,7 @@ const photos = Array.from(albumMap.values())
 							class="tag-group-item"
 							data-tags={photo.album}
 							data-index={index}
+							label={photo.label}
 							selector="lekoarts-lightbox"
 							meta={photo.props}
 						>
@@ -154,7 +163,9 @@ const photos = Array.from(albumMap.values())
 		})
 
 		layoutButtons.forEach((btn) => {
-			btn.classList.toggle('active', btn.dataset.layout === photosLayout)
+			const isActive = btn.dataset.layout === photosLayout
+			btn.classList.toggle('active', isActive)
+			btn.setAttribute('aria-pressed', String(isActive))
 		})
 	})
 </script>

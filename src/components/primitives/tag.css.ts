@@ -26,7 +26,7 @@ const tagBaseStyle = style({
 	'paddingLeft': vars.space[2],
 	'paddingRight': vars.space[2],
 	'border': '1px solid transparent',
-	'transition': `${transition.property.all} ${transition.duration.slow} ${transition.easing['ease-in-out']}`,
+	'transition': `border-color ${transition.duration.fast} ease`,
 	'@media': {
 		[minMediaQuery('md')]: {
 			fontSize: vars.fontSize.sm,

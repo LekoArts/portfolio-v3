@@ -9,7 +9,6 @@ import { createVar, globalStyle, style } from '@vanilla-extract/css'
 
 const cardShadow = createVar()
 const cardShadowHover = createVar()
-const transformVar = createVar()
 
 export const wrapperStyle = style({
 	'display': 'grid',
@@ -63,8 +62,8 @@ export const itemStyle = style({
 			boxShadow: cardShadowHover,
 			opacity: 0,
 			transitionProperty: 'opacity',
-			transitionDuration: transition.duration.slow,
-			transitionTimingFunction: transition.easing['ease-in-out'],
+			transitionDuration: transition.duration.normal,
+			transitionTimingFunction: 'ease',
 			borderRadius: vars.borderRadius.lg,
 			top: 0,
 			left: 0,
@@ -78,9 +77,6 @@ export const itemStyle = style({
 })
 
 export const annotationStyle = style({
-	'vars': {
-		[transformVar]: 'translate3d(6px, 0px, 0px)',
-	},
 	'letterSpacing': vars.letterSpacing.wider,
 	'textTransform': 'uppercase',
 	'fontWeight': vars.fontWeight.medium,
@@ -95,11 +91,6 @@ export const annotationStyle = style({
 		[minMediaQuery('sm')]: {
 			fontSize: vars.fontSize.sm,
 		},
-		'(prefers-reduced-motion: reduce)': {
-			vars: {
-				[transformVar]: 'translate3d(0px, 0px, 0px) !important',
-			},
-		},
 	},
 })
 
@@ -109,14 +100,21 @@ globalStyle(`${itemStyle} svg`, {
 })
 
 globalStyle(`${annotationStyle} > span`, {
-	transform: 'translate3d(0px, 0px, 0px)',
-	transition: `transform ${transition.duration.slow} cubic-bezier(.73,.26,.42,1.24)`,
+	transition: `transform ${transition.duration.normal} ${transition.easing['ease-out']}`,
 })
 
 globalStyle(`${itemStyle}:hover span[data-name="previous"]`, {
-	transform: 'translate3d(-6px, 0px, 0px)',
+	'@media': {
+		[transition.media['hover-motion']]: {
+			transform: 'translate3d(-6px, 0px, 0px)',
+		},
+	},
 })
 
 globalStyle(`${itemStyle}:hover span[data-name="next"]`, {
-	transform: 'translate3d(6px, 0px, 0px)',
+	'@media': {
+		[transition.media['hover-motion']]: {
+			transform: 'translate3d(6px, 0px, 0px)',
+		},
+	},
 })

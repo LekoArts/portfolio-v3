@@ -18,7 +18,7 @@ export const linkStyle = style({
 		[pseudoSelectors.hover]: {
 			textDecoration: 'none',
 		},
-		[pseudoSelectors.focus]: {
+		[pseudoSelectors.focusVisible]: {
 			boxShadow: vars.shadow.none,
 		},
 	},
@@ -48,8 +48,8 @@ const cardBaseStyle = style({
 			boxShadow: cardShadowHover,
 			opacity: 0,
 			transitionProperty: 'opacity',
-			transitionDuration: transition.duration.slow,
-			transitionTimingFunction: transition.easing['ease-in-out'],
+			transitionDuration: transition.duration.normal,
+			transitionTimingFunction: 'ease',
 			borderRadius: vars.borderRadius.lg,
 			top: 0,
 			left: 0,
@@ -58,6 +58,10 @@ const cardBaseStyle = style({
 		},
 		[`&:hover:after, ${pseudoSelectors.focusWithin}:after`]: {
 			opacity: 1,
+		},
+		// The inner link drops its own ring, so the whole card shows it instead
+		'&:has(a:focus-visible)': {
+			boxShadow: `${vars.shadow.outline}, ${cardShadow}`,
 		},
 		[themesSelectors.dark]: {
 			vars: {
@@ -129,7 +133,7 @@ export const cardVariants = styleVariants(cards, card => [cardBaseStyle, card])
 
 const baseTitleStyle = style({
 	textWrap: 'balance',
-	transition: 'color 0.3s ease-in-out',
+	transition: `color ${transition.duration.fast} ease`,
 	color: vars.color.heading,
 	selectors: {
 		[`${linkStyle}:hover &`]: {

@@ -4,9 +4,7 @@ import { transition } from '@styles/tokens/motion'
 import { style } from '@vanilla-extract/css'
 
 export const linkStyle = style({
-	transitionProperty: transition.property.all,
-	transitionDuration: transition.duration.slow,
-	transitionTimingFunction: transition.easing['ease-in-out'],
+	transition: `color ${transition.duration.fast} ease`,
 	cursor: 'pointer',
 	textDecoration: 'none',
 	outline: '2px solid transparent',
@@ -16,7 +14,7 @@ export const linkStyle = style({
 		[pseudoSelectors.hover]: {
 			textDecoration: 'underline',
 		},
-		[pseudoSelectors.focus]: {
+		[pseudoSelectors.focusVisible]: {
 			boxShadow: vars.shadow.outline,
 		},
 	},

@@ -1,3 +1,4 @@
+import { vars } from '@styles/themes/contract.css'
 import { transition } from '@styles/tokens/motion'
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css'
 
@@ -7,23 +8,56 @@ export const groupStyle = style({
 
 export const videoStyle = style({
 	maxWidth: '100%',
-	cursor: 'pointer',
 })
 
 export const playPauseButtonStyle = style({
-	opacity: 0,
-	inset: '0px',
+	position: 'absolute',
+	inset: 0,
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	width: '100%',
+	cursor: 'pointer',
+	outline: 'none',
+	selectors: {
+		'&:focus-visible': {
+			boxShadow: `inset ${vars.shadow.outline}`,
+		},
+	},
+})
+
+export const playPauseIconStyle = style({
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
 	width: '64px',
 	height: '64px',
 	background: 'rgba(0, 0, 0, 0.6)',
 	borderRadius: '50%',
 	color: 'white',
-	transition: `opacity ${transition.duration['ultra-slow']} ease 0s`,
-	pointerEvents: 'none',
+	opacity: 0,
+	transition: `opacity ${transition.duration.normal} ease, transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
 })
 
-globalStyle(`${groupStyle}:hover ${playPauseButtonStyle}`, {
+globalStyle(`${playPauseButtonStyle}:active ${playPauseIconStyle}`, {
+	'@media': {
+		[transition.media.motion]: {
+			transform: transition.press,
+		},
+	},
+})
+
+// The control stays visible while paused or keyboard-focused, and only appears on hover for precise pointers
+globalStyle(`${playPauseButtonStyle}[data-paused="true"] ${playPauseIconStyle}, ${playPauseButtonStyle}:focus-visible ${playPauseIconStyle}`, {
 	opacity: 1,
+})
+
+globalStyle(`${playPauseButtonStyle}:hover ${playPauseIconStyle}`, {
+	'@media': {
+		'(hover: hover) and (pointer: fine)': {
+			opacity: 1,
+		},
+	},
 })
 
 export const marginBottomVariants = styleVariants({

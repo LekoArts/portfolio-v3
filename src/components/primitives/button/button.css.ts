@@ -5,7 +5,7 @@ import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
 import { transition } from '@styles/tokens/motion'
-import { createVar, globalStyle, style, styleVariants } from '@vanilla-extract/css'
+import { globalStyle, style, styleVariants } from '@vanilla-extract/css'
 
 const buttonBaseStyle = style({
 	display: 'inline-flex',
@@ -20,8 +20,8 @@ const buttonBaseStyle = style({
 	lineHeight: vars.lineHeight.shorter,
 	borderRadius: vars.borderRadius.md,
 	fontWeight: `${vars.fontWeight.normal} !important`,
-	transitionProperty: transition.property.common,
-	transitionDuration: transition.duration.normal,
+	// box-shadow is left out on purpose so the focus ring appears instantly
+	transition: `background-color ${transition.duration.fast} ease, border-color ${transition.duration.fast} ease, color ${transition.duration.fast} ease, transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
 	selectors: {
 		[pseudoSelectors.focusVisible]: {
 			boxShadow: vars.shadow.outline,
@@ -98,7 +98,22 @@ const buttons: Record<VariantNames, StyleRule> = {
 	},
 }
 
-export const buttonVariants = styleVariants(buttons, btn => [buttonBaseStyle, btn])
+// Inline text buttons (`link` variant) shouldn't shrink
+const pressStyle = style({
+	'@media': {
+		[transition.media.motion]: {
+			selectors: {
+				'&:active:not([disabled], [aria-disabled=true])': {
+					transform: transition.press,
+				},
+			},
+		},
+	},
+})
+
+export const buttonVariants = styleVariants(buttons, (btn, name) => name === 'link'
+	? [buttonBaseStyle, btn]
+	: [buttonBaseStyle, pressStyle, btn])
 
 export type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'brand'
 
@@ -142,24 +157,10 @@ const sizes: Record<Sizes, StyleRule> = {
 
 export const sizesVariants = styleVariants(sizes, size => [size])
 
-const transformVar = createVar()
-
-export const arrowAnimationStyle = style({
-	'vars': {
-		[transformVar]: 'translate3d(6px, 0px, 0px)',
-	},
-	'@media': {
-		'(prefers-reduced-motion: reduce)': {
-			vars: {
-				[transformVar]: 'translate3d(0px, 0px, 0px) !important',
-			},
-		},
-	},
-})
+export const arrowAnimationStyle = style({})
 
 globalStyle(`${arrowAnimationStyle} > span`, {
-	transform: 'translate3d(0px, 0px, 0px)',
-	transition: `transform ${transition.duration.slow} cubic-bezier(.73,.26,.42,1.24)`,
+	transition: `transform ${transition.duration.normal} ${transition.easing['ease-out']}`,
 })
 
 globalStyle(`${arrowAnimationStyle} svg`, {
@@ -168,8 +169,11 @@ globalStyle(`${arrowAnimationStyle} svg`, {
 })
 
 globalStyle(`${arrowAnimationStyle}:hover > span`, {
-	transform: transformVar,
-	transition: `transform ${transition.duration.slow} cubic-bezier(.73,.26,.42,1.24)`,
+	'@media': {
+		[transition.media['hover-motion']]: {
+			transform: 'translate3d(6px, 0px, 0px)',
+		},
+	},
 })
 
 export const subtleButtonStyle = style({

@@ -7,9 +7,7 @@ import { style, styleVariants } from '@vanilla-extract/css'
 
 export const layoutIconStyle = style({
 	color: vars.color.textMuted,
-	transitionProperty: transition.property.all,
-	transitionDuration: transition.duration.slow,
-	transitionTimingFunction: transition.easing['ease-in-out'],
+	transition: `color ${transition.duration.fast} ease, background-color ${transition.duration.fast} ease, transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
 	selectors: {
 		[pseudoSelectors.hover]: {
 			color: vars.color.heading,
