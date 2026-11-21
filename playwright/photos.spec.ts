@@ -80,15 +80,22 @@ test.describe('Photos', () => {
 		await thumbnail.click()
 		await expect(dialog).toBeVisible()
 		await expect(dialog.getByRole('img', { name: /^Photo 1 of \d+ from / })).toBeVisible()
+		await page.keyboard.press('ArrowRight')
+		await expect(dialog).toBeFocused()
+		await expect(dialog.getByRole('button', { name: 'Close photo viewer' })).not.toBeFocused()
 
 		await dialog.getByRole('button', { name: 'Close photo viewer' }).click()
 		await expect(dialog).toBeHidden()
 		await expect(thumbnail).toBeFocused()
 
-		// Keyboard activation opens the viewer without the key also triggering the newly focused close button
+		// The dialog itself takes focus so arrow navigation doesn't light up the close button's focus ring
 		for (const key of ['Enter', 'Space']) {
 			await thumbnail.press(key)
 			await expect(dialog).toBeVisible()
+			await expect(dialog).toBeFocused()
+			await page.keyboard.press('ArrowRight')
+			await expect(dialog).toBeFocused()
+			await page.keyboard.press('Tab')
 			await expect(dialog.getByRole('button', { name: 'Close photo viewer' })).toBeFocused()
 			await page.keyboard.press('Escape')
 			await expect(dialog).toBeHidden()

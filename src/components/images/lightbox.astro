@@ -10,9 +10,9 @@ const { selector } = Astro.props
 ---
 
 <lekoarts-lightbox data-selector={selector}>
-	<dialog class={lightboxStyle} aria-label="Photo viewer">
+	<dialog class={lightboxStyle} aria-label="Photo viewer" tabindex="-1">
 		<img src="" alt="" class={lightboxImageStyle} />
-		<button type="button" class={lightboxCloseStyle} aria-label="Close photo viewer" autofocus>
+		<button type="button" class={lightboxCloseStyle} aria-label="Close photo viewer">
 			<SvgIcon id="close" width="24" height="24" />
 		</button>
 	</dialog>
@@ -93,6 +93,8 @@ const { selector } = Astro.props
 
 				if (dialog) {
 					dialog.showModal()
+					// Focus the dialog rather than the close button, so arrow navigation doesn't show its focus ring
+					dialog.focus()
 				}
 			}
 
