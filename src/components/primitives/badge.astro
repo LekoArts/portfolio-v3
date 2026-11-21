@@ -4,13 +4,17 @@ import Box from '@components/primitives/box.astro'
 
 interface Props {
 	variant: Badges
+	/**
+	 * Render as a heading when the badge labels a section
+	 */
+	as?: 'span' | 'h2' | 'h3'
 }
 
-const { variant } = Astro.props
+const { variant, as = 'span' } = Astro.props
 ---
 
 <Box
-	as="span"
+	as={as}
 	display="inline-block"
 	fontWeight="medium"
 	fontSize={[`xs`, null, null, `sm`]}

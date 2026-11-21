@@ -25,6 +25,21 @@ test.describe('Navigation', () => {
 		await click(page, '[aria-label="lekoarts.de, Back to homepage"] svg')
 		await expect(page).toHaveURL('/')
 	})
+	test('homepage sections are headings', async ({ page }) => {
+		await page.goto('/')
+		for (const name of [
+			'Latest Post',
+			'Featured',
+			'More Posts',
+			'Photos',
+			'Open Source',
+		]) {
+			await expect(page.getByRole('heading', { level: 2, name, exact: true })).toBeVisible()
+		}
+		await expect(page.getByRole('heading', { level: 3, name: 'Featured Projects' })).toBeVisible()
+		await expect(page.getByRole('heading', { level: 3 })).not.toHaveCount(1)
+	})
+
 	test('unknown pages offer a way back', async ({ page }) => {
 		const errors: Array<string> = []
 		page.on('pageerror', error => errors.push(error.message))
@@ -123,13 +138,11 @@ test.describe('Navigation', () => {
 		test(`shows a focus ring on every card variant (${colorScheme})`, async ({ page }) => {
 			await page.emulateMedia({ colorScheme })
 			const ring = /rgba\(66, 153, 225, 0\.6\) 0px 0px 0px 3px/
-			// Default cards render their title as h2, the other variants as p
-			const withoutHeading = 'div:has(> a > p):not(:has(> a > h2))'
-
 			await page.goto('/')
+			// Homepage cards use h3 titles; only the default variant has a description
 			const homeCards = {
-				'default': page.locator('div:has(> a > h2)').first(),
-				'title-only': page.locator(withoutHeading).first(),
+				'default': page.locator('div:has(> a > h3 + p)').first(),
+				'title-only': page.locator('div:has(> a > h3):not(:has(> a > h3 + p))').first(),
 			}
 			for (const card of Object.values(homeCards)) {
 				await card.getByRole('link').focus()
