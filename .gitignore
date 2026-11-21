@@ -16,3 +16,4 @@ pnpm-debug.log*
 /playwright/.cache/
 .netlify
 .mastracode
+plans/
