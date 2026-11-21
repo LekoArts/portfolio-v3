@@ -101,7 +101,10 @@ const { selector } = Astro.props
 					const currentDialogImg = dialog.querySelector('img') as HTMLImageElement
 					const currentIndex = Number.parseInt(currentDialogImg.dataset.index!, 10)
 
-					const nextIndex = event.key === 'ArrowRight' ? currentIndex + 1 : currentIndex - 1
+					let nextIndex = currentIndex - 1
+					if (event.key === 'ArrowRight') {
+						nextIndex = currentIndex + 1
+					}
 
 					const nextButton = buttonByIndexMap.get(nextIndex)
 

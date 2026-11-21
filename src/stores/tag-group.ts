@@ -16,7 +16,10 @@ const initialValue: TagGroupStore = {
 export const $tagGroup = map(initialValue)
 
 export function addTag(id: TagGroupKeys, tag: Tag) {
-	$tagGroup.setKey(id, [...$tagGroup.get()[id], tag])
+	$tagGroup.setKey(id, [
+		...$tagGroup.get()[id],
+		tag,
+	])
 }
 
 export function removeTag(id: TagGroupKeys, tag: Tag) {

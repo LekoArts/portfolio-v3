@@ -1,4 +1,11 @@
-export const breakpointNames = ['mobile', 'sm', 'md', 'lg', 'xl', '2xl'] as const
+export const breakpointNames = [
+	'mobile',
+	'sm',
+	'md',
+	'lg',
+	'xl',
+	'2xl',
+] as const
 
 /**
  * For accessbility reasons the media queries are defined in "rem" unit.

@@ -14,13 +14,11 @@ const { heading } = Astro.props
 	<Link class={linkStyle} href={`#${heading.slug}`}>
 		{heading.text}
 	</Link>
-	{
-		heading.subheadings.length > 0 && (
-			<ul class={nestedListStyle}>
-				{heading.subheadings.map((subheading) => (
-					<Astro.self heading={subheading} />
-				))}
-			</ul>
-		)
-	}
+	{heading.subheadings.length > 0 && (
+		<ul class={nestedListStyle}>
+			{heading.subheadings.map((subheading) => (
+				<Astro.self heading={subheading} />
+			))}
+		</ul>
+	)}
 </li>

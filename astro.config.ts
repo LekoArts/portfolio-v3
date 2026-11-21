@@ -21,11 +21,19 @@ export default defineConfig({
 	trailingSlash: SITE.trailingSlash,
 	redirects: REDIRECTS,
 	vite: {
-		plugins: [tsconfigPaths(), vanillaExtractPlugin()],
+		plugins: [
+			tsconfigPaths(),
+			vanillaExtractPlugin(),
+		],
 	},
-	integrations: [expressiveCode(), mdx(), react(), sitemap({
-		filter: page => page !== `${SITE.url}/privacy-policy/` && page !== `${SITE.url}/legal-notice/`,
-	})],
+	integrations: [
+		expressiveCode(),
+		mdx(),
+		react(),
+		sitemap({
+			filter: page => page !== `${SITE.url}/privacy-policy/` && page !== `${SITE.url}/legal-notice/`,
+		}),
+	],
 	image: {
 		service: {
 			entrypoint: './src/lib/netlify-image-service.ts',
@@ -37,13 +45,23 @@ export default defineConfig({
 	},
 	env: {
 		schema: {
-			IS_PLAYWRIGHT: envField.boolean({ access: 'public', context: 'server', default: false, optional: true }),
+			IS_PLAYWRIGHT: envField.boolean({
+				access: 'public',
+				context: 'server',
+				default: false,
+				optional: true,
+			}),
 			GITHUB_TOKEN: envField.string({ access: 'secret', context: 'server' }),
 		},
 	},
 	markdown: {
 		processor: satteri({
-			mdastPlugins: [satteriSandpack({ componentName: ['Playground', 'FileExplorer'] }), satteriAlerts],
+			mdastPlugins: [
+				satteriSandpack({
+					componentName: ['Playground', 'FileExplorer'],
+				}),
+				satteriAlerts,
+			],
 			hastPlugins: [
 				// Each document needs a fresh slugger before the permalink plugin reads heading IDs.
 				() => satteriHeadingIdsPlugin(),

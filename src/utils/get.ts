@@ -8,7 +8,9 @@
  * @param fallback  - the fallback value
  */
 export function get(obj: Record<string, any>, path: string | number, fallback?: any, index?: number) {
-	const key = typeof path === 'string' ? path.split('.') : [path]
+	const key = typeof path === 'string'
+		? path.split('.')
+		: [path]
 
 	for (index = 0; index < key.length; index += 1) {
 		if (!obj)
@@ -16,7 +18,9 @@ export function get(obj: Record<string, any>, path: string | number, fallback?: 
 		obj = obj[key[index]]
 	}
 
-	return obj === undefined ? fallback : obj
+	return obj === undefined
+		? fallback
+		: obj
 }
 
 type Get = (obj: Readonly<Record<string, unknown>>, path: string | number, fallback?: any, index?: number) => any

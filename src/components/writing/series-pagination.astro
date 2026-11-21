@@ -31,35 +31,31 @@ const { previous, next } = getAdjacentPosts(currentPart, postsInSeries)
 	<Badge variant="dark">Series</Badge>
 	<Spacer size={2} axis="vertical" />
 	<Box class={wrapperStyle}>
-		{
-			previous ? (
-				<a href={previous.slug} class={itemStyle}>
-					<Box class={annotationStyle} display="flex" alignItems="center" justifyContent="flex-start" gap={2}>
-						<span data-name="previous" aria-hidden>
-							<SvgIcon id="arrow-left" />
-						</span>
-						Previous
-					</Box>
-					<Box textAlign="left" fontSize={[`md`, null, null, `lg`]}>
-						{previous.title}
-					</Box>
-				</a>
-			) : null
-		}
-		{
-			next ? (
-				<a href={next.slug} class={itemStyle} style={{ gridArea: 'right' }}>
-					<Box class={annotationStyle} display="flex" alignItems="center" justifyContent="flex-end" gap={2}>
-						Next
-						<span data-name="next" aria-hidden>
-							<SvgIcon id="arrow-right" />
-						</span>
-					</Box>
-					<Box textAlign="right" fontSize={[`md`, null, null, `lg`]}>
-						{next.title}
-					</Box>
-				</a>
-			) : null
-		}
+		{previous ? (
+			<a href={previous.slug} class={itemStyle}>
+				<Box class={annotationStyle} display="flex" alignItems="center" justifyContent="flex-start" gap={2}>
+					<span data-name="previous" aria-hidden>
+						<SvgIcon id="arrow-left" />
+					</span>
+					Previous
+				</Box>
+				<Box textAlign="left" fontSize={[`md`, null, null, `lg`]}>
+					{previous.title}
+				</Box>
+			</a>
+		) : null}
+		{next ? (
+			<a href={next.slug} class={itemStyle} style={{ gridArea: 'right' }}>
+				<Box class={annotationStyle} display="flex" alignItems="center" justifyContent="flex-end" gap={2}>
+					Next
+					<span data-name="next" aria-hidden>
+						<SvgIcon id="arrow-right" />
+					</span>
+				</Box>
+				<Box textAlign="right" fontSize={[`md`, null, null, `lg`]}>
+					{next.title}
+				</Box>
+			</a>
+		) : null}
 	</Box>
 </Box>

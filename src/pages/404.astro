@@ -2,6 +2,8 @@
 
 <script is:inline>
 	document.addEventListener('DOMContentLoaded', () => {
-		plausible('404', { props: { path: Astro.url.pathname } })
+		plausible('404', {
+			props: { path: Astro.url.pathname },
+		})
 	})
 </script>

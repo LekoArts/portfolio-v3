@@ -96,8 +96,12 @@ export function getTransformOptions(options: ImageOptions, config: NetlifyImageS
 		provider: getProvider(config),
 		...transform,
 		...dimensions,
-		aspectRatio: width && height ? width / height : undefined,
-		url: typeof options.src === 'string' ? options.src : options.src.src,
+		aspectRatio: width && height
+			? width / height
+			: undefined,
+		url: typeof options.src === 'string'
+			? options.src
+			: options.src.src,
 	}
 }
 
@@ -106,10 +110,16 @@ const service: ExternalImageService<NetlifyImageServiceConfig> = {
 		const transformOptions = getTransformOptions(options, imageConfig.service.config)
 		const entries = getSrcSetEntries({
 			aspectRatio: transformOptions.aspectRatio,
-			breakpoints: options.widths ? [...options.widths] : undefined,
+			breakpoints: options.widths
+				? [...options.widths]
+				: undefined,
 			format: transformOptions.format,
 			height: transformOptions.height,
-			layout: transformOptions.layout === 'full-width' ? 'fullWidth' : transformOptions.layout === 'none' ? undefined : transformOptions.layout,
+			layout: transformOptions.layout === 'full-width'
+				? 'fullWidth'
+				: transformOptions.layout === 'none'
+					? undefined
+					: transformOptions.layout,
 			src: transformOptions.url,
 			width: transformOptions.width,
 		})
@@ -118,7 +128,9 @@ const service: ExternalImageService<NetlifyImageServiceConfig> = {
 			transform: {
 				...options,
 				width: Number(width),
-				height: height === undefined ? undefined : Number(height),
+				height: height === undefined
+					? undefined
+					: Number(height),
 			},
 			descriptor: `${width}w`,
 		}))
@@ -139,7 +151,9 @@ const service: ExternalImageService<NetlifyImageServiceConfig> = {
 	},
 	getHTMLAttributes(options, imageConfig) {
 		const transformOptions = getTransformOptions(options, imageConfig.service.config)
-		const layout = transformOptions.layout === 'full-width' ? 'fullWidth' : transformOptions.layout
+		const layout = transformOptions.layout === 'full-width'
+			? 'fullWidth'
+			: transformOptions.layout
 		const objectFit = (() => {
 			switch (transformOptions.fit) {
 				case 'contain':
@@ -155,7 +169,9 @@ const service: ExternalImageService<NetlifyImageServiceConfig> = {
 			}
 		})()
 		const attributes = {
-			alt: typeof options.alt === 'string' ? options.alt : undefined,
+			alt: typeof options.alt === 'string'
+				? options.alt
+				: undefined,
 			cdn: transformOptions.provider,
 			decoding: options.decoding === 'sync' || options.decoding === 'async' || options.decoding === 'auto'
 				? options.decoding
@@ -163,10 +179,16 @@ const service: ExternalImageService<NetlifyImageServiceConfig> = {
 			fetchpriority: options.fetchpriority === 'high' || options.fetchpriority === 'low' || options.fetchpriority === 'auto'
 				? options.fetchpriority
 				: undefined,
-			loading: options.loading === 'eager' || options.loading === 'lazy' ? options.loading : undefined,
+			loading: options.loading === 'eager' || options.loading === 'lazy'
+				? options.loading
+				: undefined,
 			objectFit,
-			role: typeof options.role === 'string' ? options.role : undefined,
-			sizes: typeof options.sizes === 'string' ? options.sizes : undefined,
+			role: typeof options.role === 'string'
+				? options.role
+				: undefined,
+			sizes: typeof options.sizes === 'string'
+				? options.sizes
+				: undefined,
 			src: transformOptions.url,
 		}
 		const props = layout === 'fullWidth'
@@ -179,7 +201,9 @@ const service: ExternalImageService<NetlifyImageServiceConfig> = {
 			: transformProps({
 					...attributes,
 					height: transformOptions.height!,
-					layout: layout === 'fixed' ? 'fixed' : 'constrained',
+					layout: layout === 'fixed'
+						? 'fixed'
+						: 'constrained',
 					width: transformOptions.width!,
 				})
 
@@ -193,11 +217,15 @@ const service: ExternalImageService<NetlifyImageServiceConfig> = {
 			width: _width,
 			...htmlAttributes
 		} = props
-		const className = typeof options.class === 'string' ? options.class : undefined
+		const className = typeof options.class === 'string'
+			? options.class
+			: undefined
 
 		return {
 			...htmlAttributes,
-			...(className ? { class: className } : {}),
+			...(className
+				? { class: className }
+				: {}),
 			'data-astro-image': options['data-astro-image'],
 		}
 	},

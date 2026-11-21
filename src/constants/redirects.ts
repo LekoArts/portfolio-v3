@@ -445,4 +445,7 @@ function formatRedirects(input: Array<Redirect>) {
 	return Object.fromEntries(input.map(r => [r.fromPath, r.toPath]))
 }
 
-export const REDIRECTS = formatRedirects([..._REDIRECTS, ...GARDEN_REDIRECTS])
+export const REDIRECTS = formatRedirects([
+	..._REDIRECTS,
+	...GARDEN_REDIRECTS,
+])

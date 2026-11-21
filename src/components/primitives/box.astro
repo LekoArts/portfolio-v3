@@ -18,6 +18,6 @@ if (typeof style === 'string') {
 }
 ---
 
-<Tag style={{ ...(style as CustomStyle), ...customProps }} {...otherProps} class:list={[className, atoms(atomProps)]}
-	><slot /></Tag
->
+<Tag style={{ ...(style as CustomStyle), ...customProps }} {...otherProps} class:list={[className, atoms(atomProps)]}>
+	<slot />
+</Tag>

@@ -60,11 +60,26 @@ describe('netlify image service', () => {
 
 		expect(widths).toEqual([2000, 720, 1440, 960, 1280])
 		expect(srcSet).toEqual([
-			{ transform: expect.objectContaining({ width: 720, height: 405 }), descriptor: '720w' },
-			{ transform: expect.objectContaining({ width: 960, height: 540 }), descriptor: '960w' },
-			{ transform: expect.objectContaining({ width: 1280, height: 720 }), descriptor: '1280w' },
-			{ transform: expect.objectContaining({ width: 1440, height: 810 }), descriptor: '1440w' },
-			{ transform: expect.objectContaining({ width: 2000, height: 1125 }), descriptor: '2000w' },
+			{
+				transform: expect.objectContaining({ width: 720, height: 405 }),
+				descriptor: '720w',
+			},
+			{
+				transform: expect.objectContaining({ width: 960, height: 540 }),
+				descriptor: '960w',
+			},
+			{
+				transform: expect.objectContaining({ width: 1280, height: 720 }),
+				descriptor: '1280w',
+			},
+			{
+				transform: expect.objectContaining({ width: 1440, height: 810 }),
+				descriptor: '1440w',
+			},
+			{
+				transform: expect.objectContaining({ width: 2000, height: 1125 }),
+				descriptor: '2000w',
+			},
 		])
 	})
 

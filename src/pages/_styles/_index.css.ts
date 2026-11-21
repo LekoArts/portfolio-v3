@@ -31,31 +31,34 @@ const photoCardBaseStyle = style({
 	borderRadius: vars.borderRadius.lg,
 })
 
-export const photoLinkStyle = style([photoCardBaseStyle, {
-	boxShadow: vars.shadow.lg,
-	position: 'relative',
-	selectors: {
-		[pseudoSelectors.after]: {
-			content: '""',
-			position: 'absolute',
-			width: vars.space.full,
-			height: vars.space.full,
-			transitionProperty: 'box-shadow',
-			transitionDuration: transition.duration.slow,
-			transitionTimingFunction: transition.easing['ease-in-out'],
-			boxShadow: 'inset 0 0 0 2px rgba(255, 255, 255, 0.2)',
-			opacity: 1,
-			borderRadius: vars.borderRadius.lg,
-			top: 0,
-			left: 0,
-			right: 0,
-			bottom: 0,
-		},
-		'&:hover:after': {
-			boxShadow: 'inset 0 0 0 2px rgba(255, 255, 255, 0.5)',
+export const photoLinkStyle = style([
+	photoCardBaseStyle,
+	{
+		boxShadow: vars.shadow.lg,
+		position: 'relative',
+		selectors: {
+			[pseudoSelectors.after]: {
+				content: '""',
+				position: 'absolute',
+				width: vars.space.full,
+				height: vars.space.full,
+				transitionProperty: 'box-shadow',
+				transitionDuration: transition.duration.slow,
+				transitionTimingFunction: transition.easing['ease-in-out'],
+				boxShadow: 'inset 0 0 0 2px rgba(255, 255, 255, 0.2)',
+				opacity: 1,
+				borderRadius: vars.borderRadius.lg,
+				top: 0,
+				left: 0,
+				right: 0,
+				bottom: 0,
+			},
+			'&:hover:after': {
+				boxShadow: 'inset 0 0 0 2px rgba(255, 255, 255, 0.5)',
+			},
 		},
 	},
-}])
+])
 
 export const staticImageStyle = style([photoCardBaseStyle, {}])
 

@@ -11,7 +11,9 @@ export function filterPublished(entry: CollectionEntry<'writing'>) {
 		return true
 	}
 
-	return import.meta.env.PROD ? entry.data.published : true
+	return import.meta.env.PROD
+		? entry.data.published
+		: true
 }
 
 /**

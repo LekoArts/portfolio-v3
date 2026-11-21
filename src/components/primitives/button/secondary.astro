@@ -14,6 +14,7 @@ interface Props extends BoxProps<'button' | 'a'> {
 const { href, kind = 'link', class: className, ...rest } = Astro.props
 ---
 
-<Button kind={kind} href={href} variant="link" class:list={[arrowAnimationStyle, subtleButtonStyle]} icon {...rest}
-	><slot /><SvgIcon id="arrow-right" slot="icon" /></Button
->
+<Button kind={kind} href={href} variant="link" class:list={[arrowAnimationStyle, subtleButtonStyle]} icon {...rest}>
+	<slot />
+	<SvgIcon id="arrow-right" slot="icon" />
+</Button>

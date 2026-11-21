@@ -12,6 +12,6 @@ interface Props {
 const { files, template, title, customSetup } = Astro.props
 ---
 
-<PlaygroundReact files={files} template={template} title={title} customSetup={customSetup} client:visible
-	><slot /></PlaygroundReact
->
+<PlaygroundReact files={files} template={template} title={title} customSetup={customSetup} client:visible>
+	<slot />
+</PlaygroundReact>

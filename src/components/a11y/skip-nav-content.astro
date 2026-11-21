@@ -12,4 +12,6 @@ const { id: idProp } = Astro.props
 const id = idProp || SKIP_NAV_ID
 ---
 
-<main id={id}><slot /></main>
+<main id={id}>
+	<slot />
+</main>

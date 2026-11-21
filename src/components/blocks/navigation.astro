@@ -23,25 +23,23 @@ function activeClassName(link: string | undefined) {
 <Box display="flex" alignItems="center" flexDirection="row">
 	<nav aria-label="Primary navigation">
 		<Box as="ul" display="flex" alignItems="center" flexDirection="row" class={navItemsWrapperStyle}>
-			{
-				primaryNavigation.map((item, index) => {
-					const notLastItem = index !== primaryNavigation.length - 1
+			{primaryNavigation.map((item, index) => {
+				const notLastItem = index !== primaryNavigation.length - 1
 
-					return (
-						<li>
-							<Link
-								href={item.link}
-								fontSize={[`md`, null, null, `lg`]}
-								marginRight={notLastItem ? [2, 4] : undefined}
-								p={2}
-								class={activeClassName(item.link)}
-							>
-								{item.name}
-							</Link>
-						</li>
-					)
-				})
-			}
+				return (
+					<li>
+						<Link
+							href={item.link}
+							fontSize={[`md`, null, null, `lg`]}
+							marginRight={notLastItem ? [2, 4] : undefined}
+							p={2}
+							class={activeClassName(item.link)}
+						>
+							{item.name}
+						</Link>
+					</li>
+				)
+			})}
 		</Box>
 	</nav>
 	<Spacer axis="horizontal" size={[2, 4]} />

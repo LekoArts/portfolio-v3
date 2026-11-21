@@ -14,24 +14,22 @@ const { headings } = Astro.props
 const toc = buildToc(headings)
 ---
 
-{
-	toc.length > 0 && (
-		<Box
-			as="details"
-			display={{ mobile: 'block', '2xl': 'none' }}
-			px={[3, null, 4]}
-			py={[1, null, 2]}
-			class={detailsStyle}
-			borderRadius="lg"
-		>
-			<Box as="summary" class={summaryStyle}>
-				Table of Contents
-			</Box>
-			<ul id="toc-mobile">
-				{toc.map((heading) => (
-					<TocItem heading={heading} />
-				))}
-			</ul>
+{toc.length > 0 && (
+	<Box
+		as="details"
+		display={{ mobile: 'block', '2xl': 'none' }}
+		px={[3, null, 4]}
+		py={[1, null, 2]}
+		class={detailsStyle}
+		borderRadius="lg"
+	>
+		<Box as="summary" class={summaryStyle}>
+			Table of Contents
 		</Box>
-	)
-}
+		<ul id="toc-mobile">
+			{toc.map((heading) => (
+				<TocItem heading={heading} />
+			))}
+		</ul>
+	</Box>
+)}

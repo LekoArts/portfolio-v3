@@ -27,11 +27,15 @@ const posts = getSortedWriting(await getCollection('writing', filterPublished))
 	<SkipNavContent>
 		<Container py={paddingResponsiveArrays.paddingSmall}>
 			<Box display="flex" flexDirection="column" gap={3}>
-				<Heading display="inline-block" as="h1">Writing</Heading>
-				<Text variant="prominent"
-					>A collection of essays, notes, and tutorials from my <Link href="/what-is-a-digital-garden/"
-						>digital garden</Link
-					>. <Link href="/rss.xml" class={rssLinkStyle}>RSS Feed <SvgIcon height="1em" width="1em" id="rss" /></Link>
+				<Heading display="inline-block" as="h1">
+					Writing
+				</Heading>
+				<Text variant="prominent">
+					A collection of essays, notes, and tutorials from my{' '}
+					<Link href="/what-is-a-digital-garden/">digital garden</Link>.{' '}
+					<Link href="/rss.xml" class={rssLinkStyle}>
+						RSS Feed <SvgIcon height="1em" width="1em" id="rss" />
+					</Link>
 				</Text>
 			</Box>
 			<Spacer axis="vertical" size={6} />
@@ -39,20 +43,18 @@ const posts = getSortedWriting(await getCollection('writing', filterPublished))
 			<Spacer axis="vertical" size={20} />
 			<Box display="flex" flexDirection="column" alignItems="center">
 				<Box class={cardGridStyle}>
-					{
-						posts.map(({ data: post }) => (
-							<Card
-								slug={normalize(post.slug)}
-								title={post.title}
-								subtitle={post.subtitle}
-								description={post.type === 'note' ? truncateText(post.description, 100) : post.description}
-								icon={post.icon}
-								variant={post.type === 'note' ? 'ghost' : 'default'}
-								data-tags={post.tags}
-								class="tag-group-item"
-							/>
-						))
-					}
+					{posts.map(({ data: post }) => (
+						<Card
+							slug={normalize(post.slug)}
+							title={post.title}
+							subtitle={post.subtitle}
+							description={post.type === 'note' ? truncateText(post.description, 100) : post.description}
+							icon={post.icon}
+							variant={post.type === 'note' ? 'ghost' : 'default'}
+							data-tags={post.tags}
+							class="tag-group-item"
+						/>
+					))}
 				</Box>
 			</Box>
 		</Container>

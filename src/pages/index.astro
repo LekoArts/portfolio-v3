@@ -133,16 +133,14 @@ const [firstPost, ...otherPosts] = writing
 					<Badge variant="light">Latest Post</Badge>
 					<div>
 						<Heading as="h2">{firstPost.data.title}</Heading>
-						{
-							firstPost.data.subtitle && (
-								<>
-									<Text variant="prominent" color="heading">
-										{firstPost.data.subtitle}
-									</Text>
-									<Spacer axis="vertical" size={4} />
-								</>
-							)
-						}
+						{firstPost.data.subtitle && (
+							<>
+								<Text variant="prominent" color="heading">
+									{firstPost.data.subtitle}
+								</Text>
+								<Spacer axis="vertical" size={4} />
+							</>
+						)}
 						<Text>{firstPost.data.description}</Text>
 					</div>
 					<PrimaryButton href={normalize(firstPost.data.slug)}>Continue Reading</PrimaryButton>
@@ -152,34 +150,32 @@ const [firstPost, ...otherPosts] = writing
 						<Badge variant="light">Featured</Badge>
 					</Box>
 					<Box class={cardsGridStyle}>
-						{
-							featured.map((post) => (
-								<Card
-									slug={normalize(post.data.slug)}
-									title={post.data.title}
-									variant="default"
-									description={post.data.description}
-								/>
-							))
-						}
+						{featured.map((post) => (
+							<Card
+								slug={normalize(post.data.slug)}
+								title={post.data.title}
+								variant="default"
+								description={post.data.description}
+							/>
+						))}
 					</Box>
 				</Box>
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
 					<Box display="flex" justifyContent="space-between" alignItems="center">
 						<Badge variant="light">More Posts</Badge>
-						<SecondaryButton aria-label="Read all long-form posts" href="/writing/">Read all</SecondaryButton>
+						<SecondaryButton aria-label="Read all long-form posts" href="/writing/">
+							Read all
+						</SecondaryButton>
 					</Box>
 					<Box class={cardsGridStyle}>
-						{
-							otherPosts.map((post) => (
-								<Card
-									slug={normalize(post.data.slug)}
-									title={post.data.title}
-									variant="title-only"
-									icon={post.data.icon}
-								/>
-							))
-						}
+						{otherPosts.map((post) => (
+							<Card
+								slug={normalize(post.data.slug)}
+								title={post.data.title}
+								variant="title-only"
+								icon={post.data.icon}
+							/>
+						))}
 					</Box>
 				</Box>
 				<Box display="flex" flexDirection="column" width="full" gap={6}>
@@ -230,58 +226,54 @@ const [firstPost, ...otherPosts] = writing
 						</SecondaryButton>
 					</Box>
 					<Box gap={6} class={repositoriesGridStyle}>
-						{
-							primary && secondary ? (
-								<>
-									<Box bg="primaryAsBg" p={6} borderRadius="lg" __color="#e7f1ff">
-										<Box display="flex" flexDirection="row" justifyContent="space-between" marginBottom={6}>
-											<Link
-												fontSize={[`lg`, null, null, null, `lgx`]}
-												fontWeight="bold"
-												href={primary.url}
-												target="_blank"
-												__color="white"
-											>
-												{primary.name}
-											</Link>
-											<Tag colorScheme="blue" iconId="star">
-												{primary.stargazerCount}
-											</Tag>
-										</Box>
-										<Text>{primary.description}</Text>
+						{primary && secondary ? (
+							<>
+								<Box bg="primaryAsBg" p={6} borderRadius="lg" __color="#e7f1ff">
+									<Box display="flex" flexDirection="row" justifyContent="space-between" marginBottom={6}>
+										<Link
+											fontSize={[`lg`, null, null, null, `lgx`]}
+											fontWeight="bold"
+											href={primary.url}
+											target="_blank"
+											__color="white"
+										>
+											{primary.name}
+										</Link>
+										<Tag colorScheme="blue" iconId="star">
+											{primary.stargazerCount}
+										</Tag>
 									</Box>
-									<Box bg="mutedAsBg" p={6} borderRadius="lg">
-										<Box display="flex" flexDirection="row" justifyContent="space-between" marginBottom={6}>
-											<Link
-												fontSize={[`lg`, null, null, null, `lgx`]}
-												fontWeight="bold"
-												target="_blank"
-												href={secondary.url}
-											>
-												{secondary.name}
-											</Link>
-											<Tag colorScheme="gray" iconId="star">
-												{secondary.stargazerCount}
-											</Tag>
-										</Box>
-										<Text>{secondary.description}</Text>
-									</Box>
-								</>
-							) : (
-								<Box p={2} borderRadius="lg">
-									<strong>GITHUB_TOKEN</strong> required for fetching GitHub stars
+									<Text>{primary.description}</Text>
 								</Box>
-							)
-						}
+								<Box bg="mutedAsBg" p={6} borderRadius="lg">
+									<Box display="flex" flexDirection="row" justifyContent="space-between" marginBottom={6}>
+										<Link
+											fontSize={[`lg`, null, null, null, `lgx`]}
+											fontWeight="bold"
+											target="_blank"
+											href={secondary.url}
+										>
+											{secondary.name}
+										</Link>
+										<Tag colorScheme="gray" iconId="star">
+											{secondary.stargazerCount}
+										</Tag>
+									</Box>
+									<Text>{secondary.description}</Text>
+								</Box>
+							</>
+						) : (
+							<Box p={2} borderRadius="lg">
+								<strong>GITHUB_TOKEN</strong> required for fetching GitHub stars
+							</Box>
+						)}
 					</Box>
 					<Box display="flex" justifyContent="space-between" flexWrap="wrap">
-						{
-							openSourceRepos.map((repo) => (
-								<Link href={repo.url} p={2} target="_blank">
-									{repo.name}
-								</Link>
-							))
-						}
+						{openSourceRepos.map((repo) => (
+							<Link href={repo.url} p={2} target="_blank">
+								{repo.name}
+							</Link>
+						))}
 					</Box>
 				</Box>
 			</Box>

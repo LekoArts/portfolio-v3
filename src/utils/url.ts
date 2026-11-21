@@ -8,11 +8,15 @@ export function hasTrailingSlash(url: string) {
 }
 
 export function withTrailingSlash(url: string) {
-	return hasTrailingSlash(url) ? url : `${url}/`
+	return hasTrailingSlash(url)
+		? url
+		: `${url}/`
 }
 
 export function withoutTrailingSlash(url: string) {
-	return (hasTrailingSlash(url) ? url.slice(0, -1) : url) || '/'
+	return (hasTrailingSlash(url)
+		? url.slice(0, -1)
+		: url) || '/'
 }
 
 export function isInternalUrl(url: string): boolean {

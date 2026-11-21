@@ -23,7 +23,12 @@ export function extractAtomsFromProps<AtomsFn extends AtomsFnBase>(props: any, a
 		}
 	}
 
-	return { hasAtomProps, atomProps, otherProps, customProps }
+	return {
+		hasAtomProps,
+		atomProps,
+		otherProps,
+		customProps,
+	}
 }
 
 export type OverrideTokens<T> = {

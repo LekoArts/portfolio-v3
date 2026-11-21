@@ -24,7 +24,9 @@ function split(input: string): [string, string] {
 			match = 0
 		}
 		if (match === 3) {
-			state = state === 'default' ? 'open' : 'closed'
+			state = state === 'default'
+				? 'open'
+				: 'closed'
 			locs.push(i + 1)
 		}
 	}

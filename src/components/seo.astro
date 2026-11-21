@@ -61,9 +61,7 @@ if (forceTitle) {
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <meta name="msapplication-TileColor" content="#0f172a" />
 {noIndex && <meta name="robots" content="noindex, nofollow" />}
-{
-	breadcrumbListItems.length >= 1 && (
-		<script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbList(breadcrumbListItems))} />
-	)
-}
+{breadcrumbListItems.length >= 1 && (
+	<script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbList(breadcrumbListItems))} />
+)}
 <slot />

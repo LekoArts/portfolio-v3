@@ -111,10 +111,14 @@ interface Props {
 }
 
 export function filterPublished(entry: CollectionEntry<'writing'>): boolean {
-	return import.meta.env.PROD ? entry.data.published : true
+	return import.meta.env.PROD
+		? entry.data.published
+		: true
 }
 export function filterPublished(entry: CollectionEntry<'writing'>) {
-	return import.meta.env.PROD ? entry.data.published : true
+	return import.meta.env.PROD
+		? entry.data.published
+		: true
 }
 ```
 

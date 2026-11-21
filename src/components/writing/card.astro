@@ -33,25 +33,21 @@ const { slug, title, subtitle, description, variant = 'default', icon, class: cl
 			{icon && variant === 'ghost' ? <SvgIcon id={icon} class={ghostIconStyle} /> : null}
 			{title}
 		</Text>
-		{
-			subtitle ? (
-				<Text as="h3" fontSize={{ mobile: 'md', md: 'lg' }} fontWeight="medium" color="textMuted">
-					{subtitle}
-				</Text>
-			) : null
-		}
-		{
-			description ? (
-				<Text
-					color="textMuted"
-					display={{ mobile: variant === 'ghost' ? 'none' : 'block', md: 'block' }}
-					fontSize={{ mobile: 'sm', md: 'md' }}
-					marginTop={6}
-				>
-					{description}
-				</Text>
-			) : null
-		}
+		{subtitle ? (
+			<Text as="h3" fontSize={{ mobile: 'md', md: 'lg' }} fontWeight="medium" color="textMuted">
+				{subtitle}
+			</Text>
+		) : null}
+		{description ? (
+			<Text
+				color="textMuted"
+				display={{ mobile: variant === 'ghost' ? 'none' : 'block', md: 'block' }}
+				fontSize={{ mobile: 'sm', md: 'md' }}
+				marginTop={6}
+			>
+				{description}
+			</Text>
+		) : null}
 		<span class={linkTargetStyle}></span>
 	</Link>
 </Box>

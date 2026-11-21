@@ -25,14 +25,15 @@ const mapSeriesIdToTitle: Record<string, string> = {
 	data-testid="series-callout"
 >
 	<Box as="summary" class={summaryStyle}>
-		<em>“{mapSeriesIdToTitle[seriesId]}” ({postsInSeries.length} Part Series)</em>
-	</Box><ol>
-		{
-			postsInSeries.map((entry) => (
-				<li data-is-current={currentPart === entry.part}>
-					{currentPart === entry.part ? <span>{entry.title}</span> : <a href={entry.slug}>{entry.title}</a>}
-				</li>
-			))
-		}
-	</ol></Box
->
+		<em>
+			“{mapSeriesIdToTitle[seriesId]}” ({postsInSeries.length} Part Series)
+		</em>
+	</Box>
+	<ol>
+		{postsInSeries.map((entry) => (
+			<li data-is-current={currentPart === entry.part}>
+				{currentPart === entry.part ? <span>{entry.title}</span> : <a href={entry.slug}>{entry.title}</a>}
+			</li>
+		))}
+	</ol>
+</Box>

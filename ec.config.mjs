@@ -5,7 +5,10 @@ import { EC_CSS_VARS } from './src/constants/ec.mjs'
 
 export default defineEcConfig({
 	themes: ['one-light', 'night-owl'],
-	plugins: [pluginCollapsibleSections(), pluginLineNumbers()],
+	plugins: [
+		pluginCollapsibleSections(),
+		pluginLineNumbers(),
+	],
 	defaultProps: {
 		showLineNumbers: false,
 		collapseStyle: 'collapsible-auto',
