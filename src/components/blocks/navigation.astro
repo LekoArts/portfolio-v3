@@ -14,10 +14,6 @@ if (!entry) {
 
 const { data: primaryNavigation } = entry
 const pathname = Astro.url.pathname
-
-function activeClassName(link: string | undefined) {
-	return pathname === link ? `active` : undefined
-}
 ---
 
 <Box display="flex" alignItems="center" flexDirection="row">
@@ -33,7 +29,7 @@ function activeClassName(link: string | undefined) {
 							fontSize={[`md`, null, null, `lg`]}
 							marginRight={notLastItem ? [2, 4] : undefined}
 							p={2}
-							class={activeClassName(item.link)}
+							aria-current={pathname === item.link ? 'page' : undefined}
 						>
 							{item.name}
 						</Link>

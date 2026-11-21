@@ -15,6 +15,9 @@ test.describe('Navigation', () => {
 
 		await click(page, '[aria-label="Primary navigation"] >> text=Writing')
 		await expect(page).toHaveURL('/writing/')
+		const nav = page.getByRole('navigation', { name: 'Primary navigation' })
+		await expect(nav.getByRole('link', { name: 'Writing' })).toHaveAttribute('aria-current', 'page')
+		await expect(nav.locator('[aria-current]')).toHaveCount(1)
 
 		await click(page, '[aria-label="Primary navigation"] >> text=Photos')
 		await expect(page).toHaveURL('/photos/')
