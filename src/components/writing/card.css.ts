@@ -4,7 +4,6 @@ import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
-import { transition } from '@styles/tokens/motion'
 import { zIndices } from '@styles/tokens/z-indices'
 import { createVar, style, styleVariants } from '@vanilla-extract/css'
 
@@ -47,9 +46,6 @@ const cardBaseStyle = style({
 			height: vars.space.full,
 			boxShadow: cardShadowHover,
 			opacity: 0,
-			transitionProperty: 'opacity',
-			transitionDuration: transition.duration.fast,
-			transitionTimingFunction: 'ease',
 			borderRadius: vars.borderRadius.lg,
 			top: 0,
 			left: 0,
@@ -133,7 +129,6 @@ export const cardVariants = styleVariants(cards, card => [cardBaseStyle, card])
 
 const baseTitleStyle = style({
 	textWrap: 'balance',
-	transition: `color ${transition.duration.fast} ease`,
 	color: vars.color.heading,
 	selectors: {
 		[`${linkStyle}:hover &`]: {

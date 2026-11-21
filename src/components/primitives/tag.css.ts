@@ -5,7 +5,6 @@ import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
-import { transition } from '@styles/tokens/motion'
 import { getColor, transparentizeDict } from '@utils/color'
 import { createVar, style, styleVariants } from '@vanilla-extract/css'
 
@@ -26,7 +25,6 @@ const tagBaseStyle = style({
 	'paddingLeft': vars.space[2],
 	'paddingRight': vars.space[2],
 	'border': '1px solid transparent',
-	'transition': `border-color ${transition.duration.fast} ease`,
 	'@media': {
 		[minMediaQuery('md')]: {
 			fontSize: vars.fontSize.sm,

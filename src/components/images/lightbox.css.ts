@@ -73,7 +73,7 @@ export const lightboxCloseStyle = style({
 	'color': 'white',
 	'background': 'rgba(0, 0, 0, 0.6)',
 	'outline': 'none',
-	'transition': `background-color ${transition.duration.fast} ease, transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
+	'transition': `transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
 	'@media': {
 		[transition.media.motion]: {
 			selectors: {
