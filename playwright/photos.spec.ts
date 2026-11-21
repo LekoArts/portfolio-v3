@@ -37,9 +37,15 @@ test.describe('Photos', () => {
 		const expectedMaxHeight = await firstImage.evaluate(image => Math.round(720 * (image as HTMLImageElement).naturalHeight / (image as HTMLImageElement).naturalWidth))
 		await expect(firstImage).toHaveCSS('max-height', `${expectedMaxHeight}px`)
 
-		const sourceURLs = await images.evaluateAll(elements => Array.from(new Set(elements.map(image => image.getAttribute('src')))).filter(Boolean))
-		const responses = await Promise.all(sourceURLs.map(url => request.fetch(url!, { method: 'HEAD' })))
-		expect(responses.every(response => response.ok())).toBe(true)
+		const sourceURLs = await images.evaluateAll(elements => Array.from(new Set(elements.map(image => image.getAttribute('src')))).filter(Boolean)) as string[]
+		const failedURLs: string[] = []
+		// Batch requests so the local preview server isn't flooded with hundreds of parallel connections
+		for (let i = 0; i < sourceURLs.length; i += 25) {
+			const batch = sourceURLs.slice(i, i + 25)
+			const responses = await Promise.all(batch.map(url => request.fetch(url, { method: 'HEAD' })))
+			failedURLs.push(...batch.filter((_, index) => !responses[index].ok()))
+		}
+		expect(failedURLs).toEqual([])
 	})
 
 	test('switches between masonry and grid layouts', async ({ page }) => {
