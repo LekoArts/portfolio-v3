@@ -48,7 +48,7 @@ const cardBaseStyle = style({
 			boxShadow: cardShadowHover,
 			opacity: 0,
 			transitionProperty: 'opacity',
-			transitionDuration: transition.duration.normal,
+			transitionDuration: transition.duration.fast,
 			transitionTimingFunction: 'ease',
 			borderRadius: vars.borderRadius.lg,
 			top: 0,

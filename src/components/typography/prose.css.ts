@@ -236,7 +236,6 @@ globalStyle(`${proseRootStyle} .expressive-code .frame.has-title [data-language]
 	'background': 'rebeccapurple',
 	'fontSize': '0.65em',
 	'pointerEvents': 'none',
-	'transition': 'opacity 0.2s ease-in-out',
 	'letterSpacing': vars.letterSpacing.wide,
 	'fontWeight': vars.fontWeight.medium,
 	'@media': {

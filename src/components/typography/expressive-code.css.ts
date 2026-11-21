@@ -144,7 +144,6 @@ globalStyle(`${expressiveCodeRootStyle} .expressive-code .frame.has-title [data-
 	'background': 'rebeccapurple',
 	'fontSize': '0.65em',
 	'pointerEvents': 'none',
-	'transition': 'opacity 0.2s ease-in-out',
 	'letterSpacing': vars.letterSpacing.wide,
 	'fontWeight': vars.fontWeight.medium,
 	'boxShadow': 'inset 0 1px 0 0 rgba(255,255,255,0.15), inset 0 -1px 0 0 rgba(0,0,0,0.15), 0 1px 3px 0 rgba(0,0,0,0.15)',
