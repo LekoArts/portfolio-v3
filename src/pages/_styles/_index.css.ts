@@ -1,4 +1,4 @@
-import { transition } from '@styles/tokens/motion'
+import { imageOutlineStyle } from '@styles/image-outline.css'
 import { style } from '@vanilla-extract/css'
 import { pseudoSelectors } from '../../styles/selectors'
 import { vars } from '../../styles/themes/contract.css'
@@ -42,11 +42,8 @@ export const photoLinkStyle = style([
 				position: 'absolute',
 				width: vars.space.full,
 				height: vars.space.full,
-				transitionProperty: 'box-shadow',
-				transitionDuration: transition.duration.normal,
-				transitionTimingFunction: 'ease',
-				boxShadow: 'inset 0 0 0 2px rgba(255, 255, 255, 0.2)',
-				opacity: 1,
+				opacity: 0,
+				boxShadow: 'inset 0 0 0 2px rgba(255, 255, 255, 0.5)',
 				borderRadius: vars.borderRadius.lg,
 				top: 0,
 				left: 0,
@@ -54,13 +51,13 @@ export const photoLinkStyle = style([
 				bottom: 0,
 			},
 			'&:hover:after': {
-				boxShadow: 'inset 0 0 0 2px rgba(255, 255, 255, 0.5)',
+				opacity: 1,
 			},
 		},
 	},
 ])
 
-export const staticImageStyle = style([photoCardBaseStyle, {}])
+export const staticImageStyle = style([photoCardBaseStyle, imageOutlineStyle])
 
 export const repositoriesGridStyle = style({
 	'display': 'grid',
