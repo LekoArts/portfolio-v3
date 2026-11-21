@@ -104,19 +104,19 @@ const { selector } = Astro.props
 				if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
 					const currentIndex = Number.parseInt(dialogImg.dataset.index!, 10)
 
-					let nextIndex = currentIndex - 1
+					let step = -1
 					if (event.key === 'ArrowRight') {
-						nextIndex = currentIndex + 1
+						step = 1
 					}
-
-					const nextButton = buttonByIndexMap.get(nextIndex)
 
 					/**
-					 * If the next button has the class 'hidden' the current thumbnail list is filtered by tags. Do not navigate further to these hidden images.
+					 * Buttons with the class 'hidden' are filtered out by tags. Skip over them to the next visible photo, which can be several albums away.
 					 */
-					if (nextButton?.classList.contains('hidden')) {
-						return
+					let nextIndex = currentIndex + step
+					while (buttonByIndexMap.get(nextIndex)?.classList.contains('hidden')) {
+						nextIndex += step
 					}
+					const nextButton = buttonByIndexMap.get(nextIndex)
 
 					if (nextButton) {
 						setImage(nextButton)

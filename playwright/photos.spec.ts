@@ -95,4 +95,28 @@ test.describe('Photos', () => {
 			await expect(thumbnail).toBeFocused()
 		}
 	})
+
+	test('arrow keys in the lightbox skip photos hidden by filters', async ({ page }) => {
+		const albums = await page.locator('.tag-group-item').evaluateAll(els => [
+			...new Set(els.map(el => el.getAttribute('data-tags'))),
+		])
+		const [first, , third] = albums as Array<string>
+		await page.goto(`/photos/?tags=${encodeURIComponent(first)},${encodeURIComponent(third)}`)
+		await expect(page.locator('.tag-group-item:not(.hidden)')).toHaveCount(await page.locator(`.tag-group-item[data-tags="${first}"], .tag-group-item[data-tags="${third}"]`).count())
+
+		const firstAlbum = page.getByRole('button', {
+			name: new RegExp(`from ${first}$`),
+		})
+		await firstAlbum.last().click()
+		const dialog = page.getByRole('dialog', { name: 'Photo viewer' })
+		const image = dialog.getByRole('img')
+		const lastOfFirst = await image.getAttribute('alt')
+
+		await page.keyboard.press('ArrowRight')
+		await expect(image).toHaveAttribute('alt', `Photo 1 of ${await page.getByRole('button', {
+			name: new RegExp(`from ${third}$`),
+		}).count()} from ${third}`)
+		await page.keyboard.press('ArrowLeft')
+		await expect(image).toHaveAttribute('alt', lastOfFirst!)
+	})
 })
