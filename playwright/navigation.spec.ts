@@ -108,6 +108,17 @@ test.describe('Navigation', () => {
 		await expect(visibleCards).toHaveCount(total)
 		expect(await page.evaluate(() => history.length)).toBe(historyLength)
 	})
+	test('ignores unknown tags in the URL', async ({ page }) => {
+		const visibleCards = page.locator('.tag-group-item:not(.hidden)')
+
+		await page.goto('/writing/?tags=React,Does Not Exist')
+		await expect(page.locator('lekoarts-tag-group button[data-item="React"]')).toHaveAttribute('aria-pressed', 'true')
+		expect(new URL(page.url()).searchParams.get('tags')).toBe('React')
+
+		await page.goto('/writing/?tags=Does Not Exist')
+		await expect(page).toHaveURL('/writing/')
+		await expect(visibleCards).toHaveCount(await page.locator('.tag-group-item').count())
+	})
 	for (const colorScheme of ['light', 'dark'] as const) {
 		test(`shows a focus ring on every card variant (${colorScheme})`, async ({ page }) => {
 			await page.emulateMedia({ colorScheme })
