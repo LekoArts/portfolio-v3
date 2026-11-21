@@ -36,8 +36,8 @@ importers:
         specifier: 0.44.4
         version: 0.44.4
       '@lekoarts/satteri-sandpack':
-        specifier: 1.0.0
-        version: 1.0.0(satteri@0.11.7)
+        specifier: 1.1.0
+        version: 1.1.0(satteri@0.11.7)
       '@nanostores/persistent':
         specifier: ^1.3.5
         version: 1.3.5(nanostores@1.5.5)
@@ -1346,11 +1346,11 @@ packages:
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==}
 
-  '@lekoarts/satteri-sandpack@1.0.0':
-    resolution: {integrity: sha512-u1kho5hBDCnNfwgmuPSbpq1ouWaIigIzCucr1Qui6VTj6CcVSt+GRbV/adMWXz6ij/4dK9chXEGSIEHGc+a2FA==}
+  '@lekoarts/satteri-sandpack@1.1.0':
+    resolution: {integrity: sha512-AgAPvwgeLXL+rr5T/Y8/ODRPjLidngbSLEcKMnHO//Nr0qfsoNxrwvvIC9/VrIEqfLqvcACXzhW38HkmNo2SKQ==}
     engines: {node: '>=22'}
     peerDependencies:
-      satteri: ^0.10.5
+      satteri: ^0.10.5 || ^0.11.0
 
   '@lezer/common@1.2.3':
     resolution: {integrity: sha512-w7ojc8ejBqr2REPsWxJjrMFsA/ysDCFICn8zEOR9mrqzOu2amhITYuLD8ag6XZf0CFXDrhKqw7+tW8cX66NaDA==}
@@ -7682,7 +7682,7 @@ snapshots:
 
   '@keyv/serialize@1.1.1': {}
 
-  '@lekoarts/satteri-sandpack@1.0.0(satteri@0.11.7)':
+  '@lekoarts/satteri-sandpack@1.1.0(satteri@0.11.7)':
     dependencies:
       satteri: 0.11.7
 
