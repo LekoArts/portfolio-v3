@@ -56,7 +56,9 @@ export function getSystemTheme(): 'light' | 'dark' {
 export function onThemeChange(theme: Theme): void {
 	const d = document.documentElement
 	const systemTheme = getSystemTheme()
-	const t = theme === 'system' ? VALUE[systemTheme] : VALUE[theme]
+	const t = theme === 'system'
+		? VALUE[systemTheme]
+		: VALUE[theme]
 
 	const enableAnimation = disableAnimation()
 
@@ -64,7 +66,9 @@ export function onThemeChange(theme: Theme): void {
 	d.classList.remove(...ATTRS)
 	d.classList.add(t)
 	d.dataset.theme = theme
-	d.style.colorScheme = theme === 'system' ? systemTheme : theme
+	d.style.colorScheme = theme === 'system'
+		? systemTheme
+		: theme
 
 	storeTheme(theme)
 

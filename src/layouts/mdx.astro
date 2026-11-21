@@ -23,7 +23,9 @@ const { title, description, breadcrumbListItems = [], noIndex = false } = frontm
 	<Seo slot="seo" title={title} description={description} breadcrumbListItems={breadcrumbListItems} noIndex={noIndex} />
 	<Container variant="proseRoot">
 		<SkipNavContent>
-			<Prose><slot /></Prose>
+			<Prose>
+				<slot />
+			</Prose>
 		</SkipNavContent>
 	</Container>
 </Base>

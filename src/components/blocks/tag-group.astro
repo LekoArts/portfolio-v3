@@ -18,16 +18,14 @@ const { id, items } = Astro.props
 
 <lekoarts-tag-group data-id={id}>
 	<div class={tagGroupStyle}>
-		{
-			items.sort().map((item) => (
-				<button class={tagStyle} data-item={item}>
-					{item}
-					<span class={tagCloseIconStyle} aria-hidden>
-						<SvgIcon id="close" width="100%" height="100%" />
-					</span>
-				</button>
-			))
-		}
+		{items.sort().map((item) => (
+			<button class={tagStyle} data-item={item}>
+				{item}
+				<span class={tagCloseIconStyle} aria-hidden>
+					<SvgIcon id="close" width="100%" height="100%" />
+				</span>
+			</button>
+		))}
 	</div>
 </lekoarts-tag-group>
 

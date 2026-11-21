@@ -92,76 +92,70 @@ const ogImage = post.image ?? fallbackOgImage
 	</Seo>
 	<Container variant="proseRoot">
 		<SkipNavContent>
-			{
-				post.type !== 'essay' ? (
-					<>
-						<Heading as="h1">{post.title}</Heading>
-						<Spacer size={6} axis="vertical" />
-						<Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
-						<Spacer size={4} axis="vertical" />
-						<Box display="flex" justifyContent="space-between" flexDirection={[`column`, null, null, `row`]} gap={2}>
-							<Text fontSize={{ mobile: 'sm', md: 'md' }}>
-								Created: <FormattedDate date={post.date} /> – Last Updated: <FormattedDate date={post.lastUpdated} />
-							</Text>
-							<Box gap={2} display="flex">
-								{post.tags.map((tag) => (
-									<Link href={`/writing/?${queryStringTags.to({ tags: [tag] })}`}>
-										<Tag colorScheme={TAG_TO_COLOR_MAP[tag]}>{tag}</Tag>
-									</Link>
-								))}
-							</Box>
-						</Box>
-						<Spacer size={isPartOfSeries ? 4 : 10} axis="vertical" />
-					</>
-				) : (
-					<>
-						<Text
-							color="textEmphasized"
-							fontWeight="medium"
-							textAlign="center"
-							fontSize={[`md`, null, null, `lg`, `lgx`]}
-						>
-							{post.tags.join(', ')}
+			{post.type !== 'essay' ? (
+				<>
+					<Heading as="h1">{post.title}</Heading>
+					<Spacer size={6} axis="vertical" />
+					<Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
+					<Spacer size={4} axis="vertical" />
+					<Box display="flex" justifyContent="space-between" flexDirection={[`column`, null, null, `row`]} gap={2}>
+						<Text fontSize={{ mobile: 'sm', md: 'md' }}>
+							Created: <FormattedDate date={post.date} /> – Last Updated: <FormattedDate date={post.lastUpdated} />
 						</Text>
-						<Spacer size={6} axis="vertical" />
-						<Heading as="h1" textAlign="center">
-							{post.title}
-						</Heading>
-						<Spacer size={16} axis="vertical" />
-					</>
-				)
-			}
-			{
-				post.type !== 'essay' ? (
-					<Box flexDirection="row-reverse" justifyContent="flex-end" gap={20} class={sidebarWrapperStyle}>
-						<Toc headings={headings} />
-						<Prose as="article" style={{ flex: `1 1 100%`, minWidth: `100%` }}>
-							{isPartOfSeries ? (
-								<>
-									<SeriesCallout id={post.series!.id} currentPart={post.series!.part} postsInSeries={postsInSeries} />
-									<Spacer size={{ mobile: 4, '2xl': 8 }} axis="vertical" />
-								</>
-							) : null}
-							<TocMobile headings={headings} />
-							<Spacer size={{ mobile: 8, '2xl': 0 }} axis="vertical" />
-							<Content components={components} />
-						</Prose>
+						<Box gap={2} display="flex">
+							{post.tags.map((tag) => (
+								<Link href={`/writing/?${queryStringTags.to({ tags: [tag] })}`}>
+									<Tag colorScheme={TAG_TO_COLOR_MAP[tag]}>{tag}</Tag>
+								</Link>
+							))}
+						</Box>
 					</Box>
-				) : (
-					<Prose>
+					<Spacer size={isPartOfSeries ? 4 : 10} axis="vertical" />
+				</>
+			) : (
+				<>
+					<Text
+						color="textEmphasized"
+						fontWeight="medium"
+						textAlign="center"
+						fontSize={[`md`, null, null, `lg`, `lgx`]}
+					>
+						{post.tags.join(', ')}
+					</Text>
+					<Spacer size={6} axis="vertical" />
+					<Heading as="h1" textAlign="center">
+						{post.title}
+					</Heading>
+					<Spacer size={16} axis="vertical" />
+				</>
+			)}
+			{post.type !== 'essay' ? (
+				<Box flexDirection="row-reverse" justifyContent="flex-end" gap={20} class={sidebarWrapperStyle}>
+					<Toc headings={headings} />
+					<Prose as="article" style={{ flex: `1 1 100%`, minWidth: `100%` }}>
+						{isPartOfSeries ? (
+							<>
+								<SeriesCallout id={post.series!.id} currentPart={post.series!.part} postsInSeries={postsInSeries} />
+								<Spacer size={{ mobile: 4, '2xl': 8 }} axis="vertical" />
+							</>
+						) : null}
+						<TocMobile headings={headings} />
+						<Spacer size={{ mobile: 8, '2xl': 0 }} axis="vertical" />
 						<Content components={components} />
 					</Prose>
-				)
-			}
+				</Box>
+			) : (
+				<Prose>
+					<Content components={components} />
+				</Prose>
+			)}
 			<Spacer size={12} axis="vertical" />
-			{
-				isPartOfSeries ? (
-					<>
-						<SeriesPagination id={post.series!.id} currentPart={post.series!.part} postsInSeries={postsInSeries} />
-						<Spacer size={8} axis="vertical" />
-					</>
-				) : null
-			}
+			{isPartOfSeries ? (
+				<>
+					<SeriesPagination id={post.series!.id} currentPart={post.series!.part} postsInSeries={postsInSeries} />
+					<Spacer size={8} axis="vertical" />
+				</>
+			) : null}
 			<Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
 			<Spacer size={6} axis="vertical" />
 			<Box
@@ -172,28 +166,29 @@ const ogImage = post.image ?? fallbackOgImage
 				alignItems={[`flex-start`, `center`]}
 			>
 				<Box fontSize={[`md`, null, null, `lg`]} fontWeight="medium">
-					{
-						SITE.isPublic && filePath ? (
-							<>
-								<Link target="_blank" href={getWritingEditLink(filePath)}>
-									Edit on GitHub
-								</Link>{' '}
-								-{' '}
-							</>
-						) : null
-					}Share on <Link target="_blank" href={getBlueskyShareLink(`${SITE.url}${slug}`, post.title)}>Bluesky</Link> / <Link
-						target="_blank"
-						href={getMastodonShareLink(`${SITE.url}${slug}`, post.title)}>Mastodon</Link
-					>
+					{SITE.isPublic && filePath ? (
+						<>
+							<Link target="_blank" href={getWritingEditLink(filePath)}>
+								Edit on GitHub
+							</Link>{' '}
+							-{' '}
+						</>
+					) : null}
+					Share on{' '}
+					<Link target="_blank" href={getBlueskyShareLink(`${SITE.url}${slug}`, post.title)}>
+						Bluesky
+					</Link>{' '}
+					/{' '}
+					<Link target="_blank" href={getMastodonShareLink(`${SITE.url}${slug}`, post.title)}>
+						Mastodon
+					</Link>
 				</Box>
 			</Box>
-			{
-				post.type === 'essay' && (
-					<Text marginTop={6} fontSize={[`md`, null, null, `lg`]}>
-						Last updated: <FormattedDate date={post.lastUpdated} />
-					</Text>
-				)
-			}
+			{post.type === 'essay' && (
+				<Text marginTop={6} fontSize={[`md`, null, null, `lg`]}>
+					Last updated: <FormattedDate date={post.lastUpdated} />
+				</Text>
+			)}
 		</SkipNavContent>
 	</Container>
 </Base>

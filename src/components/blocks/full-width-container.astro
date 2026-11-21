@@ -17,7 +17,9 @@ const { variant = 'default', ...rest } = Astro.props
 ---
 
 <Box class={fullWidthContainerVariants[variant]} {...rest}>
-	<Container variant={variant}><slot /></Container>
+	<Container variant={variant}>
+		<slot />
+	</Container>
 	{variant === 'navigation' ? <div class={backdropStyle} /> : null}
 	{variant === 'navigation' ? <div id={backdropEdgeStyleId} class={backdropEdgeStyle} /> : null}
 </Box>

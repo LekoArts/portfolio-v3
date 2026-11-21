@@ -10,7 +10,9 @@ describe('themeAwareStyles', () => {
 	it('supports string as property value', () => {
 		expect(
 			themeAwareStyles({
-				selectorMap: { '&.active': { background: 'red' } },
+				selectorMap: {
+					'&.active': { background: 'red' },
+				},
 				defaultTheme,
 				alternateThemeClass: darkThemeClass,
 			}),
@@ -21,7 +23,11 @@ describe('themeAwareStyles', () => {
 	it('supports light/dark child object as property value', () => {
 		expect(
 			themeAwareStyles({
-				selectorMap: { '&.active': { background: { light: 'red', dark: 'blue' } } },
+				selectorMap: {
+					'&.active': {
+						background: { light: 'red', dark: 'blue' },
+					},
+				},
 				defaultTheme,
 				alternateThemeClass: darkThemeClass,
 			}),
@@ -33,7 +39,12 @@ describe('themeAwareStyles', () => {
 	it('combines properties under same selector', () => {
 		expect(
 			themeAwareStyles({
-				selectorMap: { '&.active': { background: { light: 'red', dark: 'blue' }, color: 'white' } },
+				selectorMap: {
+					'&.active': {
+						background: { light: 'red', dark: 'blue' },
+						color: 'white',
+					},
+				},
 				defaultTheme,
 				alternateThemeClass: darkThemeClass,
 			}),
@@ -46,7 +57,10 @@ describe('themeAwareStyles', () => {
 		expect(
 			themeAwareStyles({
 				selectorMap: {
-					'&.active': { background: { light: 'red', dark: 'blue' }, color: { light: 'white', dark: 'black' } },
+					'&.active': {
+						background: { light: 'red', dark: 'blue' },
+						color: { light: 'white', dark: 'black' },
+					},
 				},
 				defaultTheme,
 				alternateThemeClass: darkThemeClass,
@@ -59,7 +73,11 @@ describe('themeAwareStyles', () => {
 	it('supports root class', () => {
 		expect(
 			themeAwareStyles({
-				selectorMap: { '&.active': { background: { light: 'red', dark: 'blue' } } },
+				selectorMap: {
+					'&.active': {
+						background: { light: 'red', dark: 'blue' },
+					},
+				},
 				defaultTheme,
 				alternateThemeClass: darkThemeClass,
 				rootClass: 'root',
@@ -87,7 +105,10 @@ describe('responsiveStyles', () => {
 		])
 
 		expect(result).toEqual({
-			p: [{ fontSize: '1rem' }, { fontSize: '2rem' }],
+			p: [
+				{ fontSize: '1rem' },
+				{ fontSize: '2rem' },
+			],
 		})
 	})
 	it('collects different properties at same variant', () => {
@@ -103,8 +124,12 @@ describe('responsiveStyles', () => {
 		])
 
 		expect(result).toEqual({
-			p: [{ fontSize: '1rem' }],
-			a: [{ fontSize: '1rem' }],
+			p: [
+				{ fontSize: '1rem' },
+			],
+			a: [
+				{ fontSize: '1rem' },
+			],
 		})
 	})
 	it('supports \'null\' as value to signal a skip', () => {
@@ -139,8 +164,16 @@ describe('responsiveStyles', () => {
 		])
 
 		expect(result).toEqual({
-			a: [{ fontSize: '1rem' }, null, { fontSize: '2rem' }],
-			p: [{ fontSize: '1rem' }, { fontWeight: 'normal' }, { fontSize: '2rem', fontWeight: 'bold' }],
+			a: [
+				{ fontSize: '1rem' },
+				null,
+				{ fontSize: '2rem' },
+			],
+			p: [
+				{ fontSize: '1rem' },
+				{ fontWeight: 'normal' },
+				{ fontSize: '2rem', fontWeight: 'bold' },
+			],
 		})
 	})
 })

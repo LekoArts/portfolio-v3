@@ -10,4 +10,6 @@ interface Props {
 const { files, title, entry } = Astro.props
 ---
 
-<FileExplorerReact files={files} title={title} entry={entry} client:visible><slot /></FileExplorerReact>
+<FileExplorerReact files={files} title={title} entry={entry} client:visible>
+	<slot />
+</FileExplorerReact>

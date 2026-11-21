@@ -33,7 +33,10 @@ describe('sätteri markdown plugins', () => {
 	it('preserves accessible heading permalink markup', async () => {
 		const result = await mdxToJs('## Example Heading', {
 			jsx: true,
-			hastPlugins: [() => satteriHeadingIdsPlugin(), satteriHeadingPermalinks],
+			hastPlugins: [
+				() => satteriHeadingIdsPlugin(),
+				satteriHeadingPermalinks,
+			],
 		})
 
 		expect(result.code).toContain('<_components.div className="markdown-heading">')
@@ -45,7 +48,10 @@ describe('sätteri markdown plugins', () => {
 	it('visually hides the introduction heading wrapper', async () => {
 		const result = await mdxToJs('## Introduction', {
 			jsx: true,
-			hastPlugins: [() => satteriHeadingIdsPlugin(), satteriHeadingPermalinks],
+			hastPlugins: [
+				() => satteriHeadingIdsPlugin(),
+				satteriHeadingPermalinks,
+			],
 		})
 
 		expect(result.code).toContain('<_components.div className="markdown-heading visually-hidden">')

@@ -46,13 +46,11 @@ switch (kind) {
 const optionalProps = kind === 'link' ? { href } : {}
 ---
 
-<Box as={as} class:list={[buttonVariants[variant], sizesVariants[size], className]} {...optionalProps} {...rest}
-	><slot />
-	{
-		icon ? (
-			<span aria-hidden class={iconButtonStyle}>
-				<slot name="icon" />
-			</span>
-		) : null
-	}</Box
->
+<Box as={as} class:list={[buttonVariants[variant], sizesVariants[size], className]} {...optionalProps} {...rest}>
+	<slot />
+	{icon ? (
+		<span aria-hidden class={iconButtonStyle}>
+			<slot name="icon" />
+		</span>
+	) : null}
+</Box>

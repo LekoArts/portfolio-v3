@@ -52,10 +52,20 @@ const responsiveAtomicProperties = defineProperties({
 	responsiveArray: breakpointNames,
 	properties: responsiveProperties,
 	shorthands: {
-		m: ['marginBottom', 'marginTop', 'marginLeft', 'marginRight'],
+		m: [
+			'marginBottom',
+			'marginTop',
+			'marginLeft',
+			'marginRight',
+		],
 		mx: ['marginLeft', 'marginRight'],
 		my: ['marginTop', 'marginBottom'],
-		p: ['paddingBottom', 'paddingTop', 'paddingLeft', 'paddingRight'],
+		p: [
+			'paddingBottom',
+			'paddingTop',
+			'paddingLeft',
+			'paddingRight',
+		],
 		px: ['paddingLeft', 'paddingRight'],
 		py: ['paddingTop', 'paddingBottom'],
 	},

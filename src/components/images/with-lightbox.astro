@@ -20,5 +20,7 @@ const { src, width: maxWidth } = meta
 	data-selector={selector}
 	data-src={src}
 	data-sizes={`(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`}
-	{...rest}><slot /></button
+	{...rest}
 >
+	<slot />
+</button>

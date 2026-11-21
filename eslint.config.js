@@ -12,6 +12,10 @@ export default antfu({
 	rules: {
 		'node/prefer-global/process': 'off',
 		'style/no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
-		'style/quotes': ['error', 'single', { avoidEscape: true }],
+		'style/quotes': [
+			'error',
+			'single',
+			{ avoidEscape: true },
+		],
 	},
 })

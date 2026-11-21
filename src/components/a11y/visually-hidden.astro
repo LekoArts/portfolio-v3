@@ -7,4 +7,6 @@ interface Props extends HTMLAttributes<'span'> {}
 const { class: className, ...rest } = Astro.props
 ---
 
-<span class:list={[visuallyHiddenStyle, className]} {...rest}><slot /></span>
+<span class:list={[visuallyHiddenStyle, className]} {...rest}>
+	<slot />
+</span>

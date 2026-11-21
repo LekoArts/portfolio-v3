@@ -14,14 +14,24 @@ const responsiveProperties = defineProperties({
 	},
 	defaultCondition: 'mobile',
 	properties: {
-		display: ['none', 'flex', 'block', 'inline-block'],
+		display: [
+			'none',
+			'flex',
+			'block',
+			'inline-block',
+		],
 		paddingTop: space,
 		paddingBottom: space,
 		paddingLeft: space,
 		paddingRight: space,
 	},
 	shorthands: {
-		padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
+		padding: [
+			'paddingTop',
+			'paddingBottom',
+			'paddingLeft',
+			'paddingRight',
+		],
 	},
 })
 

@@ -66,7 +66,9 @@ export const satteriHeadingPermalinks = defineHastPlugin({
 				type: 'element',
 				tagName: 'div',
 				properties: {
-					className: id === 'introduction' ? ['markdown-heading', 'visually-hidden'] : ['markdown-heading'],
+					className: id === 'introduction'
+						? ['markdown-heading', 'visually-hidden']
+						: ['markdown-heading'],
 				},
 				children: [
 					{

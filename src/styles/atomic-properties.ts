@@ -15,7 +15,13 @@ export const unresponsiveProperties = {
 export type UnresponsiveProperties = keyof typeof unresponsiveProperties
 
 export const responsiveProperties = {
-	display: ['block', 'inline-block', 'flex', 'inline-flex', 'none'],
+	display: [
+		'block',
+		'inline-block',
+		'flex',
+		'inline-flex',
+		'none',
+	],
 	fontSize: vars.fontSize,
 	marginTop: vars.space,
 	marginBottom: vars.space,
@@ -26,8 +32,18 @@ export const responsiveProperties = {
 	paddingRight: vars.space,
 	paddingLeft: vars.space,
 	alignItems: ['flex-start', 'flex-end', 'center'],
-	justifyContent: ['flex-start', 'flex-end', 'center', 'space-between'],
-	flexDirection: ['row', 'column', 'row-reverse', 'column-reverse'],
+	justifyContent: [
+		'flex-start',
+		'flex-end',
+		'center',
+		'space-between',
+	],
+	flexDirection: [
+		'row',
+		'column',
+		'row-reverse',
+		'column-reverse',
+	],
 	flexWrap: ['wrap', 'nowrap'],
 	height: vars.space,
 	width: vars.space,

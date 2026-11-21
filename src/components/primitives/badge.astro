@@ -14,5 +14,7 @@ const { variant } = Astro.props
 	display="inline-block"
 	fontWeight="medium"
 	fontSize={[`xs`, null, null, `sm`]}
-	class={badgeVariants[variant]}><slot /></Box
+	class={badgeVariants[variant]}
 >
+	<slot />
+</Box>

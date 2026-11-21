@@ -16,14 +16,12 @@ const { iconId = undefined, iconPosition = 'left', colorScheme = 'gray', ...rest
 
 <Box as="span" class={tagVariants[colorScheme]} {...rest}>
 	{iconPosition === 'left' && iconId && <SvgIcon id={iconId} class={tagIconStyle} />}
-	{
-		iconId ? (
-			<Box as="span" class={tagLabelBaseStyle}>
-				<slot />
-			</Box>
-		) : (
+	{iconId ? (
+		<Box as="span" class={tagLabelBaseStyle}>
 			<slot />
-		)
-	}
+		</Box>
+	) : (
+		<slot />
+	)}
 	{iconPosition === 'right' && iconId && <SvgIcon id={iconId} class={tagIconStyle} />}
 </Box>

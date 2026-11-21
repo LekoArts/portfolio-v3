@@ -42,8 +42,12 @@ export function themeAwareStyles({
 	rootClass = '',
 }: IThemeAwareStylesProps) {
 	const selectors: Record<string, CSSPropertiesWithVars> = {}
-	const r = rootClass ? `${rootClass} ` : ''
-	const alternate = defaultTheme === 'light' ? COLOR_SCHEMES[1] : COLOR_SCHEMES[0]
+	const r = rootClass
+		? `${rootClass} `
+		: ''
+	const alternate = defaultTheme === 'light'
+		? COLOR_SCHEMES[1]
+		: COLOR_SCHEMES[0]
 
 	Object.entries(selectorMap).forEach(([selector, selectorStyle]) => {
 		Object.entries(selectorStyle).forEach(([property, cssOrObject]) => {
@@ -71,9 +75,8 @@ export function themeAwareStyles({
 	return selectors
 }
 
-function removeEmpty(obj: Record<string, string | null>) {
-	// @ts-expect-error - TODO: Fix this
-	return Object.entries(obj).reduce((a, [k, v]) => (v == null ? a : ((a[k] = v), a)), {})
+function removeEmpty(obj: Record<string, string | null>): Record<string, string> {
+	return Object.fromEntries(Object.entries(obj).filter((entry): entry is [string, string] => entry[1] != null))
 }
 
 function customizer(objValue: Array<Record<string, string>> | undefined, srcValue: Record<string, string | null>) {
