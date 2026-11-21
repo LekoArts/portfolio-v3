@@ -161,3 +161,22 @@ test.describe('Meta Tags', () => {
 		expect(lang).toBe('en-US')
 	})
 })
+
+test('theme-color follows the selected theme', async ({ page }) => {
+	await page.emulateMedia({ colorScheme: 'light' })
+	await page.goto('/')
+	const themeColors = page.locator('meta[name="theme-color"]')
+	const contents = async (): Promise<Array<string | null>> => themeColors.evaluateAll(metas => metas.map(m => m.getAttribute('content')))
+	const toggle = page.locator('lekoarts-theme-select button')
+
+	await expect(themeColors).toHaveCount(2)
+	const [light, dark] = await contents()
+	expect(light).not.toBe(dark)
+
+	await toggle.click()
+	await expect.poll(contents).toEqual([light, light])
+	await toggle.click()
+	await expect.poll(contents).toEqual([dark, dark])
+	await toggle.click()
+	await expect.poll(contents).toEqual([light, dark])
+})
