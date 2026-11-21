@@ -19,9 +19,14 @@ test.describe('Headings', () => {
 		const headingLink = page.getByLabel('Permalink: Example Heading')
 		await expect(headingLink).toHaveAttribute('href', '#example-heading')
 
-		await headingLink.focus()
+		// Reach the permalink through sequential keyboard navigation, not programmatic focus
+		for (let i = 0; i < 50 && !(await headingLink.evaluate(el => el === document.activeElement)); i++)
+			await page.keyboard.press('Tab')
 		await expect(headingLink).toBeFocused()
-		await expect(headingLink).toHaveCSS('opacity', '1')
+
+		// Keyboard focus reveals it instantly instead of fading in
+		await expect(headingLink).toHaveCSS('transition-duration', '0s')
+		expect(await headingLink.evaluate(el => getComputedStyle(el).opacity)).toBe('1')
 	})
 })
 
@@ -126,6 +131,27 @@ test.describe('Video', () => {
 		await page.keyboard.press('Enter')
 		await expect(video).toHaveJSProperty('paused', false)
 		await expect(play).toHaveCount(0)
+	})
+
+	test('stays in the paused state when playback fails', async ({ page }) => {
+		await page.addInitScript(() => {
+			HTMLMediaElement.prototype.play = () => Promise.reject(new DOMException('Playback blocked', 'NotAllowedError'))
+			;(window as any).unhandled = 0
+			window.addEventListener('unhandledrejection', () => (window as any).unhandled++)
+		})
+		await page.reload()
+
+		const figure = page.getByTestId('video').first()
+		const play = figure.getByRole('button', { name: 'Play video' })
+		await expect(play).toBeVisible()
+
+		await play.click()
+		await expect(play).toBeVisible()
+		await expect(figure.getByRole('button', { name: 'Pause video' })).toHaveCount(0)
+		await expect(figure.locator('video')).toHaveJSProperty('paused', true)
+		// Give an unhandled rejection a chance to surface before checking
+		await page.waitForTimeout(100)
+		expect(await page.evaluate(() => (window as any).unhandled)).toBe(0)
 	})
 
 	test('starts paused when reduced motion is preferred', async ({ page }) => {

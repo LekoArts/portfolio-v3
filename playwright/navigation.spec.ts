@@ -82,25 +82,43 @@ test.describe('Navigation', () => {
 		await devTools.click()
 		await expect(page).toHaveURL('/writing/')
 		await expect(visibleCards).toHaveCount(total)
-	})
-	test('shows a focus ring on every card variant', async ({ page }) => {
-		await page.goto('/writing/')
 
-		const cards = page.locator('.tag-group-item')
-		const variants = [
-			cards.filter({
-				has: page.locator('h2'),
-			}).first(),
-			cards.filter({
-				hasNot: page.locator('h2'),
-			}).first(),
-		]
+		// Restoring from history must not push new entries
+		const historyLength = await page.evaluate(() => history.length)
+		await page.goBack()
+		expect(tagsParam()).toBe('Developer Tools')
+		await expect(react).toHaveAttribute('aria-pressed', 'false')
+		await expect(devTools).toHaveAttribute('aria-pressed', 'true')
 
-		for (const card of variants) {
-			await card.getByRole('link').focus()
-			await expect(card).toHaveCSS('box-shadow', /rgba\(66, 153, 225, 0\.6\) 0px 0px 0px 3px/)
-		}
+		await page.goForward()
+		await expect(page).toHaveURL('/writing/')
+		await expect(devTools).toHaveAttribute('aria-pressed', 'false')
+		await expect(visibleCards).toHaveCount(total)
+		expect(await page.evaluate(() => history.length)).toBe(historyLength)
 	})
+	for (const colorScheme of ['light', 'dark'] as const) {
+		test(`shows a focus ring on every card variant (${colorScheme})`, async ({ page }) => {
+			await page.emulateMedia({ colorScheme })
+			const ring = /rgba\(66, 153, 225, 0\.6\) 0px 0px 0px 3px/
+			// Default cards render their title as h2, the other variants as p
+			const withoutHeading = 'div:has(> a > p):not(:has(> a > h2))'
+
+			await page.goto('/')
+			const homeCards = {
+				'default': page.locator('div:has(> a > h2)').first(),
+				'title-only': page.locator(withoutHeading).first(),
+			}
+			for (const card of Object.values(homeCards)) {
+				await card.getByRole('link').focus()
+				await expect(card).toHaveCSS('box-shadow', ring)
+			}
+
+			await page.goto('/writing/')
+			const ghost = page.locator('.tag-group-item:has(> a > p):not(:has(> a > h2))').first()
+			await ghost.getByRole('link').focus()
+			await expect(ghost).toHaveCSS('box-shadow', ring)
+		})
+	}
 
 	test('art pages', async ({ page }) => {
 		await page.goto('/photos/?tags=3D')
