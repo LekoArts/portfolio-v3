@@ -25,6 +25,18 @@ test.describe('Navigation', () => {
 		await click(page, '[aria-label="lekoarts.de, Back to homepage"] svg')
 		await expect(page).toHaveURL('/')
 	})
+	test('unknown pages offer a way back', async ({ page }) => {
+		const errors: Array<string> = []
+		page.on('pageerror', error => errors.push(error.message))
+		const response = await page.goto('/this-page-does-not-exist/')
+		expect(response?.status()).toBe(404)
+
+		await expect(page).toHaveTitle(/Page not found/)
+		await expect(page.getByRole('navigation', { name: 'Primary navigation' })).toBeVisible()
+		await page.getByRole('link', { name: 'Browse all writing' }).click()
+		await expect(page).toHaveURL('/writing/')
+		expect(errors).toEqual([])
+	})
 	test('requires trailing slashes in the static preview', async ({ page }) => {
 		const noSlashResponse = await page.goto('/writing')
 		expect(noSlashResponse?.status()).toBe(404)

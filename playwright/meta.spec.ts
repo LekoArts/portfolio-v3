@@ -123,6 +123,10 @@ const noIndexPages = [
 		name: 'Resume',
 		url: '/resume/',
 	},
+	{
+		name: 'Not Found',
+		url: '/404/',
+	},
 ]
 
 test.describe('Meta Tags', () => {
