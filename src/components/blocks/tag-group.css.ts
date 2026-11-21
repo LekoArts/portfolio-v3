@@ -30,7 +30,7 @@ export const tagStyle = style({
 	'alignItems': 'center',
 	'maxWidth': '100%',
 	'lineHeight': vars.lineHeight.shorter,
-	'transition': `${transition.property.all} ${transition.duration.normal} ${transition.easing['ease-in-out']}`,
+	'transition': `background-color ${transition.duration.fast} ease, color ${transition.duration.fast} ease`,
 	'@media': {
 		[minMediaQuery('lg')]: {
 			fontSize: vars.fontSize.md,

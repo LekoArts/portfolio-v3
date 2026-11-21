@@ -48,8 +48,8 @@ const cardBaseStyle = style({
 			boxShadow: cardShadowHover,
 			opacity: 0,
 			transitionProperty: 'opacity',
-			transitionDuration: transition.duration.slow,
-			transitionTimingFunction: transition.easing['ease-in-out'],
+			transitionDuration: transition.duration.normal,
+			transitionTimingFunction: 'ease',
 			borderRadius: vars.borderRadius.lg,
 			top: 0,
 			left: 0,
@@ -133,7 +133,7 @@ export const cardVariants = styleVariants(cards, card => [cardBaseStyle, card])
 
 const baseTitleStyle = style({
 	textWrap: 'balance',
-	transition: 'color 0.3s ease-in-out',
+	transition: `color ${transition.duration.fast} ease`,
 	color: vars.color.heading,
 	selectors: {
 		[`${linkStyle}:hover &`]: {

@@ -67,7 +67,7 @@ globalStyle(`${rootWrapper} ${buttonBase}:hover`, {
 export const refreshButton = style([
 	buttonBase,
 	{
-		transition: `color ${transition.duration.slow} ${transition.easing['ease-in-out']}, transform 0.7s linear`,
+		transition: `color ${transition.duration.fast} ease, transform 0.7s linear`,
 		transform: 'rotate(0deg)',
 	},
 ])
@@ -75,13 +75,14 @@ export const refreshButton = style([
 export const backwardButton = style([
 	buttonBase,
 	{
-		transitionProperty: transition.property.all,
-		transitionDuration: transition.duration.slow,
-		transitionTimingFunction: transition.easing['ease-in-out'],
-		transform: 'translate3d(0px, 0px, 0px)',
+		transition: `color ${transition.duration.fast} ease, transform ${transition.duration.normal} ${transition.easing['ease-out']}`,
 		selectors: {
 			[pseudoSelectors.hover]: {
-				transform: 'translate3d(-1px, 0px, 0px)',
+				'@media': {
+					[transition.media['hover-motion']]: {
+						transform: 'translate3d(-1px, 0px, 0px)',
+					},
+				},
 			},
 		},
 	},
@@ -90,13 +91,14 @@ export const backwardButton = style([
 export const exportButton = style([
 	buttonBase,
 	{
-		transitionProperty: transition.property.all,
-		transitionDuration: transition.duration.slow,
-		transitionTimingFunction: transition.easing['ease-in-out'],
-		transform: 'scale(1)',
+		transition: `color ${transition.duration.fast} ease, transform ${transition.duration.normal} ${transition.easing['ease-out']}`,
 		selectors: {
 			[pseudoSelectors.hover]: {
-				transform: 'scale(1.05)',
+				'@media': {
+					[transition.media['hover-motion']]: {
+						transform: 'scale(1.05)',
+					},
+				},
 			},
 		},
 	},

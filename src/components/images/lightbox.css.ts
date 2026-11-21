@@ -19,7 +19,7 @@ export const lightboxStyle = style({
 	outline: 'none',
 	selectors: {
 		'&[open]': {
-			animation: `${show} 0.25s ease-in-out alternate`,
+			animation: `${show} 0.25s ease-in-out`,
 		},
 		'&::backdrop': {
 			backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -60,8 +60,4 @@ export const lightboxCloseStyle = style({
 
 globalStyle(`:root:has(${lightboxStyle}[open])`, {
 	overflow: 'clip',
-})
-
-globalStyle(`::backdrop:has(${lightboxStyle}[open])`, {
-	backdropFilter: 'blur(12px)',
 })
