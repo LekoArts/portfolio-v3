@@ -84,7 +84,7 @@ const MB_VARIANT = description ? `withDescription` : `default`
 
 			button.addEventListener('click', () => {
 				if (video.paused) {
-					video.play()
+					video.play().catch(sync)
 					// eslint-disable-next-line style/brace-style
 				} else {
 					video.pause()

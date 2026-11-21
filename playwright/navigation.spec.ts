@@ -83,6 +83,25 @@ test.describe('Navigation', () => {
 		await expect(page).toHaveURL('/writing/')
 		await expect(visibleCards).toHaveCount(total)
 	})
+	test('shows a focus ring on every card variant', async ({ page }) => {
+		await page.goto('/writing/')
+
+		const cards = page.locator('.tag-group-item')
+		const variants = [
+			cards.filter({
+				has: page.locator('h2'),
+			}).first(),
+			cards.filter({
+				hasNot: page.locator('h2'),
+			}).first(),
+		]
+
+		for (const card of variants) {
+			await card.getByRole('link').focus()
+			await expect(card).toHaveCSS('box-shadow', /rgba\(66, 153, 225, 0\.6\) 0px 0px 0px 3px/)
+		}
+	})
+
 	test('art pages', async ({ page }) => {
 		await page.goto('/photos/?tags=3D')
 		await page.goto('/photos/')

@@ -4,6 +4,7 @@ import { vars } from '@styles/themes/contract.css'
 import { darkThemeClass } from '@styles/themes/dark.css'
 import { breakpointNames, minMediaQuery } from '@styles/tokens/breakpoints'
 import { colorPalette } from '@styles/tokens/colors'
+import { transition } from '@styles/tokens/motion'
 import { fonts } from '@styles/tokens/typography'
 import { zIndices } from '@styles/tokens/z-indices'
 import { em, round } from '@utils/css'
@@ -97,7 +98,11 @@ globalStyle(`${proseRootStyle} .markdown-heading`, {
 })
 
 globalStyle(`${proseRootStyle} .markdown-heading:hover .anchor`, {
-	opacity: 1,
+	'@media': {
+		[transition.media.hover]: {
+			opacity: 1,
+		},
+	},
 })
 
 // Keyboard focus reveals the permalink instantly, without the hover fade
