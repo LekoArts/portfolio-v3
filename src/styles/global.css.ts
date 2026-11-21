@@ -7,13 +7,13 @@ import { fonts } from '@styles/tokens/typography'
 import { globalStyle } from '@vanilla-extract/css'
 
 globalStyle('html', {
+	background: vars.color.bg,
 	scrollPaddingTop: `calc(${space.navigationHeight} + ${vars.space[4]})`,
 })
 
 globalStyle('body', {
 	fontFamily: fonts.body,
 	color: vars.color.text,
-	background: vars.color.bg,
 	lineHeight: vars.lineHeight.base,
 	position: 'relative',
 	minHeight: vars.space.full,

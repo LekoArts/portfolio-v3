@@ -21,7 +21,7 @@ const buttonBaseStyle = style({
 	borderRadius: vars.borderRadius.md,
 	fontWeight: `${vars.fontWeight.normal} !important`,
 	// box-shadow is left out on purpose so the focus ring appears instantly
-	transition: `background-color ${transition.duration.fast} ease, border-color ${transition.duration.fast} ease, color ${transition.duration.fast} ease, transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
+	transition: `transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
 	selectors: {
 		[pseudoSelectors.focusVisible]: {
 			boxShadow: vars.shadow.outline,

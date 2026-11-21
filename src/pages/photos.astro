@@ -19,6 +19,7 @@ import WithLightbox from '@components/images/with-lightbox.astro'
 import { getImageMetadata } from '@utils/photos'
 import { capitalize } from '@utils/capitalize'
 import { paddingResponsiveArrays } from '@styles/tokens/space'
+import { imageOutlineStyle } from '@styles/image-outline.css'
 
 const images = import.meta.glob<{ default: ImageMetadata }>('../content/photos/**/*.{jpeg,jpg,png}', { eager: true })
 
@@ -120,6 +121,7 @@ const photos = Array.from(albumMap.values())
 						>
 							<Image
 								alt=""
+								class={imageOutlineStyle}
 								src={photo.props}
 								height={calculatedHeight}
 								width={MAX_WIDTH}

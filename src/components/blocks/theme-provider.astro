@@ -1,9 +1,20 @@
 ---
-import { STORAGE_KEY, THEMES, VALUE, ATTRS } from '@constants/themes'
+import { ATTRS, STORAGE_KEY, THEMES, VALUE } from '@constants/themes'
+import { darkThemeColors, lightThemeColors } from '@styles/tokens/colors'
+import { formatHex } from 'culori'
+
+// Hex keeps browser UI tinting (status bar, tab strip) working where oklch isn't parsed
+const THEME_COLORS = {
+	[THEMES.light]: formatHex(lightThemeColors.bg),
+	[THEMES.dark]: formatHex(darkThemeColors.bg),
+}
 ---
 
+<meta name="theme-color" content={THEME_COLORS.light} media="(prefers-color-scheme: light)" data-theme={THEMES.light} />
+<meta name="theme-color" content={THEME_COLORS.dark} media="(prefers-color-scheme: dark)" data-theme={THEMES.dark} />
+
 {/* This is intentionally inlined to avoid FOUC. */}
-<script is:inline define:vars={{ STORAGE_KEY, THEMES, VALUE, ATTRS }}>
+<script is:inline define:vars={{ STORAGE_KEY, THEMES, VALUE, ATTRS, THEME_COLORS }}>
 	window.LekoArtsThemeProvider = (() => {
 		const PREFERS_LIGHT = window.matchMedia('(prefers-color-scheme: light)')
 
@@ -15,6 +26,14 @@ import { STORAGE_KEY, THEMES, VALUE, ATTRS } from '@constants/themes'
 			// eslint-disable-next-line antfu/if-newline
 			if (!e) e = PREFERS_LIGHT
 			return e.matches ? THEMES.light : THEMES.dark
+		}
+
+		// An explicit theme overrides both media-scoped tags; "system" restores each tag's own color
+		function syncThemeColor(theme) {
+			document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+				const isSystem = theme === 'system'
+				meta.content = THEME_COLORS[isSystem ? meta.dataset.theme : theme]
+			})
 		}
 
 		const storedTheme = getThemeFromLocalStorage(STORAGE_KEY)
@@ -30,9 +49,11 @@ import { STORAGE_KEY, THEMES, VALUE, ATTRS } from '@constants/themes'
 		d.classList.remove(...ATTRS)
 		d.classList.add(name)
 		d.style.colorScheme = resolved
+		syncThemeColor(storedTheme || THEMES.system)
 
 		return {
 			applyTheme(theme = storedTheme || 'system') {
+				syncThemeColor(theme)
 				const el = document.getElementById('lekoarts-theme-select')
 
 				const template = document.querySelector('#theme-icons')

@@ -3,11 +3,11 @@ import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { transition } from '@styles/tokens/motion'
-import { style, styleVariants } from '@vanilla-extract/css'
+import { globalStyle, style, styleVariants } from '@vanilla-extract/css'
 
 export const layoutIconStyle = style({
 	color: vars.color.textMuted,
-	transition: `color ${transition.duration.fast} ease, background-color ${transition.duration.fast} ease, transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
+	transition: `transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
 	selectors: {
 		[pseudoSelectors.hover]: {
 			color: vars.color.heading,
@@ -87,16 +87,23 @@ const gridImages: Record<ImageWrapperVariants, StyleRule> = {
 		borderRadius: vars.borderRadius.lg,
 	},
 	masonry: {
-		'width': '100%',
-		'height': 'auto',
-		'marginBottom': vars.space[4],
-		'borderRadius': vars.borderRadius.lg,
-		'@media': {
-			[minMediaQuery('sm')]: {
-				marginBottom: vars.space[5],
-			},
-		},
+		width: '100%',
+		height: 'auto',
+		borderRadius: vars.borderRadius.lg,
 	},
 }
 
 export const gridImagesVariants = styleVariants(gridImages, variant => [variant])
+
+// Spacing lives on the button, not the image, so its hit area and focus ring match the photo
+globalStyle(`${imageWrapperVariants.masonry} > button`, {
+	'display': 'block',
+	'width': '100%',
+	'breakInside': 'avoid',
+	'marginBottom': vars.space[4],
+	'@media': {
+		[minMediaQuery('sm')]: {
+			marginBottom: vars.space[5],
+		},
+	},
+})

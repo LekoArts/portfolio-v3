@@ -30,7 +30,7 @@ export const tagStyle = style({
 	'alignItems': 'center',
 	'maxWidth': '100%',
 	'lineHeight': vars.lineHeight.shorter,
-	'transition': `background-color ${transition.duration.fast} ease, color ${transition.duration.fast} ease, transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
+	'transition': `transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
 	'@media': {
 		[minMediaQuery('lg')]: {
 			fontSize: vars.fontSize.md,
@@ -86,5 +86,13 @@ export const tagCloseIconStyle = style({
 		[pseudoSelectors.hover]: {
 			opacity: 0.8,
 		},
+	},
+})
+
+// Gated behind `data-tag-filtered` (set on the first filter interaction) so `@starting-style` doesn't also fade in every item on page load
+globalStyle('html[data-tag-filtered] .tag-group-item', {
+	'transition': `opacity ${transition.duration.fast} ${transition.easing['ease-out']}`,
+	'@starting-style': {
+		opacity: 0,
 	},
 })

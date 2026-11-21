@@ -105,10 +105,8 @@ globalStyle(`${proseRootStyle} .markdown-heading:hover .anchor`, {
 	},
 })
 
-// Keyboard focus reveals the permalink instantly, without the hover fade
 globalStyle(`${proseRootStyle} .markdown-heading .anchor:focus-visible`, {
 	opacity: 1,
-	transition: 'none',
 })
 
 globalStyle(`${proseRootStyle} .markdown-heading .anchor`, {
@@ -116,7 +114,6 @@ globalStyle(`${proseRootStyle} .markdown-heading .anchor`, {
 	display: 'flex',
 	margin: 'auto',
 	opacity: 0,
-	transition: 'opacity 150ms ease',
 	justifyContent: 'center',
 	alignItems: 'center',
 	width: vars.space[10],

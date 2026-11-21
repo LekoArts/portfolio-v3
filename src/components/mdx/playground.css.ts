@@ -1,6 +1,5 @@
 import { EC_CSS_VARS } from '@constants/ec.mjs'
 import { vars } from '@styles/themes/contract.css'
-import { transition } from '@styles/tokens/motion'
 import { globalStyle, style } from '@vanilla-extract/css'
 import { customTheme } from './sandpack.css'
 
@@ -66,24 +65,14 @@ globalStyle(`${rootWrapper} ${buttonBase}:hover`, {
 export const refreshButton = style([
 	buttonBase,
 	{
-		transition: `color ${transition.duration.fast} ease, transform 250ms linear`,
+		transition: 'transform 250ms linear',
 		transform: 'rotate(0deg)',
 	},
 ])
 
-export const backwardButton = style([
-	buttonBase,
-	{
-		transition: `color ${transition.duration.fast} ease`,
-	},
-])
+export const backwardButton = style([buttonBase])
 
-export const exportButton = style([
-	buttonBase,
-	{
-		transition: `color ${transition.duration.fast} ease`,
-	},
-])
+export const exportButton = style([buttonBase])
 
 export const previewWrapper = style({
 	borderTop: '1px solid rgba(214, 222, 235, 0.15)',

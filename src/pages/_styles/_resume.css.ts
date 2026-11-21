@@ -1,3 +1,4 @@
+import { imageOutlineStyle } from '@styles/image-outline.css'
 import { vars } from '@styles/themes/contract.css'
 import { minMediaQuery } from '@styles/tokens/breakpoints'
 import { style } from '@vanilla-extract/css'
@@ -18,7 +19,10 @@ export const summaryWrapperStyle = style({
 	},
 })
 
-export const imgStyle = style({
-	boxShadow: vars.shadow.lg,
-	borderRadius: vars.borderRadius.lg,
-})
+export const imgStyle = style([
+	imageOutlineStyle,
+	{
+		boxShadow: vars.shadow.lg,
+		borderRadius: vars.borderRadius.lg,
+	},
+])
