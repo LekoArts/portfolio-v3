@@ -1,4 +1,5 @@
 import { vars } from '@styles/themes/contract.css'
+import { transition } from '@styles/tokens/motion'
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css'
 
 export const groupStyle = style({
@@ -35,7 +36,15 @@ export const playPauseIconStyle = style({
 	borderRadius: '50%',
 	color: 'white',
 	opacity: 0,
-	transition: 'opacity 200ms ease',
+	transition: `opacity ${transition.duration.normal} ease, transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
+})
+
+globalStyle(`${playPauseButtonStyle}:active ${playPauseIconStyle}`, {
+	'@media': {
+		[transition.media.motion]: {
+			transform: transition.press,
+		},
+	},
 })
 
 // The control stays visible while paused or keyboard-focused, and only appears on hover for precise pointers

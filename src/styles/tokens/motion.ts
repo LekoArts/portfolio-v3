@@ -30,5 +30,10 @@ export const transition = {
 		 * Same as `hover`, but also requires that the visitor hasn't asked for reduced motion. Use for hover transforms.
 		 */
 		'hover-motion': '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)',
+		'motion': '(prefers-reduced-motion: no-preference)',
 	},
+	/**
+	 * Subtle scale applied to pressables while they are held down
+	 */
+	press: 'scale(0.97)',
 }

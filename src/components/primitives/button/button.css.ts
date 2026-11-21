@@ -21,7 +21,7 @@ const buttonBaseStyle = style({
 	borderRadius: vars.borderRadius.md,
 	fontWeight: `${vars.fontWeight.normal} !important`,
 	// box-shadow is left out on purpose so the focus ring appears instantly
-	transition: `background-color ${transition.duration.fast} ease, border-color ${transition.duration.fast} ease, color ${transition.duration.fast} ease`,
+	transition: `background-color ${transition.duration.fast} ease, border-color ${transition.duration.fast} ease, color ${transition.duration.fast} ease, transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
 	selectors: {
 		[pseudoSelectors.focusVisible]: {
 			boxShadow: vars.shadow.outline,
@@ -98,7 +98,22 @@ const buttons: Record<VariantNames, StyleRule> = {
 	},
 }
 
-export const buttonVariants = styleVariants(buttons, btn => [buttonBaseStyle, btn])
+// Inline text buttons (`link` variant) shouldn't shrink
+const pressStyle = style({
+	'@media': {
+		[transition.media.motion]: {
+			selectors: {
+				'&:active:not([disabled], [aria-disabled=true])': {
+					transform: transition.press,
+				},
+			},
+		},
+	},
+})
+
+export const buttonVariants = styleVariants(buttons, (btn, name) => name === 'link'
+	? [buttonBaseStyle, btn]
+	: [buttonBaseStyle, pressStyle, btn])
 
 export type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'brand'
 

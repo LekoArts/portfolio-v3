@@ -1,5 +1,6 @@
 import { pseudoSelectors } from '@styles/selectors'
 import { vars } from '@styles/themes/contract.css'
+import { transition } from '@styles/tokens/motion'
 import { globalStyle, keyframes, style } from '@vanilla-extract/css'
 
 const show = keyframes({
@@ -35,20 +36,29 @@ export const lightboxImageStyle = style({
 })
 
 export const lightboxCloseStyle = style({
-	position: 'absolute',
-	top: vars.space[4],
-	right: vars.space[4],
-	display: 'flex',
-	alignItems: 'center',
-	justifyContent: 'center',
-	width: vars.space[12],
-	height: vars.space[12],
-	borderRadius: vars.borderRadius.full,
-	color: 'white',
-	background: 'rgba(0, 0, 0, 0.6)',
-	outline: 'none',
-	transition: 'background-color 150ms ease',
-	selectors: {
+	'position': 'absolute',
+	'top': vars.space[4],
+	'right': vars.space[4],
+	'display': 'flex',
+	'alignItems': 'center',
+	'justifyContent': 'center',
+	'width': vars.space[12],
+	'height': vars.space[12],
+	'borderRadius': vars.borderRadius.full,
+	'color': 'white',
+	'background': 'rgba(0, 0, 0, 0.6)',
+	'outline': 'none',
+	'transition': `background-color ${transition.duration.fast} ease, transform ${transition.duration.fast} ${transition.easing['ease-out']}`,
+	'@media': {
+		[transition.media.motion]: {
+			selectors: {
+				'&:active': {
+					transform: transition.press,
+				},
+			},
+		},
+	},
+	'selectors': {
 		[pseudoSelectors.hover]: {
 			background: 'rgba(0, 0, 0, 0.8)',
 		},
