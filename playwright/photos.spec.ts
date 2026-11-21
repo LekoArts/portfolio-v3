@@ -22,7 +22,6 @@ test.describe('Photos', () => {
 		await expect(firstImage).toHaveAttribute('data-astro-image', 'constrained')
 		await expect(firstImage).toHaveAttribute('sizes', '(min-width: 720px) 720px, 100vw')
 		await expect(firstImage).toHaveCSS('max-width', '720px')
-		await expect(firstImage).toHaveCSS('max-height', '405px')
 
 		const srcset = await firstImage.getAttribute('srcset')
 		expect(srcset).not.toBeNull()
@@ -34,6 +33,9 @@ test.describe('Photos', () => {
 
 			return image.complete && image.naturalHeight > 0 && image.naturalWidth > 0
 		})).toBe(true)
+
+		const expectedMaxHeight = await firstImage.evaluate(image => Math.round(720 * (image as HTMLImageElement).naturalHeight / (image as HTMLImageElement).naturalWidth))
+		await expect(firstImage).toHaveCSS('max-height', `${expectedMaxHeight}px`)
 
 		const sourceURLs = await images.evaluateAll(elements => Array.from(new Set(elements.map(image => image.getAttribute('src')))).filter(Boolean))
 		const responses = await Promise.all(sourceURLs.map(url => request.fetch(url!, { method: 'HEAD' })))
@@ -55,5 +57,9 @@ test.describe('Photos', () => {
 		await expect(wrapper).toHaveCSS('display', 'grid')
 		await expect(firstImage).toHaveCSS('aspect-ratio', '1 / 1')
 		await expect(firstImage).toHaveCSS('object-fit', 'cover')
+
+		await page.reload()
+		await expect(gridButton).toHaveClass(/active/)
+		await expect(wrapper).toHaveCSS('display', 'grid')
 	})
 })

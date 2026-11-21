@@ -45,6 +45,32 @@ test.describe('Navigation', () => {
 		await firstClick(page, 'text=Kitchen Sink')
 		await expect(page).toHaveURL('/kitchen-sink/')
 	})
+	test('filters writing by tags and syncs the URL', async ({ page }) => {
+		const tagsParam = () => new URL(page.url()).searchParams.get('tags')
+		const cards = page.locator('.tag-group-item')
+		const visibleCards = page.locator('.tag-group-item:not(.hidden)')
+		const react = page.locator('lekoarts-tag-group button[data-item="React"]')
+		const devTools = page.locator('lekoarts-tag-group button[data-item="Developer Tools"]')
+
+		await page.goto('/writing/?tags=React')
+		await expect(react).toHaveClass(/active/)
+		const total = await cards.count()
+		const reactCount = await visibleCards.count()
+		expect(reactCount).toBeGreaterThan(0)
+		expect(reactCount).toBeLessThan(total)
+		for (const tags of await visibleCards.evaluateAll(els => els.map(el => el.getAttribute('data-tags') ?? '')))
+			expect(tags.split(',')).toContain('React')
+
+		await devTools.click()
+		await expect(devTools).toHaveClass(/active/)
+		expect(tagsParam()).toBe('React,Developer Tools')
+		expect(await visibleCards.count()).toBeGreaterThan(reactCount)
+
+		await react.click()
+		await devTools.click()
+		await expect(page).toHaveURL('/writing/')
+		await expect(visibleCards).toHaveCount(total)
+	})
 	test('art pages', async ({ page }) => {
 		await page.goto('/photos/?tags=3D')
 		await page.goto('/photos/')
@@ -54,9 +80,6 @@ test.describe('Navigation', () => {
 
 		await click(page, 'footer[role="contentinfo"] >> text=Writing')
 		await expect(page).toHaveURL('/writing/')
-
-		await click(page, 'footer[role="contentinfo"] >> text=React')
-		await expect(page).toHaveURL('/writing/?tags=React')
 
 		await click(page, 'footer[role="contentinfo"] >> text=RSS Feed')
 		await expect(page).toHaveURL('/rss.xml')
