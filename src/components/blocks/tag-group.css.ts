@@ -88,3 +88,11 @@ export const tagCloseIconStyle = style({
 		},
 	},
 })
+
+// Gated behind `data-tag-filtered` (set on the first filter interaction) so `@starting-style` doesn't also fade in every item on page load
+globalStyle('html[data-tag-filtered] .tag-group-item', {
+	'transition': `opacity ${transition.duration.fast} ${transition.easing['ease-out']}`,
+	'@starting-style': {
+		opacity: 0,
+	},
+})

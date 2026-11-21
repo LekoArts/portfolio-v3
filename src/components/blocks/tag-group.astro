@@ -58,6 +58,7 @@ const { id, items } = Astro.props
 			this.buttons.forEach((button) => {
 				button.addEventListener('click', () => {
 					const item = button.dataset.item as string
+					document.documentElement.dataset.tagFiltered = ''
 
 					if ($tagGroup.get()[this.id].includes(item)) {
 						removeTag(this.id, item)
@@ -81,6 +82,7 @@ const { id, items } = Astro.props
 			})
 
 			window.addEventListener('popstate', () => {
+				document.documentElement.dataset.tagFiltered = ''
 				this.isRestoring = true
 				this.restoreFromUrl()
 				this.isRestoring = false
