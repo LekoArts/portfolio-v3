@@ -14,10 +14,11 @@ type Props =
 	  }
 
 const { id, items } = Astro.props
+const label = id === 'photos' ? 'Filter by album' : 'Filter by tag'
 ---
 
 <lekoarts-tag-group data-id={id}>
-	<div class={tagGroupStyle}>
+	<div class={tagGroupStyle} role="group" aria-label={label}>
 		{items.sort().map((item) => (
 			<button class={tagStyle} data-item={item} aria-pressed="false">
 				{item}
@@ -90,11 +91,22 @@ const { id, items } = Astro.props
 		}
 
 		/**
-		 * Read tags from the query params (?tags=MDX,Astro) into the store and update the UI
+		 * Read tags from the query params (?tags=MDX,Astro) into the store and update the UI.
+		 * Tags without a button (stale or mistyped links) are dropped, otherwise they'd hide every item while no filter looks selected.
 		 */
 		restoreFromUrl() {
 			const parsed = queryStringTags.from(window.location.search)
-			const tags = (parsed?.tags ?? []) as Array<Tag>
+			const requested = (parsed?.tags ?? []) as Array<Tag>
+			const available = new Set([...this.buttons].map((button) => button.dataset.item))
+			const tags = requested.filter((tag) => available.has(tag))
+
+			if (tags.length !== requested.length) {
+				let search = ''
+				if (tags.length > 0) {
+					search = `?${queryStringTags.to({ tags })}`
+				}
+				window.history.replaceState(window.history.state, '', `${window.location.pathname}${search}`)
+			}
 
 			$tagGroup.setKey(this.id, tags)
 			this.render(tags)

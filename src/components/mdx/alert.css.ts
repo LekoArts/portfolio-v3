@@ -16,6 +16,15 @@ const alertBaseStyle = style({
 		[bgVar]: vars.color.bg,
 		[colorVar]: vars.color.text,
 		[linkDecorationVar]: colorPalette.gray[300],
+		// The prose emphasis blue drops below 4.5:1 on the tinted light backgrounds
+		[vars.color.textEmphasized]: colorPalette.blue[700],
+	},
+	'selectors': {
+		[themesSelectors.dark]: {
+			vars: {
+				[vars.color.textEmphasized]: colorPalette.blue[400],
+			},
+		},
 	},
 	'marginRight': vars.space[0],
 	'marginLeft': vars.space[0],

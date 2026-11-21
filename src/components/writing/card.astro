@@ -21,15 +21,30 @@ interface Props extends BoxProps<'div'> {
 	description?: string
 	variant?: CardVariants
 	icon?: SVGIconNames
+	/**
+	 * Heading element for the title. Defaults to h2 for the default variant and p for the others.
+	 */
+	titleAs?: 'h2' | 'h3' | 'p'
 }
 
-const { slug, title, subtitle, description, variant = 'default', icon, class: className, ...rest } = Astro.props
+const {
+	slug,
+	title,
+	subtitle,
+	description,
+	variant = 'default',
+	icon,
+	titleAs,
+	class: className,
+	...rest
+} = Astro.props
+const titleElement = titleAs ?? (variant === 'default' ? 'h2' : 'p')
 ---
 
 <Box class:list={[cardVariants[variant], className]} {...rest}>
 	<Link href={slug} class={linkStyle}>
 		{icon && variant !== 'ghost' ? <SvgIcon id={icon} class={defaultIconStyle} /> : null}
-		<Text as={variant === 'default' ? 'h2' : 'p'} class={titleVariants[variant]}>
+		<Text as={titleElement} class={titleVariants[variant]}>
 			{icon && variant === 'ghost' ? <SvgIcon id={icon} class={ghostIconStyle} /> : null}
 			{title}
 		</Text>

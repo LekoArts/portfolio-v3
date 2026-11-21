@@ -1,9 +1,34 @@
-<h1>404</h1>
+---
+import SkipNavContent from '@components/a11y/skip-nav-content.astro'
+import Box from '@components/primitives/box.astro'
+import PrimaryButton from '@components/primitives/button/primary.astro'
+import Container from '@components/primitives/container.astro'
+import Seo from '@components/seo.astro'
+import Heading from '@components/typography/heading.astro'
+import Text from '@components/typography/text.astro'
+import Base from '@layouts/base.astro'
+import { paddingResponsiveArrays } from '@styles/tokens/space'
+---
+
+<Base>
+	<Seo slot="seo" title="Page not found" noIndex />
+	<SkipNavContent>
+		<Container py={paddingResponsiveArrays.paddingLarge}>
+			<Box display="flex" flexDirection="column" alignItems="flex-start" gap={6}>
+				<Heading as="h1">Page not found</Heading>
+				<Text variant="prominent">This page doesn’t exist or has moved.</Text>
+				<PrimaryButton href="/writing/">Browse all writing</PrimaryButton>
+			</Box>
+		</Container>
+	</SkipNavContent>
+</Base>
 
 <script is:inline>
 	document.addEventListener('DOMContentLoaded', () => {
-		plausible('404', {
-			props: { path: Astro.url.pathname },
-		})
+		if (typeof window.plausible === 'function') {
+			window.plausible('404', {
+				props: { path: location.pathname },
+			})
+		}
 	})
 </script>

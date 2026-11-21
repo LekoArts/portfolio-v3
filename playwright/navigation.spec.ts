@@ -15,6 +15,9 @@ test.describe('Navigation', () => {
 
 		await click(page, '[aria-label="Primary navigation"] >> text=Writing')
 		await expect(page).toHaveURL('/writing/')
+		const nav = page.getByRole('navigation', { name: 'Primary navigation' })
+		await expect(nav.getByRole('link', { name: 'Writing' })).toHaveAttribute('aria-current', 'page')
+		await expect(nav.locator('[aria-current]')).toHaveCount(1)
 
 		await click(page, '[aria-label="Primary navigation"] >> text=Photos')
 		await expect(page).toHaveURL('/photos/')
@@ -24,6 +27,33 @@ test.describe('Navigation', () => {
 
 		await click(page, '[aria-label="lekoarts.de, Back to homepage"] svg')
 		await expect(page).toHaveURL('/')
+	})
+	test('homepage sections are headings', async ({ page }) => {
+		await page.goto('/')
+		for (const name of [
+			'Latest Post',
+			'Featured',
+			'More Posts',
+			'Photos',
+			'Open Source',
+		]) {
+			await expect(page.getByRole('heading', { level: 2, name, exact: true })).toBeVisible()
+		}
+		await expect(page.getByRole('heading', { level: 3, name: 'Featured Projects' })).toBeVisible()
+		await expect(page.getByRole('heading', { level: 3 })).not.toHaveCount(1)
+	})
+
+	test('unknown pages offer a way back', async ({ page }) => {
+		const errors: Array<string> = []
+		page.on('pageerror', error => errors.push(error.message))
+		const response = await page.goto('/this-page-does-not-exist/')
+		expect(response?.status()).toBe(404)
+
+		await expect(page).toHaveTitle(/Page not found/)
+		await expect(page.getByRole('navigation', { name: 'Primary navigation' })).toBeVisible()
+		await page.getByRole('link', { name: 'Browse all writing' }).click()
+		await expect(page).toHaveURL('/writing/')
+		expect(errors).toEqual([])
 	})
 	test('requires trailing slashes in the static preview', async ({ page }) => {
 		const noSlashResponse = await page.goto('/writing')
@@ -54,6 +84,7 @@ test.describe('Navigation', () => {
 
 		await page.goto('/writing/?tags=React')
 		await expect(react).toHaveClass(/active/)
+		await expect(page.getByRole('group', { name: 'Filter by tag' }).getByRole('button', { name: 'React' })).toHaveAttribute('aria-pressed', 'true')
 		const total = await cards.count()
 		const reactCount = await visibleCards.count()
 		expect(reactCount).toBeGreaterThan(0)
@@ -96,17 +127,26 @@ test.describe('Navigation', () => {
 		await expect(visibleCards).toHaveCount(total)
 		expect(await page.evaluate(() => history.length)).toBe(historyLength)
 	})
+	test('ignores unknown tags in the URL', async ({ page }) => {
+		const visibleCards = page.locator('.tag-group-item:not(.hidden)')
+
+		await page.goto('/writing/?tags=React,Does Not Exist')
+		await expect(page.locator('lekoarts-tag-group button[data-item="React"]')).toHaveAttribute('aria-pressed', 'true')
+		expect(new URL(page.url()).searchParams.get('tags')).toBe('React')
+
+		await page.goto('/writing/?tags=Does Not Exist')
+		await expect(page).toHaveURL('/writing/')
+		await expect(visibleCards).toHaveCount(await page.locator('.tag-group-item').count())
+	})
 	for (const colorScheme of ['light', 'dark'] as const) {
 		test(`shows a focus ring on every card variant (${colorScheme})`, async ({ page }) => {
 			await page.emulateMedia({ colorScheme })
 			const ring = /rgba\(66, 153, 225, 0\.6\) 0px 0px 0px 3px/
-			// Default cards render their title as h2, the other variants as p
-			const withoutHeading = 'div:has(> a > p):not(:has(> a > h2))'
-
 			await page.goto('/')
+			// Homepage cards use h3 titles; only the default variant has a description
 			const homeCards = {
-				'default': page.locator('div:has(> a > h2)').first(),
-				'title-only': page.locator(withoutHeading).first(),
+				'default': page.locator('div:has(> a > h3 + p)').first(),
+				'title-only': page.locator('div:has(> a > h3):not(:has(> a > h3 + p))').first(),
 			}
 			for (const card of Object.values(homeCards)) {
 				await card.getByRole('link').focus()
