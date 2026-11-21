@@ -11,7 +11,6 @@ export type SVGIconNames
 		| 'ai'
 		| 'hiking'
 		| 'travel'
-		| 'logo'
 		| 'react'
 		| 'pause'
 		| 'play'

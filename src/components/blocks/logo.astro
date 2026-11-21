@@ -1,9 +1,41 @@
 ---
-import SvgIcon from '@components/primitives/svg-icon.astro'
-import { logoStyle } from './logo.css'
+import { logoPath } from './logo-blink'
 import Link from '@components/primitives/link.astro'
 ---
 
-<Link href="/" aria-label="lekoarts.de, Back to homepage" class={logoStyle}>
-	<SvgIcon id="logo" width="35" height="35" viewBox="0 0 150 150" />
+<Link href="/" aria-label="lekoarts.de, Back to homepage" data-logo>
+	<svg aria-hidden="true" focusable="false" width="35" height="35" viewBox="0 0 150 150">
+		<path fill="currentColor" fill-rule="evenodd" d={logoPath()} />
+	</svg>
 </Link>
+
+<script>
+	import { transition } from '@styles/tokens/motion'
+	import { BLINK_DURATION, eyesAt, logoPath } from './logo-blink'
+
+	const canBlink = window.matchMedia(transition.media['hover-motion'])
+
+	for (const link of document.querySelectorAll<HTMLAnchorElement>('[data-logo]')) {
+		const path = link.querySelector('path')
+		let frame = 0
+
+		link.addEventListener('pointerenter', () => {
+			// Let a running blink finish instead of restarting it
+			if (!path || !canBlink.matches || frame) {
+				return
+			}
+
+			const start = performance.now()
+			const tick = (now: number): void => {
+				const time = now - start
+				const { left, right } = eyesAt(time)
+				path.setAttribute('d', logoPath(left, right))
+				frame = 0
+				if (time < BLINK_DURATION) {
+					frame = requestAnimationFrame(tick)
+				}
+			}
+			frame = requestAnimationFrame(tick)
+		})
+	}
+</script>
