@@ -1,4 +1,5 @@
 import { ICON_CHOICES, TAGS_CHOICES, TYPE_CHOICES } from '@constants/content'
+import { SVG_ICON_NAMES } from '@constants/types'
 import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 import { defineCollection } from 'astro:content'
@@ -29,6 +30,7 @@ const navigations = defineCollection({
 	schema: z.array(z.object({
 		name: z.string(),
 		link: z.string().optional(),
+		icon: z.enum(SVG_ICON_NAMES).optional(),
 		items: z.array(z.object({
 			name: z.string(),
 			link: z.string(),

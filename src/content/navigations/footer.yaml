@@ -1,26 +1,18 @@
-- name: Writing
-  link: /writing/
-  items:
-    - name: RSS Feed
-      link: /rss.xml
-      isExternal: true
-- name: Photos
-  link: /photos/
-- name: About
-  link: /about/
-  items:
-    - name: Resume
-      link: /resume/
-    - name: Uses
-      link: /uses/
-- name: Social
-  items:
-    - name: Email
-      link: mailto:lekoarts@gmail.com
-      isExternal: true
-    - name: Bluesky
-      link: https://bsky.app/profile/lekoarts.de
-      isExternal: true
-    - name: LinkedIn
-      link: https://www.linkedin.com/in/lennart-joergens/
-      isExternal: true
+- name: Resume
+  link: /resume/
+  icon: resume
+- name: Uses
+  link: /uses/
+  icon: computer
+- name: RSS Feed
+  link: /rss.xml
+  icon: rss
+  isExternal: true
+- name: Bluesky
+  link: https://bsky.app/profile/lekoarts.de
+  icon: bluesky
+  isExternal: true
+- name: LinkedIn
+  link: https://www.linkedin.com/in/lennart-joergens/
+  icon: linkedin
+  isExternal: true

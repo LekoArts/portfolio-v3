@@ -133,11 +133,11 @@ const sizes: Record<Sizes, StyleRule> = {
 		paddingRight: vars.space[3],
 	},
 	md: {
-		height: vars.space[10],
-		minWidth: vars.space[10],
+		height: vars.space[8],
+		minWidth: vars.space[8],
 		fontSize: vars.fontSize.md,
-		paddingLeft: vars.space[4],
-		paddingRight: vars.space[4],
+		paddingLeft: vars.space[3],
+		paddingRight: vars.space[3],
 	},
 	lg: {
 		height: vars.space[12],

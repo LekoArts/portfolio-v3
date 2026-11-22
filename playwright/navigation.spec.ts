@@ -188,10 +188,12 @@ test.describe('Navigation', () => {
 	test('footer navigation', async ({ page }) => {
 		await page.goto('/')
 
-		await click(page, 'footer[role="contentinfo"] >> text=Writing')
-		await expect(page).toHaveURL('/writing/')
+		const footer = page.getByRole('contentinfo')
 
-		await click(page, 'footer[role="contentinfo"] >> text=RSS Feed')
+		await footer.getByRole('link', { name: 'Uses' }).click()
+		await expect(page).toHaveURL('/uses/')
+
+		await footer.getByRole('link', { name: 'RSS Feed' }).click()
 		await expect(page).toHaveURL('/rss.xml')
 	})
 	test('tutorials', async ({ page }) => {
