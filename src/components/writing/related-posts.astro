@@ -1,0 +1,33 @@
+---
+import Badge from '@components/primitives/badge.astro'
+import Box from '@components/primitives/box.astro'
+import FormattedDate from '@components/primitives/formatted-date.astro'
+import Spacer from '@components/primitives/spacer.astro'
+import type { RelatedPostItem } from '@utils/related-posts'
+import { dateStyle, linkStyle, listStyle, titleStyle } from './related-posts.css'
+
+interface Props {
+	posts: Array<RelatedPostItem>
+}
+
+const { posts } = Astro.props
+---
+
+<Box as="section" aria-labelledby="related-posts" data-testid="related-posts">
+	<Badge variant="dark" as="h2">
+		<span id="related-posts">Related posts</span>
+	</Badge>
+	<Spacer size={2} axis="vertical" />
+	<ol class={listStyle}>
+		{posts.map((post) => (
+			<li>
+				<a href={post.slug} class={linkStyle}>
+					<span class={titleStyle}>{post.title}</span>
+					<Box as="span" color="textMuted" fontSize="sm" class={dateStyle}>
+						<FormattedDate date={post.date} />
+					</Box>
+				</a>
+			</li>
+		))}
+	</ol>
+</Box>

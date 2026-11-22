@@ -27,6 +27,8 @@ import SeriesCallout from '@components/writing/series-callout.astro'
 import { queryStringTags } from '@utils/url'
 import TocMobile from '@components/writing/toc-mobile.astro'
 import SeriesPagination from '@components/writing/series-pagination.astro'
+import RelatedPosts from '@components/writing/related-posts.astro'
+import { getRelatedPosts } from '@utils/related-posts'
 
 export async function getStaticPaths() {
 	const entries = await getCollection('writing', filterPublished)
@@ -43,12 +45,13 @@ export async function getStaticPaths() {
 				entry,
 				slug,
 				postsInSeries,
+				relatedPosts: getRelatedPosts(entry, entries),
 			},
 		}
 	})
 }
 
-const { entry, slug, postsInSeries } = Astro.props
+const { entry, slug, postsInSeries, relatedPosts } = Astro.props
 const { data: post, filePath } = entry
 const { Content, headings } = await render(entry)
 
@@ -153,7 +156,13 @@ const ogImage = post.image ?? fallbackOgImage
 			{isPartOfSeries ? (
 				<>
 					<SeriesPagination id={post.series!.id} currentPart={post.series!.part} postsInSeries={postsInSeries} />
-					<Spacer size={8} axis="vertical" />
+					<Spacer size={relatedPosts.length > 0 ? 10 : 8} axis="vertical" />
+				</>
+			) : null}
+			{relatedPosts.length > 0 ? (
+				<>
+					<RelatedPosts posts={relatedPosts} />
+					<Spacer size={10} axis="vertical" />
 				</>
 			) : null}
 			<Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
