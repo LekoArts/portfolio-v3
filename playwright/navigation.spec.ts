@@ -28,6 +28,27 @@ test.describe('Navigation', () => {
 		await click(page, '[aria-label="lekoarts.de, Back to homepage"] svg')
 		await expect(page).toHaveURL('/')
 	})
+	test('logo blinks on hover and returns to the original mark', async ({ page }) => {
+		await page.goto('/')
+		const logo = page.getByRole('link', { name: 'lekoarts.de, Back to homepage' })
+		const path = logo.locator('path')
+		const original = await path.getAttribute('d')
+
+		await logo.hover()
+		await expect.poll(() => path.getAttribute('d')).not.toBe(original)
+		await expect.poll(() => path.getAttribute('d')).toBe(original)
+	})
+	test('logo does not blink with reduced motion', async ({ page }) => {
+		await page.emulateMedia({ reducedMotion: 'reduce' })
+		await page.goto('/')
+		const logo = page.getByRole('link', { name: 'lekoarts.de, Back to homepage' })
+		const path = logo.locator('path')
+		const original = await path.getAttribute('d')
+
+		await logo.hover()
+		await page.waitForTimeout(400)
+		await expect(path).toHaveAttribute('d', original!)
+	})
 	test('homepage sections are headings', async ({ page }) => {
 		await page.goto('/')
 		for (const name of [
