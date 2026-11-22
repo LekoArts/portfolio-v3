@@ -229,7 +229,7 @@ export const lightThemeColors: typeof nullColors = {
 	inherit: 'inherit',
 	navigationBg: transparentize(colorPalette.white, navBgTransparency),
 	ghostBg: transparentize(colorPalette.blueGray[900], 0.15),
-	ghostBgSubtle: transparentize(colorPalette.blueGray[900], 0.05),
+	ghostBgSubtle: transparentize(colorPalette.blueGray[800], 0.05),
 	copyButtonBg: colorPalette.white,
 }
 
@@ -253,6 +253,6 @@ export const darkThemeColors: typeof nullColors = {
 	inherit: 'inherit',
 	navigationBg: transparentize(colorPalette.blueGray[900], navBgTransparency),
 	ghostBg: transparentize(colorPalette.white, 0.15),
-	ghostBgSubtle: transparentize(colorPalette.white, 0.05),
+	ghostBgSubtle: transparentize(colorPalette.white, 0.025),
 	copyButtonBg: transparentize(colorPalette.blue[600], 0.4),
 }
