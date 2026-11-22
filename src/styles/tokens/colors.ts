@@ -199,11 +199,11 @@ export const nullColors = {
 	proseLinkDecoration: '',
 	heading: '',
 	divider: '',
-	bgHover: '',
 	cardBg: '',
 	inherit: 'inherit',
 	navigationBg: '',
 	ghostBg: '',
+	ghostBgSubtle: '',
 	copyButtonBg: '',
 }
 
@@ -225,11 +225,11 @@ export const lightThemeColors: typeof nullColors = {
 	proseLinkDecoration: colorPalette.gray[300],
 	heading: colorPalette.black,
 	divider: colorPalette.blueGray[100],
-	bgHover: colorPalette.blueGray[100],
 	cardBg: colorPalette.white,
 	inherit: 'inherit',
 	navigationBg: transparentize(colorPalette.white, navBgTransparency),
 	ghostBg: transparentize(colorPalette.blueGray[900], 0.15),
+	ghostBgSubtle: transparentize(colorPalette.blueGray[800], 0.05),
 	copyButtonBg: colorPalette.white,
 }
 
@@ -249,10 +249,10 @@ export const darkThemeColors: typeof nullColors = {
 	proseLinkDecoration: colorPalette.gray[500],
 	heading: colorPalette.white,
 	divider: colorPalette.blueGray[800],
-	bgHover: colorPalette.blueGray[800],
 	cardBg: colorPalette.blueGray[800],
 	inherit: 'inherit',
 	navigationBg: transparentize(colorPalette.blueGray[900], navBgTransparency),
 	ghostBg: transparentize(colorPalette.white, 0.15),
+	ghostBgSubtle: transparentize(colorPalette.white, 0.025),
 	copyButtonBg: transparentize(colorPalette.blue[600], 0.4),
 }
